@@ -1,0 +1,163 @@
+module sonic-port {
+    namespace "http://github.com/Azure/sonic-port";
+    prefix prt;
+
+    import sonic-common {
+        prefix scommon;
+    }
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC PORT";
+
+    revision 2020-08-04 {
+        description
+            "Added fec attribute";
+    }
+
+    revision 2019-05-15 {
+        description
+            "Initial revision.";
+    }
+
+    container sonic-port {
+
+        container PORT {
+
+            list PORT_LIST {
+                key "ifname";
+                    sonic-ext:custom-validation ValidateDpbStatus;
+
+                leaf ifname {
+                    type string {
+                        pattern "Ethernet([1-3][0-9]{3}|[1-9][0-9]{2}|[1-9][0-9]|[0-9])" {
+                            error-message "Invalid interface name";
+                            error-app-tag interface-name-invalid;
+                        }
+                    }
+                }
+
+                leaf index {
+                    type uint16;
+                }
+
+                leaf speed {
+                    type string;
+                }
+
+                leaf fec {
+                    type scommon:fec-mode;
+                }
+
+                leaf valid_speeds {
+                    type string;
+                }
+
+                leaf alias {
+                    type string;
+                }
+
+                leaf description {
+                    type string;
+                }
+
+                leaf mtu{
+                    type uint32 {
+                        range "1312..9216" {
+                            error-message "Invalid MTU value";
+                            error-app-tag mtu-invalid;
+                        }
+                    }
+                    sonic-ext:custom-validation ValidateMtuForPOMemberCount;
+                }
+
+                leaf lanes {
+                    type string;
+                }
+
+                leaf admin_status {
+                    type scommon:admin-status;
+                }
+
+                leaf pfc_asym {
+                    type string;
+                }
+
+                leaf override_unreliable_los {
+                    type string;
+                }
+            }
+        }
+        container PORT_TABLE {
+            config false;
+
+            list PORT_TABLE_LIST {
+                key "ifname";
+
+                leaf ifname {
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+
+                leaf index {
+                    type uint16;
+                }
+
+                leaf lanes {
+                    type string;
+                }
+
+                leaf mtu {
+                    type uint32 {
+                        range "1312..9216" {
+                            error-message "Invalid MTU value";
+                            error-app-tag mtu-invalid;
+                        }
+                    }
+                }
+
+                leaf valid_speeds {
+                    type string;
+                }
+
+                leaf alias {
+                    type string;
+                }
+
+                leaf oper_status {
+                    type scommon:oper-status;
+                }
+
+                leaf admin_status {
+                    type scommon:admin-status;
+                }
+
+                leaf description {
+                    type string;
+                }
+
+                leaf speed {
+                    type uint64;
+                }
+
+                leaf port_load_interval {
+                    type uint16;
+                }
+
+                leaf fec {
+                    type scommon:fec-mode;
+                }
+            }
+        }
+    }
+}

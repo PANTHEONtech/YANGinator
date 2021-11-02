@@ -1,0 +1,22 @@
+plugins {
+    id 'org.jetbrains.intellij' version '1.1.6'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2021.2.1'
+    plugins = ['com.intellij.java']
+}
+
+test {
+    systemProperty "idea.home.path", "src/test"
+}
+
+sourceSets.main.java.srcDirs 'src/main/gen'
+sourceSets.main.java.srcDirs 'src/main/highlighter'
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+

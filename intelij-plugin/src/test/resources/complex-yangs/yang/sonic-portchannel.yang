@@ -1,0 +1,233 @@
+module sonic-portchannel {
+    namespace "http://github.com/Azure/sonic-portchannel";
+    prefix spc;
+
+    import sonic-common {
+        prefix scommon;
+    }
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    import sonic-port {
+        prefix prt;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC PORTCHANNEL";
+
+    revision 2020-07-30 {
+        description
+            "Add Portchannel description.";
+    }
+
+    revision 2019-05-15 {
+        description
+            "Initial revision.";
+    }
+
+    typedef mode {
+        type enumeration {
+            enum enable;
+            enum disable;
+        }
+    }
+
+    container sonic-portchannel {
+
+        container PORTCHANNEL_GLOBAL {
+
+            list PORTCHANNEL_GLOBAL_LIST {
+                key "keyleaf";
+
+                leaf keyleaf {
+                    type enumeration {
+                        enum GLOBAL;
+                    }
+                    description
+                        "Key node identifier. It's value is always GLOBAL";
+                }
+
+                leaf graceful_shutdown_mode {
+                    type mode;
+                    description
+                        "Enable/Disable portchannel graceful shutdown mode";
+                }
+            }
+        }
+
+        container PORTCHANNEL {
+
+            list PORTCHANNEL_LIST {
+                key "name";
+                sonic-ext:custom-validation ValidatePortChannelCreationDeletion;
+
+                leaf name {
+                    type string {
+                        pattern "PortChannel([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-6])" {
+                            error-message "Invalid PortChannel name pattern";
+                            error-app-tag portchannel-name-invalid;
+                        }
+                    }
+                }
+
+                leaf admin_status {
+                    type scommon:admin-status;
+                    default up;
+                }
+
+                leaf mtu {
+                    type uint32 {
+                        range "1312..9216" {
+                            error-message "Invalid MTU value";
+                            error-app-tag mtu-invalid;
+                        }
+                    }
+                    sonic-ext:custom-validation ValidateMtuForPOMemberCount;
+                }
+                
+                leaf static {
+                    type boolean;
+                    default false;
+                }
+
+                leaf min_links {
+                    type uint8 {
+                        range "1..255" {
+                            error-message "Invalid Min-links value, valid range 1 to 255";
+                            error-app-tag min-links-invalid;
+                        }
+                    }
+                }
+
+                leaf fallback {
+                    type boolean;
+                }
+
+                leaf fast_rate {
+                    type boolean;
+                    must "../static = 'false'"
+                    {
+                        error-message "Fast Rate interval configuration is not applicable for Static LAGs";
+                        error-app-tag fast-rate-config;
+                    }
+                }
+
+                leaf graceful_shutdown_mode {
+                    type mode;
+                    description
+                        "Enable/Disable graceful shutdown mode per portchannel";
+                }
+
+                leaf description {
+                    type string;
+                    description
+                        "Decription of the portchannel";
+                }
+            }
+        }
+
+        container PORTCHANNEL_MEMBER {
+
+            list PORTCHANNEL_MEMBER_LIST {
+                key "name ifname";
+                sonic-ext:custom-validation ValidateMtuForPOMemberCount;
+
+                leaf name {
+                    type leafref {
+                        path "../../../PORTCHANNEL/PORTCHANNEL_LIST/name";
+                    }
+                }
+
+                leaf ifname {
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+            }
+        }
+
+        container LAG_TABLE {
+            config false;
+
+            list LAG_TABLE_LIST {
+                key "lagname";
+
+                leaf lagname {
+                    type string;
+                }
+
+                leaf admin_status {
+                    type scommon:admin-status;
+                }
+
+                leaf mtu {
+                    type uint32 {
+                        range "1312..9216" {
+                            error-message "Invalid MTU value";
+                            error-app-tag mtu-invalid;
+                        }
+                    }
+                }
+
+                leaf active {
+                    type boolean;
+                }
+
+                leaf name {
+                    type string;
+                }
+
+                leaf oper_status {
+                    type scommon:oper-status;
+                }
+
+                //control to disable traffic collection and distribution for all LAG member ports
+                leaf traffic_disable {
+                    type boolean; 
+                }
+
+                leaf fallback_operational {
+                    type boolean;
+                }
+                leaf speed {
+                    type uint64;
+                }
+                leaf port_load_interval {
+                    type uint16;
+                }
+            }
+        }
+
+        container LAG_MEMBER_TABLE {
+            config false;
+            list LAG_MEMBER_TABLE_LIST {
+                key "name ifname";
+
+                leaf name {
+                    type leafref {
+                        path "../../../LAG_TABLE/LAG_TABLE_LIST/lagname";
+                    }
+                }
+
+                leaf ifname {
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+                leaf status {
+                    type string;
+                    description
+                        "status of the portchannel member";
+                }
+            }
+        }
+    }
+}

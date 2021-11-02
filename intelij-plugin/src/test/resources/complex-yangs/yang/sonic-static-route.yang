@@ -1,0 +1,194 @@
+module sonic-static-route {
+    namespace "http://github.com/Azure/sonic-static-route";
+    prefix ssrt;
+    yang-version 1.1;
+
+    import ietf-inet-types {
+        prefix inet;
+    }
+    import sonic-vrf {
+        prefix svrf;
+    }
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC Static Route YANG";
+
+    revision 2020-03-13 {
+        description
+            "Initial revision.";
+    }
+
+    typedef ip-address-list {
+        type union {
+            type ssrt:ipv4-address-list;
+            type ssrt:ipv6-address-list;
+        }
+        description
+            "The ip-address-list type represents comma separated list of
+             IP addresses and is IP version neutral. The format of the
+             textual representation implies the IP version.";
+    }
+
+    typedef ipv4-address-list {
+        type string {
+            pattern
+                '((([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}' +
+                '([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])' +
+                '(%[\p{N}\p{L}]+)?,)*' +
+                '(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}' +
+                '([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])' +
+                '(%[\p{N}\p{L}]+)?';
+        }
+        description
+            "The ipv4-address-list type represents comma separated list
+             of IPv4 addresses in dotted-quad notation. The IPv4 address
+             may include a zone index, separated by a % sign.";
+    }
+
+    typedef ipv6-address-list {
+        type string {
+            pattern
+                '(((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}' +
+                '((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|' +
+                '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}' +
+                '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))' +
+                '(%[\p{N}\p{L}]+)?,)*' +
+                '((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}' +
+                '((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|' +
+                '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}' +
+                '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))' +
+                '(%[\p{N}\p{L}]+)?';
+            pattern
+                '(((([^:,]+:){6}(([^:,]+:[^:,]+)|([^,]*\.[^,]*)))|' +
+                '((([^:,]+:)*[^:,]+)?::(([^:,]+:)*[^:,]+)?)' +
+                '(%[^,]+)?),)*' +
+                '((([^:,]+:){6}(([^:,]+:[^:,]+)|([^,]*\.[^,]*)))|' +
+                '((([^:,]+:)*[^:,]+)?::(([^:,]+:)*[^:,]+)?)' +
+                '(%[^,]+)?)';
+        }
+        description
+            "The ipv6-address-list type represents comma separated list
+             of IPv6 addresses in full, mixed, shortened, and shortend-
+             mixed notation. The IPv6 address may include a zone index,
+             separated by a % sign.";
+    }
+
+    container sonic-static-route {
+        container STATIC_ROUTE {
+            list STATIC_ROUTE_LIST {
+                key "vrf-name prefix";
+
+                leaf vrf-name {
+                    /*type union {
+                        type string {
+                            pattern "default";
+                        }*/
+                    type leafref {
+                        path "/svrf:sonic-vrf/svrf:VRF/svrf:VRF_LIST/svrf:vrf_name";
+                    }
+                    //}
+                    description
+                      "The VRF to which this route entry belongs.";
+                }
+
+                leaf prefix {
+                    type inet:ip-prefix;
+                    description
+                        "The prefix member in CIDR notation -- while the
+                        prefix may be either IPv4 or IPv6, most
+                        implementations require all members of the prefix set
+                        to be the same address family.  Mixing address types in
+                        the same prefix set is likely to cause an error.";
+                }
+
+                leaf nexthop {
+                    sonic-ext:custom-validation ValidateNexthopGateway;
+                    type ip-address-list;
+                    description
+                         "List of gateway IP for all next-hops of specific route.
+                          Each entry of comma separated list string of this and below leaves
+                          corresponds to the respective entry in list of gateway IP, interface,
+                          distance, next-hop VRF and blackhole flag. i.e first entry in lists
+                          of gateway,interface, distance, nexthop-vrf and blackhole is a set.
+                          If gateway IP not specified by the user value of 0.0.0.0 will be set
+                          to make the set.
+
+                          Example:
+                            Route to prefix 10.10.0.0/16 with two NHs
+                                ip route 10.10.0.0/16 1.1.1.2 40
+                                ip route 10.10.0.0/16 Ethernet12 nexthop-vrf Vrf_red
+                            would be expressed as:
+                                prefix:         10.10.0.0/16
+                                ifname:         ,Ethernet12
+                                distance:       40,0
+                                nexthop-vrf:    ,Vrf_red
+                                nexthop:        1.1.1.2,0.0.0.0
+
+                          ";
+                }
+                leaf ifname {
+                    sonic-ext:custom-validation ValidateNexthopInterface;
+                    type string;
+                    description
+                        "List of interface name for all next-hops of specific route.
+                         If interface is not in the current VRF, the nexthop-vrf field should match
+                         the vrf of this interface for routes to be configured.
+                         If interface not specified by the user empty string will be set to make
+                         the set";
+                }
+                leaf distance {
+                    type string {
+                        pattern "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]),)*"
+                            + "([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" {
+                            error-message "Invalid nexthop distance list";
+                            error-app-tag distance-list-invalid;
+                        }
+                    }
+                    description
+                        "List of metric value of all next-hops for specific route.
+                         A metric which is utilised to specify the preference of
+                         the next-hop entry when it is injected into the RIB. The
+                         lower the metric, the more preferable the prefix is. 
+                         If  this value is not specified the metric is inherited from
+                         the default metric utilised for static routes within the
+                         network instance that the static routes are being
+                         instantiated. The value will be set to 0 if no value is specified 
+                         to make the set";
+                }
+                leaf nexthop-vrf {
+                    sonic-ext:custom-validation ValidateNexthopVrf;
+                    type string {
+                        pattern "((default|Vrf[a-zA-Z0-9_-]+|),)*(default|Vrf[a-zA-Z0-9_-]+|)" {
+                            error-message "Invalid nexthop VRF name list";
+                            error-app-tag vrf-name-list-invalid;
+                        }
+                    }
+                    description
+                        "List of next-hop VRF name for all next-hops of specific route. If nexthop-vrf
+                         not specified by the user empty string will be set to make the set";
+                }
+                leaf blackhole {
+                    type string {
+                        pattern "((true|false),)*(true|false)" {
+                            error-message "Invalid nexthop blackhole flag list";
+                            error-app-tag blackhole-flag-list-invalid;
+                        }
+                    }
+                    description
+                        "List of blackhole flag for all next-hops of specific route. If true Specified
+                         next-hop is a blackhole route i.e discard matched packets.";
+                }
+            }
+        }
+    }
+}

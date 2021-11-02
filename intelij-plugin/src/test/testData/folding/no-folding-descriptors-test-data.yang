@@ -1,0 +1,35 @@
+module module-name {
+    yang-version 1;
+    namespace "namespace";
+    prefix "prefix";
+
+    description
+        "This yang should have zero folding descriptors
+         because we don't know pair of which curly brace
+         and quotation mark is missing.";
+
+    revision "2021-09-22" {
+            description
+            "Just another description";
+    }
+
+    typedef another-type {
+                type string;
+                description
+                    "Just another description";
+                reference
+                    "Just another reference";
+            }
+
+    grouping another-model {
+        leaf name {
+            description "Quotation mark at the end of this description is missing;
+            type string;
+
+        }
+        leaf version {
+            description "Right curly brace in this leaf is missing";
+            type another-type2;
+
+    }
+}

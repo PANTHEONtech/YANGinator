@@ -1,0 +1,10 @@
+allprojects {
+    apply plugin: 'java'
+
+    group 'tech.pantheon.YANGinator'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
