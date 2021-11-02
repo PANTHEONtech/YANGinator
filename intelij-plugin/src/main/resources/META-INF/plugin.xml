@@ -13,7 +13,7 @@
     <name>YANGinator</name>
     <category>Custom Languages</category>
     <version>1.0</version>
-    <vendor email="pantheon.tech" url="nourl">Pantheon.tech</vendor>
+    <vendor email="info@pantheon.tech" url="https://pantheon.tech">Pantheon.tech</vendor>
 
     <idea-version since-build="202.6397.94"/>
 
@@ -76,7 +76,7 @@
         <em>Initial version 1.0</em><br/>
         <b>Features</b>
         <ul>
-          <li>Base validation for yang 1.0</li>
+          <li>Advanced validation for yang 1.0</li>
           <li>Commenting</li>
           <li>Code completion</li>
           <li>Go to declaration</li>
