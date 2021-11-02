@@ -21,7 +21,6 @@ import static tech.pantheon.yanginator.plugin.completion.YangCompletionContribut
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilder;
@@ -59,17 +58,17 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
 
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
 
-        setPrefixValues(childrenOfCurrentFile, POP_UP.getPrefixToYangModule());
+        setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
 
-        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
-        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
-        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
 
         var importedIdentifiers = findAllImportedIdentifiers();
-        setImportedIdentifiers(importedIdentifiers, POP_UP.getImportedIdentifiers());
+        setImportedIdentifiers(importedIdentifiers, YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers());
         updateImportedIdentifiers(importedIdentifiers);
 
-        POP_UP.setPrefixMatcher("");
+        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher("");
 
         return new FoldingDescriptor[0];
     }
@@ -103,7 +102,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
         return virtualFiles.stream()
-                .filter(virtualFile -> containsFileName(fileName, virtualFile))
+                .filter(virtualFile -> equalsFileName(fileName, virtualFile))
                 .map(virtualFile -> getYangFile(project, virtualFile))
                 .findFirst().orElse(null);
     }
@@ -219,7 +218,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private List<String> findAllImportedIdentifiers() {
         var currentIdentifiers = new ArrayList<String>();
 
-        POP_UP.getPrefixToYangModule().keySet().forEach(prefix -> createListOfWords().stream()
+        YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule().keySet().forEach(prefix -> createListOfWords().stream()
                 .filter(isYangStatement(prefix))
                 .filter(endsWithColons())
                 .forEach(currentIdentifiers::add));
@@ -253,7 +252,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private List<PsiElement> findChildrenInAnotherFile(String fileName) {
         return new ArrayList<>(PsiTreeUtil.findChildrenOfType(
                 getPsiNode(this.psiNode.getProject(),
-                        POP_UP.getPrefixToYangModule().get(fileName)),
+                        YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule().get(fileName)),
                 PsiElement.class));
     }
 
@@ -279,7 +278,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
 
     private void updateImportedIdentifiers(List<String> importedIdentifiers) {
         if (importedIdentifiers.isEmpty()) {
-            POP_UP.getImportedIdentifiers().clear();
+            YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers().clear();
         }
     }
 
@@ -324,7 +323,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return new ArrayList<>(List.of(this.psiNode.getText().replace(WSP_STR, EMPTY_STR).split(TO_WORDS_RGX)));
     }
 
-    private boolean containsFileName(String fileName, VirtualFile virtualFile) {
+    private boolean equalsFileName(String fileName, VirtualFile virtualFile) {
         if (virtualFile != null) {
             String presentableName = virtualFile.getPresentableName();
             String presentableNameSubStr = presentableName.substring(0, presentableName.length() - DOT_YANG_STR.length());

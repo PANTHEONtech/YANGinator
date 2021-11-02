@@ -142,4 +142,3 @@ public final class YangCompletionContributorDataUtil {
                 psiElement(YangTypes.YANG_ALPHA)), psiElement(keyword));
     }
 }
-
