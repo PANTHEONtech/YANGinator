@@ -1,0 +1,401 @@
+module sonic-interface {
+    namespace "http://github.com/Azure/sonic-interface";
+    prefix sint;
+    yang-version 1.1;
+
+    import ietf-inet-types {
+        prefix inet;
+    }
+
+    import sonic-port {
+        prefix prt;
+    }
+
+        import sonic-vrf {
+            prefix vrf;
+        }
+
+        import sonic-loopback-interface {
+            prefix lointf;
+        }
+
+        import sonic-loopback {
+            prefix lo;
+        }
+
+        import sonic-portchannel {
+            prefix spc;
+        }
+
+        import sonic-vlan {
+            prefix svlan;
+        }
+
+        import sonic-common {
+            prefix cmn;
+        }
+
+        import sonic-extension {
+                prefix sonic-ext;
+        }
+
+        import sonic-interface-common {
+            prefix sonic-if-cmn;
+        }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC INTERFACE";
+
+    revision 2020-07-26 {
+        description
+            "Modification for sonic-loopback.yang.";
+    }
+    revision 2020-04-07 {
+        description
+            "Add VRF and IP address attribute";
+    }
+    revision 2020-02-28 {
+        description
+            "Add DHCP server attribute";
+    }
+    revision 2020-02-15 {
+        description
+            "Add ipv6_use_link_local_only attribute to interface object";
+    }
+    revision 2019-12-01 {
+        description
+            "Add leafref for vrf_name.";
+    }
+    revision 2019-11-20 {
+        description
+            "Adding RPC for clear counters.";
+    }
+    revision 2019-07-02 {
+        description
+            "Initial revision.";
+    }
+
+/*
+ * RPCs
+*/
+        rpc clear_counters {
+            description "RPC for clearing interface counters. Input can be :
+                       1. Single interface name
+                       2. All interfaces
+                       3. All interfaces of a particular type";
+
+            input {
+                leaf interface-param {
+                    type string;
+                        description
+                            "parameter for clearing counters - all or interface type(Ethernet/PortChannel) or interface name";
+                    }
+            }
+            output {
+                leaf status {
+                    type int32;
+                    description
+                        "The status of the operation execution request.";
+                }
+                leaf status-detail {
+                    type string;
+                    description
+                        "The detailed status of the operation execution request.";
+                }
+            }
+        }
+
+        rpc clear_ip {
+
+            description
+                "Clears IPv4/IPv6 address assigned to a specific interface";
+            input {
+                leaf ifName {
+                    type string;
+                    description
+                        "Interface with which IP address needs to be disassociated";
+                }
+                leaf ipPrefix {
+                    type inet:ip-prefix;
+                    description
+                        "IP (v4/v6) address needs to be removed";
+                }
+                leaf secondary {
+                    type boolean;
+                    description "Indicates whether IP adddress configured is secondary or not";
+                }
+            }
+            output {
+                leaf status {
+                    type uint32;
+                    description
+                        "Status of operation execution request";
+                }
+                leaf status-detail {
+                    type string;
+                    description
+                        "Detailed status of operation execution request";
+                }
+            }
+        }
+
+
+    container sonic-interface {
+
+        container INTERFACE {
+
+            list INTERFACE_LIST {
+                key "portname";
+
+                leaf portname{
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+
+                leaf vrf_name {
+                    type leafref {
+                            path "/vrf:sonic-vrf/vrf:VRF/vrf:VRF_LIST/vrf:vrf_name";
+                    }
+                }
+
+                leaf nat_zone {
+                    type uint8 {
+                        range "0..3";
+                    }
+                }
+
+                leaf-list dhcp_servers {
+                    max-elements 4;
+                    type inet:ip-address;
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                        "(count(/sonic-interface/INTERFACE/INTERFACE_IPADDR_LIST[portname=current()/../portname]) > 1)"
+                        {
+                            error-message "DHCP server can be configured on routing interface only";
+                            error-app-tag dhcp-server-invalid-routing-interface;
+                        }
+                }
+
+                leaf-list dhcpv6_servers{
+                    max-elements 4;
+                    type inet:ipv6-address;
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                        "(count(/sonic-interface/INTERFACE/INTERFACE_IPADDR_LIST[portname=current()/../portname]) > 1)"
+                        {
+                            error-message "DHCP server can be configured on routing interface only";
+                            error-app-tag dhcp-server-invalid-routing-interface;
+                        }
+                }
+
+                                leaf dhcp_relay_link_select {
+                                        type cmn:mode-enable;
+                                }
+
+                                leaf dhcp_relay_src_intf {
+                                        type string;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                             "(current()/../dhcp_servers)"
+                                             {
+                                                       error-message "DHCP relay address not configured or invalid operation";
+                                                       error-app-tag dhcp-server-adress-config;
+                                             }
+
+                                }
+
+                                leaf dhcp_relay_max_hop_count {
+                                        type uint32;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                                "(current()/../dhcp_servers)"
+                                           {
+                                                       error-message "DHCP relay address not configured";
+                                                       error-app-tag dhcp-server-adress-config;
+                                           }
+
+                                }
+
+                                leaf dhcp_server_vrf {
+                                        type string;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                               "(current()/../dhcp_servers)"
+                                              {
+                                                       error-message "DHCP server not configured";
+                                                       error-app-tag dhcp-server-invalid-vrf-config;
+                                              }
+                                }
+
+                                leaf dhcp_relay_vrf_select {
+                                        type cmn:mode-enable;
+                                        default disable;
+                                }
+
+                                leaf dhcp_relay_policy_action {
+                                        type cmn:relay-policy-action;
+                                        default discard;
+                                }
+
+                                leaf dhcpv6_relay_src_intf {
+                                        type string;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                                "(current()/../dhcpv6_servers) "
+                                             {
+                                                       error-message "DHCP relay address not configured";
+                                                       error-app-tag dhcp-server-adress-config;
+                                             }
+
+                                }
+
+                                leaf dhcpv6_relay_max_hop_count {
+                                        type uint32;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                                "(current()/../dhcpv6_servers) "
+                                             {
+                                                       error-message "DHCP relay address not configured";
+                                                       error-app-tag dhcp-server-adress-config;
+                                             }
+
+                                }
+
+                                leaf dhcpv6_server_vrf {
+                                        type string;
+                                        must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                                               "(current()/../dhcpv6_servers)"
+                                              {
+                                                       error-message "DHCP server or src-intf not configured";
+                                                       error-app-tag dhcp-server-invalid-vrf-config;
+                                              }
+                                }
+
+                                leaf dhcpv6_relay_vrf_select {
+                                        type cmn:mode-enable;
+                                        default disable;
+                                }
+
+                leaf ipv6_use_link_local_only {
+                                    type cmn:mode-enable;
+                                    default disable;
+                                    description
+                                        "Enable IPv6 link local address on interface";
+                                    must "count(/spc:sonic-portchannel/spc:PORTCHANNEL_MEMBER/spc:PORTCHANNEL_MEMBER_LIST[spc:ifname=current()/../portname]) = 0"
+                                    {
+                                        error-message "Interface configured as a member of PortChannel. Cannot enable IPv6";
+                                        error-app-tag intf-po-member;
+                                    }
+                                    must "count(/svlan:sonic-vlan/svlan:VLAN_MEMBER/svlan:VLAN_MEMBER_LIST[svlan:ifname=current()/../portname]) = 0"
+                                    {
+                                        error-message "Interface configured as a member of Vlan. Cannot enable IPv6";
+                                        error-app-tag intf-vlan-member;
+                                    }
+
+                }
+
+                leaf unnumbered {
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                         "not(contains(/sonic-interface/INTERFACE/INTERFACE_IPADDR_LIST[portname=current()/../portname]/ip_prefix, '.'))"
+                    {
+                        error-message "Cannot configure IP address and IP Unnumbered interface configurations on the same interface";
+                        error-app-tag intf-ip-config;
+                    }
+
+                    must "count(/spc:sonic-portchannel/spc:PORTCHANNEL_MEMBER/spc:PORTCHANNEL_MEMBER_LIST[spc:ifname=current()/../portname]) = 0"
+                    {
+                        error-message "Interface configured as a member of portchannel. Cannot configure IP Unnumbered";
+                        error-app-tag intf-po-member;
+                    }
+
+                    must "(count(current()/../vrf_name) = 0 and count(/lointf:sonic-loopback-interface/lointf:LOOPBACK_INTERFACE/lointf:LOOPBACK_INTERFACE_LIST[lointf:loIfName=current()]/lointf:vrf_name) = 0) or " +
+                         "(/lointf:sonic-loopback-interface/lointf:LOOPBACK_INTERFACE/lointf:LOOPBACK_INTERFACE_LIST[lointf:loIfName=current()]/lointf:vrf_name = current()/../vrf_name)"
+                    {
+                        error-message "Donor and Unnumbered interface should be in same VRF";
+                        error-app-tag donor-unnum-diff-vrf;
+                    }
+
+                    sonic-ext:custom-validation ValidateIpv4UnnumIntf;
+                    type leafref {
+                        path "/lo:sonic-loopback/lo:LOOPBACK/lo:LOOPBACK_LIST/lo:name";
+                    }
+                }
+
+                leaf-list helper_addresses {
+                    type sonic-if-cmn:vrf-ip;
+                    max-elements 4;
+                    description
+                        "List of destination addresses with each being a combination of Vrf and IP address";
+                }
+
+            }
+
+            list INTERFACE_IPADDR_LIST {
+                key "portname ip_prefix";
+
+                must "(/cmn:operation/cmn:operation != 'CREATE') or " +
+                     "(not(contains(current()/ip_prefix, '.')) or "  +
+                     "(count(current()/../INTERFACE_LIST[portname=current()/portname]/unnumbered) = 0))"
+                {
+                    error-message "Cannot configure IPv4 address and IP Unnumbered interface configurations on the same interface";
+                    error-app-tag intf-unnum;
+                }
+
+                leaf portname{
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+
+                leaf ip_prefix {
+                    type inet:ip-prefix;
+                    sonic-ext:custom-validation ValidateIntfIp;
+                }
+                leaf secondary {
+                    type boolean;
+                    description "Indicates whether IP adddress configured is secondary or not";
+                }
+            }
+        }
+
+        container INTF_TABLE {
+            config false;
+            list INTF_TABLE_LIST {
+                key "ifName";
+
+                leaf ifName {
+                    type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+
+                leaf unnumbered {
+                    type string;
+                }
+
+                leaf ipv6_use_link_local_only {
+                    default disable;
+                    type cmn:mode-enable;
+                }
+            }
+
+            list INTF_TABLE_IPADDR_LIST {
+                key "ifName ipPrefix";
+
+                leaf ifName {
+                   type leafref {
+                        path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:ifname";
+                    }
+                }
+
+                leaf ipPrefix {
+                    type inet:ip-prefix;
+                }
+
+                leaf secondary {
+                    type boolean;
+                }
+             }
+        }
+   }
+}

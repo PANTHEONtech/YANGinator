@@ -1,0 +1,80 @@
+module openfabric-sonic {
+    yang-version 1;
+    namespace "http://yang.openfabric.net/sonic";
+    prefix "jnc";
+    import openfabric-types { prefix oft; revision-date "2017-11-21"; }
+
+    description "Sonic settings";
+
+    revision "2020-06-25" {
+        description "Initial revision of openfabric-data model";
+    }
+
+    container settings {
+        container endpoint-templates {
+            list devices {
+                key type;
+                leaf type {
+                    type oft:device-type-enum;
+                }
+                container templates {
+                    list template {
+                        key name;
+                        leaf name {
+                            type oft:template-name;
+                        }
+                        // storm control is set in kbps in sonic
+                        leaf storm-control {
+                            type uint64 {
+                                range "0..100000000" {
+                                    error-message "kbps value out of range";
+                                }
+                            }
+                        }
+                        leaf link-status-traps {
+                            type boolean;
+                            default false;
+                        }
+                        leaf edge {
+                            type boolean;
+                            default false;
+                        }
+                        leaf bpdu-filter {
+                            type boolean;
+                            default false;
+                        }
+                        leaf bpdu-guard {
+                            type boolean;
+                            default false;
+                        }
+                        leaf jumbo-mtu {
+                            type boolean;
+                            default false;
+                        }
+                        container mac-limit {
+                            leaf mac-limit {
+                                type uint16 {
+                                    range 1..16383;
+                                }
+                            }
+                            leaf packet-action {
+                                type enumeration {
+                                    enum DROP;
+                                    enum DROP-AND-LOG;
+                                    enum LOG;
+                                    enum NONE;
+                                    enum SHUTDOWN;
+                                }
+                            }
+                            leaf recovery-timeout {
+                                type uint16 {
+                                    range 10..3600;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

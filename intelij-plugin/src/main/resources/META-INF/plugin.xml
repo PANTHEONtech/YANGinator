@@ -1,0 +1,86 @@
+<!--
+  ~ /*
+  ~   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+  ~
+  ~   This program and the accompanying materials are made available under the
+  ~   terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  ~   and is available at http://www.eclipse.org/legal/epl-v10.html
+  ~  */
+  -->
+
+<idea-plugin>
+    <id>tech.pantheon.yanginator</id>
+    <name>YANGinator</name>
+    <category>Custom Languages</category>
+    <version>1.0</version>
+    <vendor email="pantheon.tech" url="nourl">Pantheon.tech</vendor>
+
+    <idea-version since-build="202.6397.94"/>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.commenter language="Yang"
+                        implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
+        <fileType name="Yang file" implementationClass="tech.pantheon.yanginator.plugin.YangFileType"
+                  fieldName="INSTANCE" language="Yang" extensions="yang"/>
+        <lang.parserDefinition
+                language="Yang"
+                implementationClass="tech.pantheon.yanginator.plugin.YangParserDefinition"/>
+        <lang.foldingBuilder language="Yang"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCurlyBraceFoldingManager"/>
+        <lang.foldingBuilder language="Yang"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangDescriptionFoldingManager"/>
+        <lang.foldingBuilder language="Yang"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
+        <lang.syntaxHighlighterFactory
+                language="Yang"
+                implementationClass="tech.pantheon.yanginator.plugin.editor.YangSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
+        <lang.commenter language="Yang"
+                        implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
+        <lang.braceMatcher language="Yang" implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
+
+        <completion.contributor language="Yang" implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
+        <lang.foldingBuilder language="Yang"
+                             implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
+        <psi.referenceContributor language="Yang" implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
+
+        <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
+    </extensions>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+    <description><![CDATA[
+       <h3>Plugin adds support for language Yang.</h3>
+       YANG is a data modeling language used to model configuration and
+       state data manipulated by the Network Configuration Protocol (NETCONF),
+       NETCONF remote procedure calls, and NETCONF notifications.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <em>Initial version 1.0</em><br/>
+        <b>Features</b>
+        <ul>
+          <li>Base validation for yang 1.0</li>
+          <li>Commenting</li>
+          <li>Code completion</li>
+          <li>Go to declaration</li>
+          <li>Code folding (curly brackets and multiline strings)</li>
+        </ul><br>]]>
+    </change-notes>
+</idea-plugin>

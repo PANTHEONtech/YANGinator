@@ -1,0 +1,185 @@
+module sonic-vlan-interface {
+    namespace "http://github.com/Azure/sonic-vlan-interface";
+    prefix sVlanIf;
+    yang-version 1.1;
+
+    import ietf-inet-types {
+        prefix inet;
+    }
+
+    import sonic-vlan {
+        prefix svlan;
+    }
+
+    import sonic-vrf {
+        prefix vrf;
+    }
+
+    import sonic-common {
+        prefix cmn;
+    }
+
+    import sonic-interface-common {
+        prefix sonic-if-cmn;
+    }
+
+    import sonic-loopback-interface {
+        prefix lointf;
+    }
+
+    import sonic-loopback {
+        prefix lo;
+    }
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC VLAN INTERFACE";
+
+    revision 2020-07-26 {
+        description
+            "Change for sonic-loopback.yang.";
+    }
+    revision 2020-04-07 {
+        description
+            "Add VRF and IP address attribute";
+    }
+    revision 2020-02-28 {
+        description
+            "Add DHCP server attribute";
+    }
+    revision 2020-02-15 {
+        description
+            "Add ipv6_use_link_local_only attribute to interface object.";
+    }
+    revision 2019-12-01 {
+        description
+            "Add vrf_name for VRF interface binding.";
+    }
+    revision 2019-07-02 {
+        description
+            "Initial revision.";
+    }
+
+
+    container sonic-vlan-interface {
+
+        container VLAN_INTERFACE {
+
+            list VLAN_INTERFACE_LIST {
+                key "vlanName";
+
+                leaf vlanName{
+                    type leafref {
+                        path "/svlan:sonic-vlan/svlan:VLAN/svlan:VLAN_LIST/svlan:name";
+                    }
+                }
+
+                leaf nat_zone {
+                    type uint8 {
+                        range "0..3";
+                    }
+                }
+
+                leaf vrf_name {
+                    type leafref {
+                        path "/vrf:sonic-vrf/vrf:VRF/vrf:VRF_LIST/vrf:vrf_name";
+                    }
+                }
+
+                leaf-list dhcp_servers{
+                    max-elements 4;
+                    type inet:ip-address;
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                        "(count(/sonic-vlan-interface/VLAN_INTERFACE/VLAN_INTERFACE_IPADDR_LIST[vlanName=current()/../vlanName]) > 1)"
+                        {
+                            error-message "DHCP server can be configured on vlan routing interface only";
+                            error-app-tag dhcp-server-invalid-vlan-routing-interface;
+                        }
+                }
+
+                leaf-list dhcpv6_servers{
+                    max-elements 4;
+                    type inet:ipv6-address;
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                        "(count(/sonic-vlan-interface/VLAN_INTERFACE/VLAN_INTERFACE_IPADDR_LIST[vlanName=current()/../vlanName]) > 1)"
+                        {
+                            error-message "DHCP server can be configured on vlan routing interface only";
+                            error-app-tag dhcp-server-invalid-vlan-routing-interface;
+                        }
+                }
+
+                leaf ipv6_use_link_local_only {
+                    type cmn:mode-enable;
+                    default disable;
+                    description
+                        "Enable IPv6 link local address on interface";
+                }
+
+                leaf unnumbered {
+                    must "((/cmn:operation/cmn:operation != 'CREATE') and (/cmn:operation/cmn:operation != 'UPDATE')) or " +
+                         "not(contains(/sonic-vlan-interface/VLAN_INTERFACE/VLAN_INTERFACE_IPADDR_LIST[vlanName=current()/../vlanName]/ip_prefix, '.'))"
+                    {
+                        error-message "Cannot configure IP address and IP Unnumbered interface configurations on the same interface";
+                        error-app-tag vlanintf-ip-config;
+                    }
+
+                    must "(count(current()/../vrf_name) = 0 and count(/lointf:sonic-loopback-interface/lointf:LOOPBACK_INTERFACE/lointf:LOOPBACK_INTERFACE_LIST[lointf:loIfName=current()]/lointf:vrf_name) = 0) or " +
+                         "(/lointf:sonic-loopback-interface/lointf:LOOPBACK_INTERFACE/lointf:LOOPBACK_INTERFACE_LIST[lointf:loIfName=current()]/lointf:vrf_name = current()/../vrf_name)"
+                    {
+                        error-message "Donor and Unnumbered interface should be in same VRF";
+                        error-app-tag donor-unnum-diff-vrf;
+                    }
+
+                    sonic-ext:custom-validation ValidateIpv4UnnumIntf;
+
+                    type leafref {
+                        path "/lo:sonic-loopback/lo:LOOPBACK/lo:LOOPBACK_LIST/lo:name";
+                    }
+                }
+
+
+                leaf-list helper_addresses {
+                    type sonic-if-cmn:vrf-ip;
+                    max-elements 4;
+                    description
+                        "List of destination addresses with each being a combination of Vrf and IP address";
+                }
+            }
+
+            list VLAN_INTERFACE_IPADDR_LIST {
+                key "vlanName ip_prefix";
+
+                    must "(/cmn:operation/cmn:operation != 'CREATE') or " +
+                         "(not(contains(current()/ip_prefix, '.')) or "  +
+                         "(count(current()/../VLAN_INTERFACE_LIST[vlanName=current()/vlanName]/unnumbered) = 0))"
+                    {
+                        error-message "Cannot configure IPv4 address and IP Unnumbered interface configurations on the same interface";
+                        error-app-tag vlan-intf-unnum;
+                    }
+
+                leaf vlanName{
+                    type leafref {
+                        path "/svlan:sonic-vlan/svlan:VLAN/svlan:VLAN_LIST/svlan:name";
+                    }
+                }
+
+                leaf ip_prefix {
+                    type inet:ip-prefix;
+          sonic-ext:custom-validation ValidateIntfIp;
+                }
+                leaf secondary {
+                    type boolean;
+                }
+            }
+        }
+    }
+}

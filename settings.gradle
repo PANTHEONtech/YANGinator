@@ -1,0 +1,5 @@
+rootProject.name = 'YANGinator'
+
+include 'rfc-parser'
+include 'intelij-plugin'
+
