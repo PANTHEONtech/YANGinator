@@ -28,10 +28,12 @@ public final class YangCompletionContributorDataUtil {
     public static final String TYPE_STR = "type";
     public static final String COLON_STR = ":";
     public static final String SEMICOLON_STR = ";";
+    public static final String LEFT_BRACE_STR = "{";
     public static final String WSP_STR = " ";
     public static final String EMPTY_STR = "";
     public static final String QUOTES_STR = "\"";
     public static final String TO_WORDS_RGX = "\\s+";
+    public static final String DOT_YANG_STR = ".yang";
 
     public static final ElementPattern<PsiElement> AFTER_BASE_KEYWORD = getCaptureAfterWSP(YangTypes.YANG_BASE_KEYWORD);
     public static final ElementPattern<PsiElement> AFTER_GROUPING_KEYWORD = getCaptureAfterWSP(YangTypes.YANG_GROUPING_KEYWORD);
@@ -40,7 +42,7 @@ public final class YangCompletionContributorDataUtil {
     public static final ElementPattern<PsiElement> AFTER_IDENTIFIER
             = psiElement().afterLeaf(psiElement(YangTypes.YANG_COLON).afterSibling(psiElement(YangTypes.YANG_ALPHA)));
     public static final ElementPattern<PsiElement> AFTER_PSI_ERROR_ELEMENT
-             = psiElement().afterLeaf(psiElement(YangTypes.YANG_COLON));
+            = psiElement().afterLeaf(psiElement(YangTypes.YANG_COLON));
 
     public static final List<String> YANG_STATEMENTS = ImmutableList.of(
             "anyxml",

@@ -12,13 +12,16 @@ package tech.pantheon.yanginator.plugin.completion;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.COLON_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.DOT_YANG_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.EMPTY_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.LEFT_BRACE_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.QUOTES_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SEMICOLON_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TO_WORDS_RGX;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilder;
@@ -56,15 +59,17 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
 
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
 
-        setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
+        setPrefixValues(childrenOfCurrentFile, POP_UP.getPrefixToYangModule());
 
-        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
-        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
-        setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
+        setCompletionValues(childrenOfCurrentFile, POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
 
-        setImportedIdentifiers(findAllCurrentIdentifiers(), YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers());
+        var importedIdentifiers = findAllImportedIdentifiers();
+        setImportedIdentifiers(importedIdentifiers, POP_UP.getImportedIdentifiers());
+        updateImportedIdentifiers(importedIdentifiers);
 
-        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher("");
+        POP_UP.setPrefixMatcher("");
 
         return new FoldingDescriptor[0];
     }
@@ -139,7 +144,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
             } else if (isDescriptionOrModule(prevSibling)) {
                 return false;
             } else {
-                 prevSibling = prevSibling.getPrevSibling();
+                prevSibling = prevSibling.getPrevSibling();
             }
         }
         return false;
@@ -211,10 +216,10 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     }
 
     @NotNull
-    private List<String> findAllCurrentIdentifiers() {
+    private List<String> findAllImportedIdentifiers() {
         var currentIdentifiers = new ArrayList<String>();
 
-        YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule().keySet().forEach(prefix -> createListOfWords().stream()
+        POP_UP.getPrefixToYangModule().keySet().forEach(prefix -> createListOfWords().stream()
                 .filter(isYangStatement(prefix))
                 .filter(endsWithColons())
                 .forEach(currentIdentifiers::add));
@@ -224,8 +229,8 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     @NotNull
     private Predicate<String> endsWithColons() {
         return s -> s.charAt(s.length() - 1) == COLON_STR.charAt(0)
-                || s.charAt(s.length() - 1) == SEMICOLON_STR.charAt(0)
-                && s.charAt(s.length() - 2) == COLON_STR.charAt(0);
+                || s.charAt(s.length() - 1) == SEMICOLON_STR.charAt(0) && s.charAt(s.length() - 2) == COLON_STR.charAt(0)
+                || s.charAt(s.length() - 1) == LEFT_BRACE_STR.charAt(0) && s.charAt(s.length() - 2) == COLON_STR.charAt(0);
     }
 
     @NotNull
@@ -240,14 +245,15 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return currentIdentifiers.get(0)
                 .substring(BASE_STR.length())
                 .replace(COLON_STR, EMPTY_STR)
-                .replace(SEMICOLON_STR, EMPTY_STR);
+                .replace(SEMICOLON_STR, EMPTY_STR)
+                .replace(LEFT_BRACE_STR, EMPTY_STR);
     }
 
     @NotNull
     private List<PsiElement> findChildrenInAnotherFile(String fileName) {
         return new ArrayList<>(PsiTreeUtil.findChildrenOfType(
                 getPsiNode(this.psiNode.getProject(),
-                        YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule().get(fileName)),
+                        POP_UP.getPrefixToYangModule().get(fileName)),
                 PsiElement.class));
     }
 
@@ -271,9 +277,15 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         }
     }
 
+    private void updateImportedIdentifiers(List<String> importedIdentifiers) {
+        if (importedIdentifiers.isEmpty()) {
+            POP_UP.getImportedIdentifiers().clear();
+        }
+    }
+
     private boolean isNotSpaceOrQuote(PsiElement nextSibling) {
-        return !isElementYangType(nextSibling, YangTypes.YANG_SPACE)
-                && !isElementYangType(nextSibling, YangTypes.YANG_DOUBLE_QUOTE);
+        return !(isElementYangType(nextSibling, YangTypes.YANG_SPACE)
+                || isElementYangType(nextSibling, YangTypes.YANG_DOUBLE_QUOTE));
     }
 
     private boolean isComment(PsiElement nextSibling) {
@@ -313,7 +325,12 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     }
 
     private boolean containsFileName(String fileName, VirtualFile virtualFile) {
-        return virtualFile.getCanonicalPath() != null && virtualFile.getCanonicalPath().contains(fileName);
+        if (virtualFile != null) {
+            String presentableName = virtualFile.getPresentableName();
+            String presentableNameSubStr = presentableName.substring(0, presentableName.length() - DOT_YANG_STR.length());
+            return presentableNameSubStr.equals(fileName);
+        }
+        return false;
     }
 
     private PsiElement nonNullElementAt(int offset) {
