@@ -15,9 +15,6 @@ This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validat
 - Code completion
 - Go to declaration
 - Find usages
-
-# TODO
-
 - [YANG 1.1](https://datatracker.ietf.org/doc/html/rfc7950) validation
 
 # Development Environment
@@ -48,7 +45,7 @@ The YANGinator plugin will be enabled after restart.
 
 - Open the *Register New File Type Association* window.
 
-- The easiest way to do so is by using the *Search Everywhere* window.
+- The easiest way to do so is, by using the *Search Everywhere* window.
 
 Search for *Associate with file type..*
 
@@ -65,7 +62,7 @@ YANGinator will be enabled by now. Enjoy!
 
 ### 6. Help Us Continue
 
-If you found bug/problem possible feature create an [issue](https://github.com/PANTHEONtech/YANGinator/issues).
+If you found a bug, problem, or have an idea for a possible feature, create an [Issue here](https://github.com/PANTHEONtech/YANGinator/issues).
 
 *Please browse the open issues before opening a new one.*
 
