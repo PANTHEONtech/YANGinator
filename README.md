@@ -1,77 +1,71 @@
-intellij-yang
+YANGinator | An IntelliJ YANG Validation Plugin
 =============
 
-This IntelliJ Plugin adds support for Yang.
+This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validating YANG files. Developers and enthusiasts will have the option to validate their YANG files before deployment.
 
 # Features
 
-- Base validation for yang 1.0
-- Code folding (curly brackets and multiline strings)
+- Base validation for [YANG 1.0](https://datatracker.ietf.org/doc/html/rfc6020)
+- Code folding (curly brackets & multi-line strings)
 - Commenting
 - Paired brace matcher
 
-# In progress
-- Advanced validation for Yang 1.0
+# In Progress
+- Advanced validation for YANG 1.0
 - Code completion
 - Go to declaration
 - Find usages
-
-# To do
-
-- Yang 1.1 validation
+- [YANG 1.1](https://datatracker.ietf.org/doc/html/rfc7950) validation
 
 # Development Environment
 
-Follow the tutorial [Intellij Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html) 
+Follow this tutorial [IntelliJ Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/IntelliJ/custom-language-support-tutorial.html) to add custom lanugage support in IntelliJ.
 
-# Plugin usage tutorial
-###**1. Install plugin**
+# Installing YANGinator
 
-1.0 The easiest way to find plugins window in Intellij is using Search everywhere window (*default double shift key*).
-(Search: plugins)
+### 1. Install YANGinator
 
-###**3. Restart IDE**
+The easiest way to find the *Plugins* window in IntelliJ, is by using the *Search everywhere* window (by default, double-tap the Shift key). Search for *plugins*.
 
-3.0 Plugin will be enabled after restart.
+You can also find YANGinator in the [official IntelliJ Marketplace here.](https://plugins.jetbrains.com/plugin/17935-yanginator)
 
-###**4. Register New File Type Association**
+### 2. Search for YANGinator
 
-4.0 Open any Yang file.
+In the newly opened *Plugins* window, search for *YANGinator*.
 
-4.1 Open Register New File Type Association window.
+![Install Plugin IntelliJ](/intelij-plugin/src/main/resources/images/installation/install_plugin.gif)
 
-4.2 The easiest way to do so is again using Search everywhere window.
-- search for *associate with file type..*
+### 3. Restart IDE
 
-4.3 Select open matching files in intelliJ IDEA:
-- select Yang
+The YANGinator plugin will be enabled after restart.
+
+### 4. Register *New File Type* Association
+
+- Open any YANG file.
+
+- Open the *Register New File Type Association* window.
+
+- The easiest way to do so is, by using the *Search Everywhere* window.
+
+Search for *Associate with file type..*
+
+- Select *Open matching files* in IntelliJ IDEA:
+- Select *Yang*
 
 4.4 Press OK button.
 
 ![install plugin from disk.png](intelij-plugin/src/main/resources/images/installation/tutorial_new_file_type_association.png)
 
-###***5. Enjoy plugin***
+### 5. Enjoy YANGinator
 
-5.0 Plugin should be working now.
+YANGinator will be enabled by now. Enjoy!
 
-###***6. Help us continue***
+### 6. Help Us Continue
 
-6.0 If you found bug/problem possible feature create an
-[issue](https://github.com/PANTHEONtech/YANGinator/issues).
-*(browse the open issues before opening a new one)*
+If you found a bug, problem, or have an idea for a possible feature, create an [Issue here](https://github.com/PANTHEONtech/YANGinator/issues).
 
-6.1 If plugin helped you give repository star.
+*Please browse the open issues before opening a new one.*
 
-###***7. Happy coding!***
+6.1 If YANGinator helped you, consider giving the repository a star!
 
-
-
-
-
-
-
-
-
-
-
-
+### 7. Happy coding!
