@@ -3,10 +3,10 @@ package tech.pantheon.yanginator.plugin.breadcrumbs;
 import com.intellij.ui.JBColor;
 import com.intellij.xml.breadcrumbs.CrumbPresentation;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class YangCrumbPresentation extends CrumbPresentation {
-    JBColor color;
+    private final JBColor color;
 
     public YangCrumbPresentation(JBColor color) {
         this.color = color;

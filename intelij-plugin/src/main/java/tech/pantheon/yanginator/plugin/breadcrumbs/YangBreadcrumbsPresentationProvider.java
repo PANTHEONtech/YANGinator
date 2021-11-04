@@ -6,7 +6,8 @@ import com.intellij.xml.breadcrumbs.BreadcrumbsPresentationProvider;
 import com.intellij.xml.breadcrumbs.CrumbPresentation;
 
 public class YangBreadcrumbsPresentationProvider extends BreadcrumbsPresentationProvider {
-    private final CrumbPresentation[] colors = {new YangCrumbPresentation(JBColor.BLUE),
+    private static final CrumbPresentation[] COLORS = {
+            new YangCrumbPresentation(JBColor.BLUE),
             new YangCrumbPresentation(JBColor.GREEN),
             new YangCrumbPresentation(JBColor.RED)};
 
@@ -14,7 +15,7 @@ public class YangBreadcrumbsPresentationProvider extends BreadcrumbsPresentation
     public CrumbPresentation[] getCrumbPresentations(PsiElement[] psiElements) {
         CrumbPresentation[] crumbPresentations = new CrumbPresentation[psiElements.length];
         for (int i = 0; i < psiElements.length; i++) {
-            crumbPresentations[i] = colors[i % colors.length];
+            crumbPresentations[i] = COLORS[i % COLORS.length];
         }
         return crumbPresentations;
     }

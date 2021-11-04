@@ -25,9 +25,9 @@ public class YangBreadcrumbsProvider implements BreadcrumbsProvider {
                 psiElement instanceof YangContainerStmt;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    String getElementInfo(@NotNull PsiElement psiElement) {
+    public String getElementInfo(@NotNull PsiElement psiElement) {
         return Objects.requireNonNull(PsiTreeUtil.findChildOfType(psiElement, YangIdentifierArgImpl.class)).getText();
     }
 }
