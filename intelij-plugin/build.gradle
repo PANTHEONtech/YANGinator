@@ -4,8 +4,12 @@ plugins {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = '2021.2.1'
+    version = '2021.2.3'
     plugins = ['com.intellij.java']
+}
+
+publishPlugin {
+    token.set(System.getenv("JETBRAINS_PUBLISH_TOKEN"))
 }
 
 test {
