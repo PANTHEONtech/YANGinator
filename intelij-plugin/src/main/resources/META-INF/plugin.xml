@@ -51,6 +51,8 @@
         <psi.referenceContributor language="Yang" implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
 
         <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
+        <breadcrumbsInfoProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsProvider"/>
+        <breadcrumbsPresentationProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsPresentationProvider"/>
     </extensions>
 
     <application-components>
