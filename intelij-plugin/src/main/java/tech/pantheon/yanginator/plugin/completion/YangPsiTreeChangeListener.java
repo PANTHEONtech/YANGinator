@@ -24,40 +24,33 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
-        PsiElement prevPsiElement = getPrevPsiElement(event);
-        if (event.getFile() != null) {
-            if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-                POP_UP.setPrefixMatcher(prevPsiElement == null ? "" : prevPsiElement.getText());
-            }
+        if (event.getFile() == null ||
+                event.getFile().getNode() == null ||
+                event.getFile().getNode().getPsi() == null){
+            return;
+        }
+        PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
+            POP_UP.setPrefixMatcher(prevPsiElement == null ? "" : prevPsiElement.getText());
         }
     }
 
     @Nullable
-    private PsiElement getPrevPsiElement(@NotNull PsiTreeChangeEvent event) {
-        PsiElement currentPsiElement = getCurrentPsiElement(event);
-        if (event.getFile() != null) {
-            return event.getFile().getNode().getPsi()
-                    .findElementAt(getOffsetOfCaret(event) - (currentPsiElement == null ? 1 : currentPsiElement.getTextLength()));
-        }
-        return null;
+    private PsiElement getPrevPsiElement(@NotNull PsiElement element) {
+        PsiElement currentPsiElement = getCurrentPsiElement(element);
+        return element.findElementAt
+                (getOffsetOfCaret(element) - (currentPsiElement == null ? 1 : currentPsiElement.getTextLength()));
     }
 
     @Nullable
-    private PsiElement getCurrentPsiElement(@NotNull PsiTreeChangeEvent event) {
-        if (event.getFile() != null) {
-            if (event.getFile().getNode() != null) {
-                return event.getFile().getNode().getPsi().findElementAt(getOffsetOfCaret(event));
-            }
-        }
-        return null;
+    private PsiElement getCurrentPsiElement(@NotNull PsiElement element) {
+        return element.findElementAt(getOffsetOfCaret(element));
     }
 
-    private int getOffsetOfCaret(@NotNull PsiTreeChangeEvent event) {
-        if (event.getFile() != null) {
-            Editor editor = PsiEditorUtil.findEditor(event.getFile().getNode().getPsi());
-            if (editor != null) {
-                return editor.getCaretModel().getCurrentCaret().getOffset();
-            }
+    private int getOffsetOfCaret(@NotNull PsiElement element) {
+        Editor editor = PsiEditorUtil.findEditor(element);
+        if (editor != null) {
+            return editor.getCaretModel().getCurrentCaret().getOffset();
         }
         return 0;
     }
