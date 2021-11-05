@@ -1,10 +1,15 @@
+group 'tech.pantheon.YANGinator'
+version '1.0'
+
 allprojects {
     apply plugin: 'java'
-
-    group 'tech.pantheon.YANGinator'
-    version '1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    version = rootProject.version
+    group = rootProject.group
 }
