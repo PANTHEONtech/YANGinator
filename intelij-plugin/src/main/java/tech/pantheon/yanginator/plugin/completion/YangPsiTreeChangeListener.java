@@ -24,9 +24,9 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
-        if (event.getFile() == null ||
-                event.getFile().getNode() == null ||
-                event.getFile().getNode().getPsi() == null){
+        if (event.getFile() == null
+                || event.getFile().getNode() == null
+                || event.getFile().getNode().getPsi() == null){
             return;
         }
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
@@ -38,8 +38,8 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
     @Nullable
     private PsiElement getPrevPsiElement(@NotNull PsiElement element) {
         PsiElement currentPsiElement = getCurrentPsiElement(element);
-        return element.findElementAt
-                (getOffsetOfCaret(element) - (currentPsiElement == null ? 1 : currentPsiElement.getTextLength()));
+        int elementLength = currentPsiElement == null ? 1 : currentPsiElement.getTextLength();
+        return element.findElementAt(getOffsetOfCaret(element) - elementLength);
     }
 
     @Nullable
