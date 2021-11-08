@@ -1,9 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_KEYWORD;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_KEYWORD;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -13,6 +10,9 @@ import tech.pantheon.yanginator.plugin.psi.YangDecimalValue;
 import tech.pantheon.yanginator.plugin.psi.YangIntegerValue;
 import tech.pantheon.yanginator.plugin.psi.YangRangeBoundary;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_KEYWORD;
 
 public class YangRangeBoundaryImpl extends YangNamedElementImpl implements YangRangeBoundary {
 

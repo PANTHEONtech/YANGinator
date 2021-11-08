@@ -1,6 +1,14 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangHIdentifierLiteral;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ADD_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ANYXML_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ARGUMENT_KEYWORD;
@@ -81,14 +89,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_VALUE_KEYWORD
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_WHEN_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YANG_VERSION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YIN_ELEMENT_KEYWORD;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangHIdentifierLiteral;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements YangHIdentifierLiteral {
 

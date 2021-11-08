@@ -1,9 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -11,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangNewLineCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
 
 public class YangNewLineCharactersImpl extends YangNamedElementImpl implements YangNewLineCharacters {
 

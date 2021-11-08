@@ -1,8 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -10,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionArg;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
 
 public class YangYangVersionArgImpl extends YangNamedElementImpl implements YangYangVersionArg {
 

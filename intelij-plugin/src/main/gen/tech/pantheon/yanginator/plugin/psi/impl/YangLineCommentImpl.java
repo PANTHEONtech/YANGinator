@@ -1,19 +1,20 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_LINE_COMMENT_START;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangNewLineCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangSingleLineCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_LINE_COMMENT_START;
 
 public class YangLineCommentImpl extends YangNamedElementImpl implements YangLineComment {
 

@@ -1,15 +1,10 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_KEYWORD;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
 import tech.pantheon.yanginator.plugin.psi.YangLeafListStmt;
@@ -18,6 +13,12 @@ import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
 public class YangLeafListStmtImpl extends YangStatementImpl implements YangLeafListStmt {
 

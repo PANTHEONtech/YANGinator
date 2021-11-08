@@ -4,13 +4,14 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangDeviationStmtBody;
 import tech.pantheon.yanginator.plugin.psi.YangStatement;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangDeviationStmtBodyImpl extends YangNamedElementImpl implements YangDeviationStmtBody {
 
