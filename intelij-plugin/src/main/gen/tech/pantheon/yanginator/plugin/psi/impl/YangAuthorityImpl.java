@@ -1,8 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -13,6 +11,8 @@ import tech.pantheon.yanginator.plugin.psi.YangHost;
 import tech.pantheon.yanginator.plugin.psi.YangPort;
 import tech.pantheon.yanginator.plugin.psi.YangUserinfo;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 
 public class YangAuthorityImpl extends YangNamedElementImpl implements YangAuthority {
 

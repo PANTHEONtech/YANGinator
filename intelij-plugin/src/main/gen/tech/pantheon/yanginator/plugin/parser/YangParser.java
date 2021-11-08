@@ -1,6 +1,14 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.parser;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.lang.PsiParser;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
+
 import static com.intellij.lang.parser.GeneratedParserUtilBase.TRUE_CONDITION;
 import static com.intellij.lang.parser.GeneratedParserUtilBase._AND_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase._COLLAPSE_;
@@ -15,14 +23,6 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIs;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LightPsiParser;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilder.Marker;
-import com.intellij.lang.PsiParser;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
@@ -11253,20 +11253,17 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // string-restrictions-body +
+  // string-restrictions-body *
   public static boolean string_restrictions(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "string_restrictions")) return false;
-    if (!nextTokenIs(b, "<string restrictions>", YANG_LENGTH_KEYWORD, YANG_PATTERN_KEYWORD)) return false;
-    boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_STRING_RESTRICTIONS, "<string restrictions>");
-    r = string_restrictions_body(b, l + 1);
-    while (r) {
+    while (true) {
       int c = current_position_(b);
       if (!string_restrictions_body(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "string_restrictions", c)) break;
     }
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, true, false, null);
+    return true;
   }
 
   /* ********************************************************** */
@@ -11456,26 +11453,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // numerical-restrictions |
   //  decimal64-specification |
-  //  string-restrictions |
   //  enum-specification |
   //  leafref-specification |
   //  identityref-specification |
   //  instance-identifier-specification |
   //  bits-specification |
-  //  union-specification
+  //  union-specification |
+  //  string-restrictions
   public static boolean type_body_stmts(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_body_stmts")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_TYPE_BODY_STMTS, "<type body stmts>");
     r = numerical_restrictions(b, l + 1);
     if (!r) r = decimal64_specification(b, l + 1);
-    if (!r) r = string_restrictions(b, l + 1);
     if (!r) r = enum_specification(b, l + 1);
     if (!r) r = leafref_specification(b, l + 1);
     if (!r) r = identityref_specification(b, l + 1);
     if (!r) r = instance_identifier_specification(b, l + 1);
     if (!r) r = bits_specification(b, l + 1);
     if (!r) r = union_specification(b, l + 1);
+    if (!r) r = string_restrictions(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -11484,7 +11481,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   // TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
   //  ( SEMICOLON |
   //  ( LEFT_BRACE stmtsep
-  //  type-body-stmts + // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
   //  RIGHT_BRACE ) )
   public static boolean type_stmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt")) return false;
@@ -11502,7 +11499,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   // SEMICOLON |
   //  ( LEFT_BRACE stmtsep
-  //  type-body-stmts + // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
   //  RIGHT_BRACE )
   private static boolean type_stmt_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt_4")) return false;
@@ -11515,7 +11512,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   // LEFT_BRACE stmtsep
-  //  type-body-stmts + // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
   //  RIGHT_BRACE
   private static boolean type_stmt_4_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt_4_1")) return false;
@@ -11523,23 +11520,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_LEFT_BRACE);
     r = r && stmtsep(b, l + 1);
-    r = r && type_stmt_4_1_2(b, l + 1);
+    r = r && type_body_stmts(b, l + 1);
     r = r && consumeToken(b, YANG_RIGHT_BRACE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // type-body-stmts +
-  private static boolean type_stmt_4_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_stmt_4_1_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = type_body_stmts(b, l + 1);
-    while (r) {
-      int c = current_position_(b);
-      if (!type_body_stmts(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "type_stmt_4_1_2", c)) break;
-    }
     exit_section_(b, m, null, r);
     return r;
   }

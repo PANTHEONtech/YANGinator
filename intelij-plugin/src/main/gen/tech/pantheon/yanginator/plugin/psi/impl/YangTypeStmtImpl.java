@@ -1,16 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPE_KEYWORD;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgQuoted;
@@ -21,6 +14,11 @@ import tech.pantheon.yanginator.plugin.psi.YangTypeBodyStmts;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPE_KEYWORD;
 
 public class YangTypeStmtImpl extends YangGeneratedReferenceTypeImpl implements YangTypeStmt {
 
@@ -63,9 +61,9 @@ public class YangTypeStmtImpl extends YangGeneratedReferenceTypeImpl implements 
   }
 
   @Override
-  @NotNull
-  public List<YangTypeBodyStmts> getTypeBodyStmtsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypeBodyStmts.class);
+  @Nullable
+  public YangTypeBodyStmts getTypeBodyStmts() {
+    return findChildByClass(YangTypeBodyStmts.class);
   }
 
   @Override

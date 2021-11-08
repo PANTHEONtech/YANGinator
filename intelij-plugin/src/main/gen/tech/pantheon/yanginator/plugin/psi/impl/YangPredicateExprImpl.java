@@ -1,14 +1,10 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUAL;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
@@ -16,6 +12,11 @@ import tech.pantheon.yanginator.plugin.psi.YangNonQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangPredicateExpr;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUAL;
 
 public class YangPredicateExprImpl extends YangNamedElementImpl implements YangPredicateExpr {
 

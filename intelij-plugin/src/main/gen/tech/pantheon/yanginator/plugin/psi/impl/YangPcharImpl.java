@@ -1,8 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -14,6 +12,8 @@ import tech.pantheon.yanginator.plugin.psi.YangPctEncoded;
 import tech.pantheon.yanginator.plugin.psi.YangSubDelims;
 import tech.pantheon.yanginator.plugin.psi.YangUnreserved;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 
 public class YangPcharImpl extends YangNamedElementImpl implements YangPchar {
 

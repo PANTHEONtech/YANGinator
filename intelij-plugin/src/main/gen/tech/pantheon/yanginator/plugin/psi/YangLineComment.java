@@ -2,9 +2,10 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface YangLineComment extends YangNamedElement {
 

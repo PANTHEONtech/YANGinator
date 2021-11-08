@@ -2,7 +2,6 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
@@ -21,8 +20,8 @@ public interface YangTypeStmt extends YangGeneratedReferenceType {
   @Nullable
   YangStmtsep getStmtsep();
 
-  @NotNull
-  List<YangTypeBodyStmts> getTypeBodyStmtsList();
+  @Nullable
+  YangTypeBodyStmts getTypeBodyStmts();
 
   @Nullable
   PsiElement getLeftBrace();

@@ -4,13 +4,14 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangPctEncoded;
 import tech.pantheon.yanginator.plugin.psi.YangSubDelims;
 import tech.pantheon.yanginator.plugin.psi.YangUnreserved;
 import tech.pantheon.yanginator.plugin.psi.YangUserinfo;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangUserinfoImpl extends YangNamedElementImpl implements YangUserinfo {
 

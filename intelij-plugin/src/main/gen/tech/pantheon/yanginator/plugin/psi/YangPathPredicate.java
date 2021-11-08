@@ -2,8 +2,9 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public interface YangPathPredicate extends YangNamedElement {
 

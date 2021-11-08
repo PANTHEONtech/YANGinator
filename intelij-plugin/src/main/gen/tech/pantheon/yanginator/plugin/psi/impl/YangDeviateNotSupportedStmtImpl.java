@@ -1,12 +1,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_KEYWORD;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOT_SUPPORTED_KEYWORD;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -17,6 +11,12 @@ import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOT_SUPPORTED_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
 
 public class YangDeviateNotSupportedStmtImpl extends YangStatementImpl implements YangDeviateNotSupportedStmt {
 

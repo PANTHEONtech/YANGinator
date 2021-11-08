@@ -249,7 +249,7 @@ typedef-stmt-body ::= (type-stmt stmtsep) |
 type-stmt ::= TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
  ( SEMICOLON |
  ( LEFT_BRACE stmtsep
- type-body-stmts + // + is not corresponding with rfc6020 (added additionally)
+ type-body-stmts // + is not corresponding with rfc6020 (added additionally)
  RIGHT_BRACE ) )
  {
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
@@ -258,13 +258,13 @@ type-stmt ::= TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
 
 type-body-stmts ::= numerical-restrictions |
  decimal64-specification |
- string-restrictions |
  enum-specification |
  leafref-specification |
  identityref-specification |
  instance-identifier-specification |
  bits-specification |
- union-specification
+ union-specification |
+ string-restrictions
 
 numerical-restrictions ::= range-stmt stmtsep
 
@@ -293,7 +293,7 @@ fraction-digits-arg ::= ( "1" ( ZERO | "1" | "2" | "3" | "4" |
 string-restrictions-body ::= ( length-stmt stmtsep ) | // ?
  ( pattern-stmt stmtsep ) // *
 
- string-restrictions ::= string-restrictions-body +
+ string-restrictions ::= string-restrictions-body *
 
 length-stmt-body ::= ( error-message-stmt stmtsep ) | // ?
  ( error-app-tag-stmt stmtsep ) | // ?
