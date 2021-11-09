@@ -13,6 +13,7 @@ package tech.pantheon.yanginator.plugin.reference;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -70,7 +71,7 @@ public class YangUtil {
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
 
         for (VirtualFile virtualFile : virtualFiles) {
-            YangFile yangFile = (YangFile) PsiManager.getInstance(project).findFile(virtualFile);
+            PsiFile yangFile = PsiManager.getInstance(project).findFile(virtualFile);
             if (yangFile != null) {
                 T[] literals = YangUtil.findAllChildrenOfType(yangFile, getClassType(genericElement));
                 if (literals != null) {
