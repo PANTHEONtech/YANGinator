@@ -1,6 +1,7 @@
-[![Checks Status](https://img.shields.io/github/checks-status/PANTHEONtech/YANGinator/master)](https://github.com/PANTHEONtech/YANGinator/actions)
-[![Java CI with Gradle](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml/badge.svg)](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml)
 [![Latest Release](https://img.shields.io/github/v/release/PANTHEONtech/YANGinator)](https://github.com/PANTHEONtech/YANGinator/releases)
+[![License](https://img.shields.io/github/license/PANTHEONtech/YANGinator)](https://github.com/PANTHEONtech/YANGinator/blob/master/LICENSE)
+[![Java CI with Gradle](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml/badge.svg)](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml)
+[![Checks Status](https://img.shields.io/github/checks-status/PANTHEONtech/YANGinator/master)](https://github.com/PANTHEONtech/YANGinator/actions)
 
 
 
