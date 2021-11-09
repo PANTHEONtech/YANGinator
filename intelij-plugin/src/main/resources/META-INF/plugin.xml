@@ -8,7 +8,7 @@
   ~  */
   -->
 
-<idea-plugin>
+<idea-plugin require-restart="true">
     <id>tech.pantheon.yanginator</id>
     <name>YANGinator</name>
     <category>Custom Languages</category>
@@ -21,34 +21,34 @@
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <lang.commenter language="Yang"
+        <lang.commenter language="yang-pantheon"
                         implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
         <fileType name="Yang file" implementationClass="tech.pantheon.yanginator.plugin.YangFileType"
-                  fieldName="INSTANCE" language="Yang" extensions="yang"/>
+                  fieldName="INSTANCE" language="yang-pantheon" extensions="yang"/>
         <lang.parserDefinition
-                language="Yang"
+                language="yang-pantheon"
                 implementationClass="tech.pantheon.yanginator.plugin.YangParserDefinition"/>
-        <lang.foldingBuilder language="Yang"
+        <lang.foldingBuilder language="yang-pantheon"
                              implementationClass=
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangCurlyBraceFoldingManager"/>
-        <lang.foldingBuilder language="Yang"
+        <lang.foldingBuilder language="yang-pantheon"
                              implementationClass=
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangDescriptionFoldingManager"/>
-        <lang.foldingBuilder language="Yang"
+        <lang.foldingBuilder language="yang-pantheon"
                              implementationClass=
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
         <lang.syntaxHighlighterFactory
-                language="Yang"
+                language="yang-pantheon"
                 implementationClass="tech.pantheon.yanginator.plugin.editor.YangSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
-        <lang.commenter language="Yang"
+        <lang.commenter language="yang-pantheon"
                         implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
-        <lang.braceMatcher language="Yang" implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
+        <lang.braceMatcher language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
 
-        <completion.contributor language="Yang" implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
-        <lang.foldingBuilder language="Yang"
+        <completion.contributor language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
+        <lang.foldingBuilder language="yang-pantheon"
                              implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
-        <psi.referenceContributor language="Yang" implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
+        <psi.referenceContributor language="yang-pantheon" implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
 
         <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
         <breadcrumbsInfoProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsProvider"/>
