@@ -15,12 +15,30 @@
     <version>1.0</version>
     <vendor email="info@pantheon.tech" url="https://pantheon.tech">Pantheon.tech</vendor>
 
+    <description><![CDATA[
+       <h3>Plugin adds support for language Yang.</h3>
+       YANG is a data modeling language used to model configuration and
+       state data manipulated by the Network Configuration Protocol (NETCONF),
+       NETCONF remote procedure calls, and NETCONF notifications.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <b>Fixed</b>
+        <ul>
+          <li>Fixed fatal error after installation alongside with another plugin for yang language</li>
+          <li>String type no longer require optional parameters</li>
+          <li>Fixed fatal error while debugging</li>
+          <li>Fixed class cast exception bug in larger projects</li>
+        </ul><br>]]>
+    </change-notes>
+
     <idea-version since-build="202.6397.94"/>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Language -->
         <lang.commenter language="yang-pantheon"
                         implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
         <fileType name="Yang file" implementationClass="tech.pantheon.yanginator.plugin.YangFileType"
@@ -28,6 +46,8 @@
         <lang.parserDefinition
                 language="yang-pantheon"
                 implementationClass="tech.pantheon.yanginator.plugin.YangParserDefinition"/>
+
+        <!-- Folding -->
         <lang.foldingBuilder language="yang-pantheon"
                              implementationClass=
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangCurlyBraceFoldingManager"/>
@@ -37,52 +57,33 @@
         <lang.foldingBuilder language="yang-pantheon"
                              implementationClass=
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
-        <lang.syntaxHighlighterFactory
-                language="yang-pantheon"
-                implementationClass="tech.pantheon.yanginator.plugin.editor.YangSyntaxHighlighterFactory"/>
-        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
+
+        <!-- Highlighter -->
+        <lang.syntaxHighlighterFactory language="yang-pantheon"
+                                       implementationClass="tech.pantheon.yanginator.plugin.editor.YangSyntaxHighlighterFactory"/>
+
+        <!-- Commenter -->
         <lang.commenter language="yang-pantheon"
                         implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
-        <lang.braceMatcher language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
 
-        <completion.contributor language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
+        <!-- Editor -->
+        <lang.braceMatcher language="yang-pantheon"
+                           implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
+        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
+
+        <!-- Completion -->
+        <completion.contributor language="yang-pantheon"
+                                implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
         <lang.foldingBuilder language="yang-pantheon"
                              implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
-        <psi.referenceContributor language="yang-pantheon" implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
-
         <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
+
+        <!-- Reference -->
+        <psi.referenceContributor language="yang-pantheon"
+                                  implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
+
+        <!-- Breadcrumbs -->
         <breadcrumbsInfoProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsProvider"/>
         <breadcrumbsPresentationProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsPresentationProvider"/>
     </extensions>
-
-    <application-components>
-        <!-- Add your application components here -->
-    </application-components>
-
-    <project-components>
-        <!-- Add your project components here -->
-    </project-components>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
-
-    <description><![CDATA[
-       <h3>Plugin adds support for language Yang.</h3>
-       YANG is a data modeling language used to model configuration and
-       state data manipulated by the Network Configuration Protocol (NETCONF),
-       NETCONF remote procedure calls, and NETCONF notifications.
-    ]]></description>
-
-    <change-notes><![CDATA[
-        <em>Initial version 1.0</em><br/>
-        <b>Features</b>
-        <ul>
-          <li>Advanced validation for yang 1.0</li>
-          <li>Commenting</li>
-          <li>Code completion</li>
-          <li>Go to declaration</li>
-          <li>Code folding (curly brackets and multiline strings)</li>
-        </ul><br>]]>
-    </change-notes>
 </idea-plugin>
