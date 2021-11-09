@@ -12,16 +12,13 @@ This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validat
 # Features
 
 - Base validation for [YANG 1.0](https://datatracker.ietf.org/doc/html/rfc6020)
-- Code folding (curly brackets & multi-line strings)
+- Syntax highlighting 
+- Auto completion
+- Code folding (curly brackets, multi-line strings, multi-line comments)
 - Commenting
 - Paired brace matcher
-
-# In Progress
-- Advanced validation for YANG 1.0
-- Code completion
+- Breadcrumbs support
 - Go to declaration
-- Find usages
-- [YANG 1.1](https://datatracker.ietf.org/doc/html/rfc7950) validation
 
 # Development Environment
 
