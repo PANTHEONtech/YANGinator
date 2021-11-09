@@ -40,7 +40,7 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
         final List<ResolveResult> results = new ArrayList<>();
 
         for (final PsiElement declaration : declarations) {
-            results.add(new PsiElementResolveResult(declaration));
+            results.add(new PsiElementResolveResult(declaration.getContainingFile()));
         }
         return results.toArray(new ResolveResult[0]);
     }
