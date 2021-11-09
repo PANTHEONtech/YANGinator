@@ -249,7 +249,7 @@ typedef-stmt-body ::= (type-stmt stmtsep) |
 type-stmt ::= TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
  ( SEMICOLON |
  ( LEFT_BRACE stmtsep
- type-body-stmts // + is not corresponding with rfc6020 (added additionally)
+ type-body-stmts
  RIGHT_BRACE ) )
  {
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
@@ -264,7 +264,7 @@ type-body-stmts ::= numerical-restrictions |
  instance-identifier-specification |
  bits-specification |
  union-specification |
- string-restrictions
+ string-restrictions     //order different than rfc6020 because string-restrictions can be empty so it have to be matched last.
 
 numerical-restrictions ::= range-stmt stmtsep
 
