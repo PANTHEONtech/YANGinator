@@ -21,15 +21,15 @@ jobs:
         distribution: 'adopt'
         cache: gradle
 
-      # Create release version
-      - name: Create release version
-        run: gradle createReleaseVersion
+    # Create release version
+    - name: Create release version
+      run: gradle createReleaseVersion
 
-      # Create next snapshot version
-      - name: Create next snapshot version
-        run: gradle createNextSnapshotVersion
+    # Create next snapshot version
+    - name: Create next snapshot version
+      run: gradle createNextSnapshotVersion
 
-      # Push new version into repository
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Increment version after release
+    # Push new version into repository
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Increment version after release
