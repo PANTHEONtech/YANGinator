@@ -26,8 +26,21 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name }}
 
+      # Create release version
+      - name: Create release version
+        run: gradle createReleaseVersion
+
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
         env:
           PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
         run: gradle publishPlugin
+
+      # Create next snapshot version
+      - name: Create next snapshot version
+        run: gradle createNextSnapshotVersion
+
+      # Push new version into repository
+      - uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: Increment version after release
