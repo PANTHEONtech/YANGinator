@@ -135,12 +135,13 @@ module openconfig-interfaces {
       "Reference leafrefs to interface / subinterface";
 
     container test {
+    // test empty type statemnet
       leaf name {
         description "Name of VLANs";
         type string {
         }
       }
-
+    // test type statements with extensions
       leaf description {
         description "Text description of VLANs";
         type string {
