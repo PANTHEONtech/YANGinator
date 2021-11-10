@@ -13,3 +13,25 @@ subprojects {
     version = rootProject.version
     group = rootProject.group
 }
+
+task createReleaseVersion {
+    doLast {
+        def snapshotVersion = buildFile.getText().find(version)
+        def releaseVersion = snapshotVersion.replace("-SNAPSHOT", "")
+        println "Release version : " + releaseVersion
+        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + releaseVersion + "'")
+        buildFile.setText(newBuildFile)
+    }
+}
+
+task createNextSnapshotVersion {
+    doLast {
+        def releaseVersion = buildFile.getText().find(version)
+        String currentMinor = version.substring(releaseVersion.lastIndexOf('.') + 1)
+        int nextMinor = currentMinor.toInteger() + 1
+        def snapshotVersion = releaseVersion.replace("." + currentMinor, "." + nextMinor + "-SNAPSHOT")
+        println "Snapshot version : " + snapshotVersion
+        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + snapshotVersion + "'")
+        buildFile.setText(newBuildFile)
+    }
+}
