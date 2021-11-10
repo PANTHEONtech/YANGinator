@@ -24,8 +24,8 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.release.tag_name }}
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
+          ref: ${{ github.head_ref }}
 
       # Create release version
       - name: Create release version
