@@ -134,6 +134,22 @@ module openconfig-interfaces {
     description
       "Reference leafrefs to interface / subinterface";
 
+    container test {
+      leaf name {
+        description "Name of VLANs";
+        type string {
+        }
+      }
+
+      leaf description {
+        description "Text description of VLANs";
+        type string {
+          junos:posix-pattern "^.{1,255}$";
+          junos:pattern-message "Must be a string of 255 characters or less";
+        }
+      }
+    }
+
     leaf interface {
       type leafref {
         path "/oc-if:interfaces/oc-if:interface/oc-if:name";
