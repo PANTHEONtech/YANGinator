@@ -23,7 +23,7 @@ This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validat
 
 # Development Environment
 
-Follow this tutorial [IntelliJ Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/IntelliJ/custom-language-support-tutorial.html) to add custom lanugage support in IntelliJ.
+Follow this tutorial [IntelliJ Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html) to add custom lanugage support in IntelliJ.
 
 # Installing YANGinator
 
