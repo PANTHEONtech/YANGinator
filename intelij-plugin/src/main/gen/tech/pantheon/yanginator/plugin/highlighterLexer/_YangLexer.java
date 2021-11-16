@@ -12,6 +12,9 @@
 
 package tech.pantheon.yanginator.plugin.highlighterLexer;
 
+import com.intellij.lexer.FlexLexer;
+import com.intellij.psi.tree.IElementType;
+
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ADD_KEYWORD;
@@ -101,9 +104,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_VALUE_KEYWORD
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_WHEN_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YANG_VERSION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YIN_ELEMENT_KEYWORD;
-
-import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;
 
 
 /**

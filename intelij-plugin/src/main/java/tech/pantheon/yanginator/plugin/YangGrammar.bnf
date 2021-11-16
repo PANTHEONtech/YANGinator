@@ -786,17 +786,18 @@ notification-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  notification-stmt-body *
  RIGHT_BRACE ) )
 
+// Changed to allow check for multiplicity
+deviation-stmt-body-args ::= deviate-not-supported-stmt |
+ (
+    deviate-add-stmt |
+    deviate-replace-stmt |
+    deviate-delete-stmt
+ ) +
+
 deviation-stmt-body ::=
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) | // ?
- (
-     deviate-not-supported-stmt |
-     (
-         deviate-add-stmt |
-         deviate-replace-stmt |
-         deviate-delete-stmt
-     ) + stmtsep // stmsep is not in rfc but should be there ;)
- )
+ ( deviation-stmt-body-args stmtsep ) // stmsep is not in rfc but should be there ;)
 
  deviation-stmt ::= DEVIATION_KEYWORD sep
  deviation-arg-str optsep

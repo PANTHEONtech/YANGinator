@@ -3,15 +3,13 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangDeviationStmtBody;
+import tech.pantheon.yanginator.plugin.psi.YangDeviationStmtBodyArgs;
 import tech.pantheon.yanginator.plugin.psi.YangStatement;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import java.util.List;
 
 public class YangDeviationStmtBodyImpl extends YangNamedElementImpl implements YangDeviationStmtBody {
 
@@ -30,15 +28,21 @@ public class YangDeviationStmtBodyImpl extends YangNamedElementImpl implements Y
   }
 
   @Override
-  @NotNull
-  public List<YangStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStatement.class);
+  @Nullable
+  public YangStatement getStatement() {
+    return findChildByClass(YangStatement.class);
   }
 
   @Override
   @Nullable
+  public YangDeviationStmtBodyArgs getDeviationStmtBodyArgs() {
+    return findChildByClass(YangDeviationStmtBodyArgs.class);
+  }
+
+  @Override
+  @NotNull
   public YangStmtsep getStmtsep() {
-    return findChildByClass(YangStmtsep.class);
+    return findNotNullChildByClass(YangStmtsep.class);
   }
 
 }

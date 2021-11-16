@@ -275,6 +275,10 @@ public class YangVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitDeviationStmtBodyArgs(@NotNull YangDeviationStmtBodyArgs o) {
+    visitNamedElement(o);
+  }
+
   public void visitEnumSpecification(@NotNull YangEnumSpecification o) {
     visitNamedElement(o);
   }

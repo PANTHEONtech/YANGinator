@@ -4,14 +4,15 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public interface YangDeviationStmtBody extends YangNamedElement {
 
-  @NotNull
-  List<YangStatement> getStatementList();
+  @Nullable
+  YangStatement getStatement();
 
   @Nullable
+  YangDeviationStmtBodyArgs getDeviationStmtBodyArgs();
+
+  @NotNull
   YangStmtsep getStmtsep();
 
 }

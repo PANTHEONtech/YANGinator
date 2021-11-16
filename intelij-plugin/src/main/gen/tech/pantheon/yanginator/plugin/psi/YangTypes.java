@@ -53,6 +53,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangDeviateNotSupportedStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviateReplaceStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationArgStrImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtBodyArgsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDigitImpl;
@@ -338,6 +339,7 @@ public interface YangTypes {
   IElementType YANG_DEVIATION_ARG_STR = new YangElementType("YANG_DEVIATION_ARG_STR");
   IElementType YANG_DEVIATION_STMT = new YangElementType("YANG_DEVIATION_STMT");
   IElementType YANG_DEVIATION_STMT_BODY = new YangElementType("YANG_DEVIATION_STMT_BODY");
+  IElementType YANG_DEVIATION_STMT_BODY_ARGS = new YangElementType("YANG_DEVIATION_STMT_BODY_ARGS");
   IElementType YANG_DIGIT = new YangElementType("YANG_DIGIT");
   IElementType YANG_ENUM_SPECIFICATION = new YangElementType("YANG_ENUM_SPECIFICATION");
   IElementType YANG_ENUM_STMT = new YangElementType("YANG_ENUM_STMT");
@@ -926,6 +928,9 @@ public interface YangTypes {
       }
       else if (type == YANG_DEVIATION_STMT_BODY) {
         return new YangDeviationStmtBodyImpl(node);
+      }
+      else if (type == YANG_DEVIATION_STMT_BODY_ARGS) {
+        return new YangDeviationStmtBodyArgsImpl(node);
       }
       else if (type == YANG_DIGIT) {
         return new YangDigitImpl(node);
