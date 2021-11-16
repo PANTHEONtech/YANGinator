@@ -4292,14 +4292,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ( description-stmt stmtsep ) | // ?
   //  ( reference-stmt stmtsep ) | // ?
-  //  (
-  //      deviate-not-supported-stmt |
-  //      (
-  //          deviate-add-stmt |
-  //          deviate-replace-stmt |
-  //          deviate-delete-stmt
-  //      ) + stmtsep // stmsep is not in rfc but should be there ;)
-  //  )
+  //  ( deviation-stmt-body-args stmtsep )
   public static boolean deviation_stmt_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deviation_stmt_body")) return false;
     boolean r;
@@ -4333,61 +4326,59 @@ public class YangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // deviate-not-supported-stmt |
-  //      (
-  //          deviate-add-stmt |
-  //          deviate-replace-stmt |
-  //          deviate-delete-stmt
-  //      ) + stmtsep
+  // deviation-stmt-body-args stmtsep
   private static boolean deviation_stmt_body_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deviation_stmt_body_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = deviate_not_supported_stmt(b, l + 1);
-    if (!r) r = deviation_stmt_body_2_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (
-  //          deviate-add-stmt |
-  //          deviate-replace-stmt |
-  //          deviate-delete-stmt
-  //      ) + stmtsep
-  private static boolean deviation_stmt_body_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "deviation_stmt_body_2_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = deviation_stmt_body_2_1_0(b, l + 1);
+    r = deviation_stmt_body_args(b, l + 1);
     r = r && stmtsep(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (
-  //          deviate-add-stmt |
-  //          deviate-replace-stmt |
-  //          deviate-delete-stmt
-  //      ) +
-  private static boolean deviation_stmt_body_2_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "deviation_stmt_body_2_1_0")) return false;
+  /* ********************************************************** */
+  // deviate-not-supported-stmt |
+  //  (
+  //     deviate-add-stmt |
+  //     deviate-replace-stmt |
+  //     deviate-delete-stmt
+  //  ) +
+  public static boolean deviation_stmt_body_args(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deviation_stmt_body_args")) return false;
+    if (!nextTokenIs(b, YANG_DEVIATE_KEYWORD)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = deviation_stmt_body_2_1_0_0(b, l + 1);
+    r = deviate_not_supported_stmt(b, l + 1);
+    if (!r) r = deviation_stmt_body_args_1(b, l + 1);
+    exit_section_(b, m, YANG_DEVIATION_STMT_BODY_ARGS, r);
+    return r;
+  }
+
+  // (
+  //     deviate-add-stmt |
+  //     deviate-replace-stmt |
+  //     deviate-delete-stmt
+  //  ) +
+  private static boolean deviation_stmt_body_args_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deviation_stmt_body_args_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = deviation_stmt_body_args_1_0(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!deviation_stmt_body_2_1_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "deviation_stmt_body_2_1_0", c)) break;
+      if (!deviation_stmt_body_args_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "deviation_stmt_body_args_1", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
   // deviate-add-stmt |
-  //          deviate-replace-stmt |
-  //          deviate-delete-stmt
-  private static boolean deviation_stmt_body_2_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "deviation_stmt_body_2_1_0_0")) return false;
+  //     deviate-replace-stmt |
+  //     deviate-delete-stmt
+  private static boolean deviation_stmt_body_args_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deviation_stmt_body_args_1_0")) return false;
     boolean r;
     r = deviate_add_stmt(b, l + 1);
     if (!r) r = deviate_replace_stmt(b, l + 1);
@@ -11481,7 +11472,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   // TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
   //  ( SEMICOLON |
   //  ( LEFT_BRACE stmtsep
-  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts
   //  RIGHT_BRACE ) )
   public static boolean type_stmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt")) return false;
@@ -11499,7 +11490,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   // SEMICOLON |
   //  ( LEFT_BRACE stmtsep
-  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts
   //  RIGHT_BRACE )
   private static boolean type_stmt_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt_4")) return false;
@@ -11512,7 +11503,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   // LEFT_BRACE stmtsep
-  //  type-body-stmts // + is not corresponding with rfc6020 (added additionally)
+  //  type-body-stmts
   //  RIGHT_BRACE
   private static boolean type_stmt_4_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_stmt_4_1")) return false;

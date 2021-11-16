@@ -84,5 +84,8 @@
         <!-- Breadcrumbs -->
         <breadcrumbsInfoProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsProvider"/>
         <breadcrumbsPresentationProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsPresentationProvider"/>
+
+        <!-- Annotator -->
+        <annotator language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.annotator.YangAnnotator"/>
     </extensions>
 </idea-plugin>

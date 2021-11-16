@@ -8,14 +8,14 @@
  *
  */
 
-package com.intellij.lang.yang.highlighterLexer;
+package tech.pantheon.yanginator.plugin.highlighterLexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static com.intellij.lang.yang.psi.YangTypes.*;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
 
 %%
 

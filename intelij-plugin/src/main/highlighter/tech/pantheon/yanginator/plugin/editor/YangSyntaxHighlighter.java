@@ -10,6 +10,15 @@
 
 package tech.pantheon.yanginator.plugin.editor;
 
+import com.intellij.lexer.Lexer;
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
+import com.intellij.psi.TokenType;
+import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.highlighterLexer.YangHighlighterLexer;
+
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ANYXML_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_ARGUMENT_KEYWORD;
@@ -79,15 +88,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_VALUE_KEYWORD
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_WHEN_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YANG_VERSION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_YIN_ELEMENT_KEYWORD;
-
-import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
-import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.highlighterLexer.YangHighlighterLexer;
 
 public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey ILLEGAL = createTextAttributesKey("YANG_ILLEGAL", DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE);

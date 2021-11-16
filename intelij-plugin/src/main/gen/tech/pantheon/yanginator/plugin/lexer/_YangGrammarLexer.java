@@ -12,6 +12,9 @@
 
 package tech.pantheon.yanginator.plugin.lexer;
 
+import com.intellij.lexer.FlexLexer;
+import com.intellij.psi.tree.IElementType;
+
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ADD_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHA;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ANYXML_KEYWORD;
@@ -122,9 +125,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
-
-import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;
 
 
 /**
