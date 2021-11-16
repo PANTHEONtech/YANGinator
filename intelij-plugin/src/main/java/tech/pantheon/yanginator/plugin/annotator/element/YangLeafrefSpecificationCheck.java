@@ -9,12 +9,12 @@ import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
 
 public class YangLeafrefSpecificationCheck extends AbstractYangStmtCheck {
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangLeafrefSpecification;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangPathStmt.class);
         minOne.check(element, holder, YangPathStmt.class);
         maxOne.check(element, holder, YangRequireInstanceStmt.class);

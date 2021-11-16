@@ -16,18 +16,18 @@ import java.util.List;
 
 public class YangUsesAugmentStmtCheck extends AbstractYangStmtCheck {
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangUsesAugmentStmt;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangWhenStmt.class);
         maxOne.check(element, holder, YangStatusStmt.class);
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
-        List<Class<?>> tmp = new ArrayList<>(ElementCheckUtils.getDataDefStatements());
-        tmp.add(YangCaseStmt.class);
-        minOne.checkMany(element, holder, tmp);
+        final List<Class<?>> dataDefStatements = new ArrayList<>(ElementCheckUtils.getDataDefStatements());
+        dataDefStatements.add(YangCaseStmt.class);
+        minOne.checkMany(element, holder, dataDefStatements);
     }
 }

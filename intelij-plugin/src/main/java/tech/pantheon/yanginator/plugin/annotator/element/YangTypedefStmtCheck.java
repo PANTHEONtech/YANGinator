@@ -13,12 +13,12 @@ import tech.pantheon.yanginator.plugin.psi.YangUnitsStmt;
 
 public class YangTypedefStmtCheck extends AbstractYangStmtCheck {
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangTypedefStmt;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangTypeStmt.class);
         minOne.check(element, holder, YangTypeStmt.class);
         maxOne.check(element, holder, YangUnitsStmt.class);

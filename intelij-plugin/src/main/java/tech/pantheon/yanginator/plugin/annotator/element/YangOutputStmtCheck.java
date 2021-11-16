@@ -8,12 +8,12 @@ import tech.pantheon.yanginator.plugin.psi.YangOutputStmt;
 
 public class YangOutputStmtCheck extends AbstractYangStmtCheck {
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangOutputStmt;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         minOne.checkMany(element, holder, ElementCheckUtils.getDataDefStatements());
     }
 }

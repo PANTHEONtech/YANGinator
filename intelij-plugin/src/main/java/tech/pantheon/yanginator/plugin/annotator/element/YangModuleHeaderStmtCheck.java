@@ -9,7 +9,6 @@ import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
 public class YangModuleHeaderStmtCheck extends AbstractYangStmtCheck {
-
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangModuleHeaderStmts;

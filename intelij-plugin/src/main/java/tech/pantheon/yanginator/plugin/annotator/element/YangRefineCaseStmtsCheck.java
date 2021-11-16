@@ -9,12 +9,12 @@ import tech.pantheon.yanginator.plugin.psi.YangRefineCaseStmts;
 
 public class YangRefineCaseStmtsCheck extends AbstractYangStmtCheck {
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangRefineCaseStmts;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
     }

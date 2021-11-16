@@ -4,7 +4,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.annotator.check.ElementCheckUtils;
-import tech.pantheon.yanginator.plugin.annotator.check.MinOneElementCheck;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
@@ -17,14 +16,13 @@ import tech.pantheon.yanginator.plugin.psi.YangStatusStmt;
 import tech.pantheon.yanginator.plugin.psi.YangWhenStmt;
 
 public class YangListStmtCheck extends AbstractYangStmtCheck {
-    MinOneElementCheck m = new MinOneElementCheck();
     @Override
-    public boolean isApplicable(@NotNull PsiElement element) {
+    public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangListStmt;
     }
 
     @Override
-    public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangWhenStmt.class);
         maxOne.check(element, holder, YangKeyStmt.class);
         maxOne.check(element, holder, YangConfigStmt.class);

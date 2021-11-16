@@ -10,7 +10,6 @@ import tech.pantheon.yanginator.plugin.psi.YangOrganizationStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 
 public class YangMetaStmtCheck extends AbstractYangStmtCheck {
-
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangMetaStmts;

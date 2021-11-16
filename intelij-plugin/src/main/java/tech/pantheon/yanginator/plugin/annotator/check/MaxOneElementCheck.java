@@ -10,12 +10,13 @@ import java.util.List;
 
 public class MaxOneElementCheck implements ElementCheck {
     @Override
-    public void check(@NotNull PsiElement element, @NotNull AnnotationHolder holder, @NotNull Class<? extends PsiElement> elementClass) {
-        long count = 0;
-        PsiElement[] children = element.getChildren();
+    public void check(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                      @NotNull final Class<? extends PsiElement> elementClass) {
+        long childrenCount = 0;
+        final PsiElement[] children = element.getChildren();
         for (PsiElement child : children) {
-            count += Arrays.stream(child.getChildren()).filter(elementClass::isInstance).count();
-            if (count > 1) {
+            childrenCount += Arrays.stream(child.getChildren()).filter(elementClass::isInstance).count();
+            if (childrenCount > 1) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "More than one "
                                 + ElementCheckUtils.translateClassName(elementClass))
                         .range(child.getFirstChild())
@@ -25,15 +26,17 @@ public class MaxOneElementCheck implements ElementCheck {
         }
     }
 
-    public void checkMany(@NotNull PsiElement element, @NotNull AnnotationHolder holder, @NotNull List<Class<?>> elementClasses) {
-        long count = 0;
-        PsiElement[] children = element.getChildren();
+
+    public void checkMany(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                          @NotNull final List<Class<?>> elementClasses) {
+        long childrenCount = 0;
+        final PsiElement[] children = element.getChildren();
         for (Class<?>  c : elementClasses) {
             for (PsiElement ch : children) {
-                count += Arrays.stream(ch.getChildren()).filter(c::isInstance).count();
+                childrenCount += Arrays.stream(ch.getChildren()).filter(c::isInstance).count();
             }
         }
-        if (count > 1) {
+        if (childrenCount > 1) {
             holder.newAnnotation(HighlightSeverity.ERROR, "More than one "
                             + ElementCheckUtils.translateClassName(elementClasses.get(elementClasses.size() - 1)))
                     .range(element.getLastChild())

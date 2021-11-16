@@ -90,7 +90,7 @@ public class YangAnnotator implements Annotator {
     );
 
     @Override
-    public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+    public void annotate(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         for (AbstractYangStmtCheck stmtCheck : STMT_CHECKS) {
             if (stmtCheck.isApplicable(element)) {
                 stmtCheck.performCheck(element, holder);

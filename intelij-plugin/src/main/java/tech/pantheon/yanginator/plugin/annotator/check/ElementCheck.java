@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public interface ElementCheck {
-    void check(@NotNull PsiElement element, @NotNull AnnotationHolder holder, @NotNull Class<? extends PsiElement> elementClass);
-    void checkMany(@NotNull PsiElement element, @NotNull AnnotationHolder holder, @NotNull List<Class<?>> elementClasses);
+    void check(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+               @NotNull final Class<? extends PsiElement> elementClass);
+    void checkMany(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                   @NotNull final List<Class<?>> elementClasses);
 }
