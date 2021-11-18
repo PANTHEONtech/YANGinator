@@ -13,6 +13,7 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.TRUE_CONDITION;
 import static com.intellij.lang.parser.GeneratedParserUtilBase._AND_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase._COLLAPSE_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase._NONE_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._NOT_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.adapt_builder_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.create_token_set_;
@@ -5544,7 +5545,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING_SPLITTER? (ALPHA | UNDERSCORE | identifier-literal) STRING_SPLITTER? (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
+  // STRING_SPLITTER? !(('X'|'x') ('M'|'m') ('L'|'l')) (ALPHA | UNDERSCORE | identifier-literal) STRING_SPLITTER? (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
   public static boolean identifier_quoted(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_quoted")) return false;
     boolean r;
@@ -5553,6 +5554,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     r = r && identifier_quoted_1(b, l + 1);
     r = r && identifier_quoted_2(b, l + 1);
     r = r && identifier_quoted_3(b, l + 1);
+    r = r && identifier_quoted_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -5564,9 +5566,58 @@ public class YangParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // ALPHA | UNDERSCORE | identifier-literal
+  // !(('X'|'x') ('M'|'m') ('L'|'l'))
   private static boolean identifier_quoted_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_quoted_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !identifier_quoted_1_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ('X'|'x') ('M'|'m') ('L'|'l')
+  private static boolean identifier_quoted_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier_quoted_1_0_0(b, l + 1);
+    r = r && identifier_quoted_1_0_1(b, l + 1);
+    r = r && identifier_quoted_1_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'X'|'x'
+  private static boolean identifier_quoted_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_1_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, "X");
+    if (!r) r = consumeToken(b, "x");
+    return r;
+  }
+
+  // 'M'|'m'
+  private static boolean identifier_quoted_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_1_0_1")) return false;
+    boolean r;
+    r = consumeToken(b, "M");
+    if (!r) r = consumeToken(b, "m");
+    return r;
+  }
+
+  // 'L'|'l'
+  private static boolean identifier_quoted_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_1_0_2")) return false;
+    boolean r;
+    r = consumeToken(b, "L");
+    if (!r) r = consumeToken(b, "l");
+    return r;
+  }
+
+  // ALPHA | UNDERSCORE | identifier-literal
+  private static boolean identifier_quoted_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_2")) return false;
     boolean r;
     r = consumeToken(b, YANG_ALPHA);
     if (!r) r = consumeToken(b, YANG_UNDERSCORE);
@@ -5575,26 +5626,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   // STRING_SPLITTER?
-  private static boolean identifier_quoted_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_quoted_2")) return false;
+  private static boolean identifier_quoted_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_3")) return false;
     STRING_SPLITTER(b, l + 1);
     return true;
   }
 
   // (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
-  private static boolean identifier_quoted_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_quoted_3")) return false;
+  private static boolean identifier_quoted_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!identifier_quoted_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "identifier_quoted_3", c)) break;
+      if (!identifier_quoted_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "identifier_quoted_4", c)) break;
     }
     return true;
   }
 
   // ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER
-  private static boolean identifier_quoted_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_quoted_3_0")) return false;
+  private static boolean identifier_quoted_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_quoted_4_0")) return false;
     boolean r;
     r = consumeToken(b, YANG_ALPHA);
     if (!r) r = DIGIT(b, l + 1);

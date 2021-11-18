@@ -1053,7 +1053,7 @@ identifier-arg ::= identifier
 // ;; An identifier MUST NOT start with (('X'|'x') ('M'|'m') ('L'|'l'))
 identifier ::= identifier-quoted // (ALPHA | UNDERSCORE | identifier-literal) (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal)*
 
-identifier-quoted ::= STRING_SPLITTER? (ALPHA | UNDERSCORE | identifier-literal) STRING_SPLITTER? (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
+identifier-quoted ::= STRING_SPLITTER? !(('X'|'x') ('M'|'m') ('L'|'l')) (ALPHA | UNDERSCORE | identifier-literal) STRING_SPLITTER? (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
 
 STRING_SPLITTER ::= DOUBLE_QUOTE sep? "+" sep? DOUBLE_QUOTE
 SINGLE_QUOTE_STRING_SPLITTER ::= SINGLE_QUOTE sep? "+" sep? SINGLE_QUOTE
