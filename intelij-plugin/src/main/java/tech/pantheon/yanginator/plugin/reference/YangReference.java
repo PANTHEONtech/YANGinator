@@ -16,10 +16,11 @@ import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
-import java.util.ArrayList;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
 
@@ -40,7 +41,7 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
         final List<ResolveResult> results = new ArrayList<>();
 
         for (final PsiElement declaration : declarations) {
-            results.add(new PsiElementResolveResult(declaration.getContainingFile()));
+            results.add(new PsiElementResolveResult(declaration));
         }
         return results.toArray(new ResolveResult[0]);
     }
