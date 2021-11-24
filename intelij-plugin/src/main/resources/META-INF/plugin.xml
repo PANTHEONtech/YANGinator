@@ -22,13 +22,19 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        <b>Fixed</b>
+        <b>New Features</b>
         <ul>
-          <li>Fixed fatal error after installation alongside with another plugin for yang language</li>
-          <li>String type no longer require optional parameters</li>
-          <li>Fixed fatal error while debugging</li>
-          <li>Fixed class cast exception bug in larger projects</li>
-        </ul><br>]]>
+          <li>Included grouping statements in breadcrumbs</li>
+          <li>Properly checking identifier's start character</li>
+          <li>Added annotator to check for multiplicity of statements</li>
+        </ul>
+        <br>
+        <b>Fixed issues</b>
+        <ul>
+          <li>Fixed "Go to" declaration</li>
+          <li>Fixed issues with deviate not-supported</li>
+        </ul>
+    ]]>
     </change-notes>
 
     <idea-version since-build="202.6397.94"/>
