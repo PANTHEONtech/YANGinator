@@ -8,9 +8,12 @@ import java.util.List;
 public interface YangLengthArg extends YangNamedElement {
 
   @NotNull
-  List<YangLengthPart> getLengthPartList();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  List<YangOptsep> getOptsepList();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  List<YangLengthPart> getLengthPartList();
 
 }

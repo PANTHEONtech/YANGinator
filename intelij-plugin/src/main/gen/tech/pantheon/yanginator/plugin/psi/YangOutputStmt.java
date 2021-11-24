@@ -9,13 +9,16 @@ import java.util.List;
 public interface YangOutputStmt extends YangStatement {
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   List<YangOutputStmtBody> getOutputStmtBodyList();
 
   @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getLeftBrace();

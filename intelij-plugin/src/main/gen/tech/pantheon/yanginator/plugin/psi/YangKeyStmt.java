@@ -4,13 +4,18 @@ package tech.pantheon.yanginator.plugin.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangKeyStmt extends YangStatement {
 
   @NotNull
-  YangKeyArgStr getKeyArgStr();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangSep getSep();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  YangKeyArgStr getKeyArgStr();
 
   @NotNull
   YangStmtend getStmtend();

@@ -6,22 +6,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
+import java.util.List;
+
 public interface YangTypeStmt extends YangGeneratedReferenceType {
+
+  @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   YangIdentifierRefArgQuoted getIdentifierRefArgQuoted();
 
-  @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
-
   @Nullable
   YangTypeBodyStmts getTypeBodyStmts();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @Nullable
   PsiElement getLeftBrace();

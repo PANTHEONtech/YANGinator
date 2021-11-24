@@ -10,7 +10,6 @@ import tech.pantheon.yanginator.plugin.psi.YangPos;
 import tech.pantheon.yanginator.plugin.psi.YangPredicate;
 import tech.pantheon.yanginator.plugin.psi.YangPredicateExpr;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -30,12 +29,6 @@ public class YangPredicateImpl extends YangNamedElementImpl implements YangPredi
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
   }
 
   @Override

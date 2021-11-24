@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangPrefix;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement2;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
@@ -40,26 +40,26 @@ public class YangUnknownStatement2Impl extends YangNamedElementImpl implements Y
 
   @Override
   @NotNull
-  public YangIdentifier getIdentifier() {
-    return findNotNullChildByClass(YangIdentifier.class);
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
   }
 
   @Override
   @NotNull
-  public YangOptsep getOptsep() {
-    return findNotNullChildByClass(YangOptsep.class);
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
+  @NotNull
+  public YangIdentifier getIdentifier() {
+    return findNotNullChildByClass(YangIdentifier.class);
   }
 
   @Override
   @Nullable
   public YangPrefix getPrefix() {
     return findChildByClass(YangPrefix.class);
-  }
-
-  @Override
-  @Nullable
-  public YangSep getSep() {
-    return findChildByClass(YangSep.class);
   }
 
   @Override

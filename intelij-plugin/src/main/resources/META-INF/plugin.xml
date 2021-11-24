@@ -70,6 +70,10 @@
                            implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
         <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
 
+        <!-- Formatter -->
+        <lang.formatter language="yang-pantheon"
+                        implementationClass="tech.pantheon.yanginator.plugin.formatter.YangFormattingModelBuilder"/>
+
         <!-- Completion -->
         <completion.contributor language="yang-pantheon"
                                 implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>

@@ -10,19 +10,19 @@ import java.util.List;
 public interface YangIncludeStmt extends YangStatement {
 
   @NotNull
-  YangIdentifierArgQuoted getIdentifierArgQuoted();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @Nullable
   YangRevisionDateStmt getRevisionDateStmt();
 
   @NotNull
-  YangSep getSep();
-
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getIncludeKeyword();

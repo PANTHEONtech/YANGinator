@@ -9,19 +9,19 @@ import java.util.List;
 public interface YangLeafListStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull
   List<YangLeafListStmtBody> getLeafListStmtBodyList();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getLeafListKeyword();

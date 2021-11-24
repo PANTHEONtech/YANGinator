@@ -12,9 +12,6 @@ public interface YangCurrentFunctionInvocation extends YangNamedElement {
   @NotNull
   List<YangStringSplitter> getStringSplitterList();
 
-  @NotNull
-  List<YangWsp> getWspList();
-
   @Nullable
   YangSplittedCurrentKeyword getSplittedCurrentKeyword();
 

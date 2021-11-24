@@ -71,14 +71,14 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // comment? CARRIAGE_RETURN comment?
-  public static boolean CR(PsiBuilder b, int l) {
+  static boolean CR(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CR")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_CR, "<cr>");
+    Marker m = enter_section_(b);
     r = CR_0(b, l + 1);
     r = r && consumeToken(b, YANG_CARRIAGE_RETURN);
     r = r && CR_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -98,13 +98,13 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // CR LF
-  public static boolean CRLF(PsiBuilder b, int l) {
+  static boolean CRLF(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CRLF")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_CRLF, "<crlf>");
+    Marker m = enter_section_(b);
     r = CR(b, l + 1);
     r = r && LF(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -140,13 +140,13 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (SP SP SP SP) | TAB
-  public static boolean HTAB(PsiBuilder b, int l) {
+  static boolean HTAB(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HTAB")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_HTAB, "<htab>");
+    Marker m = enter_section_(b);
     r = HTAB_0(b, l + 1);
     if (!r) r = consumeToken(b, YANG_TAB);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1160,14 +1160,12 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // LINEFEED | LINE_COMMENT
-  public static boolean LF(PsiBuilder b, int l) {
+  static boolean LF(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "LF")) return false;
-    if (!nextTokenIs(b, "<lf>", YANG_LINEFEED, YANG_SINGLE_LINE_COMMENT_START)) return false;
+    if (!nextTokenIs(b, "", YANG_LINEFEED, YANG_SINGLE_LINE_COMMENT_START)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_LF, "<lf>");
     r = consumeToken(b, YANG_LINEFEED);
     if (!r) r = LINE_COMMENT(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -1245,15 +1243,15 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BLOCK_COMMENT? SPACE BLOCK_COMMENT?
-  public static boolean SP(PsiBuilder b, int l) {
+  static boolean SP(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SP")) return false;
-    if (!nextTokenIs(b, "<sp>", YANG_BLOCK_COMMENT, YANG_SPACE)) return false;
+    if (!nextTokenIs(b, "", YANG_BLOCK_COMMENT, YANG_SPACE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_SP, "<sp>");
+    Marker m = enter_section_(b);
     r = SP_0(b, l + 1);
     r = r && consumeToken(b, YANG_SPACE);
     r = r && SP_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1272,7 +1270,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE sep? "+" sep? DOUBLE_QUOTE
+  // DOUBLE_QUOTE public-sep? "+" public-sep? DOUBLE_QUOTE
   public static boolean STRING_SPLITTER(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER")) return false;
     if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
@@ -1287,17 +1285,17 @@ public class YangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // sep?
+  // public-sep?
   private static boolean STRING_SPLITTER_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER_1")) return false;
-    sep(b, l + 1);
+    public_sep(b, l + 1);
     return true;
   }
 
-  // sep?
+  // public-sep?
   private static boolean STRING_SPLITTER_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER_3")) return false;
-    sep(b, l + 1);
+    public_sep(b, l + 1);
     return true;
   }
 
@@ -1583,14 +1581,14 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BLOCK_COMMENT? (SP | HTAB) BLOCK_COMMENT?
-  public static boolean WSP(PsiBuilder b, int l) {
+  static boolean WSP(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "WSP")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_WSP, "<wsp>");
+    Marker m = enter_section_(b);
     r = WSP_0(b, l + 1);
     r = r && WSP_1(b, l + 1);
     r = r && WSP_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -6973,13 +6971,11 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // CRLF | LF
-  public static boolean line_break(PsiBuilder b, int l) {
+  static boolean line_break(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line_break")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_LINE_BREAK, "<line break>");
     r = CRLF(b, l + 1);
     if (!r) r = LF(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -8128,15 +8124,13 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ( WSP | line-break )*
-  public static boolean optsep(PsiBuilder b, int l) {
+  static boolean optsep(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "optsep")) return false;
-    Marker m = enter_section_(b, l, _NONE_, YANG_OPTSEP, "<optsep>");
     while (true) {
       int c = current_position_(b);
       if (!optsep_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "optsep", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 
@@ -9252,6 +9246,17 @@ public class YangParser implements PsiParser, LightPsiParser {
     r = r && string(b, l + 1);
     r = r && stmtend(b, l + 1);
     exit_section_(b, m, YANG_PRESENCE_STMT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // sep
+  public static boolean public_sep(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "public_sep")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_PUBLIC_SEP, "<public sep>");
+    r = sep(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -10943,17 +10948,17 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (WSP | line-break)+
-  public static boolean sep(PsiBuilder b, int l) {
+  static boolean sep(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "sep")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_SEP, "<sep>");
+    Marker m = enter_section_(b);
     r = sep_0(b, l + 1);
     while (r) {
       int c = current_position_(b);
       if (!sep_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "sep", c)) break;
     }
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -11180,15 +11185,13 @@ public class YangParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (WSP | line-break  | unknown-statement)*
-  public static boolean stmtsep(PsiBuilder b, int l) {
+  static boolean stmtsep(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "stmtsep")) return false;
-    Marker m = enter_section_(b, l, _NONE_, YANG_STMTSEP, "<stmtsep>");
     while (true) {
       int c = current_position_(b);
       if (!stmtsep_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "stmtsep", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 

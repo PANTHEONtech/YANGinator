@@ -7,12 +7,6 @@ import org.jetbrains.annotations.Nullable;
 public interface YangSingleLineCharacters extends YangNamedElement {
 
   @Nullable
-  YangHtab getHtab();
-
-  @Nullable
-  YangSp getSp();
-
-  @Nullable
   YangVchar getVchar();
 
   @Nullable
@@ -26,5 +20,11 @@ public interface YangSingleLineCharacters extends YangNamedElement {
 
   @Nullable
   PsiElement getSingleQuote();
+
+  @Nullable
+  PsiElement getSpace();
+
+  @Nullable
+  PsiElement getTab();
 
 }

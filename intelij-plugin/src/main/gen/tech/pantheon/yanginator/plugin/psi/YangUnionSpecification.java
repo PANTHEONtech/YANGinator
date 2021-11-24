@@ -8,9 +8,15 @@ import java.util.List;
 public interface YangUnionSpecification extends YangNamedElement {
 
   @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   List<YangTypeStmt> getTypeStmtList();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

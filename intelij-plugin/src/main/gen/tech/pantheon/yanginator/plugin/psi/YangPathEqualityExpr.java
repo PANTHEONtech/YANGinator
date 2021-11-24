@@ -12,9 +12,6 @@ public interface YangPathEqualityExpr extends YangNamedElement {
   List<YangStringSplitter> getStringSplitterList();
 
   @NotNull
-  List<YangWsp> getWspList();
-
-  @NotNull
   YangNodeIdentifier getNodeIdentifier();
 
   @NotNull

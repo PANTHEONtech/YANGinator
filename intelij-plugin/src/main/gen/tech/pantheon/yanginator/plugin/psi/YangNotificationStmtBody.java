@@ -4,18 +4,26 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangNotificationStmtBody extends YangNamedElement {
+
+  @NotNull
+  List<YangLineComment> getLineCommentList();
 
   @Nullable
   YangStatement getStatement();
 
+  @NotNull
+  List<YangComment> getCommentList();
+
   @Nullable
   YangGroupingStmt getGroupingStmt();
 
-  @NotNull
-  YangStmtsep getStmtsep();
-
   @Nullable
   YangTypedefStmt getTypedefStmt();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

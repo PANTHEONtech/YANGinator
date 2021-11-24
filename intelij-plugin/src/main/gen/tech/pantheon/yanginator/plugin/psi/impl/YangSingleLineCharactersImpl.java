@@ -6,16 +6,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangHtab;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierLiteral;
 import tech.pantheon.yanginator.plugin.psi.YangSingleLineCharacters;
-import tech.pantheon.yanginator.plugin.psi.YangSp;
 import tech.pantheon.yanginator.plugin.psi.YangVchar;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_LINE_COMMENT_START;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
 
 public class YangSingleLineCharactersImpl extends YangNamedElementImpl implements YangSingleLineCharacters {
 
@@ -31,18 +31,6 @@ public class YangSingleLineCharactersImpl extends YangNamedElementImpl implement
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public YangHtab getHtab() {
-    return findChildByClass(YangHtab.class);
-  }
-
-  @Override
-  @Nullable
-  public YangSp getSp() {
-    return findChildByClass(YangSp.class);
   }
 
   @Override
@@ -73,6 +61,18 @@ public class YangSingleLineCharactersImpl extends YangNamedElementImpl implement
   @Nullable
   public PsiElement getSingleQuote() {
     return findChildByType(YANG_SINGLE_QUOTE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getSpace() {
+    return findChildByType(YANG_SPACE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTab() {
+    return findChildByType(YANG_TAB);
   }
 
 }

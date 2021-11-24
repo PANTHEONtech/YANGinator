@@ -8,6 +8,9 @@ import java.util.List;
 public interface YangSingleQuoteStringSplitter extends YangNamedElement {
 
   @NotNull
-  List<YangSep> getSepList();
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
 }

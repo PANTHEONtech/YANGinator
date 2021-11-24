@@ -5,7 +5,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangPublicSep;
 import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
@@ -29,8 +29,8 @@ public class YangStringSplitterImpl extends YangNamedElementImpl implements Yang
 
   @Override
   @NotNull
-  public List<YangSep> getSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+  public List<YangPublicSep> getPublicSepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPublicSep.class);
   }
 
 }

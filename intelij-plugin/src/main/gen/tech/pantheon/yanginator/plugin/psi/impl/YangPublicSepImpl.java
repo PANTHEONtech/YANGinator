@@ -2,27 +2,24 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangHtab;
-import tech.pantheon.yanginator.plugin.psi.YangSp;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
+import tech.pantheon.yanginator.plugin.psi.YangPublicSep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
+public class YangPublicSepImpl extends YangNamedElementImpl implements YangPublicSep {
 
-public class YangHtabImpl extends YangNamedElementImpl implements YangHtab {
-
-  public YangHtabImpl(@NotNull ASTNode node) {
+  public YangPublicSepImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitHtab(this);
+    visitor.visitPublicSep(this);
   }
 
   @Override
@@ -33,14 +30,14 @@ public class YangHtabImpl extends YangNamedElementImpl implements YangHtab {
 
   @Override
   @NotNull
-  public List<YangSp> getSpList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSp.class);
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
   }
 
   @Override
-  @Nullable
-  public PsiElement getTab() {
-    return findChildByType(YANG_TAB);
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
   }
 
 }

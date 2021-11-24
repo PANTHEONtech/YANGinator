@@ -6,11 +6,13 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangStatement;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -33,8 +35,20 @@ public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyS
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<YangStatement> getStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
   }
 
   @Override
@@ -51,14 +65,14 @@ public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyS
 
   @Override
   @NotNull
-  public List<YangStmtsep> getStmtsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+  public List<YangTypedefStmt> getTypedefStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmt.class);
   }
 
   @Override
   @NotNull
-  public List<YangTypedefStmt> getTypedefStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmt.class);
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
 }

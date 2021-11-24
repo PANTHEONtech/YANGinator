@@ -5,8 +5,9 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangDescendantSchemaNodeid;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangUniqueArg;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
@@ -30,14 +31,20 @@ public class YangUniqueArgImpl extends YangNamedElementImpl implements YangUniqu
 
   @Override
   @NotNull
-  public List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDescendantSchemaNodeid.class);
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
   }
 
   @Override
   @NotNull
-  public List<YangSep> getSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDescendantSchemaNodeid.class);
   }
 
 }

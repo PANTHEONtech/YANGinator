@@ -3,12 +3,20 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangIdentityrefSpecification extends YangNamedElement {
+
+  @NotNull
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
   YangBaseStmt getBaseStmt();
 
   @NotNull
-  YangStmtsep getStmtsep();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

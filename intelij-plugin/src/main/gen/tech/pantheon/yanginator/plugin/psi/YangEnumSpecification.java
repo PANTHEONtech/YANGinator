@@ -8,9 +8,15 @@ import java.util.List;
 public interface YangEnumSpecification extends YangNamedElement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   List<YangEnumStmt> getEnumStmtList();
 
   @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

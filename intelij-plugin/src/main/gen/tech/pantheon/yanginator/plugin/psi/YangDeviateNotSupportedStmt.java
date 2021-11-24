@@ -5,16 +5,18 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangDeviateNotSupportedStmt extends YangStatement {
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangSep getSep();
+  List<YangComment> getCommentList();
 
-  @Nullable
-  YangStmtsep getStmtsep();
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getDeviateKeyword();
