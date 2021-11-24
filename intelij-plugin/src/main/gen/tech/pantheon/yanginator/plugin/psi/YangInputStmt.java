@@ -9,13 +9,16 @@ import java.util.List;
 public interface YangInputStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   List<YangInputStmtBody> getInputStmtBodyList();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getInputKeyword();

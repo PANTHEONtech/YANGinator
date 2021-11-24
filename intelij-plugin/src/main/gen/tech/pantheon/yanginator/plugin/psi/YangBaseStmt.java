@@ -5,16 +5,18 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
+import java.util.List;
+
 public interface YangBaseStmt extends YangGeneratedReferenceType {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   YangIdentifierRefArgQuoted getIdentifierRefArgQuoted();
-
-  @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
 
   @NotNull
   YangStmtend getStmtend();

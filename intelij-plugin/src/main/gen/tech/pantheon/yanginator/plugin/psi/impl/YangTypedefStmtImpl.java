@@ -6,12 +6,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmtBody;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
@@ -39,32 +39,32 @@ public class YangTypedefStmtImpl extends YangGeneratedReferenceTypeImpl implemen
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
+  @NotNull
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
     return findNotNullChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override
   @NotNull
-  public YangOptsep getOptsep() {
-    return findNotNullChildByClass(YangOptsep.class);
-  }
-
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
-
-  @Override
-  @NotNull
-  public YangStmtsep getStmtsep() {
-    return findNotNullChildByClass(YangStmtsep.class);
-  }
-
-  @Override
-  @NotNull
   public List<YangTypedefStmtBody> getTypedefStmtBodyList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmtBody.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
   @Override

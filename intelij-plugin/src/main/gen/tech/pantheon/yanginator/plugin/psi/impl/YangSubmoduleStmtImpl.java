@@ -8,15 +8,15 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionStmts;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -44,8 +44,20 @@ public class YangSubmoduleStmtImpl extends YangStatementImpl implements YangSubm
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
   public YangBodyStmts getBodyStmts() {
     return findNotNullChildByClass(YangBodyStmts.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
   }
 
   @Override
@@ -68,32 +80,20 @@ public class YangSubmoduleStmtImpl extends YangStatementImpl implements YangSubm
 
   @Override
   @NotNull
-  public List<YangOptsep> getOptsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-  }
-
-  @Override
-  @NotNull
   public YangRevisionStmts getRevisionStmts() {
     return findNotNullChildByClass(YangRevisionStmts.class);
   }
 
   @Override
   @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
-
-  @Override
-  @NotNull
-  public YangStmtsep getStmtsep() {
-    return findNotNullChildByClass(YangStmtsep.class);
-  }
-
-  @Override
-  @NotNull
   public YangSubmoduleHeaderStmts getSubmoduleHeaderStmts() {
     return findNotNullChildByClass(YangSubmoduleHeaderStmts.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
   @Override

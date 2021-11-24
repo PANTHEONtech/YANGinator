@@ -6,17 +6,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangHtab;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierLiteral;
 import tech.pantheon.yanginator.plugin.psi.YangNewLineCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedStringBodyCharacters;
-import tech.pantheon.yanginator.plugin.psi.YangSp;
 import tech.pantheon.yanginator.plugin.psi.YangVchar;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_LINE_COMMENT_START;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRINGS_DOUBLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRINGS_SINGLE_QUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
 
 public class YangQuotedStringBodyCharactersImpl extends YangNamedElementImpl implements YangQuotedStringBodyCharacters {
 
@@ -32,18 +32,6 @@ public class YangQuotedStringBodyCharactersImpl extends YangNamedElementImpl imp
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public YangHtab getHtab() {
-    return findChildByClass(YangHtab.class);
-  }
-
-  @Override
-  @Nullable
-  public YangSp getSp() {
-    return findChildByClass(YangSp.class);
   }
 
   @Override
@@ -72,6 +60,12 @@ public class YangQuotedStringBodyCharactersImpl extends YangNamedElementImpl imp
 
   @Override
   @Nullable
+  public PsiElement getSpace() {
+    return findChildByType(YANG_SPACE);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getStringsDoubleQuote() {
     return findChildByType(YANG_STRINGS_DOUBLE_QUOTE);
   }
@@ -80,6 +74,12 @@ public class YangQuotedStringBodyCharactersImpl extends YangNamedElementImpl imp
   @Nullable
   public PsiElement getStringsSingleQuote() {
     return findChildByType(YANG_STRINGS_SINGLE_QUOTE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTab() {
+    return findChildByType(YANG_TAB);
   }
 
 }

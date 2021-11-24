@@ -8,7 +8,13 @@ import java.util.List;
 public interface YangBodyStmts extends YangNamedElement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
   List<YangStatement> getStatementList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   List<YangGroupingStmt> getGroupingStmtList();
@@ -17,9 +23,9 @@ public interface YangBodyStmts extends YangNamedElement {
   List<YangIdentityStmt> getIdentityStmtList();
 
   @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangTypedefStmt> getTypedefStmtList();
 
   @NotNull
-  List<YangTypedefStmt> getTypedefStmtList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

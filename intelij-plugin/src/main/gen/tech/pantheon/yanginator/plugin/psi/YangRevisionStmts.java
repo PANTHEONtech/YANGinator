@@ -8,9 +8,15 @@ import java.util.List;
 public interface YangRevisionStmts extends YangNamedElement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   List<YangRevisionStmt> getRevisionStmtList();
 
   @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

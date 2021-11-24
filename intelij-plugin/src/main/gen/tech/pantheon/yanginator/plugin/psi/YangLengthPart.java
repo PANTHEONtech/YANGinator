@@ -10,10 +10,13 @@ import java.util.List;
 public interface YangLengthPart extends YangNamedElement {
 
   @NotNull
-  List<YangLengthBoundary> getLengthBoundaryList();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  List<YangOptsep> getOptsepList();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  List<YangLengthBoundary> getLengthBoundaryList();
 
   @Nullable
   PsiElement getDoubleDot();

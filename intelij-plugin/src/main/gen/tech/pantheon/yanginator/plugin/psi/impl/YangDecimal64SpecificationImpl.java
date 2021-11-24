@@ -3,11 +3,16 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangDecimal64Specification;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsStmt;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangDecimal64SpecificationImpl extends YangNamedElementImpl implements YangDecimal64Specification {
 
@@ -27,14 +32,26 @@ public class YangDecimal64SpecificationImpl extends YangNamedElementImpl impleme
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
+  @NotNull
   public YangFractionDigitsStmt getFractionDigitsStmt() {
     return findNotNullChildByClass(YangFractionDigitsStmt.class);
   }
 
   @Override
   @NotNull
-  public YangStmtsep getStmtsep() {
-    return findNotNullChildByClass(YangStmtsep.class);
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
 }

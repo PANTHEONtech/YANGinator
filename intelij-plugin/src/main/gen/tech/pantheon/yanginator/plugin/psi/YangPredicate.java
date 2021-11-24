@@ -9,9 +9,6 @@ import java.util.List;
 public interface YangPredicate extends YangNamedElement {
 
   @NotNull
-  List<YangWsp> getWspList();
-
-  @NotNull
   List<YangPos> getPosList();
 
   @NotNull

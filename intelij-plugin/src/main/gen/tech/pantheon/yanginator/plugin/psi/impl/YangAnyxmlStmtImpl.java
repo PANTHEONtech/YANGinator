@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangAnyxmlStmt;
 import tech.pantheon.yanginator.plugin.psi.YangAnyxmlStmtBody;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -41,8 +41,20 @@ public class YangAnyxmlStmtImpl extends YangStatementImpl implements YangAnyxmlS
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<YangAnyxmlStmtBody> getAnyxmlStmtBodyList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangAnyxmlStmtBody.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
   }
 
   @Override
@@ -53,20 +65,8 @@ public class YangAnyxmlStmtImpl extends YangStatementImpl implements YangAnyxmlS
 
   @Override
   @NotNull
-  public YangOptsep getOptsep() {
-    return findNotNullChildByClass(YangOptsep.class);
-  }
-
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
-
-  @Override
-  @Nullable
-  public YangStmtsep getStmtsep() {
-    return findChildByClass(YangStmtsep.class);
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
   @Override

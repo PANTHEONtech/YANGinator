@@ -11,19 +11,19 @@ import java.util.List;
 public interface YangIdentityStmt extends YangGeneratedReferenceType {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull
   List<YangIdentityStmtBody> getIdentityStmtBodyList();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getIdentityKeyword();

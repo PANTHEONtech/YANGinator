@@ -11,16 +11,16 @@ import java.util.List;
 public interface YangUsesStmt extends YangGeneratedReferenceType {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   YangIdentifierRefArgQuoted getIdentifierRefArgQuoted();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   List<YangUsesStmtBody> getUsesStmtBodyList();

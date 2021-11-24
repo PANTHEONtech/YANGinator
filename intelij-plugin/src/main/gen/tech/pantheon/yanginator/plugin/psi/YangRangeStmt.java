@@ -10,7 +10,10 @@ import java.util.List;
 public interface YangRangeStmt extends YangStatement {
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   YangRangeArgStr getRangeArgStr();
@@ -19,10 +22,7 @@ public interface YangRangeStmt extends YangStatement {
   List<YangRangeStmtBody> getRangeStmtBodyList();
 
   @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @Nullable
   PsiElement getLeftBrace();

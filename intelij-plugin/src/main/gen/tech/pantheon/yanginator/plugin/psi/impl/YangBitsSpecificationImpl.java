@@ -7,7 +7,9 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBitStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBitsSpecification;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -30,14 +32,26 @@ public class YangBitsSpecificationImpl extends YangNamedElementImpl implements Y
 
   @Override
   @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
   public List<YangBitStmt> getBitStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBitStmt.class);
   }
 
   @Override
   @NotNull
-  public List<YangStmtsep> getStmtsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangUnknownStatement> getUnknownStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
   }
 
 }

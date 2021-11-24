@@ -12,9 +12,6 @@ public interface YangPathKeyExpr extends YangNamedElement {
   List<YangStringSplitter> getStringSplitterList();
 
   @NotNull
-  List<YangWsp> getWspList();
-
-  @NotNull
   YangCurrentFunctionInvocation getCurrentFunctionInvocation();
 
   @NotNull

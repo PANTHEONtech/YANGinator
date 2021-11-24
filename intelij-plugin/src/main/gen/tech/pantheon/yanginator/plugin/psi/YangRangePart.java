@@ -10,7 +10,10 @@ import java.util.List;
 public interface YangRangePart extends YangNamedElement {
 
   @NotNull
-  List<YangOptsep> getOptsepList();
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   List<YangRangeBoundary> getRangeBoundaryList();

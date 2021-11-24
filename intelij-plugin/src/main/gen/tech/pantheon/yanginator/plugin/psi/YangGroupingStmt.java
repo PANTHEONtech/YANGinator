@@ -11,19 +11,19 @@ import java.util.List;
 public interface YangGroupingStmt extends YangGeneratedReferenceType {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   List<YangGroupingStmtBody> getGroupingStmtBodyList();
 
   @NotNull
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getGroupingKeyword();

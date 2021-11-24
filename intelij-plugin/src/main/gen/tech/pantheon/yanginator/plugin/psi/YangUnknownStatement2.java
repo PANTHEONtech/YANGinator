@@ -10,16 +10,16 @@ import java.util.List;
 public interface YangUnknownStatement2 extends YangNamedElement {
 
   @NotNull
-  YangIdentifier getIdentifier();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  YangIdentifier getIdentifier();
 
   @Nullable
   YangPrefix getPrefix();
-
-  @Nullable
-  YangSep getSep();
 
   @Nullable
   YangString getString();

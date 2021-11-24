@@ -10,16 +10,16 @@ import java.util.List;
 public interface YangDeviateDeleteStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
   List<YangStatement> getStatementList();
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangComment> getCommentList();
 
   @NotNull
-  YangSep getSep();
-
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getDeleteKeyword();

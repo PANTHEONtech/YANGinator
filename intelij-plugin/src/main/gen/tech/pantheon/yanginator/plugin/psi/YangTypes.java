@@ -33,8 +33,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangConfigStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangContactStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangContainerStmtBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangContainerStmtImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangCrImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangCrlfImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangCurrentFunctionInvocationImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDataDefStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDateArgImpl;
@@ -78,7 +76,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangHexdigImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangHierPartImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangHighlighterTokensImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangHostImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangHtabImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIPLiteralImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIPv4AddressImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIPv6AddressImpl;
@@ -117,8 +114,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangLengthBoundaryImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLengthPartImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLengthStmtBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLengthStmtImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangLfImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangLineBreakImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLineCommentImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLinkageStmtsBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangLinkageStmtsImpl;
@@ -151,7 +146,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangNonZeroDigitImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNotificationStmtBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNotificationStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNumericalRestrictionsImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangOptsepImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangOrderedByArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangOrderedByArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangOrderedByStmtImpl;
@@ -187,6 +181,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixQuotedImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPresenceStmtImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangPublicSepImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangQueryImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangQuotedStringBodyCharactersImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRangeArgImpl;
@@ -229,18 +224,15 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangSchemaNodeidImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSchemeImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentNzImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangSepImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSingleLineCharactersImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSingleQuoteStringSplitterImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSingleQuotedStringBodyCharactersImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangSpImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSplittedCurrentKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatementImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStmtendImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangStmtsepImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStringRestrictionsBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStringRestrictionsImpl;
@@ -277,7 +269,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangValueStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangVcharImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangWhenStmtBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangWhenStmtImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangWspImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangVersionArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangVersionArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangVersionStmtImpl;
@@ -317,8 +308,6 @@ public interface YangTypes {
   IElementType YANG_CONTACT_STMT = new YangElementType("YANG_CONTACT_STMT");
   IElementType YANG_CONTAINER_STMT = new YangElementType("YANG_CONTAINER_STMT");
   IElementType YANG_CONTAINER_STMT_BODY = new YangElementType("YANG_CONTAINER_STMT_BODY");
-  IElementType YANG_CR = new YangElementType("YANG_CR");
-  IElementType YANG_CRLF = new YangElementType("YANG_CRLF");
   IElementType YANG_CURRENT_FUNCTION_INVOCATION = new YangElementType("YANG_CURRENT_FUNCTION_INVOCATION");
   IElementType YANG_DATA_DEF_STMT = new YangElementType("YANG_DATA_DEF_STMT");
   IElementType YANG_DATE_ARG = new YangElementType("YANG_DATE_ARG");
@@ -360,7 +349,6 @@ public interface YangTypes {
   IElementType YANG_HIER_PART = new YangElementType("YANG_HIER_PART");
   IElementType YANG_HIGHLIGHTER_TOKENS = new YangElementType("YANG_HIGHLIGHTER_TOKENS");
   IElementType YANG_HOST = new YangElementType("YANG_HOST");
-  IElementType YANG_HTAB = new YangElementType("YANG_HTAB");
   IElementType YANG_H_16 = new YangElementType("YANG_H_16");
   IElementType YANG_H_IDENTIFIER_LITERAL = new YangElementType("YANG_H_IDENTIFIER_LITERAL");
   IElementType YANG_IDENTIFIER = new YangElementType("YANG_IDENTIFIER");
@@ -401,8 +389,6 @@ public interface YangTypes {
   IElementType YANG_LENGTH_PART = new YangElementType("YANG_LENGTH_PART");
   IElementType YANG_LENGTH_STMT = new YangElementType("YANG_LENGTH_STMT");
   IElementType YANG_LENGTH_STMT_BODY = new YangElementType("YANG_LENGTH_STMT_BODY");
-  IElementType YANG_LF = new YangElementType("YANG_LF");
-  IElementType YANG_LINE_BREAK = new YangElementType("YANG_LINE_BREAK");
   IElementType YANG_LINE_COMMENT = new YangElementType("YANG_LINE_COMMENT");
   IElementType YANG_LINKAGE_STMTS = new YangElementType("YANG_LINKAGE_STMTS");
   IElementType YANG_LINKAGE_STMTS_BODY = new YangElementType("YANG_LINKAGE_STMTS_BODY");
@@ -435,7 +421,6 @@ public interface YangTypes {
   IElementType YANG_NOTIFICATION_STMT = new YangElementType("YANG_NOTIFICATION_STMT");
   IElementType YANG_NOTIFICATION_STMT_BODY = new YangElementType("YANG_NOTIFICATION_STMT_BODY");
   IElementType YANG_NUMERICAL_RESTRICTIONS = new YangElementType("YANG_NUMERICAL_RESTRICTIONS");
-  IElementType YANG_OPTSEP = new YangElementType("YANG_OPTSEP");
   IElementType YANG_ORDERED_BY_ARG = new YangElementType("YANG_ORDERED_BY_ARG");
   IElementType YANG_ORDERED_BY_ARG_STR = new YangElementType("YANG_ORDERED_BY_ARG_STR");
   IElementType YANG_ORDERED_BY_STMT = new YangElementType("YANG_ORDERED_BY_STMT");
@@ -471,6 +456,7 @@ public interface YangTypes {
   IElementType YANG_PREFIX_QUOTED = new YangElementType("YANG_PREFIX_QUOTED");
   IElementType YANG_PREFIX_STMT = new YangElementType("YANG_PREFIX_STMT");
   IElementType YANG_PRESENCE_STMT = new YangElementType("YANG_PRESENCE_STMT");
+  IElementType YANG_PUBLIC_SEP = new YangElementType("YANG_PUBLIC_SEP");
   IElementType YANG_QUERY = new YangElementType("YANG_QUERY");
   IElementType YANG_QUOTED_STRING_BODY_CHARACTERS = new YangElementType("YANG_QUOTED_STRING_BODY_CHARACTERS");
   IElementType YANG_RANGE_ARG = new YangElementType("YANG_RANGE_ARG");
@@ -513,19 +499,16 @@ public interface YangTypes {
   IElementType YANG_SCHEME = new YangElementType("YANG_SCHEME");
   IElementType YANG_SEGMENT = new YangElementType("YANG_SEGMENT");
   IElementType YANG_SEGMENT_NZ = new YangElementType("YANG_SEGMENT_NZ");
-  IElementType YANG_SEP = new YangElementType("YANG_SEP");
   IElementType YANG_SHORT_CASE_STMT = new YangElementType("YANG_SHORT_CASE_STMT");
   IElementType YANG_SINGLE_LINE_CHARACTERS = new YangElementType("YANG_SINGLE_LINE_CHARACTERS");
   IElementType YANG_SINGLE_QUOTED_STRING_BODY_CHARACTERS = new YangElementType("YANG_SINGLE_QUOTED_STRING_BODY_CHARACTERS");
   IElementType YANG_SINGLE_QUOTE_STRING_SPLITTER = new YangElementType("YANG_SINGLE_QUOTE_STRING_SPLITTER");
-  IElementType YANG_SP = new YangElementType("YANG_SP");
   IElementType YANG_SPLITTED_CURRENT_KEYWORD = new YangElementType("YANG_SPLITTED_CURRENT_KEYWORD");
   IElementType YANG_STATEMENT = new YangElementType("YANG_STATEMENT");
   IElementType YANG_STATUS_ARG = new YangElementType("YANG_STATUS_ARG");
   IElementType YANG_STATUS_ARG_STR = new YangElementType("YANG_STATUS_ARG_STR");
   IElementType YANG_STATUS_STMT = new YangElementType("YANG_STATUS_STMT");
   IElementType YANG_STMTEND = new YangElementType("YANG_STMTEND");
-  IElementType YANG_STMTSEP = new YangElementType("YANG_STMTSEP");
   IElementType YANG_STRING = new YangElementType("YANG_STRING");
   IElementType YANG_STRING_RESTRICTIONS = new YangElementType("YANG_STRING_RESTRICTIONS");
   IElementType YANG_STRING_RESTRICTIONS_BODY = new YangElementType("YANG_STRING_RESTRICTIONS_BODY");
@@ -562,7 +545,6 @@ public interface YangTypes {
   IElementType YANG_VCHAR = new YangElementType("YANG_VCHAR");
   IElementType YANG_WHEN_STMT = new YangElementType("YANG_WHEN_STMT");
   IElementType YANG_WHEN_STMT_BODY = new YangElementType("YANG_WHEN_STMT_BODY");
-  IElementType YANG_WSP = new YangElementType("YANG_WSP");
   IElementType YANG_YANG_VERSION_ARG = new YangElementType("YANG_YANG_VERSION_ARG");
   IElementType YANG_YANG_VERSION_ARG_STR = new YangElementType("YANG_YANG_VERSION_ARG_STR");
   IElementType YANG_YANG_VERSION_STMT = new YangElementType("YANG_YANG_VERSION_STMT");
@@ -863,12 +845,6 @@ public interface YangTypes {
       else if (type == YANG_CONTAINER_STMT_BODY) {
         return new YangContainerStmtBodyImpl(node);
       }
-      else if (type == YANG_CR) {
-        return new YangCrImpl(node);
-      }
-      else if (type == YANG_CRLF) {
-        return new YangCrlfImpl(node);
-      }
       else if (type == YANG_CURRENT_FUNCTION_INVOCATION) {
         return new YangCurrentFunctionInvocationImpl(node);
       }
@@ -992,9 +968,6 @@ public interface YangTypes {
       else if (type == YANG_HOST) {
         return new YangHostImpl(node);
       }
-      else if (type == YANG_HTAB) {
-        return new YangHtabImpl(node);
-      }
       else if (type == YANG_H_16) {
         return new YangH16Impl(node);
       }
@@ -1115,12 +1088,6 @@ public interface YangTypes {
       else if (type == YANG_LENGTH_STMT_BODY) {
         return new YangLengthStmtBodyImpl(node);
       }
-      else if (type == YANG_LF) {
-        return new YangLfImpl(node);
-      }
-      else if (type == YANG_LINE_BREAK) {
-        return new YangLineBreakImpl(node);
-      }
       else if (type == YANG_LINE_COMMENT) {
         return new YangLineCommentImpl(node);
       }
@@ -1216,9 +1183,6 @@ public interface YangTypes {
       }
       else if (type == YANG_NUMERICAL_RESTRICTIONS) {
         return new YangNumericalRestrictionsImpl(node);
-      }
-      else if (type == YANG_OPTSEP) {
-        return new YangOptsepImpl(node);
       }
       else if (type == YANG_ORDERED_BY_ARG) {
         return new YangOrderedByArgImpl(node);
@@ -1324,6 +1288,9 @@ public interface YangTypes {
       }
       else if (type == YANG_PRESENCE_STMT) {
         return new YangPresenceStmtImpl(node);
+      }
+      else if (type == YANG_PUBLIC_SEP) {
+        return new YangPublicSepImpl(node);
       }
       else if (type == YANG_QUERY) {
         return new YangQueryImpl(node);
@@ -1451,9 +1418,6 @@ public interface YangTypes {
       else if (type == YANG_SEGMENT_NZ) {
         return new YangSegmentNzImpl(node);
       }
-      else if (type == YANG_SEP) {
-        return new YangSepImpl(node);
-      }
       else if (type == YANG_SINGLE_LINE_CHARACTERS) {
         return new YangSingleLineCharactersImpl(node);
       }
@@ -1462,9 +1426,6 @@ public interface YangTypes {
       }
       else if (type == YANG_SINGLE_QUOTE_STRING_SPLITTER) {
         return new YangSingleQuoteStringSplitterImpl(node);
-      }
-      else if (type == YANG_SP) {
-        return new YangSpImpl(node);
       }
       else if (type == YANG_SPLITTED_CURRENT_KEYWORD) {
         return new YangSplittedCurrentKeywordImpl(node);
@@ -1483,9 +1444,6 @@ public interface YangTypes {
       }
       else if (type == YANG_STMTEND) {
         return new YangStmtendImpl(node);
-      }
-      else if (type == YANG_STMTSEP) {
-        return new YangStmtsepImpl(node);
       }
       else if (type == YANG_STRING) {
         return new YangStringImpl(node);
@@ -1594,9 +1552,6 @@ public interface YangTypes {
       }
       else if (type == YANG_WHEN_STMT_BODY) {
         return new YangWhenStmtBodyImpl(node);
-      }
-      else if (type == YANG_WSP) {
-        return new YangWspImpl(node);
       }
       else if (type == YANG_YANG_VERSION_ARG) {
         return new YangYangVersionArgImpl(node);

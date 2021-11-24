@@ -4,14 +4,18 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIntegerValue;
 import tech.pantheon.yanginator.plugin.psi.YangIntegerValueStr;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangValueStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VALUE_KEYWORD;
 
@@ -33,6 +37,18 @@ public class YangValueStmtImpl extends YangStatementImpl implements YangValueStm
   }
 
   @Override
+  @NotNull
+  public List<YangLineComment> getLineCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineComment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangComment> getCommentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+  }
+
+  @Override
   @Nullable
   public YangIntegerValue getIntegerValue() {
     return findChildByClass(YangIntegerValue.class);
@@ -42,12 +58,6 @@ public class YangValueStmtImpl extends YangStatementImpl implements YangValueStm
   @Nullable
   public YangIntegerValueStr getIntegerValueStr() {
     return findChildByClass(YangIntegerValueStr.class);
-  }
-
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
   }
 
   @Override

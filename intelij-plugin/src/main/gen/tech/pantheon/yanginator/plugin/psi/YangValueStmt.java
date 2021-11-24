@@ -5,16 +5,21 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangValueStmt extends YangStatement {
+
+  @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @Nullable
   YangIntegerValue getIntegerValue();
 
   @Nullable
   YangIntegerValueStr getIntegerValueStr();
-
-  @NotNull
-  YangSep getSep();
 
   @NotNull
   YangStmtend getStmtend();

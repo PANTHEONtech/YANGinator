@@ -9,13 +9,13 @@ import java.util.List;
 public interface YangUsesAugmentStmt extends YangStatement {
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangSep getSep();
+  List<YangComment> getCommentList();
 
   @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   YangUsesAugmentArgStr getUsesAugmentArgStr();

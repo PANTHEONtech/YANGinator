@@ -11,7 +11,6 @@ import tech.pantheon.yanginator.plugin.psi.YangPathKeyExpr;
 import tech.pantheon.yanginator.plugin.psi.YangRelPathKeyexpr;
 import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -37,12 +36,6 @@ public class YangPathKeyExprImpl extends YangNamedElementImpl implements YangPat
   @NotNull
   public List<YangStringSplitter> getStringSplitterList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
   }
 
   @Override

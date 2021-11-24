@@ -8,6 +8,6 @@ import java.util.List;
 public interface YangStringSplitter extends YangNamedElement {
 
   @NotNull
-  List<YangSep> getSepList();
+  List<YangPublicSep> getPublicSepList();
 
 }

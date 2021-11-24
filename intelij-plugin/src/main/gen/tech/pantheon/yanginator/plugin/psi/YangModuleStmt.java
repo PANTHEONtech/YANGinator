@@ -10,7 +10,13 @@ import java.util.List;
 public interface YangModuleStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
   YangBodyStmts getBodyStmts();
+
+  @NotNull
+  List<YangComment> getCommentList();
 
   @NotNull
   YangIdentifierArgQuoted getIdentifierArgQuoted();
@@ -25,16 +31,10 @@ public interface YangModuleStmt extends YangStatement {
   YangModuleHeaderStmts getModuleHeaderStmts();
 
   @NotNull
-  List<YangOptsep> getOptsepList();
-
-  @NotNull
   YangRevisionStmts getRevisionStmts();
 
   @NotNull
-  YangSep getSep();
-
-  @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getLeftBrace();

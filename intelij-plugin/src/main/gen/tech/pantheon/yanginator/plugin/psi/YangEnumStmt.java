@@ -10,19 +10,19 @@ import java.util.List;
 public interface YangEnumStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
+  List<YangComment> getCommentList();
+
+  @NotNull
   List<YangEnumStmtBody> getEnumStmtBodyList();
 
   @NotNull
-  YangOptsep getOptsep();
-
-  @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
-
-  @NotNull
   YangString getString();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getEnumKeyword();

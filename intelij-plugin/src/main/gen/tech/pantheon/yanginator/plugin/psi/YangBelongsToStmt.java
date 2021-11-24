@@ -9,19 +9,19 @@ import java.util.List;
 public interface YangBelongsToStmt extends YangStatement {
 
   @NotNull
-  YangIdentifierArgQuoted getIdentifierArgQuoted();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull
   YangPrefixStmt getPrefixStmt();
 
   @NotNull
-  YangSep getSep();
-
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getBelongsToKeyword();

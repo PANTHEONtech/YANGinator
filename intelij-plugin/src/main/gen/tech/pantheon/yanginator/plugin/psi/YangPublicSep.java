@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangOptsep extends YangNamedElement {
+public interface YangPublicSep extends YangNamedElement {
 
   @NotNull
-  List<YangWsp> getWspList();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  List<YangLineBreak> getLineBreakList();
+  List<YangComment> getCommentList();
 
 }

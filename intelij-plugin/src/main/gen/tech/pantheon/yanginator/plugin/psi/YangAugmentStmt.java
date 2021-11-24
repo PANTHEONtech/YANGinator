@@ -9,19 +9,19 @@ import java.util.List;
 public interface YangAugmentStmt extends YangStatement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
   YangAugmentArgStr getAugmentArgStr();
 
   @NotNull
   List<YangAugmentStmtBody> getAugmentStmtBodyList();
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangComment> getCommentList();
 
   @NotNull
-  YangSep getSep();
-
-  @NotNull
-  YangStmtsep getStmtsep();
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   PsiElement getAugmentKeyword();

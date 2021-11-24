@@ -10,16 +10,16 @@ import java.util.List;
 public interface YangWhenStmt extends YangStatement {
 
   @NotNull
-  YangOptsep getOptsep();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  YangSep getSep();
-
-  @Nullable
-  YangStmtsep getStmtsep();
+  List<YangComment> getCommentList();
 
   @NotNull
   YangString getString();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
   @NotNull
   List<YangWhenStmtBody> getWhenStmtBodyList();

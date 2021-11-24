@@ -8,9 +8,15 @@ import java.util.List;
 public interface YangBitsSpecification extends YangNamedElement {
 
   @NotNull
+  List<YangLineComment> getLineCommentList();
+
+  @NotNull
   List<YangBitStmt> getBitStmtList();
 
   @NotNull
-  List<YangStmtsep> getStmtsepList();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  List<YangUnknownStatement> getUnknownStatementList();
 
 }

@@ -8,9 +8,12 @@ import java.util.List;
 public interface YangUniqueArg extends YangNamedElement {
 
   @NotNull
-  List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList();
+  List<YangLineComment> getLineCommentList();
 
   @NotNull
-  List<YangSep> getSepList();
+  List<YangComment> getCommentList();
+
+  @NotNull
+  List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList();
 
 }

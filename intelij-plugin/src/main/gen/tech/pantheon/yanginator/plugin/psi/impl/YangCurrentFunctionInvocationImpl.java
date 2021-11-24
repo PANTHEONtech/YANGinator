@@ -11,7 +11,6 @@ import tech.pantheon.yanginator.plugin.psi.YangCurrentFunctionInvocation;
 import tech.pantheon.yanginator.plugin.psi.YangSplittedCurrentKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -39,12 +38,6 @@ public class YangCurrentFunctionInvocationImpl extends YangNamedElementImpl impl
   @NotNull
   public List<YangStringSplitter> getStringSplitterList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
   }
 
   @Override

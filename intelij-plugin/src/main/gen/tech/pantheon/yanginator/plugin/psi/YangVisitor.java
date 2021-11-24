@@ -7,23 +7,11 @@ import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public class YangVisitor extends PsiElementVisitor {
 
-  public void visitCr(@NotNull YangCr o) {
-    visitNamedElement(o);
-  }
-
-  public void visitCrlf(@NotNull YangCrlf o) {
-    visitNamedElement(o);
-  }
-
   public void visitDigit(@NotNull YangDigit o) {
     visitNamedElement(o);
   }
 
   public void visitHexdig(@NotNull YangHexdig o) {
-    visitNamedElement(o);
-  }
-
-  public void visitHtab(@NotNull YangHtab o) {
     visitNamedElement(o);
   }
 
@@ -43,19 +31,11 @@ public class YangVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
-  public void visitLf(@NotNull YangLf o) {
-    visitNamedElement(o);
-  }
-
   public void visitLineComment(@NotNull YangLineComment o) {
     visitNamedElement(o);
   }
 
   public void visitSingleQuoteStringSplitter(@NotNull YangSingleQuoteStringSplitter o) {
-    visitNamedElement(o);
-  }
-
-  public void visitSp(@NotNull YangSp o) {
     visitNamedElement(o);
   }
 
@@ -72,10 +52,6 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitVchar(@NotNull YangVchar o) {
-    visitNamedElement(o);
-  }
-
-  public void visitWsp(@NotNull YangWsp o) {
     visitNamedElement(o);
   }
 
@@ -495,10 +471,6 @@ public class YangVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
-  public void visitLineBreak(@NotNull YangLineBreak o) {
-    visitNamedElement(o);
-  }
-
   public void visitLinkageStmts(@NotNull YangLinkageStmts o) {
     visitNamedElement(o);
   }
@@ -620,10 +592,6 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitNumericalRestrictions(@NotNull YangNumericalRestrictions o) {
-    visitNamedElement(o);
-  }
-
-  public void visitOptsep(@NotNull YangOptsep o) {
     visitNamedElement(o);
   }
 
@@ -765,6 +733,10 @@ public class YangVisitor extends PsiElementVisitor {
 
   public void visitPresenceStmt(@NotNull YangPresenceStmt o) {
     visitStatement(o);
+  }
+
+  public void visitPublicSep(@NotNull YangPublicSep o) {
+    visitNamedElement(o);
   }
 
   public void visitQuery(@NotNull YangQuery o) {
@@ -935,10 +907,6 @@ public class YangVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
-  public void visitSep(@NotNull YangSep o) {
-    visitNamedElement(o);
-  }
-
   public void visitShortCaseStmt(@NotNull YangShortCaseStmt o) {
     visitStatement(o);
   }
@@ -968,10 +936,6 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitStmtend(@NotNull YangStmtend o) {
-    visitNamedElement(o);
-  }
-
-  public void visitStmtsep(@NotNull YangStmtsep o) {
     visitNamedElement(o);
   }
 
