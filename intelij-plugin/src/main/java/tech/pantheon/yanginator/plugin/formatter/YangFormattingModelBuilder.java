@@ -14,14 +14,6 @@ import tech.pantheon.yanginator.plugin.YangLanguage;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 public class YangFormattingModelBuilder implements FormattingModelBuilder {
-    private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
-        return new SpacingBuilder(settings, YangLanguage.INSTANCE)
-                .after(YangTypes.YANG_TYPE_KEYWORD)
-                .spaces(1)
-                .before(YangTypes.YANG_IDENTIFIER)
-                .none();
-    }
-
     @Override
     public @NotNull FormattingModel createModel(@NotNull final FormattingContext formattingContext) {
         final CodeStyleSettings codeStyleSettings = formattingContext.getCodeStyleSettings();
@@ -32,5 +24,13 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
                                 Alignment.createAlignment(),
                                 createSpaceBuilder(codeStyleSettings)),
                         codeStyleSettings);
+    }
+
+    private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
+        return new SpacingBuilder(settings, YangLanguage.INSTANCE)
+                .after(YangTypes.YANG_TYPE_KEYWORD)
+                .spaces(1)
+                .before(YangTypes.YANG_IDENTIFIER)
+                .none();
     }
 }

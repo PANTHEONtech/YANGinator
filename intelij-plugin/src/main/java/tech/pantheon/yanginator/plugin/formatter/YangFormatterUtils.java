@@ -5,7 +5,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
-public class YangFormatterUtils {
+final class YangFormatterUtils {
     private static final TokenSet WHITESPACE_SET = TokenSet.create(
             YangTypes.YANG_SPACE,
             YangTypes.YANG_TAB,
@@ -88,14 +88,17 @@ public class YangFormatterUtils {
             YangTypes.YANG_LINE_COMMENT
     );
 
-    protected static Indent getIndentForType(final IElementType type) {
+    private YangFormatterUtils() {
+    }
+
+    static Indent getIndentForType(final IElementType type) {
         if (STATEMENT_SET.contains(type)) {
             return Indent.getNormalIndent();
         }
         return Indent.getNoneIndent();
     }
 
-    protected static boolean createBlock(final IElementType type) {
+    static boolean shouldBuildBlock(final IElementType type) {
         return !WHITESPACE_SET.contains(type);
     }
 }
