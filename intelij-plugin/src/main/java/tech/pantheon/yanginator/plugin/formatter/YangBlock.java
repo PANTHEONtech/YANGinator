@@ -36,7 +36,7 @@ public class YangBlock extends AbstractBlock {
         final List<Block> blocks = new ArrayList<>();
         ASTNode child = myNode.getFirstChildNode();
         while (child != null) {
-            if (YangFormatterUtils.createBlock(child.getElementType())) {
+            if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
                 Block block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
                         spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
                 blocks.add(block);
