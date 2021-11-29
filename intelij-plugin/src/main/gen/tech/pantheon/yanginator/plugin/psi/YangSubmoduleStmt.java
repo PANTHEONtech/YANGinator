@@ -27,7 +27,7 @@ public interface YangSubmoduleStmt extends YangStatement {
   @Nullable
   YangMetaStmts getMetaStmts();
 
-  @NotNull
+  @Nullable
   YangRevisionStmts getRevisionStmts();
 
   @NotNull

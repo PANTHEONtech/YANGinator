@@ -79,9 +79,9 @@ public class YangSubmoduleStmtImpl extends YangStatementImpl implements YangSubm
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangRevisionStmts getRevisionStmts() {
-    return findNotNullChildByClass(YangRevisionStmts.class);
+    return findChildByClass(YangRevisionStmts.class);
   }
 
   @Override

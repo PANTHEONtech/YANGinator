@@ -10,7 +10,7 @@
 
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
-   parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
+
 
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
@@ -56,7 +56,7 @@ module-stmt ::= optsep MODULE_KEYWORD sep identifier-arg-quoted
  module-header-stmts
  linkage-stmts?
  meta-stmts?
- revision-stmts
+ revision-stmts?
  body-stmts
  RIGHT_BRACE ) optsep
 
@@ -67,7 +67,7 @@ submodule-stmt ::= optsep SUBMODULE_KEYWORD sep identifier-arg-quoted
  submodule-header-stmts
  linkage-stmts?
  meta-stmts?
- revision-stmts
+ revision-stmts?
  body-stmts
  RIGHT_BRACE ) optsep
 
@@ -88,14 +88,14 @@ meta-stmts-body ::= ( organization-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
- meta-stmts ::= meta-stmts-body *
+ meta-stmts ::= meta-stmts-body +
 
 linkage-stmts-body ::= ( import-stmt stmtsep ) | // *
  ( include-stmt stmtsep ) // *
 
- linkage-stmts ::= linkage-stmts-body *
+ linkage-stmts ::= linkage-stmts-body +
 
-revision-stmts ::= ( revision-stmt stmtsep ) *
+revision-stmts ::= ( revision-stmt stmtsep ) +
 
 body-stmts ::= ( ( extension-stmt |
  feature-stmt |

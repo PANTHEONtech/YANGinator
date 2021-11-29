@@ -30,7 +30,7 @@ public interface YangModuleStmt extends YangStatement {
   @NotNull
   YangModuleHeaderStmts getModuleHeaderStmts();
 
-  @NotNull
+  @Nullable
   YangRevisionStmts getRevisionStmts();
 
   @NotNull
