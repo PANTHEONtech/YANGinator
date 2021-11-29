@@ -1,0 +1,15 @@
+module acme-foo {
+  namespace "http://acme.example.com/foo";
+  prefix "acfoo";
+
+  //aaa
+  import my-extensions{
+    prefix "myext";
+  }
+  list interface {
+    key "name";
+    leaf name {
+      type string;
+    }
+  }
+}

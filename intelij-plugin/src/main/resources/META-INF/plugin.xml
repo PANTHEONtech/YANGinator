@@ -79,6 +79,9 @@
         <!-- Formatter -->
         <lang.formatter language="yang-pantheon"
                         implementationClass="tech.pantheon.yanginator.plugin.formatter.YangFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider
+                implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangLanguageCodeStyleSettingsProvider"/>
 
         <!-- Completion -->
         <completion.contributor language="yang-pantheon"
