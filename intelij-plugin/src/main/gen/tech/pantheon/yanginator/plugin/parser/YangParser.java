@@ -6980,17 +6980,20 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // linkage-stmts-body *
+  // linkage-stmts-body +
   public static boolean linkage_stmts(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "linkage_stmts")) return false;
+    if (!nextTokenIs(b, "<linkage stmts>", YANG_IMPORT_KEYWORD, YANG_INCLUDE_KEYWORD)) return false;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_LINKAGE_STMTS, "<linkage stmts>");
-    while (true) {
+    r = linkage_stmts_body(b, l + 1);
+    while (r) {
       int c = current_position_(b);
       if (!linkage_stmts_body(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "linkage_stmts", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
-    return true;
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -7413,17 +7416,19 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // meta-stmts-body *
+  // meta-stmts-body +
   public static boolean meta_stmts(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "meta_stmts")) return false;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_META_STMTS, "<meta stmts>");
-    while (true) {
+    r = meta_stmts_body(b, l + 1);
+    while (r) {
       int c = current_position_(b);
       if (!meta_stmts_body(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "meta_stmts", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
-    return true;
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -7610,7 +7615,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   //  module-header-stmts
   //  linkage-stmts?
   //  meta-stmts?
-  //  revision-stmts
+  //  revision-stmts?
   //  body-stmts
   //  RIGHT_BRACE ) optsep
   public static boolean module_stmt(PsiBuilder b, int l) {
@@ -7632,7 +7637,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   //  module-header-stmts
   //  linkage-stmts?
   //  meta-stmts?
-  //  revision-stmts
+  //  revision-stmts?
   //  body-stmts
   //  RIGHT_BRACE
   private static boolean module_stmt_5(PsiBuilder b, int l) {
@@ -7644,7 +7649,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     r = r && module_header_stmts(b, l + 1);
     r = r && module_stmt_5_3(b, l + 1);
     r = r && module_stmt_5_4(b, l + 1);
-    r = r && revision_stmts(b, l + 1);
+    r = r && module_stmt_5_5(b, l + 1);
     r = r && body_stmts(b, l + 1);
     r = r && consumeToken(b, YANG_RIGHT_BRACE);
     exit_section_(b, m, null, r);
@@ -7662,6 +7667,13 @@ public class YangParser implements PsiParser, LightPsiParser {
   private static boolean module_stmt_5_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_stmt_5_4")) return false;
     meta_stmts(b, l + 1);
+    return true;
+  }
+
+  // revision-stmts?
+  private static boolean module_stmt_5_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_stmt_5_5")) return false;
+    revision_stmts(b, l + 1);
     return true;
   }
 
@@ -10670,17 +10682,20 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( revision-stmt stmtsep ) *
+  // ( revision-stmt stmtsep ) +
   public static boolean revision_stmts(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "revision_stmts")) return false;
-    Marker m = enter_section_(b, l, _NONE_, YANG_REVISION_STMTS, "<revision stmts>");
-    while (true) {
+    if (!nextTokenIs(b, YANG_REVISION_KEYWORD)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = revision_stmts_0(b, l + 1);
+    while (r) {
       int c = current_position_(b);
       if (!revision_stmts_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "revision_stmts", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
-    return true;
+    exit_section_(b, m, YANG_REVISION_STMTS, r);
+    return r;
   }
 
   // revision-stmt stmtsep
@@ -11428,7 +11443,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   //  submodule-header-stmts
   //  linkage-stmts?
   //  meta-stmts?
-  //  revision-stmts
+  //  revision-stmts?
   //  body-stmts
   //  RIGHT_BRACE ) optsep
   public static boolean submodule_stmt(PsiBuilder b, int l) {
@@ -11450,7 +11465,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   //  submodule-header-stmts
   //  linkage-stmts?
   //  meta-stmts?
-  //  revision-stmts
+  //  revision-stmts?
   //  body-stmts
   //  RIGHT_BRACE
   private static boolean submodule_stmt_5(PsiBuilder b, int l) {
@@ -11462,7 +11477,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     r = r && submodule_header_stmts(b, l + 1);
     r = r && submodule_stmt_5_3(b, l + 1);
     r = r && submodule_stmt_5_4(b, l + 1);
-    r = r && revision_stmts(b, l + 1);
+    r = r && submodule_stmt_5_5(b, l + 1);
     r = r && body_stmts(b, l + 1);
     r = r && consumeToken(b, YANG_RIGHT_BRACE);
     exit_section_(b, m, null, r);
@@ -11480,6 +11495,13 @@ public class YangParser implements PsiParser, LightPsiParser {
   private static boolean submodule_stmt_5_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "submodule_stmt_5_4")) return false;
     meta_stmts(b, l + 1);
+    return true;
+  }
+
+  // revision-stmts?
+  private static boolean submodule_stmt_5_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "submodule_stmt_5_5")) return false;
+    revision_stmts(b, l + 1);
     return true;
   }
 
