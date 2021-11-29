@@ -11,6 +11,7 @@ import com.intellij.formatting.WrapType;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangLanguage;
+import tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettings;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 public class YangFormattingModelBuilder implements FormattingModelBuilder {
@@ -27,9 +28,10 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
     }
 
     private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
+        final YangCodeStyleSettings yangSetting = settings.getCustomSettings(YangCodeStyleSettings.class);
         return new SpacingBuilder(settings, YangLanguage.INSTANCE)
                 .after(YangTypes.YANG_TYPE_KEYWORD)
-                .spaces(1)
+                .spaceIf(yangSetting.SPACE_AFTER_KEYWORD)
                 .before(YangTypes.YANG_IDENTIFIER)
                 .none();
     }
