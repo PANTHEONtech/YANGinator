@@ -88,6 +88,10 @@ final class YangFormatterUtils {
             YangTypes.YANG_LINE_COMMENT
     );
 
+    private static final TokenSet DO_NOT_ALIGN_SET = TokenSet.create(
+            YangTypes.YANG_STRING_SPLITTER
+    );
+
     private YangFormatterUtils() {
     }
 
@@ -100,5 +104,9 @@ final class YangFormatterUtils {
 
     static boolean shouldBuildBlock(final IElementType type) {
         return !WHITESPACE_SET.contains(type);
+    }
+
+    static boolean shouldAlign(final IElementType type) {
+        return !DO_NOT_ALIGN_SET.contains(type);
     }
 }

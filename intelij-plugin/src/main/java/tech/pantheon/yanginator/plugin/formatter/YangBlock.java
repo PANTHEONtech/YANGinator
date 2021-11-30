@@ -37,13 +37,24 @@ public class YangBlock extends AbstractBlock {
         ASTNode child = myNode.getFirstChildNode();
         while (child != null) {
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
-                Block block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
-                        spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
-                blocks.add(block);
+                blocks.add(buildBlock(child));
             }
             child = child.getTreeNext();
         }
         return blocks;
+    }
+
+    @NotNull
+    private Block buildBlock(final ASTNode child) {
+        Block block;
+        if (YangFormatterUtils.shouldAlign(child.getElementType())) {
+            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
+                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
+        }else {
+            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), null,
+                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
+        }
+        return block;
     }
 
     @Override

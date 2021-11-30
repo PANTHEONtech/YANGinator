@@ -1055,7 +1055,7 @@ identifier ::= identifier-quoted // (ALPHA | UNDERSCORE | identifier-literal) (A
 
 identifier-quoted ::= STRING_SPLITTER? !(('X'|'x') ('M'|'m') ('L'|'l')) (ALPHA | UNDERSCORE | identifier-literal) STRING_SPLITTER? (ALPHA | DIGIT | UNDERSCORE | DASH | DOT | identifier-literal | STRING_SPLITTER)*
 
-STRING_SPLITTER ::= DOUBLE_QUOTE public-sep? "+" public-sep? DOUBLE_QUOTE
+STRING_SPLITTER ::= DOUBLE_QUOTE sep? "+" sep? DOUBLE_QUOTE
 SINGLE_QUOTE_STRING_SPLITTER ::= SINGLE_QUOTE sep? "+" sep? SINGLE_QUOTE
 
 identifier-ref-arg-quoted ::= identifier-ref-arg | ( DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE ) //< a string that matches the rule identifier-ref-arg >
@@ -1088,10 +1088,6 @@ private optsep ::=  ( WSP | line-break )*
 private stmtsep ::=  (WSP | line-break  | unknown-statement)*
 
 private line-break ::= CRLF | LF
-
-// workaround for formatter not formatting string splitter correctly
-// wraps spaces so formatter does not consider them as spaces
-public-sep ::= sep
 
 non-zero-digit ::= POSITIVE_NUMBER
 

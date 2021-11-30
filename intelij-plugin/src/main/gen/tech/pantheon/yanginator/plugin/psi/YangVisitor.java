@@ -735,10 +735,6 @@ public class YangVisitor extends PsiElementVisitor {
     visitStatement(o);
   }
 
-  public void visitPublicSep(@NotNull YangPublicSep o) {
-    visitNamedElement(o);
-  }
-
   public void visitQuery(@NotNull YangQuery o) {
     visitNamedElement(o);
   }

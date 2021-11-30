@@ -181,7 +181,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixQuotedImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPrefixStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPresenceStmtImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangPublicSepImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangQueryImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangQuotedStringBodyCharactersImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRangeArgImpl;
@@ -456,7 +455,6 @@ public interface YangTypes {
   IElementType YANG_PREFIX_QUOTED = new YangElementType("YANG_PREFIX_QUOTED");
   IElementType YANG_PREFIX_STMT = new YangElementType("YANG_PREFIX_STMT");
   IElementType YANG_PRESENCE_STMT = new YangElementType("YANG_PRESENCE_STMT");
-  IElementType YANG_PUBLIC_SEP = new YangElementType("YANG_PUBLIC_SEP");
   IElementType YANG_QUERY = new YangElementType("YANG_QUERY");
   IElementType YANG_QUOTED_STRING_BODY_CHARACTERS = new YangElementType("YANG_QUOTED_STRING_BODY_CHARACTERS");
   IElementType YANG_RANGE_ARG = new YangElementType("YANG_RANGE_ARG");
@@ -1288,9 +1286,6 @@ public interface YangTypes {
       }
       else if (type == YANG_PRESENCE_STMT) {
         return new YangPresenceStmtImpl(node);
-      }
-      else if (type == YANG_PUBLIC_SEP) {
-        return new YangPublicSepImpl(node);
       }
       else if (type == YANG_QUERY) {
         return new YangQueryImpl(node);

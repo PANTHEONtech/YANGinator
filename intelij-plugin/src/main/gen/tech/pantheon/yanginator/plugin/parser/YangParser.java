@@ -1270,7 +1270,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE public-sep? "+" public-sep? DOUBLE_QUOTE
+  // DOUBLE_QUOTE sep? "+" sep? DOUBLE_QUOTE
   public static boolean STRING_SPLITTER(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER")) return false;
     if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
@@ -1285,17 +1285,17 @@ public class YangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // public-sep?
+  // sep?
   private static boolean STRING_SPLITTER_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER_1")) return false;
-    public_sep(b, l + 1);
+    sep(b, l + 1);
     return true;
   }
 
-  // public-sep?
+  // sep?
   private static boolean STRING_SPLITTER_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "STRING_SPLITTER_3")) return false;
-    public_sep(b, l + 1);
+    sep(b, l + 1);
     return true;
   }
 
@@ -9258,17 +9258,6 @@ public class YangParser implements PsiParser, LightPsiParser {
     r = r && string(b, l + 1);
     r = r && stmtend(b, l + 1);
     exit_section_(b, m, YANG_PRESENCE_STMT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // sep
-  public static boolean public_sep(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "public_sep")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, YANG_PUBLIC_SEP, "<public sep>");
-    r = sep(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
