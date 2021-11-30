@@ -10,7 +10,7 @@ intellij {
 
 patchPluginXml {
     sinceBuild = '211'
-    untilBuild = '999.*'
+    untilBuild = ''
 }
 
 publishPlugin {
