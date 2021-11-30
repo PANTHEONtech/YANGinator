@@ -37,8 +37,6 @@
     ]]>
     </change-notes>
 
-    <idea-version since-build="202.6397.94"/>
-
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
 
