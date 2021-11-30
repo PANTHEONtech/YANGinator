@@ -31,7 +31,7 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
         final YangCodeStyleSettings yangSetting = settings.getCustomSettings(YangCodeStyleSettings.class);
         return new SpacingBuilder(settings, YangLanguage.INSTANCE)
                 .after(YangTypes.YANG_TYPE_KEYWORD)
-                .spaceIf(yangSetting.SPACE_AFTER_KEYWORD)
+                .spaceIf(yangSetting.spacesAfterKeyword)
                 .before(YangTypes.YANG_IDENTIFIER)
                 .none();
     }

@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class YangCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
+
     @Override
     public CustomCodeStyleSettings createCustomSettings(final CodeStyleSettings settings) {
         return new YangCodeStyleSettings(settings);
