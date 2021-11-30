@@ -8,6 +8,11 @@ intellij {
     plugins = ['com.intellij.java']
 }
 
+patchPluginXml {
+    sinceBuild = '211'
+    untilBuild = '999.*'
+}
+
 publishPlugin {
     token.set(System.getenv("PUBLISH_TOKEN"))
 }
