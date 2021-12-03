@@ -1,9 +1,21 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
 package tech.pantheon.yanginator.plugin.formatter;
 
 import com.intellij.formatting.Indent;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.DUMMY_BLOCK;
+import static tech.pantheon.yanginator.plugin.YangParserDefinition.FILE;
 
 final class YangFormatterUtils {
     private static final TokenSet WHITESPACE_SET = TokenSet.create(
@@ -88,8 +100,63 @@ final class YangFormatterUtils {
             YangTypes.YANG_LINE_COMMENT
     );
 
+    private static final TokenSet TO_INDENT_STATEMENTS_SET = TokenSet.create(
+            YangTypes.YANG_MODULE_STMT,
+            YangTypes.YANG_SUBMODULE_STMT,
+            YangTypes.YANG_IMPORT_STMT,
+            YangTypes.YANG_INCLUDE_STMT,
+            YangTypes.YANG_BELONGS_TO_STMT,
+            YangTypes.YANG_REVISION_STMT,
+            YangTypes.YANG_EXTENSION_STMT,
+            YangTypes.YANG_ARGUMENT_STMT,
+            YangTypes.YANG_IDENTITY_STMT,
+            YangTypes.YANG_FEATURE_STMT,
+            YangTypes.YANG_TYPEDEF_STMT,
+            YangTypes.YANG_TYPE_STMT,
+            YangTypes.YANG_RANGE_STMT,
+            YangTypes.YANG_LENGTH_STMT,
+            YangTypes.YANG_PATTERN_STMT,
+            YangTypes.YANG_ENUM_STMT,
+            YangTypes.YANG_BIT_STMT,
+            YangTypes.YANG_MUST_STMT,
+            YangTypes.YANG_GROUPING_STMT,
+            YangTypes.YANG_CONTAINER_STMT,
+            YangTypes.YANG_LEAF_STMT,
+            YangTypes.YANG_LEAF_LIST_STMT,
+            YangTypes.YANG_LIST_STMT,
+            YangTypes.YANG_CHOICE_STMT,
+            YangTypes.YANG_CASE_STMT,
+            YangTypes.YANG_ANYXML_STMT,
+            YangTypes.YANG_USES_STMT,
+            YangTypes.YANG_REFINE_STMT,
+            YangTypes.YANG_USES_AUGMENT_STMT,
+            YangTypes.YANG_AUGMENT_STMT,
+            YangTypes.YANG_UNKNOWN_STATEMENT,
+            YangTypes.YANG_UNKNOWN_STATEMENT_2,
+            YangTypes.YANG_WHEN_STMT,
+            YangTypes.YANG_RPC_STMT,
+            YangTypes.YANG_INPUT_STMT,
+            YangTypes.YANG_OUTPUT_STMT,
+            YangTypes.YANG_NOTIFICATION_STMT,
+            YangTypes.YANG_DEVIATION_STMT,
+            YangTypes.YANG_DEVIATE_NOT_SUPPORTED_STMT,
+            YangTypes.YANG_DEVIATE_ADD_STMT,
+            YangTypes.YANG_DEVIATE_DELETE_STMT,
+            YangTypes.YANG_DEVIATE_REPLACE_STMT
+    );
+
     private static final TokenSet DO_NOT_ALIGN_SET = TokenSet.create(
-            YangTypes.YANG_STRING_SPLITTER
+            YangTypes.YANG_STRING_SPLITTER,
+            YangTypes.YANG_SINGLE_QUOTE_STRING_SPLITTER,
+            YangTypes.YANG_NODE_IDENTIFIER,
+            YangTypes.YANG_IDENTIFIER,
+            YangTypes.YANG_IDENTIFIER_QUOTED,
+            YangTypes.YANG_PREFIX
+    );
+
+    private static final TokenSet INVALID_YANG_SET = TokenSet.create(
+            FILE,
+            DUMMY_BLOCK
     );
 
     private YangFormatterUtils() {
@@ -108,5 +175,13 @@ final class YangFormatterUtils {
 
     static boolean shouldAlign(final IElementType type) {
         return !DO_NOT_ALIGN_SET.contains(type);
+    }
+
+    static boolean indentSubStmt(final IElementType type) {
+        return TO_INDENT_STATEMENTS_SET.contains(type);
+    }
+
+    static boolean invalidYang(final IElementType type) {
+        return INVALID_YANG_SET.contains(type);
     }
 }

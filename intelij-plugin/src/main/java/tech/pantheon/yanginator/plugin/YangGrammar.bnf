@@ -1,10 +1,9 @@
 /*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available under the
- *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- *   and is available at http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
  *
  */
 
@@ -1063,7 +1062,7 @@ identifier-ref-arg-quoted ::= identifier-ref-arg | ( DOUBLE_QUOTE identifier-ref
 identifier-ref-arg  ::= (prefix COLON)? identifier
 
 // rfc6020 defines that string could be quoted on unquoted but single quoted string is used sometimes also
-string ::= (DOUBLE_QUOTE (identifier-literal | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE)
+string ::= (DOUBLE_QUOTE (identifier-literal | new-line-characters | SP | HTAB | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE)
     | ( non-quoted-string) |
     ( SINGLE_QUOTE (identifier-literal | single-quoted-string-body-characters | SINGLE_QUOTE_STRING_SPLITTER)* SINGLE_QUOTE)
 
