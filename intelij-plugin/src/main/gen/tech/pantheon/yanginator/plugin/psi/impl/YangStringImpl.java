@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
@@ -7,6 +16,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierLiteral;
+import tech.pantheon.yanginator.plugin.psi.YangNewLineCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangNonQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedStringBodyCharacters;
 import tech.pantheon.yanginator.plugin.psi.YangSingleQuoteStringSplitter;
@@ -49,6 +59,12 @@ public class YangStringImpl extends YangNamedElementImpl implements YangString {
   @NotNull
   public List<YangIdentifierLiteral> getIdentifierLiteralList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangIdentifierLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangNewLineCharacters> getNewLineCharactersList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNewLineCharacters.class);
   }
 
   @Override
