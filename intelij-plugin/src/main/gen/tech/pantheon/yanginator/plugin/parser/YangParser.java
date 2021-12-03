@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.parser;
 
@@ -11210,7 +11219,7 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (DOUBLE_QUOTE (identifier-literal | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE)
+  // (DOUBLE_QUOTE (identifier-literal | new-line-characters | SP | HTAB | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE)
   //     | ( non-quoted-string) |
   //     ( SINGLE_QUOTE (identifier-literal | single-quoted-string-body-characters | SINGLE_QUOTE_STRING_SPLITTER)* SINGLE_QUOTE)
   public static boolean string(PsiBuilder b, int l) {
@@ -11224,7 +11233,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // DOUBLE_QUOTE (identifier-literal | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE
+  // DOUBLE_QUOTE (identifier-literal | new-line-characters | SP | HTAB | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *  DOUBLE_QUOTE
   private static boolean string_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "string_0")) return false;
     boolean r;
@@ -11236,7 +11245,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (identifier-literal | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *
+  // (identifier-literal | new-line-characters | SP | HTAB | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER) *
   private static boolean string_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "string_0_1")) return false;
     while (true) {
@@ -11247,11 +11256,14 @@ public class YangParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // identifier-literal | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER
+  // identifier-literal | new-line-characters | SP | HTAB | quoted-string-body-characters | SINGLE_QUOTE | STRING_SPLITTER
   private static boolean string_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "string_0_1_0")) return false;
     boolean r;
     r = identifier_literal(b, l + 1);
+    if (!r) r = new_line_characters(b, l + 1);
+    if (!r) r = SP(b, l + 1);
+    if (!r) r = HTAB(b, l + 1);
     if (!r) r = quoted_string_body_characters(b, l + 1);
     if (!r) r = consumeToken(b, YANG_SINGLE_QUOTE);
     if (!r) r = STRING_SPLITTER(b, l + 1);
