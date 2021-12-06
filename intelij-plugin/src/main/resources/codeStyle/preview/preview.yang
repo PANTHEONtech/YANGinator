@@ -1,3 +1,4 @@
+/* The preview may not display changes correctly, but it works correctly. */
 module acme-foo {
   namespace "http://acme.example.com/foo";
   prefix "acfoo";

@@ -23,6 +23,9 @@ import tech.pantheon.yanginator.plugin.YangLanguage;
 import tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettings;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
+import static tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils.KEYWORD_SET;
+import static tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils.SEMICOLON_SET;
+
 public class YangFormattingModelBuilder implements FormattingModelBuilder {
     @Override
     public @NotNull FormattingModel createModel(@NotNull final FormattingContext formattingContext) {
@@ -39,9 +42,16 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
     private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
         final YangCodeStyleSettings yangSetting = settings.getCustomSettings(YangCodeStyleSettings.class);
         return new SpacingBuilder(settings, YangLanguage.INSTANCE)
-                .after(YangTypes.YANG_TYPE_KEYWORD)
-                .spaceIf(yangSetting.spacesAfterKeyword)
-                .before(YangTypes.YANG_IDENTIFIER)
-                .none();
+                .after(KEYWORD_SET)
+                .spaces(1)
+                .before(YangTypes.YANG_LEFT_BRACE)
+                .spaceIf(yangSetting.spacesBeforeLeftBrace)
+                .before(SEMICOLON_SET)
+                .none()
+                .beforeInside(YangTypes.YANG_STRING, YangTypes.YANG_UNKNOWN_STATEMENT)
+                .spaces(1)
+                .aroundInside(YangTypes.YANG_OTHER_CHARACTER, YangTypes.YANG_STRING_SPLITTER)
+                .spaceIf(settings.getCommonSettings(YangLanguage.INSTANCE.getID()).SPACE_AROUND_ADDITIVE_OPERATORS);
     }
+
 }

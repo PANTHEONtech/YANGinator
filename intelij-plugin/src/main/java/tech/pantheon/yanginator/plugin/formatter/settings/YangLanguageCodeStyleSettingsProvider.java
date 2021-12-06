@@ -23,22 +23,20 @@ import tech.pantheon.yanginator.plugin.YangLanguage;
 public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
 
     private static final String INDENT_SIZE_OPTION_NAME = "INDENT_SIZE";
-    private static final String CONTINUATION_INDENT_SIZE_OPTION_NAME = "CONTINUATION_INDENT_SIZE";
     private static final String TAB_SIZE_OPTION_NAME = "TAB_SIZE";
-    private static final String SPACE_AROUND_ASSIGNMENT_OPERATORS_OPTION_NAME = "SPACE_AROUND_ASSIGNMENT_OPERATORS";
-    private static final String SPACES_AFTER_KEYWORD_OPTION_NAME = "spacesAfterKeyword";
-    private static final String SPACES_AFTER_KEYWORD_TITLE = "Space after keyword";
-    private static final String CUSTOM_SPACING_GROUP_NAME = "Custom spacing";
+    private static final String SPACE_AROUND_ADDITIVE_OPERATORS_OPTION_NAME = "SPACE_AROUND_ADDITIVE_OPERATORS";
+    private static final String SPACES_BEFORE_LEFT_BRACE_OPTION_NAME = "spacesBeforeLeftBrace";
+    private static final String SPACES_BEFORE_LEFT_BRACE_TITLE = "Space before left brace";
+    private static final String SPACES_BEFORE_LEFT_BRACE_GROUP_NAME = "Custom spacing";
 
     @Override
     public void customizeSettings(@NotNull final CodeStyleSettingsCustomizable consumer,
                                   @NotNull final SettingsType settingsType) {
         if (settingsType == SettingsType.SPACING_SETTINGS) {
-            consumer.showStandardOptions(SPACE_AROUND_ASSIGNMENT_OPERATORS_OPTION_NAME);
-            consumer.showCustomOption(YangCodeStyleSettings.class, SPACES_AFTER_KEYWORD_OPTION_NAME, SPACES_AFTER_KEYWORD_TITLE, CUSTOM_SPACING_GROUP_NAME);
+            consumer.showStandardOptions(SPACE_AROUND_ADDITIVE_OPERATORS_OPTION_NAME);
+            consumer.showCustomOption(YangCodeStyleSettings.class, SPACES_BEFORE_LEFT_BRACE_OPTION_NAME, SPACES_BEFORE_LEFT_BRACE_TITLE, SPACES_BEFORE_LEFT_BRACE_GROUP_NAME);
         } else if (settingsType == SettingsType.INDENT_SETTINGS) {
             consumer.showStandardOptions(INDENT_SIZE_OPTION_NAME);
-            consumer.showStandardOptions(CONTINUATION_INDENT_SIZE_OPTION_NAME);
             consumer.showStandardOptions(TAB_SIZE_OPTION_NAME);
         }
     }
