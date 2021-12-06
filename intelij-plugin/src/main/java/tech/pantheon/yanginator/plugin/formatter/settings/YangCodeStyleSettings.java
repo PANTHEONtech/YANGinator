@@ -14,7 +14,7 @@ import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 
 public class YangCodeStyleSettings extends CustomCodeStyleSettings {
 
-    public boolean spacesAfterKeyword = true;
+    public boolean spacesBeforeLeftBrace = true;
 
     public YangCodeStyleSettings(final CodeStyleSettings settings) {
         super("YangCodeStyleSettings", settings);
