@@ -20,6 +20,7 @@ This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validat
 - Paired brace matcher
 - Breadcrumbs support
 - Go to declaration
+- Code formatting
 
 # Development Environment
 
