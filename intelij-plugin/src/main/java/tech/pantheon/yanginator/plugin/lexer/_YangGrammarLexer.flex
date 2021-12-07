@@ -56,7 +56,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
     LETTER=[a-zA-Z]
     ALPHA={LETTER}
     SINGLE_LINE_COMMENT_START = {FORWARD_SLASH}{2}
-    BLOCK_COMMENT="/*" [^*] ~"*/" | "/*" "*"+ "/"
+    BLOCK_COMMENT= "/*"( [^*] | (\*+[^*/]) )*\*+\/
     //LINE_COMMENT={SINGLE_LINE_COMMENT_START}[^\"\n\r]*{NEWLINE}
     EOL=\R
     TAB=\t
