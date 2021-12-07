@@ -24,15 +24,12 @@
     <change-notes><![CDATA[
         <b>New Features</b>
         <ul>
-          <li>Included grouping statements in breadcrumbs</li>
-          <li>Properly checking identifier's start character</li>
-          <li>Added annotator to check for multiplicity of statements</li>
+          <li>Code formatting</li>
         </ul>
         <br>
         <b>Fixed issues</b>
         <ul>
-          <li>Fixed "Go to" declaration</li>
-          <li>Fixed issues with deviate not-supported</li>
+          <li>Fixed a bug where block comments were not recognized correctly</li>
         </ul>
     ]]>
     </change-notes>
