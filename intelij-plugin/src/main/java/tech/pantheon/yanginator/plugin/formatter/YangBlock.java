@@ -49,6 +49,9 @@ public class YangBlock extends AbstractBlock {
     protected List<Block> buildChildren() {
         final List<Block> blocks = new ArrayList<>();
         ASTNode child = myNode.getFirstChildNode();
+        if (YangFormatterUtils.shouldBuildBeforeModule(myNode.getElementType())) {
+            child = buildBeforeModule(blocks, child);
+        }
         while (child != null) {
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
                 blocks.add(buildBlock(child));
@@ -56,6 +59,24 @@ public class YangBlock extends AbstractBlock {
             child = child.getTreeNext();
         }
         return blocks;
+    }
+
+    @Nullable
+    private ASTNode buildBeforeModule(final List<Block> blocks, ASTNode child) {
+        boolean started = false;
+        while (!started && child != null) {
+            if (child.getElementType() == YangTypes.YANG_MODULE_KEYWORD
+                    || child.getElementType() == YangTypes.YANG_SUBMODULE_KEYWORD) {
+                started = true;
+            }
+            if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
+                Block block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
+                        spacingBuilder, Indent.getNoneIndent());
+                blocks.add(block);
+            }
+            child = child.getTreeNext();
+        }
+        return child;
     }
 
     @NotNull

@@ -184,7 +184,8 @@ final class YangFormatterUtils {
             YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_UNKNOWN_STATEMENT_2,
             YangTypes.YANG_STRING,
-            YangTypes.YANG_LINE_COMMENT
+            YangTypes.YANG_LINE_COMMENT,
+            YangTypes.YANG_BLOCK_COMMENT
     );
 
     private static final TokenSet TO_INDENT_STATEMENTS_SET = TokenSet.create(
@@ -246,6 +247,12 @@ final class YangFormatterUtils {
             DUMMY_BLOCK
     );
 
+    private static final TokenSet BEFORE_MODULE_SET = TokenSet.create(
+            YangTypes.YANG_MODULE_STMT,
+            YangTypes.YANG_SUBMODULE_STMT,
+            FILE
+    );
+
     private YangFormatterUtils() {
     }
 
@@ -270,5 +277,9 @@ final class YangFormatterUtils {
 
     static boolean invalidYang(final IElementType type) {
         return INVALID_YANG_SET.contains(type);
+    }
+
+    static boolean shouldBuildBeforeModule(final IElementType type) {
+        return BEFORE_MODULE_SET.contains(type);
     }
 }
