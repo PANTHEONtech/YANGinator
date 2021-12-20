@@ -18,7 +18,7 @@ public interface YangRefineStmt extends YangStatement {
   @Nullable
   YangRefineAnyxmlStmts getRefineAnyxmlStmts();
 
-  @NotNull
+  @Nullable
   YangRefineArgStr getRefineArgStr();
 
   @Nullable

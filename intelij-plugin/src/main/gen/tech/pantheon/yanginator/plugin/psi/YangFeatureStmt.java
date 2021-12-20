@@ -18,7 +18,7 @@ public interface YangFeatureStmt extends YangStatement {
   @NotNull
   List<YangFeatureStmtBody> getFeatureStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull

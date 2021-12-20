@@ -3,6 +3,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface YangUsesAugmentStmt extends YangStatement {
   @NotNull
   List<YangUnknownStatement> getUnknownStatementList();
 
-  @NotNull
+  @Nullable
   YangUsesAugmentArgStr getUsesAugmentArgStr();
 
   @NotNull
@@ -26,10 +27,10 @@ public interface YangUsesAugmentStmt extends YangStatement {
   @NotNull
   PsiElement getAugmentKeyword();
 
-  @NotNull
+  @Nullable
   PsiElement getLeftBrace();
 
-  @NotNull
+  @Nullable
   PsiElement getRightBrace();
 
 }

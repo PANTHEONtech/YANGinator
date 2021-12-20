@@ -19,7 +19,7 @@ public interface YangGroupingStmt extends YangGeneratedReferenceType {
   @NotNull
   List<YangGroupingStmtBody> getGroupingStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull

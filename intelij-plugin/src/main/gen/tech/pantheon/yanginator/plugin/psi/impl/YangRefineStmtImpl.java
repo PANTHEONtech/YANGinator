@@ -64,9 +64,9 @@ public class YangRefineStmtImpl extends YangStatementImpl implements YangRefineS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangRefineArgStr getRefineArgStr() {
-    return findNotNullChildByClass(YangRefineArgStr.class);
+    return findChildByClass(YangRefineArgStr.class);
   }
 
   @Override

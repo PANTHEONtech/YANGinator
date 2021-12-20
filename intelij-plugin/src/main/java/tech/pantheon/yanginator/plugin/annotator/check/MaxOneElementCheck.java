@@ -35,12 +35,24 @@ public class MaxOneElementCheck implements ElementCheck {
         }
     }
 
+    @Override
+    public void simpleCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                            @NotNull final Class<? extends PsiElement> elementClass) {
+        long childrenCount = Arrays.stream(element.getChildren()).filter(elementClass::isInstance).count();
+        if (childrenCount > 1) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "More than one "
+                            + ElementCheckUtils.translateClassName(elementClass))
+                    .range(element.getFirstChild())
+                    .create();
+        }
+    }
+
 
     public void checkMany(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
                           @NotNull final List<Class<?>> elementClasses) {
         long childrenCount = 0;
         final PsiElement[] children = element.getChildren();
-        for (Class<?>  c : elementClasses) {
+        for (Class<?> c : elementClasses) {
             for (PsiElement ch : children) {
                 childrenCount += Arrays.stream(ch.getChildren()).filter(c::isInstance).count();
             }

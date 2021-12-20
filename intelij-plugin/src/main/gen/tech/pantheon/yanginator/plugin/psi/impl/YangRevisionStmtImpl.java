@@ -58,9 +58,9 @@ public class YangRevisionStmtImpl extends YangStatementImpl implements YangRevis
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangRevisionDate getRevisionDate() {
-    return findNotNullChildByClass(YangRevisionDate.class);
+    return findChildByClass(YangRevisionDate.class);
   }
 
   @Override

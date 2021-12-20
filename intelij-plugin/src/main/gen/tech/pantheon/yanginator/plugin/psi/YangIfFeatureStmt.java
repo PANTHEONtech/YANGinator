@@ -3,6 +3,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ public interface YangIfFeatureStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierRefArgQuoted getIdentifierRefArgQuoted();
 
-  @NotNull
+  @Nullable
   YangStmtend getStmtend();
 
   @NotNull

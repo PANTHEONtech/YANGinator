@@ -18,7 +18,7 @@ public interface YangEnumStmt extends YangStatement {
   @NotNull
   List<YangEnumStmtBody> getEnumStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangString getString();
 
   @NotNull

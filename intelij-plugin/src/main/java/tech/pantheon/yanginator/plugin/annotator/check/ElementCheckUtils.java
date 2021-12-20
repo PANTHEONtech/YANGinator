@@ -33,6 +33,7 @@ import tech.pantheon.yanginator.plugin.psi.YangListStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMandatoryStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMaxElementsStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMinElementsStmt;
+import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangNamespaceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangOrderedByStmt;
 import tech.pantheon.yanginator.plugin.psi.YangOrganizationStmt;
@@ -44,6 +45,7 @@ import tech.pantheon.yanginator.plugin.psi.YangPresenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangStatusStmt;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUnitsStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
@@ -89,7 +91,9 @@ public class ElementCheckUtils {
             Map.entry(YangLengthStmt.class, "length"),
             Map.entry(YangPathStmt.class, "path"),
             Map.entry(YangRequireInstanceStmt.class, "require instance"),
-            Map.entry(YangCaseStmt.class, "case")
+            Map.entry(YangCaseStmt.class, "case"),
+            Map.entry(YangModuleHeaderStmts.class, "header statement"),
+            Map.entry(YangSubmoduleHeaderStmts.class, "submodule header statement")
     );
 
     private static final List<Class<?>> DATA_DEF_STATEMENTS = List.of(YangContainerStmt.class,

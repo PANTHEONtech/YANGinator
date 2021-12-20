@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgQuoted;
@@ -47,15 +48,15 @@ public class YangBaseStmtImpl extends YangGeneratedReferenceTypeImpl implements 
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierRefArgQuoted getIdentifierRefArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierRefArgQuoted.class);
+    return findChildByClass(YangIdentifierRefArgQuoted.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class MinOneElementCheck implements ElementCheck{
+public class MinOneElementCheck implements ElementCheck {
     @Override
     public void check(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
                       @NotNull final Class<? extends PsiElement> elementClass) {
@@ -26,6 +26,17 @@ public class MinOneElementCheck implements ElementCheck{
         for (PsiElement ch : children) {
             childrenCount += Arrays.stream(ch.getChildren()).filter(elementClass::isInstance).count();
         }
+        if (childrenCount < 1) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Missing " + ElementCheckUtils.translateClassName(elementClass))
+                    .range(element.getLastChild())
+                    .create();
+        }
+    }
+
+    @Override
+    public void simpleCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                            @NotNull final Class<? extends PsiElement> elementClass) {
+        long childrenCount = Arrays.stream(element.getChildren()).filter(elementClass::isInstance).count();
         if (childrenCount < 1) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Missing " + ElementCheckUtils.translateClassName(elementClass))
                     .range(element.getLastChild())

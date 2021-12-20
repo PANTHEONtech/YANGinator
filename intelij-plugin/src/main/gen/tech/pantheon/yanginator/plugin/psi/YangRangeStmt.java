@@ -15,7 +15,7 @@ public interface YangRangeStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangRangeArgStr getRangeArgStr();
 
   @NotNull

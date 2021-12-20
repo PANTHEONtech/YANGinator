@@ -12,13 +12,13 @@ public interface YangModuleStmt extends YangStatement {
   @NotNull
   List<YangLineComment> getLineCommentList();
 
-  @NotNull
+  @Nullable
   YangBodyStmts getBodyStmts();
 
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @Nullable
@@ -27,7 +27,7 @@ public interface YangModuleStmt extends YangStatement {
   @Nullable
   YangMetaStmts getMetaStmts();
 
-  @NotNull
+  @Nullable
   YangModuleHeaderStmts getModuleHeaderStmts();
 
   @Nullable
@@ -36,13 +36,13 @@ public interface YangModuleStmt extends YangStatement {
   @NotNull
   List<YangUnknownStatement> getUnknownStatementList();
 
-  @NotNull
+  @Nullable
   PsiElement getLeftBrace();
 
   @NotNull
   PsiElement getModuleKeyword();
 
-  @NotNull
+  @Nullable
   PsiElement getRightBrace();
 
 }

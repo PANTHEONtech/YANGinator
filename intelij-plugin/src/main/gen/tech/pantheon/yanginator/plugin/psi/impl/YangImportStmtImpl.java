@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
@@ -56,9 +57,9 @@ public class YangImportStmtImpl extends YangStatementImpl implements YangImportS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierArgQuoted.class);
+    return findChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override
@@ -74,15 +75,15 @@ public class YangImportStmtImpl extends YangStatementImpl implements YangImportS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getLeftBrace() {
-    return findNotNullChildByType(YANG_LEFT_BRACE);
+    return findChildByType(YANG_LEFT_BRACE);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getRightBrace() {
-    return findNotNullChildByType(YANG_RIGHT_BRACE);
+    return findChildByType(YANG_RIGHT_BRACE);
   }
 
 }

@@ -61,9 +61,9 @@ public class YangValueStmtImpl extends YangStatementImpl implements YangValueStm
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override

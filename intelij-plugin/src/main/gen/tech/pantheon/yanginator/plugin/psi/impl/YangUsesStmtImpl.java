@@ -52,9 +52,9 @@ public class YangUsesStmtImpl extends YangGeneratedReferenceTypeImpl implements 
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierRefArgQuoted getIdentifierRefArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierRefArgQuoted.class);
+    return findChildByClass(YangIdentifierRefArgQuoted.class);
   }
 
   @Override

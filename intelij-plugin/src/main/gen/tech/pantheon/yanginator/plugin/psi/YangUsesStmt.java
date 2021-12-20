@@ -16,7 +16,7 @@ public interface YangUsesStmt extends YangGeneratedReferenceType {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierRefArgQuoted getIdentifierRefArgQuoted();
 
   @NotNull

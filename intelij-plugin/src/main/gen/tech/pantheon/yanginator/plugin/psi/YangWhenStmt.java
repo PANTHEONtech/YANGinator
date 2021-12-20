@@ -15,7 +15,7 @@ public interface YangWhenStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangString getString();
 
   @NotNull

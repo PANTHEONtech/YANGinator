@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangConfigArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
@@ -47,15 +48,15 @@ public class YangConfigStmtImpl extends YangStatementImpl implements YangConfigS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangConfigArgStr getConfigArgStr() {
-    return findNotNullChildByClass(YangConfigArgStr.class);
+    return findChildByClass(YangConfigArgStr.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override
