@@ -52,9 +52,9 @@ public class YangNotificationStmtImpl extends YangStatementImpl implements YangN
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierArgQuoted.class);
+    return findChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override

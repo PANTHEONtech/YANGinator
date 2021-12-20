@@ -52,9 +52,9 @@ public class YangLengthStmtImpl extends YangStatementImpl implements YangLengthS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangLengthArgStr getLengthArgStr() {
-    return findNotNullChildByClass(YangLengthArgStr.class);
+    return findChildByClass(YangLengthArgStr.class);
   }
 
   @Override

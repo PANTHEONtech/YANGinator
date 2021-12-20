@@ -58,9 +58,9 @@ public class YangCaseStmtImpl extends YangStatementImpl implements YangCaseStmt 
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierArgQuoted.class);
+    return findChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override

@@ -3,6 +3,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface YangTypedefStmt extends YangGeneratedReferenceType {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull
@@ -24,10 +25,10 @@ public interface YangTypedefStmt extends YangGeneratedReferenceType {
   @NotNull
   List<YangUnknownStatement> getUnknownStatementList();
 
-  @NotNull
+  @Nullable
   PsiElement getLeftBrace();
 
-  @NotNull
+  @Nullable
   PsiElement getRightBrace();
 
   @NotNull

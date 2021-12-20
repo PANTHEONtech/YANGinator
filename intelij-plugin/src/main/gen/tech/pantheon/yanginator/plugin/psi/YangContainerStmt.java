@@ -18,7 +18,7 @@ public interface YangContainerStmt extends YangStatement {
   @NotNull
   List<YangContainerStmtBody> getContainerStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull

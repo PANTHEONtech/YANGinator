@@ -51,52 +51,82 @@ tokens ::= BLOCK_COMMENT
 
 module-stmt ::= optsep MODULE_KEYWORD sep identifier-arg-quoted
  optsep
- ( LEFT_BRACE stmtsep
- module-header-stmts
+ LEFT_BRACE stmtsep
+ module-header-stmts?
  linkage-stmts?
  meta-stmts?
  revision-stmts?
- body-stmts
- RIGHT_BRACE ) optsep
+ body-stmts?
+ RIGHT_BRACE optsep {pin=2}
 
 
 submodule-stmt ::= optsep SUBMODULE_KEYWORD sep identifier-arg-quoted
  optsep
  ( LEFT_BRACE stmtsep
- submodule-header-stmts
+ submodule-header-stmts?
  linkage-stmts?
  meta-stmts?
  revision-stmts?
- body-stmts
- RIGHT_BRACE ) optsep
+ body-stmts?
+ RIGHT_BRACE ) optsep {pin=2}
 
 module-header-stmts-body ::= ( yang-version-stmt stmtsep ) | // ?
  namespace-stmt stmtsep |
  prefix-stmt stmtsep
 
- module-header-stmts ::= module-header-stmts-body +
+ module-header-stmts ::= module-header-stmts-body + {pin(".*")=1 recoverWhile=recover_rule_header}
+
+ private recover_rule_header ::= !( module-header-stmts |
+  submodule-header-stmts |
+  linkage-stmts |
+  meta-stmts |
+  revision-stmts |
+  body-stmts |
+  (RIGHT_BRACE stmtsep <<eof>>))
 
 submodule-header-stmts-body ::= ( yang-version-stmt stmtsep ) | // ?
  belongs-to-stmt stmtsep
 
  submodule-header-stmts ::=
- submodule-header-stmts-body +
+ submodule-header-stmts-body + {pin(".*")=1 recoverWhile=recover_rule_header}
 
 meta-stmts-body ::= ( organization-stmt stmtsep ) | // ?
  ( contact-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
- meta-stmts ::= meta-stmts-body +
+ meta-stmts ::= meta-stmts-body + {pin(".*")=1 recoverWhile=recover_rule_meta }
+
+ private recover_rule_meta ::= !(meta-stmts |
+  revision-stmts |
+  body-stmts |
+  (RIGHT_BRACE stmtsep <<eof>>))
 
 linkage-stmts-body ::= ( import-stmt stmtsep ) | // *
  ( include-stmt stmtsep ) // *
 
- linkage-stmts ::= linkage-stmts-body +
+ linkage-stmts ::= linkage-stmts-body + {pin(".*")=1 recoverWhile=recover_rule_linkage }
 
-revision-stmts ::= ( revision-stmt stmtsep ) +
+private recover_rule_linkage ::= !(linkage-stmts |
+ meta-stmts |
+ revision-stmts |
+ body-stmts |
+ (RIGHT_BRACE stmtsep <<eof>>))
 
-body-stmts ::= ( ( extension-stmt |
+revision-stmts ::= ( revision-stmt stmtsep ) + {pin(".*")=1 recoverWhile=recover_rule_revision }
+
+private recover_rule_revision ::= !(revision-stmts |
+ body-stmts |
+ (RIGHT_BRACE stmtsep <<eof>>))
+
+body-stmts ::= body-sub-stmt + //{pin=1 recoverWhile=recover_rule_body }
+
+private body-sub-stmt ::= body-stmts-base stmtsep {pin=1 recoverWhile=recover_rule_body }
+
+private recover_rule_body ::= !(body-stmts-base |
+(RIGHT_BRACE stmtsep <<eof>>))
+
+private body-stmts-base ::= (extension-stmt |
  feature-stmt |
  identity-stmt |
  typedef-stmt |
@@ -105,7 +135,7 @@ body-stmts ::= ( ( extension-stmt |
  augment-stmt |
  rpc-stmt |
  notification-stmt |
- deviation-stmt ) stmtsep ) *
+ deviation-stmt)
 
 data-def-stmt ::= container-stmt |
  leaf-stmt |
@@ -116,77 +146,82 @@ data-def-stmt ::= container-stmt |
  uses-stmt
 
 yang-version-stmt ::= YANG_VERSION_KEYWORD sep yang-version-arg-str
- optsep stmtend
+ optsep stmtend {pin=1}
 
 yang-version-arg-str ::= yang-version-arg | ( DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE ) /* a string that matches the rule
  yang-version-arg > */
 yang-version-arg ::= "1" (DOT "1")?
 
 import-stmt ::= IMPORT_KEYWORD sep identifier-arg-quoted optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  prefix-stmt stmtsep
  ( revision-date-stmt stmtsep ) ?
- RIGHT_BRACE )
+ RIGHT_BRACE  stmtsep {pin=1}
 
+private include-stmt-body ::= LEFT_BRACE stmtsep
+                      ( revision-date-stmt stmtsep ) ?
+                      RIGHT_BRACE {pin=1}
+
+//modified to improve error massages after error recovery
 include-stmt ::= INCLUDE_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( revision-date-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( include-stmt-body | SEMICOLON ) stmtsep {pin=1}
 
-namespace-stmt ::= NAMESPACE_KEYWORD sep uri-str optsep stmtend
+namespace-stmt ::= NAMESPACE_KEYWORD sep uri-str optsep stmtend  {pin=1}
 
 prefix-stmt ::= PREFIX_KEYWORD sep prefix-arg-str
- optsep stmtend
+ optsep stmtend {pin=1}
 
 belongs-to-stmt ::= BELONGS_TO_KEYWORD sep identifier-arg-quoted
  optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  prefix-stmt stmtsep
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 organization-stmt ::= ORGANIZATION_KEYWORD sep string
- optsep stmtend
+ optsep stmtend {pin=1}
 
-contact-stmt ::= CONTACT_KEYWORD sep string optsep stmtend
+contact-stmt ::= CONTACT_KEYWORD sep string optsep stmtend {pin=1}
 
-description-stmt ::= DESCRIPTION_KEYWORD sep string optsep
- stmtend
+description-stmt ::= DESCRIPTION_KEYWORD sep string optsep stmtend {pin=1}
 
-reference-stmt ::= REFERENCE_KEYWORD sep string optsep stmtend
+reference-stmt ::= REFERENCE_KEYWORD sep string optsep stmtend {pin=1}
 
-units-stmt ::= UNITS_KEYWORD sep string optsep stmtend
+units-stmt ::= UNITS_KEYWORD sep string optsep stmtend {pin=1}
 
+private revision-sub-stmt ::= LEFT_BRACE stmtsep
+                       ( description-stmt stmtsep ) ?
+                       ( reference-stmt stmtsep ) ?
+                       RIGHT_BRACE {pin=1}
+
+//modified to improve error massages after error recovery
 revision-stmt ::= REVISION_KEYWORD sep revision-date optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( description-stmt stmtsep ) ?
- ( reference-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( revision-sub-stmt | SEMICOLON ) {pin=1}
 
 revision-date ::= date-arg-str
 
-revision-date-stmt ::= REVISION_DATE_KEYWORD sep revision-date stmtend
+revision-date-stmt ::= REVISION_DATE_KEYWORD sep revision-date stmtend {pin=1}
 
 extension-stmt-body ::= ( argument-stmt stmtsep ) | // ?
  ( status-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private extension-sub-stmt ::= LEFT_BRACE stmtsep
+                       extension-stmt-body *
+                       RIGHT_BRACE {pin=1}
+
+//modified to improve error massages after error recovery
  extension-stmt ::= EXTENSION_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- extension-stmt-body *
- RIGHT_BRACE ) )
+ ( extension-sub-stmt | SEMICOLON ) {pin=1}
+
+private argument-sub-stmt ::= LEFT_BRACE stmtsep
+                      ( yin-element-stmt stmtsep ) ?
+                      RIGHT_BRACE {pin=1}
 
 argument-stmt ::= ARGUMENT_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( yin-element-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( argument-sub-stmt | SEMICOLON ) {pin=1}
 
-yin-element-stmt ::= YIN_ELEMENT_KEYWORD sep yin-element-arg-str
- stmtend
+yin-element-stmt ::= YIN_ELEMENT_KEYWORD sep yin-element-arg-str stmtend {pin=1}
 
 yin-element-arg-str ::= yin-element-arg | ( DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE ) /* a string that matches the rule
  yin-element-arg > */
@@ -197,13 +232,14 @@ identity-stmt-body ::= ( base-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private identity-sub-stmt ::= LEFT_BRACE stmtsep
+                              identity-stmt-body *
+                              RIGHT_BRACE {pin=1}
+
  identity-stmt ::= IDENTITY_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- identity-stmt-body *
- RIGHT_BRACE )
- )
+ ( identity-sub-stmt | SEMICOLON )
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
@@ -211,6 +247,7 @@ identity-stmt-body ::= ( base-stmt stmtsep ) | // ?
 base-stmt ::= BASE_KEYWORD sep identifier-ref-arg-quoted
  optsep stmtend
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
@@ -220,14 +257,15 @@ feature-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private feature-sub-stmt ::= LEFT_BRACE stmtsep
+                             feature-stmt-body +
+                             RIGHT_BRACE {pin=1}
+
  feature-stmt ::= FEATURE_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- feature-stmt-body +
- RIGHT_BRACE ) )
+ ( feature-sub-stmt | SEMICOLON ) {pin=1}
 
 if-feature-stmt ::= IF_FEATURE_KEYWORD sep identifier-ref-arg-quoted
- optsep stmtend
+ optsep stmtend {pin=1}
 
 typedef-stmt-body ::= (type-stmt stmtsep) |
  ( units-stmt stmtsep ) | // ?
@@ -237,20 +275,23 @@ typedef-stmt-body ::= (type-stmt stmtsep) |
  ( reference-stmt stmtsep ) // ?
 
  typedef-stmt ::= TYPEDEF_KEYWORD sep identifier-arg-quoted optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  typedef-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
 
+private type-sub-stmt ::= LEFT_BRACE stmtsep
+                          type-body-stmts
+                          RIGHT_BRACE {pin=1}
+
 type-stmt ::= TYPE_KEYWORD sep identifier-ref-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- type-body-stmts
- RIGHT_BRACE ) )
+ ( type-sub-stmt | SEMICOLON )
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
@@ -272,16 +313,17 @@ range-stmt-body ::= ( error-message-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private range-sub-stmt ::= LEFT_BRACE stmtsep
+                           range-stmt-body *
+                           RIGHT_BRACE {pin=1}
+
  range-stmt ::= RANGE_KEYWORD sep range-arg-str optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- range-stmt-body *
- RIGHT_BRACE ) )
+ ( range-sub-stmt | SEMICOLON ) {pin=1}
 
 decimal64-specification ::= fraction-digits-stmt stmtsep // stmsep is not corresponding with rfc6020 (added additionally)
 
 fraction-digits-stmt ::= FRACTION_DIGITS_KEYWORD sep
- fraction-digits-arg-str stmtend
+ fraction-digits-arg-str stmtend {pin=1}
 
 fraction-digits-arg-str ::= fraction-digits-arg | ( DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE ) /* a string that matches the rule
  fraction-digits-arg > */
@@ -299,24 +341,26 @@ length-stmt-body ::= ( error-message-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private length-sub-stmt ::= LEFT_BRACE stmtsep
+                            length-stmt-body *
+                            RIGHT_BRACE {pin=1}
+
  length-stmt ::= LENGTH_KEYWORD sep length-arg-str optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- length-stmt-body *
- RIGHT_BRACE ) )
+ ( length-sub-stmt | SEMICOLON ) {pin=1}
 
 pattern-stmt-body ::= ( error-message-stmt stmtsep ) | // ?
  ( error-app-tag-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
- pattern-stmt ::= PATTERN_KEYWORD sep string optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- pattern-stmt-body *
- RIGHT_BRACE ) )
+private pattern-sub-stmt ::= LEFT_BRACE stmtsep
+                             pattern-stmt-body *
+                             RIGHT_BRACE {pin=1}
 
-default-stmt ::= DEFAULT_KEYWORD sep string stmtend
+ pattern-stmt ::= PATTERN_KEYWORD sep string optsep
+ ( pattern-sub-stmt | SEMICOLON ) {pin=1}
+
+default-stmt ::= DEFAULT_KEYWORD sep string stmtend {pin=1}
 
 enum-specification ::= ( enum-stmt stmtsep ) +
 
@@ -325,11 +369,12 @@ enum-stmt-body ::= ( value-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private enum-sub-stmt ::= LEFT_BRACE stmtsep
+                          enum-stmt-body *
+                          RIGHT_BRACE {pin=1}
+
  enum-stmt ::= ENUM_KEYWORD sep string optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- enum-stmt-body *
- RIGHT_BRACE ) )
+ ( enum-sub-stmt | SEMICOLON ) {pin=1}
 
 leafref-specification-body ::= (path-stmt stmtsep) |
  ( require-instance-stmt stmtsep ) // ?
@@ -337,10 +382,10 @@ leafref-specification-body ::= (path-stmt stmtsep) |
  leafref-specification ::=
  leafref-specification-body +
 
-path-stmt ::= PATH_KEYWORD sep path-arg-str stmtend
+path-stmt ::= PATH_KEYWORD sep path-arg-str stmtend {pin=1}
 
 require-instance-stmt ::= REQUIRE_INSTANCE_KEYWORD sep
- require-instance-arg-str stmtend
+ require-instance-arg-str stmtend {pin=1}
 
 require-instance-arg-str ::= require-instance-arg | ( DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE ) /* a string that matches the rule
  require-instance-arg > */
@@ -361,22 +406,22 @@ bit-stmt-body ::= ( position-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private bit-sub-stmt ::= LEFT_BRACE stmtsep
+                         bit-stmt-body *
+                         RIGHT_BRACE {pin=1}
+
  bit-stmt ::= BIT_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- bit-stmt-body *
- RIGHT_BRACE )
- )
+ ( bit-sub-stmt | SEMICOLON ) {pin=1}
 
 
 position-stmt ::= POSITION_KEYWORD sep
- position-value-arg-str stmtend
+ position-value-arg-str stmtend {pin=1}
 
 position-value-arg-str ::= position-value-arg | ( DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE ) /* a string that matches the rule
  position-value-arg > */
 position-value-arg ::= non-negative-integer-value
 
-status-stmt ::= STATUS_KEYWORD sep status-arg-str stmtend
+status-stmt ::= STATUS_KEYWORD sep status-arg-str stmtend {pin=1}
 
 status-arg-str ::= status-arg | ( DOUBLE_QUOTE status-arg DOUBLE_QUOTE ) /* a string that matches the rule
  status-arg > */
@@ -385,23 +430,23 @@ status-arg ::= CURRENT_KEYWORD |
  DEPRECATED_KEYWORD
 
 config-stmt ::= CONFIG_KEYWORD sep
- config-arg-str stmtend
+ config-arg-str stmtend {pin=1}
 
 config-arg-str ::= config-arg | ( DOUBLE_QUOTE config-arg DOUBLE_QUOTE ) /* a string that matches the rule
  config-arg > */
 config-arg ::= TRUE_KEYWORD | FALSE_KEYWORD
 
 mandatory-stmt ::= MANDATORY_KEYWORD sep
- mandatory-arg-str stmtend
+ mandatory-arg-str stmtend {pin=1}
 
 mandatory-arg-str ::= mandatory-arg | ( DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE ) /* a string that matches the rule
  mandatory-arg > */
 mandatory-arg ::= TRUE_KEYWORD | FALSE_KEYWORD
 
-presence-stmt ::= PRESENCE_KEYWORD sep string stmtend
+presence-stmt ::= PRESENCE_KEYWORD sep string stmtend {pin=1}
 
 ordered-by-stmt ::= ORDERED_BY_KEYWORD sep
- ordered-by-arg-str stmtend
+ ordered-by-arg-str stmtend {pin=1}
 
 ordered-by-arg-str ::= ordered-by-arg | ( DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE ) /* a string that matches the rule
  ordered-by-arg > */
@@ -412,32 +457,33 @@ must-stmt-body ::= ( error-message-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+ private must-sub-stmt ::= LEFT_BRACE stmtsep
+                           must-stmt-body *
+                           RIGHT_BRACE {pin=1}
+
  must-stmt ::= MUST_KEYWORD sep string optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- must-stmt-body *
- RIGHT_BRACE ) )
+ ( must-sub-stmt | SEMICOLON ) {pin=1}
 
-error-message-stmt ::= ERROR_MESSAGE_KEYWORD sep string stmtend
+error-message-stmt ::= ERROR_MESSAGE_KEYWORD sep string stmtend {pin=1}
 
-error-app-tag-stmt ::= ERROR_APP_TAG_KEYWORD sep string stmtend
+error-app-tag-stmt ::= ERROR_APP_TAG_KEYWORD sep string stmtend {pin=1}
 
 min-elements-stmt ::= MIN_ELEMENTS_KEYWORD sep
- min-value-arg-str stmtend
+ min-value-arg-str stmtend {pin=1}
 
 min-value-arg-str ::= min-value-arg | ( DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE ) /* a string that matches the rule
  min-value-arg > */
 min-value-arg ::= non-negative-integer-value
 
 max-elements-stmt ::= MAX_ELEMENTS_KEYWORD sep
- max-value-arg-str stmtend
+ max-value-arg-str stmtend {pin=1}
 
 max-value-arg-str ::= max-value-arg | ( DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE ) /* a string that matches the rule
  max-value-arg > */
 max-value-arg ::= UNBOUNDED_KEYWORD |
- positive-integer-value
+ positive-integer-value {pin=1}
 
-value-stmt ::= VALUE_KEYWORD sep ( integer-value | integer-value-str ) stmtend
+value-stmt ::= VALUE_KEYWORD sep ( integer-value | integer-value-str ) stmtend {pin=1}
 
 grouping-stmt-body ::= ( status-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
@@ -446,12 +492,14 @@ grouping-stmt-body ::= ( status-stmt stmtsep ) | // ?
  grouping-stmt ) stmtsep ) | // *
  ( data-def-stmt stmtsep ) // *
 
+private grouping-sub-stmt ::= LEFT_BRACE stmtsep
+                              grouping-stmt-body *
+                              RIGHT_BRACE {pin=1}
+
  grouping-stmt ::= GROUPING_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- grouping-stmt-body *
- RIGHT_BRACE ) )
+ ( grouping-sub-stmt | SEMICOLON )
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
@@ -468,11 +516,12 @@ container-stmt-body ::= ( when-stmt stmtsep ) | // ?
  grouping-stmt ) stmtsep ) | // *
  ( data-def-stmt stmtsep ) // *
 
+private container-sub-stmt ::= LEFT_BRACE stmtsep
+                               container-stmt-body *
+                               RIGHT_BRACE {pin=1}
+
  container-stmt ::= CONTAINER_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- container-stmt-body *
- RIGHT_BRACE ) )
+ ( container-sub-stmt | SEMICOLON ) {pin=1}
 
 leaf-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( if-feature-stmt stmtsep ) | // *
@@ -487,9 +536,9 @@ leaf-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
  leaf-stmt ::= LEAF_KEYWORD sep identifier-arg-quoted optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  leaf-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 leaf-list-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( if-feature-stmt stmtsep ) | // *
@@ -505,9 +554,9 @@ leaf-list-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
  leaf-list-stmt ::= LEAF_LIST_KEYWORD sep identifier-arg-quoted optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  leaf-list-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 list-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( if-feature-stmt stmtsep ) | // *
@@ -526,17 +575,18 @@ list-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( data-def-stmt stmtsep ) // +
 
  list-stmt ::= LIST_KEYWORD sep identifier-arg-quoted optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  list-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE
+ stmtsep {pin=1}
 
-key-stmt ::= KEY_KEYWORD sep key-arg-str stmtend
+key-stmt ::= KEY_KEYWORD sep key-arg-str stmtend {pin=1}
 
 key-arg-str ::= key-arg | ( DOUBLE_QUOTE key-arg DOUBLE_QUOTE ) /* a string that matches the rule
  key-arg > */
 key-arg ::= node-identifier ( sep node-identifier ) *
 
-unique-stmt ::= UNIQUE_KEYWORD sep unique-arg-str stmtend
+unique-stmt ::= UNIQUE_KEYWORD sep unique-arg-str stmtend {pin=1}
 
 unique-arg-str ::= unique-arg | ( DOUBLE_QUOTE unique-arg DOUBLE_QUOTE ) /* a string that matches the rule
  unique-arg > */
@@ -553,11 +603,12 @@ choice-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) | // ?
  ( ( short-case-stmt | case-stmt ) stmtsep ) // *
 
+private choice-sub-stmt ::= LEFT_BRACE stmtsep
+                            choice-stmt-body *
+                            RIGHT_BRACE {pin=1}
+
  choice-stmt ::= CHOICE_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- choice-stmt-body *
- RIGHT_BRACE ) )
+ ( choice-sub-stmt | SEMICOLON ) {pin=1}
 
 short-case-stmt ::= container-stmt |
  leaf-stmt |
@@ -572,11 +623,12 @@ case-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) | // ?
  ( data-def-stmt stmtsep ) // *
 
+private case-sub-stmt ::= LEFT_BRACE stmtsep
+                          case-stmt-body +
+                          RIGHT_BRACE {pin=1}
+
  case-stmt ::= CASE_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- case-stmt-body +
- RIGHT_BRACE ) )
+ ( case-sub-stmt | SEMICOLON ) {pin=1}
 
 anyxml-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( if-feature-stmt stmtsep ) | // *
@@ -587,13 +639,12 @@ anyxml-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private anyxml-sub-stmt ::= LEFT_BRACE stmtsep
+                        anyxml-stmt-body *
+                        RIGHT_BRACE {pin=1}
+
  anyxml-stmt ::= ANYXML_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- anyxml-stmt-body *
- RIGHT_BRACE
- )
- )
+ ( anyxml-sub-stmt | SEMICOLON ) {pin=1}
 
 uses-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( if-feature-stmt stmtsep ) | // *
@@ -603,27 +654,30 @@ uses-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( refine-stmt stmtsep ) | // *
  ( uses-augment-stmt stmtsep ) // *
 
+private uses-sub-stmt ::= LEFT_BRACE stmtsep
+                          uses-stmt-body *
+                          RIGHT_BRACE {pin=1}
+
  uses-stmt ::= USES_KEYWORD sep identifier-ref-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- uses-stmt-body *
- RIGHT_BRACE ) )
+ ( uses-sub-stmt | SEMICOLON )
  {
+    pin = 1
     implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
     extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
  }
 
+private refine-sub-stmt ::= LEFT_BRACE stmtsep
+                            ( refine-container-stmts |
+                            refine-leaf-stmts |
+                            refine-leaf-list-stmts |
+                            refine-list-stmts |
+                            refine-choice-stmts |
+                            refine-case-stmts |
+                            refine-anyxml-stmts )
+                            RIGHT_BRACE {pin=1}
+
 refine-stmt ::= REFINE_KEYWORD sep refine-arg-str optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( refine-container-stmts |
- refine-leaf-stmts |
- refine-leaf-list-stmts |
- refine-list-stmts |
- refine-choice-stmts |
- refine-case-stmts |
- refine-anyxml-stmts )
- RIGHT_BRACE ) )
+ ( refine-sub-stmt | SEMICOLON ) {pin=1}
 
 refine-arg-str ::= refine-arg | ( DOUBLE_QUOTE refine-arg DOUBLE_QUOTE ) /* a string that matches the rule
  refine-arg > */
@@ -696,9 +750,9 @@ uses-augment-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( case-stmt stmtsep ) ) // +
 
  uses-augment-stmt ::= AUGMENT_KEYWORD sep uses-augment-arg-str optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  uses-augment-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 uses-augment-arg-str ::= uses-augment-arg | ( DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE ) /* a string that matches the rule
  uses-augment-arg > */
@@ -713,29 +767,32 @@ augment-stmt-body ::= ( when-stmt stmtsep ) | // ?
  ( case-stmt stmtsep ) ) // +
 
  augment-stmt ::= AUGMENT_KEYWORD sep augment-arg-str optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  augment-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 augment-arg-str ::= augment-arg | ( DOUBLE_QUOTE augment-arg-quoted DOUBLE_QUOTE ) /* a string that matches the rule
  augment-arg > */
 augment-arg ::= absolute-schema-nodeid
 augment-arg-quoted ::= absolute-schema-nodeid-quoted
 
+private unknown-sub-statement ::= LEFT_BRACE unknown-statement2 * RIGHT_BRACE {pin=1}
+
 unknown-statement ::= prefix COLON identifier ( sep string ) ? optsep
- ( SEMICOLON | ( LEFT_BRACE unknown-statement2 * RIGHT_BRACE ) )
+ ( SEMICOLON | unknown-sub-statement )
 
 unknown-statement2 ::= ( prefix COLON ) ? identifier ( sep string ) ? optsep
- ( SEMICOLON | ( LEFT_BRACE unknown-statement2 * RIGHT_BRACE ) )
+ ( SEMICOLON | unknown-sub-statement )
 
 when-stmt-body ::= ( description-stmt stmtsep ) | // ?
  ( reference-stmt stmtsep ) // ?
 
+private when-sub-stmt ::= LEFT_BRACE stmtsep
+                          when-stmt-body *
+                          RIGHT_BRACE {pin=1}
+
  when-stmt ::= WHEN_KEYWORD sep string optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- when-stmt-body *
- RIGHT_BRACE ) )
+ ( when-sub-stmt | SEMICOLON ) {pin=1}
 
 rpc-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  ( status-stmt stmtsep ) | // ?
@@ -746,29 +803,30 @@ rpc-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  ( input-stmt stmtsep ) | // ?
  ( output-stmt stmtsep ) // ?
 
+private rpc-sub-stmt ::= LEFT_BRACE stmtsep
+                         rpc-stmt-body *
+                         RIGHT_BRACE {pin=1}
+
  rpc-stmt ::= RPC_KEYWORD sep identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- rpc-stmt-body *
- RIGHT_BRACE ) )
+ ( rpc-sub-stmt | SEMICOLON ) {pin=1}
 
 input-stmt-body ::= ( ( typedef-stmt |
  grouping-stmt ) stmtsep ) | // *
  ( data-def-stmt stmtsep ) // +
 
  input-stmt ::= INPUT_KEYWORD optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  input-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 output-stmt-body ::= ( ( typedef-stmt |
  grouping-stmt ) stmtsep ) | // *
  ( data-def-stmt stmtsep ) // +
 
  output-stmt ::= OUTPUT_KEYWORD optsep
- ( LEFT_BRACE stmtsep
+ LEFT_BRACE stmtsep
  output-stmt-body +
- RIGHT_BRACE )
+ RIGHT_BRACE {pin=1}
 
 notification-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  ( status-stmt stmtsep ) | // ?
@@ -778,12 +836,13 @@ notification-stmt-body ::= ( if-feature-stmt stmtsep ) | // *
  grouping-stmt ) stmtsep ) | // *
  ( data-def-stmt stmtsep ) // *
 
+private notification-sub-stmt ::= LEFT_BRACE stmtsep
+                              notification-stmt-body *
+                              RIGHT_BRACE {pin=1}
+
  notification-stmt ::= NOTIFICATION_KEYWORD sep
  identifier-arg-quoted optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- notification-stmt-body *
- RIGHT_BRACE ) )
+ ( notification-sub-stmt | SEMICOLON ) {pin=1}
 
 // Changed to allow check for multiplicity
 deviation-stmt-body-args ::= deviate-not-supported-stmt |
@@ -800,11 +859,9 @@ deviation-stmt-body ::=
 
  deviation-stmt ::= DEVIATION_KEYWORD sep
  deviation-arg-str optsep
- (
  LEFT_BRACE stmtsep
  deviation-stmt-body +
- RIGHT_BRACE
- )
+ RIGHT_BRACE {pin=3}
 
 deviation-arg-str ::= deviation-arg | ( DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE ) /* a string that matches the rule
  deviation-arg > */
@@ -815,41 +872,44 @@ deviate-not-supported-stmt ::=
  NOT_SUPPORTED_KEYWORD optsep
  ( SEMICOLON |
  ( LEFT_BRACE stmtsep
- RIGHT_BRACE ) )
+ RIGHT_BRACE ) ) {pin=3}
+
+private deviate-add-sub-stmt ::= LEFT_BRACE stmtsep
+                                 ( units-stmt stmtsep ) ?
+                                 ( must-stmt stmtsep ) *
+                                 ( unique-stmt stmtsep ) *
+                                 ( default-stmt stmtsep ) ?
+                                 ( config-stmt stmtsep ) ?
+                                 ( mandatory-stmt stmtsep ) ?
+                                 ( min-elements-stmt stmtsep ) ?
+                                 ( max-elements-stmt stmtsep ) ?
+                                 RIGHT_BRACE {pin=1}
 
 deviate-add-stmt ::= DEVIATE_KEYWORD sep ADD_KEYWORD optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( units-stmt stmtsep ) ?
- ( must-stmt stmtsep ) *
- ( unique-stmt stmtsep ) *
- ( default-stmt stmtsep ) ?
- ( config-stmt stmtsep ) ?
- ( mandatory-stmt stmtsep ) ?
- ( min-elements-stmt stmtsep ) ?
- ( max-elements-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( deviate-add-sub-stmt | SEMICOLON ) {pin=3}
+
+private deviate-delete-sub-stmt ::= LEFT_BRACE stmtsep
+                                    ( units-stmt stmtsep ) ?
+                                    ( must-stmt stmtsep ) *
+                                    ( unique-stmt stmtsep ) *
+                                    ( default-stmt stmtsep ) ?
+                                    RIGHT_BRACE {pin=1}
 
 deviate-delete-stmt ::= DEVIATE_KEYWORD sep DELETE_KEYWORD optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( units-stmt stmtsep ) ?
- ( must-stmt stmtsep ) *
- ( unique-stmt stmtsep ) *
- ( default-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( deviate-delete-sub-stmt | SEMICOLON ) {pin=3}
+
+private deviate-replace-sub-stmt ::= LEFT_BRACE stmtsep
+                                     ( type-stmt stmtsep ) ?
+                                     ( units-stmt stmtsep ) ?
+                                     ( default-stmt stmtsep ) ?
+                                     ( config-stmt stmtsep ) ?
+                                     ( mandatory-stmt stmtsep ) ?
+                                     ( min-elements-stmt stmtsep ) ?
+                                     ( max-elements-stmt stmtsep ) ?
+                                     RIGHT_BRACE {pin=1}
 
 deviate-replace-stmt ::= DEVIATE_KEYWORD sep REPLACE_KEYWORD optsep
- ( SEMICOLON |
- ( LEFT_BRACE stmtsep
- ( type-stmt stmtsep ) ?
- ( units-stmt stmtsep ) ?
- ( default-stmt stmtsep ) ?
- ( config-stmt stmtsep ) ?
- ( mandatory-stmt stmtsep ) ?
- ( min-elements-stmt stmtsep ) ?
- ( max-elements-stmt stmtsep ) ?
- RIGHT_BRACE ) )
+ ( deviate-replace-sub-stmt | SEMICOLON ) {pin=3}
  // ;; Ranges
 
 range-arg-str ::= range-arg | ( DOUBLE_QUOTE range-arg DOUBLE_QUOTE ) /* a string that matches the rule

@@ -58,9 +58,9 @@ public class YangGroupingStmtImpl extends YangGeneratedReferenceTypeImpl impleme
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierArgQuoted.class);
+    return findChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override

@@ -34,6 +34,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.YangLengthStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangListStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangMetaStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangModuleHeaderStmtCheck;
+import tech.pantheon.yanginator.plugin.annotator.element.YangModuleStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangMustStmtChange;
 import tech.pantheon.yanginator.plugin.annotator.element.YangNotificationStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangOutputStmtCheck;
@@ -48,6 +49,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.YangRefineLeafStmtsChec
 import tech.pantheon.yanginator.plugin.annotator.element.YangRefineListStmtsCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangStringRestrictionsCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangSubmoduleHeaderStmtsCheck;
+import tech.pantheon.yanginator.plugin.annotator.element.YangSubmoduleStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangTypedefStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangUsesAugmentStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangUsesStmtCheck;
@@ -95,7 +97,9 @@ public class YangAnnotator implements Annotator {
             new YangSubmoduleHeaderStmtsCheck(),
             new YangStringRestrictionsCheck(),
             new YangLeafrefSpecificationCheck(),
-            new YangDeviationStmtCheck()
+            new YangDeviationStmtCheck(),
+            new YangModuleStmtCheck(),
+            new YangSubmoduleStmtCheck()
     );
 
     @Override

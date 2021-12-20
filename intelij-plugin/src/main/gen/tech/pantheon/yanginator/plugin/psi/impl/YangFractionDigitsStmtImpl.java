@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsStmt;
@@ -47,15 +48,15 @@ public class YangFractionDigitsStmtImpl extends YangStatementImpl implements Yan
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangFractionDigitsArgStr getFractionDigitsArgStr() {
-    return findNotNullChildByClass(YangFractionDigitsArgStr.class);
+    return findChildByClass(YangFractionDigitsArgStr.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override

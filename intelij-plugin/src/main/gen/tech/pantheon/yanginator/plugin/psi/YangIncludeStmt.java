@@ -15,7 +15,7 @@ public interface YangIncludeStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @Nullable

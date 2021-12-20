@@ -58,9 +58,9 @@ public class YangMustStmtImpl extends YangStatementImpl implements YangMustStmt 
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangString getString() {
-    return findNotNullChildByClass(YangString.class);
+    return findChildByClass(YangString.class);
   }
 
   @Override

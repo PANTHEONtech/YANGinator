@@ -18,7 +18,7 @@ public interface YangMustStmt extends YangStatement {
   @NotNull
   List<YangMustStmtBody> getMustStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangString getString();
 
   @NotNull

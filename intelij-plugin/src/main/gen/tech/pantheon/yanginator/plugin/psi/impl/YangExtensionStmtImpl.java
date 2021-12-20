@@ -58,9 +58,9 @@ public class YangExtensionStmtImpl extends YangStatementImpl implements YangExte
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangIdentifierArgQuoted getIdentifierArgQuoted() {
-    return findNotNullChildByClass(YangIdentifierArgQuoted.class);
+    return findChildByClass(YangIdentifierArgQuoted.class);
   }
 
   @Override

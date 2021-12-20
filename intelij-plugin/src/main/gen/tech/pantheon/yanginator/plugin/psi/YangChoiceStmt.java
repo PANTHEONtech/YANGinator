@@ -18,7 +18,7 @@ public interface YangChoiceStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull

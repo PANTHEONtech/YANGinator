@@ -18,6 +18,10 @@ import java.util.List;
 public interface ElementCheck {
     void check(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
                @NotNull final Class<? extends PsiElement> elementClass);
+
+    void simpleCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
+                     @NotNull final Class<? extends PsiElement> elementClass);
+
     void checkMany(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder,
                    @NotNull final List<Class<?>> elementClasses);
 }

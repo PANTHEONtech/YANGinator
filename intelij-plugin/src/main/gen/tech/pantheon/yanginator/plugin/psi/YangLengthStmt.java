@@ -15,7 +15,7 @@ public interface YangLengthStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangLengthArgStr getLengthArgStr();
 
   @NotNull

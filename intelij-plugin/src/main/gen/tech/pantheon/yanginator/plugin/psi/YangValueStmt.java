@@ -21,7 +21,7 @@ public interface YangValueStmt extends YangStatement {
   @Nullable
   YangIntegerValueStr getIntegerValueStr();
 
-  @NotNull
+  @Nullable
   YangStmtend getStmtend();
 
   @NotNull

@@ -52,9 +52,9 @@ public class YangRangeStmtImpl extends YangStatementImpl implements YangRangeStm
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangRangeArgStr getRangeArgStr() {
-    return findNotNullChildByClass(YangRangeArgStr.class);
+    return findChildByClass(YangRangeArgStr.class);
   }
 
   @Override

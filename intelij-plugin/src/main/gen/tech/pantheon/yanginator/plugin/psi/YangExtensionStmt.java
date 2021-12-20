@@ -18,7 +18,7 @@ public interface YangExtensionStmt extends YangStatement {
   @NotNull
   List<YangExtensionStmtBody> getExtensionStmtBodyList();
 
-  @NotNull
+  @Nullable
   YangIdentifierArgQuoted getIdentifierArgQuoted();
 
   @NotNull

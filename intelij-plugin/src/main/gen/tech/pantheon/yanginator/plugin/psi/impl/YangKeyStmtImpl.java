@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangKeyArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
@@ -47,15 +48,15 @@ public class YangKeyStmtImpl extends YangStatementImpl implements YangKeyStmt {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangKeyArgStr getKeyArgStr() {
-    return findNotNullChildByClass(YangKeyArgStr.class);
+    return findChildByClass(YangKeyArgStr.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override

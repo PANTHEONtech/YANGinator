@@ -18,7 +18,7 @@ public interface YangRevisionStmt extends YangStatement {
   @NotNull
   List<YangComment> getCommentList();
 
-  @NotNull
+  @Nullable
   YangRevisionDate getRevisionDate();
 
   @NotNull

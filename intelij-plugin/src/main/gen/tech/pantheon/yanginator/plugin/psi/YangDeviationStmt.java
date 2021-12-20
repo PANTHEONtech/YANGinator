@@ -3,6 +3,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,10 +27,10 @@ public interface YangDeviationStmt extends YangStatement {
   @NotNull
   PsiElement getDeviationKeyword();
 
-  @NotNull
+  @Nullable
   PsiElement getLeftBrace();
 
-  @NotNull
+  @Nullable
   PsiElement getRightBrace();
 
 }

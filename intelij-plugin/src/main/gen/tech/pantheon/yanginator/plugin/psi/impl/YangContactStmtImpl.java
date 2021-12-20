@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangContactStmt;
 import tech.pantheon.yanginator.plugin.psi.YangLineComment;
@@ -47,15 +48,15 @@ public class YangContactStmtImpl extends YangStatementImpl implements YangContac
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangString getString() {
-    return findNotNullChildByClass(YangString.class);
+    return findChildByClass(YangString.class);
   }
 
   @Override

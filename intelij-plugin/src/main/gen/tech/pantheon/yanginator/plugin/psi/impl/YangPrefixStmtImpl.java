@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangLineComment;
 import tech.pantheon.yanginator.plugin.psi.YangPrefixArgStr;
@@ -47,15 +48,15 @@ public class YangPrefixStmtImpl extends YangStatementImpl implements YangPrefixS
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangPrefixArgStr getPrefixArgStr() {
-    return findNotNullChildByClass(YangPrefixArgStr.class);
+    return findChildByClass(YangPrefixArgStr.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override
