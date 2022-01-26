@@ -1,8 +1,12 @@
 group 'tech.pantheon.YANGinator'
 version '1.6-SNAPSHOT'
 
+
 allprojects {
     apply plugin: 'java'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 
     repositories {
         mavenCentral()
@@ -13,6 +17,8 @@ subprojects {
     version = rootProject.version
     group = rootProject.group
 }
+
+
 
 task createReleaseVersion {
     doLast {
@@ -35,3 +41,10 @@ task createNextSnapshotVersion {
         buildFile.setText(newBuildFile)
     }
 }
+
+
+
+
+
+
+
