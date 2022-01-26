@@ -1,16 +1,38 @@
 plugins {
-    id 'org.jetbrains.intellij' version '1.3.0'
+    id 'org.jetbrains.intellij' version "$intellijGradlePluginVersion"
+    id 'org.jetbrains.changelog' version "$changelogVersion"
 }
+
+apply plugin: 'org.jetbrains.changelog'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = '2021.2.3'
+    version = ideaVersion
     plugins = ['com.intellij.java']
 }
 
-patchPluginXml {
-    sinceBuild = '211'
-    untilBuild = ''
+changelog {
+    path = "${project.projectDir}/CHANGELOG.md"
+    header = "${-> version.get()}"
+    headerParserRegex = ~/(\d+\.\d+)/
+    itemPrefix = "*"
+    keepUnreleasedSection = true
+    unreleasedTerm = "[Unreleased]"
+    groups = []
+}
+
+tasks {
+
+    patchPluginXml {
+        sinceBuild = '211'
+        untilBuild = ''
+        changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/intelij-plugin/CHANGELOG.md\">more...</a>"
+    }
+}
+
+runPluginVerifier {
+    ideVersions = ["IIC-2021.1.3", "IIU-2021.1.3", "PCC-2021.1.3", "PCP-2021.1.3", "PCE-2021.1.3", "DG-2021.1.3", "PS-2021.1.3", "RD-2021.1.3",
+                   "WS-2021.1.3", "RM-2021.1.3",  "MPS-2021.1.3", "CL-2021.1.3", "GO-2021.1.3"]
 }
 
 publishPlugin {
@@ -21,11 +43,15 @@ test {
     systemProperty "idea.home.path", "src/test"
 }
 
-sourceSets.main.java.srcDirs 'src/main/gen'
-sourceSets.main.java.srcDirs 'src/main/highlighter'
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/gen', 'src/main/highlighter'
+        }
+    }
 }
 
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:' + findProperty("jupiterEngineVersion")
+}
 
