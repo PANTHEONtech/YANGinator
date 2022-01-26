@@ -8,7 +8,7 @@
   ~  */
   -->
 
-<idea-plugin>
+<idea-plugin url="https://github.com/PANTHEONtech/YANGinator">
     <id>tech.pantheon.yanginator</id>
     <name>YANGinator</name>
     <category>Custom Languages</category>
@@ -21,21 +21,7 @@
        NETCONF remote procedure calls, and NETCONF notifications.
     ]]></description>
 
-    <change-notes><![CDATA[
-        <b>New Features</b>
-        <ul>
-          <li>Code formatting</li>
-        </ul>
-        <br>
-        <b>Fixed issues</b>
-        <ul>
-          <li>Fixed a bug where block comments were not recognized correctly</li>
-        </ul>
-    ]]>
-    </change-notes>
-
     <depends>com.intellij.modules.lang</depends>
-    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Language -->
