@@ -1,7 +1,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/PANTHEONtech/YANGinator)](https://plugins.jetbrains.com/plugin/17935-yanginator)
 [![License](https://img.shields.io/github/license/PANTHEONtech/YANGinator)](https://github.com/PANTHEONtech/YANGinator/blob/master/LICENSE)
 [![Java CI with Gradle](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml/badge.svg)](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml)
-[![InteliJ Compatibility Verification](https://github.com/PANTHEONtech/YANGinator/actions/workflows/compatibility.yml/badge.svg?event=schedule)](https://github.com/PANTHEONtech/YANGinator/actions/workflows/compatibility.yml)
+[![InteliJ Compatibility Verification](https://github.com/PANTHEONtech/YANGinator/actions/workflows/compatibility.yml/badge.svg?event=schedule)](https://github.com/PANTHEONtech/YANGinator/blob/master/compatible.version)
 
 
 YANGinator | An IntelliJ YANG Validation Plugin
