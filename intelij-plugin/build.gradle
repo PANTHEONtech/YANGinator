@@ -25,7 +25,7 @@ tasks {
     patchPluginXml {
         sinceBuild = '211'
         untilBuild = ''
-        changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/intelij-plugin/CHANGELOG.md\">more...</a>"
+        changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
 }
 
@@ -46,11 +46,13 @@ sourceSets {
 }
 
 dependencies {
-    implementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
+
+// Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
 runPluginVerifier {
-    File file = new File("intelij-plugin/compatible.version")
+    File file = new File("compatible.version")
     def line
     ideVersions = []
     file.withReader { reader ->
