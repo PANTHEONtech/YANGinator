@@ -3,7 +3,7 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: commonsIoVersion
     implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
     implementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jupiterApiVersion
-    implementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
 test {
