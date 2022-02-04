@@ -1,5 +1,4 @@
 # Change log
-
 ## 1.5
 * Code formatting [#3](https://github.com/PANTHEONtech/YANGinator/issues/3)
 * Fixed a bug where block comments were not recognized correctly [#34](https://github.com/PANTHEONtech/YANGinator/issues/34)
