@@ -12,7 +12,7 @@ intellij {
 }
 
 changelog {
-    path = "CHANGELOG.md"
+    path = "${project.parent.projectDir}/CHANGELOG.md"
     header = "${-> version.get()}"
     headerParserRegex = ~/(\d+\.\d+)/
     itemPrefix = "*"
@@ -49,10 +49,9 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-
 // Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
 runPluginVerifier {
-    File file = new File("compatible.version")
+    File file = new File("${project.parent.projectDir}/COMPATIBLE.version")
     def line
     ideVersions = []
     file.withReader { reader ->

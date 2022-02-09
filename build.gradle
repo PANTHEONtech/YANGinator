@@ -17,6 +17,12 @@ subprojects {
     group = rootProject.group
 }
 
+tasks {
+    wrapper {
+        gradleVersion = "$gradleVersion"
+    }
+}
+
 task createReleaseVersion {
     doLast {
         def snapshotVersion = buildFile.getText().find(version)
