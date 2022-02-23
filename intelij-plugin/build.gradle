@@ -49,16 +49,32 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-// Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
-runPluginVerifier {
+final MAX_VERIFIER_NUMBER = 2
+def counter = 0
+def ideaVersions = []
+
+task compatibilityCheck {
     File file = new File("${project.parent.projectDir}/COMPATIBLE.version")
     def line
-    ideVersions = []
     file.withReader { reader ->
         while ((line = reader.readLine()) != null) {
             if (!line.isEmpty() && !line.contains('#')) {
-                ideVersions.add(line)
+                ideaVersions.add(line)
+                counter++
+                if (counter % MAX_VERIFIER_NUMBER == 0) {
+                    // delete versions in .pluginVerifier/ides
+                    println ideaVersions
+                    tasks.runPluginVerifier.execute()
+                    ideaVersions.clear()
+                }
             }
         }
     }
+    //dependsOn runPluginVerifier
+}
+
+// Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
+runPluginVerifier {
+    println "from runPlugin " + ideaVersions
+    ideVersions = ideaVersions
 }
