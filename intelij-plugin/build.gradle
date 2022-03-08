@@ -49,32 +49,56 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-final MAX_VERIFIER_NUMBER = 2
+final MAX_VERIFIER_NUMBER = 5
 def counter = 0
-def ideaVersions = []
+ext.ideaVersions = new ArrayList<String>()
 
-task compatibilityCheck {
-    File file = new File("${project.parent.projectDir}/COMPATIBLE.version")
+def makeCommand() {
+    def commandBuilder = new StringBuilder()
+    commandBuilder.append("rm -rf ../../.pluginVerifier\n")
+    commandBuilder.append("gradle runPluginVerifier -PtestVersions=")
+    for (int i in 0..ideaVersions.size()-1) {
+        commandBuilder.append(ideaVersions.get(i))
+        if (i != ideaVersions.size() - 1) {
+            commandBuilder.append(",")
+        }
+    }
+    commandBuilder.append("\n")
+    return commandBuilder
+}
+
+task compatibilityCheck(type: Exec) {
+    File runFile = new File("${project.projectDir}/run.sh")
+    File versionFile = new File("${project.parent.projectDir}/COMPATIBLE.version")
+    def commandBuilder = new StringBuilder()
+    commandBuilder.append("#!/usr/bin/bash\n\n")
     def line
-    file.withReader { reader ->
+    versionFile.withReader { reader ->
         while ((line = reader.readLine()) != null) {
             if (!line.isEmpty() && !line.contains('#')) {
                 ideaVersions.add(line)
                 counter++
                 if (counter % MAX_VERIFIER_NUMBER == 0) {
-                    // delete versions in .pluginVerifier/ides
-                    println ideaVersions
-                    tasks.runPluginVerifier.execute()
+                    commandBuilder.append(makeCommand())
                     ideaVersions.clear()
                 }
             }
         }
     }
-    //dependsOn runPluginVerifier
+    if (ideaVersions.size() >= 1) {
+        commandBuilder.append(makeCommand())
+    }
+    commandBuilder.append("\nrm ./run.sh")
+    runFile.write(commandBuilder.toString())
+    commandLine "./run.sh"
 }
 
 // Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
 runPluginVerifier {
-    println "from runPlugin " + ideaVersions
-    ideVersions = ideaVersions
+    def testVersions = project.findProperty("testVersions")
+    println "Test versions from argument: " + testVersions
+    if (testVersions != null) {
+        println "Parsed versions from argument: " + Arrays.asList(testVersions.split(","))
+        ideVersions = Arrays.asList(testVersions.split(","))
+    }
 }
