@@ -18,4 +18,4 @@ jobs:
         distribution: 'adopt'
         cache: gradle
     - name: Verify Plugin Compatibility
-      run: gradle runPluginVerifier
+      run: gradle compatibilityCheck
