@@ -17,5 +17,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-    - name: Verify Plugin Compatibility
-      run: gradle compatibilityCheck
+    - name: Prepare Verify Plugin Compatibility
+      run: gradle prepareCompatibilityCheck
+    - name: Execute Verify Plugin Compatibility
+      run: sh ./compatibility-check.sh
