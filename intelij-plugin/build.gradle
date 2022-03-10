@@ -67,8 +67,8 @@ def makeCommand() {
     return commandBuilder
 }
 
-task compatibilityCheck(type: Exec) {
-    File runFile = new File("${project.projectDir}/run.sh")
+task prepareCompatibilityCheck {
+    File runFile = new File("${project.projectDir}/compatibility-check.sh")
     File versionFile = new File("${project.parent.projectDir}/COMPATIBLE.version")
     def commandBuilder = new StringBuilder()
     commandBuilder.append("#!/usr/bin/bash\n\n")
@@ -88,9 +88,8 @@ task compatibilityCheck(type: Exec) {
     if (ideaVersions.size() >= 1) {
         commandBuilder.append(makeCommand())
     }
-    commandBuilder.append("\nrm ./run.sh")
+    commandBuilder.append("\nrm ./compatibility-check.sh")
     runFile.write(commandBuilder.toString())
-    commandLine "./run.sh"
 }
 
 // Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
