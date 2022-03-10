@@ -55,7 +55,7 @@ ext.ideaVersions = new ArrayList<String>()
 
 def makeCommand() {
     def commandBuilder = new StringBuilder()
-    commandBuilder.append("rm -rf ../../.pluginVerifier\n")
+    commandBuilder.append("rm -rf /home/runner/.pluginVerifier\n")
     commandBuilder.append("gradle runPluginVerifier -PtestVersions=")
     for (int i in 0..ideaVersions.size()-1) {
         commandBuilder.append(ideaVersions.get(i))
@@ -68,7 +68,8 @@ def makeCommand() {
 }
 
 task prepareCompatibilityCheck {
-    File runFile = new File("${project.projectDir}/compatibility-check.sh")
+    def runnerFileName = "${project.projectDir}/compatibility-check.sh"
+    File runFile = new File(runnerFileName)
     File versionFile = new File("${project.parent.projectDir}/COMPATIBLE.version")
     def commandBuilder = new StringBuilder()
     commandBuilder.append("#!/usr/bin/bash\n\n")
@@ -88,7 +89,7 @@ task prepareCompatibilityCheck {
     if (ideaVersions.size() >= 1) {
         commandBuilder.append(makeCommand())
     }
-    commandBuilder.append("\nrm ./compatibility-check.sh")
+    commandBuilder.append("\nrm ").append(runnerFileName)
     runFile.write(commandBuilder.toString())
 }
 
