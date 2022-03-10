@@ -55,7 +55,6 @@ ext.ideaVersions = new ArrayList<String>()
 
 def makeCommand() {
     def commandBuilder = new StringBuilder()
-    commandBuilder.append("rm -rf /home/runner/.pluginVerifier\n")
     commandBuilder.append("gradle runPluginVerifier -PtestVersions=")
     for (int i in 0..ideaVersions.size()-1) {
         commandBuilder.append(ideaVersions.get(i))
@@ -64,6 +63,7 @@ def makeCommand() {
         }
     }
     commandBuilder.append("\n")
+    commandBuilder.append("rm -rf /home/runner/.pluginVerifier\n")
     return commandBuilder
 }
 
