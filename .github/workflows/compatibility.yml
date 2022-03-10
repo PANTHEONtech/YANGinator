@@ -20,4 +20,4 @@ jobs:
     - name: Prepare Verify Plugin Compatibility
       run: gradle prepareCompatibilityCheck
     - name: Execute Verify Plugin Compatibility
-      run: sh ./compatibility-check.sh
+      run: sh ./intelij-plugin/compatibility-check.sh
