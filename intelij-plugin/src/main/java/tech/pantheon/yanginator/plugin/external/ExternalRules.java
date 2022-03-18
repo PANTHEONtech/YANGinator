@@ -21,67 +21,67 @@ public class ExternalRules {
      * can remove it.
      * see more in /yanginator/plugin/external/AnyOrderRuleTutorial.md
      *
-     * @param b           Psi builder
-     * @param l           Level, by increasing it we move to the next element
+     * @param psiBuilder  Psi builder
+     * @param level       Level, by increasing it we move to the next element
      * @param listOfItems list of items to try parsing and matching
      * @return return true if all items are matched BUT does not check for duplicates
      */
 
-    public static boolean anyOrder(PsiBuilder b, int l, Parser... listOfItems) {
-        if (!recursion_guard_(b, l, "rule")) return false;
-        boolean r;
+    public static boolean anyOrder(PsiBuilder psiBuilder, int level, Parser... listOfItems) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+        boolean parserResultBoolean;
         //create new array of booleans with length of items that we want to match
-        boolean[] booleanList = new boolean[listOfItems.length];
+        boolean[] listOfBooleanResults = new boolean[listOfItems.length];
         //create list out of listOfItems array, so we can remove items that were already matched
-        List<Parser> list = new ArrayList<>(List.of(listOfItems));
+        List<Parser> listOfItemsToParse = new ArrayList<>(List.of(listOfItems));
         Set<Parser> optionalParsed = new HashSet<>();
         //enter the section to match
-        PsiBuilder.Marker m = enter_section_(b);
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
 
         for (int i = 0; i < listOfItems.length; i++) {
-            r = false;
-            for (int j = 0; j < list.size(); j++) {
-                int oldOffset = b.getCurrentOffset();
+            parserResultBoolean = false;
+            for (int j = 0; j < listOfItemsToParse.size(); j++) {
+                int oldOffset = psiBuilder.getCurrentOffset();
                 //try parsing item
-                r = list.get(j).parse(b, l + 1);
-                if (i == j && r) {
-                    booleanList[i] = true;
+                parserResultBoolean = listOfItemsToParse.get(j).parse(psiBuilder, level + 1);
+                if (i == j && parserResultBoolean) {
+                    listOfBooleanResults[i] = true;
                 }
-                int newOffset = b.getCurrentOffset();
+                int newOffset = psiBuilder.getCurrentOffset();
                 //optional or not optional
-                if (r && (oldOffset == newOffset)) {
+                if (parserResultBoolean && (oldOffset == newOffset)) {
                     optionalParsed.add(listOfItems[j]);
                     //try parsing optional
                     for (Parser item : optionalParsed) {
-                        oldOffset = b.getCurrentOffset();
-                        r = item.parse(b, l + 1);
-                        if (r && oldOffset != newOffset) {
+                        oldOffset = psiBuilder.getCurrentOffset();
+                        parserResultBoolean = item.parse(psiBuilder, level + 1);
+                        if (parserResultBoolean && oldOffset != newOffset) {
                             //remove optional item if it was parsed
                             optionalParsed.remove(item);
-                            booleanList[i] = true;
+                            listOfBooleanResults[i] = true;
                             //no need to loop futher, the item has been parsed
                             break;
                         } else {
-                            r = false;
+                            parserResultBoolean = false;
                         }
                     }
                 }
-                if (r) {
-                    booleanList[j] = true;
+                if (parserResultBoolean) {
+                    listOfBooleanResults[j] = true;
                     //no need to loop futher, the item has been parsed
                     break;
                 }
             }
             //move to next element and try matching it
-            l += 1;
+            level += 1;
         }
-        exit_section_(b, m, null, areAllTrue(booleanList));
-        return areAllTrue(booleanList);
+        exit_section_(psiBuilder, marker, null, areAllTrue(listOfBooleanResults));
+        return areAllTrue(listOfBooleanResults);
     }
 
-    private static boolean areAllTrue(boolean[] array) {
+    private static boolean areAllTrue(boolean[] listOfBooleanResults) {
         //simple method to find if all elements are true
-        for (boolean b : array) if (!b) return false;
+        for (boolean booleanList : listOfBooleanResults) if (!booleanList) return false;
         return true;
     }
 
