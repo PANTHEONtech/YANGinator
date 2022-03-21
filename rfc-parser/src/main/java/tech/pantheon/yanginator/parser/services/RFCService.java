@@ -11,6 +11,7 @@
 package tech.pantheon.yanginator.parser.services;
 
 import com.google.common.collect.ImmutableList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class RFCService {
 
     private final Logger logger;
