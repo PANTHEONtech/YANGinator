@@ -3,7 +3,7 @@
 Following methods are used for transformation of Augmented Backus–Naur form (.abnf) grammar into Backus–Naur form (.bnf)
 .
 
-<b>For your own safety, do not change the order in which the methods are called.</b>
+<b>For your own safety and mental well-being, do not change the order in which the methods are called.</b>
 
 <ul>
   <li>replaceAllAbnfTokens(oldGrammar)</li>
@@ -26,13 +26,14 @@ Abnf specification for different YANG versions can be found in RFCs:
 
 ### 1. Replace tokens
 
-Method  <code><b>replaceAllAbnfTokens(List<String> oldGrammar)</b></code> takes original .abnf grammar as a parameter.
+Method  <code><b>replaceAllAbnfTokens(List<String> oldGrammar)</b></code> takes original .abnf grammar as a parameter. 
+Except tokens enclosed inside double quotes.
 
 * The method transforms:
-    * "=" to "::=" Equal sign
-    * "/" to "|" Or
-    * ";;" to "//" Comment
-    * ";" to "//" Comment
+    * Equal sign: = changed to ::= 
+    * Or: / changed to | 
+    * Comment: ;; changed to // 
+    * Comment: ; changed to // 
 
 Example of original .abnf grammar:
 

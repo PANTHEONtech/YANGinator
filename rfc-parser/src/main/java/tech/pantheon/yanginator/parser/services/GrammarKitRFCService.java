@@ -39,7 +39,7 @@ public class GrammarKitRFCService {
      * which will return transformed (Backus–Naur form) list of strings - <code>newGrammar</code>.
      * Finally, {@link #writeIntoOutputFile} stores <code>newGrammar</code> to <code>outputFile</code>.
      *
-     * @param inputFile the source file of abnf grammar
+     * @param inputFile  the source file of abnf grammar
      * @param outputFile the output file in which converted bnf grammar will be saved
      */
     public void transformAbnfToBnf(final File inputFile, final File outputFile) {
@@ -67,21 +67,20 @@ public class GrammarKitRFCService {
     }
 
     /**
-     *  Transforms a list of strings <code>oldGrammar</code> from Augmented
-     *  Backus–Naur form to Backus–Naur form. New list of strings formatted
-     *  according to Intellij Grammar Kit .bnf standards.
+     * Transforms a list of strings <code>oldGrammar</code> from Augmented
+     * Backus–Naur form to Backus–Naur form. New list of strings formatted
+     * according to Intellij Grammar Kit .bnf standards.
      *
      * @param oldGrammar the list of strings containing .abnf grammar
      * @return the list of strings containing .bnf grammar
-     * @see  <a href="/YANGinator/rfc-parser/docs/readme.md">
-     * ABNF to BNF transformaiton</a>
+     * @see <a href="/YANGinator/rfc-parser/docs/readme.md">readme.md</a>
      */
     private List<String> parseInputFile(final List<String> oldGrammar) {
         List<String> result;
         result = GrammarKitRFCUtils.replaceAllAbnfTokens(oldGrammar);
         result = GrammarKitRFCUtils.deleteWhitespaces(result);
-        result = GrammarKitRFCUtils.trimAndAppendOperator(result,"1*","+");
-        result = GrammarKitRFCUtils.trimAndAppendOperator(result,"*","*");
+        result = GrammarKitRFCUtils.trimAndAppendOperator(result, "1*", "+");
+        result = GrammarKitRFCUtils.trimAndAppendOperator(result, "*", "*");
         result = GrammarKitRFCUtils.replaceAsterWord(result, "1*");
         result = GrammarKitRFCUtils.replaceAsterWord(result, "*");
         result = GrammarKitRFCUtils.replaceHexadecimalRange(result);
@@ -90,11 +89,11 @@ public class GrammarKitRFCService {
     }
 
     /**
-     *  Writes the content of given list o strings
-     *  (transformed bnf grammar) into <code>outputFile</code>
+     * Writes the content of given list o strings
+     * (transformed bnf grammar) into <code>outputFile</code>
      *
      * @param outputFile the file into which will be the content of provided list written
-     * @param lines the list of strings
+     * @param lines      the list of strings
      */
     private void writeIntoOutputFile(final File outputFile, final List<String> lines) {
         try (final PrintWriter printWriter = new PrintWriter(outputFile)) {
