@@ -40,7 +40,7 @@ public class RFCParser {
      * @param abnfGrammar the file containing .abnf grammar for YANG format
      */
     private static void generateGrammar(final String yangVersion, final File abnfGrammar) {
-        String path = "../../main/gen/yang-" + yangVersion;
+        String path = "rfc-parser/src/main/gen/yang-" + yangVersion;
         boolean isCreated = new File(path).mkdir();
         if (isCreated) {
             File outputFile = new File(path + "/" + FilenameUtils.removeExtension(abnfGrammar.getName()) + "-grammar-kit.bnf");
@@ -62,7 +62,7 @@ public class RFCParser {
      */
     private static void generateGrammar(final File abnfGrammar) {
         String fileName = FilenameUtils.removeExtension(abnfGrammar.getName());
-        String path = "../../main/gen/" + fileName;
+        String path = "rfc-parser/src/main/gen/" + fileName;
         boolean isCreated = new File(path).mkdir();
         if (isCreated) {
             File outputFile = new File(path + "/" + fileName + "-grammar-kit.bnf");
