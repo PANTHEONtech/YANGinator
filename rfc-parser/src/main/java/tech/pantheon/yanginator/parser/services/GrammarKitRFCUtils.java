@@ -14,15 +14,29 @@ import tech.pantheon.yanginator.parser.types.BnfTokenType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GrammarKitRFCUtils {
 
-    public static final BnfTokenType PIPE = new BnfTokenType("|", "PIPE");
-
-    public static final String BNFEqual = "::=";
-    public final static String ABNF_COMMENT_START = ";;";
+    private static final BnfTokenType PIPE = new BnfTokenType("|", "PIPE");
+    private static final String BNFEqual = "::=";
+    private static final String ABNF_COMMENT_START = ";;";
+    private static final Pattern ASTERISK_MULTIPLIER_PATTERN = Pattern.compile("(?<oldOperatorGroup>\\*\\()");
+    private static final Pattern DIGIT_ASTERISK_MULTIPLIER_PATTERN = Pattern.compile("(?<oldOperatorGroup>1\\*\\()");
+    private static final Pattern WORD_MULTIPLIER_ASTERISK = Pattern.compile(".*(?<wordSelect>\\*[\\w\\-]+).*");
+    private static final Pattern WORD_MULTIPLIER_DIGIT_ASTERISK = Pattern.compile(".*(?<wordSelect>1\\*[\\w\\-]+).*");
+    private static final Pattern STRING_RULE_PATTERN = Pattern.compile(".*(?<statementStart>(<[\\s+\\w].*))$");
+    private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("(?<hexadecimal>(%x\\d{1,2}\\w))");
+    private static final Pattern HEXADECIMAL_RANGE_PATTERN = Pattern.compile("(?<hexadecimalRange>(%x\\d{1,2}\\w-\\d{1,2}\\w))");
+    private static final Map<String, String> SPECIAL_CHARACTER = Map.of(
+            "%x0D", "\"\\r\"",
+            "%x09", "\"\\t\"",
+            "%x0A", "\"\\n\"",
+            "%x22", "\"\\\"\"",
+            "%x5C", "\\");
 
     /**
      * Replaces each occurrence of an abnfTokens in provided list with a bnfTokens.
@@ -95,16 +109,15 @@ public class GrammarKitRFCUtils {
      * @return the list of strings in which abnf operator was removed and bnf operator is used instead.
      */
     public static List<String> trimAndAppendOperator(final List<String> lines, final String oldOperator, final String replacement) {
-        String regexInsert = oldOperator;
+        Pattern multiplierRegex = null;
         if (oldOperator.equals("*")) {
-            regexInsert = "\\*\\(";
+            multiplierRegex = ASTERISK_MULTIPLIER_PATTERN;
         } else if (oldOperator.equals("1*")) {
-            regexInsert = "1\\*\\(";
+            multiplierRegex = DIGIT_ASTERISK_MULTIPLIER_PATTERN;
         }
 
-        final Pattern oldOperatorPattern = Pattern.compile("(?<oldOperatorGroup>" + regexInsert + ")");
         String concatenatedLines = String.join("\n", lines);
-        Matcher matcher = oldOperatorPattern.matcher(concatenatedLines);
+        Matcher matcher = Objects.requireNonNull(multiplierRegex).matcher(concatenatedLines);
         int newOperatorIndex;
         int oldOperatorIndex;
         while (matcher.find()) {
@@ -133,7 +146,7 @@ public class GrammarKitRFCUtils {
                     }
                 }
             }
-            matcher = oldOperatorPattern.matcher(concatenatedLines);
+            matcher = multiplierRegex.matcher(concatenatedLines);
         }
 
         return List.of(concatenatedLines.split("\n"));
@@ -178,20 +191,19 @@ public class GrammarKitRFCUtils {
      * @return the list of strings in which abnf operator was removed and bnf operator is used instead.
      */
     public static List<String> replaceAsterWord(final List<String> lines, String oldOperator) {
-        String regexInsert = oldOperator;
+        Pattern asteriskRegex = null;
         String replacement = "";
         if (oldOperator.equals("*")) {
-            regexInsert = "\\*[\\w\\-]+";
+            asteriskRegex = WORD_MULTIPLIER_ASTERISK;
             replacement = "*";
         } else if (oldOperator.equals("1*")) {
-            regexInsert = "1\\*[\\w\\-]+";
+            asteriskRegex = WORD_MULTIPLIER_DIGIT_ASTERISK;
             replacement = "+";
         }
 
-        final Pattern asteriskRegex = Pattern.compile(".*(?<wordSelect>" + regexInsert + ").*");
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            Matcher matcher = asteriskRegex.matcher(line.trim());
+            Matcher matcher = Objects.requireNonNull(asteriskRegex).matcher(line.trim());
             while (matcher.matches()) {
                 String oldWord = matcher.group("wordSelect");
                 String newWord = oldWord.replace(oldOperator, "");
@@ -214,11 +226,10 @@ public class GrammarKitRFCUtils {
      * @return the list of strings with string rules replaced.
      */
     public static List<String> rewriteStringRules(final List<String> lines) {
-        final Pattern rulePattern = Pattern.compile(".*(?<statementStart>(<[\\s+\\w].*))$");
         List<String> result = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             String firstLineOfRule = lines.get(i);
-            Matcher matcher = rulePattern.matcher(firstLineOfRule.trim());
+            Matcher matcher = STRING_RULE_PATTERN.matcher(firstLineOfRule.trim());
             if (matcher.matches()) {
                 String originalString = matcher.group("statementStart");
                 String quotes = "\"\\\"\"";
@@ -249,21 +260,20 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> replaceHexadecimalRange(List<String> lines) {
         List<String> result = new ArrayList<>();
-        final Pattern hexPatternRange = Pattern.compile("(?<hexadecimalRange>(%x\\d{1,2}\\w-\\d{1,2}\\w))");
 
         for (String line : lines) {
-            Matcher matcher = hexPatternRange.matcher(line.trim());
+            Matcher matcher = HEXADECIMAL_RANGE_PATTERN.matcher(line.trim());
             while (matcher.find()) {
                 String originalHexDef = matcher.group("hexadecimalRange").trim();
                 String originalHexDefWithZero = originalHexDef.trim().replaceAll("%", "0");
                 String hexLowerBoundaryString = originalHexDefWithZero.substring(0, 4);
                 int hexLowerBoundary = Integer.decode(hexLowerBoundaryString);
-                int hexUpperBoundary = Integer.parseInt(originalHexDefWithZero.substring(5).toLowerCase(), 16);
+                int hexUpperBoundary = Integer.parseInt(originalHexDefWithZero.substring(5), 16);
                 int hex = hexLowerBoundary;
                 StringBuilder replacement = new StringBuilder();
                 while (hex <= hexUpperBoundary) {
-                    if (hex == 34 | hex == 92) {
-                        replacement.append(" \"\\").append((char) hex).append("\" |");
+                    if (hex == 34 || hex == 92) {
+                        replacement.append("'").append((char) hex).append("' |");
                     } else {
                         replacement.append(" \"").append((char) hex).append("\" |");
                     }
@@ -287,10 +297,9 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> replaceHexadecimal(List<String> lines) {
         List<String> result = new ArrayList<>();
-        final Pattern hexPattern = Pattern.compile("(?<hexadecimal>(%x\\d{1,2}\\w))");
 
         for (String line : lines) {
-            Matcher matcher = hexPattern.matcher(line.trim());
+            Matcher matcher = HEXADECIMAL_PATTERN.matcher(line.trim());
             while (matcher.find()) {
                 String originalHexDef = matcher.group("hexadecimal").trim();
                 if (isSpecialCharacter(originalHexDef)) {
@@ -317,7 +326,7 @@ public class GrammarKitRFCUtils {
      * @return {@code true} if given string equals to specified hexadecimal values, {@code false} otherwise
      */
     private static boolean isSpecialCharacter(final String originalHexDef) {
-        return originalHexDef.equals("%x0D") | originalHexDef.equals("%x09") | originalHexDef.equals("%x0A") | originalHexDef.equals("%x22") | originalHexDef.equals("%x5C");
+        return SPECIAL_CHARACTER.containsKey(originalHexDef);
     }
 
     /**
@@ -328,15 +337,6 @@ public class GrammarKitRFCUtils {
      * @return the string representation of given hexadecimal value
      */
     private static String transformSpecialChars(final String originalHexDef) {
-        if ("%x0D".equals(originalHexDef)) {
-            return "\"\\r\"";
-        } else if ("%x09".equals(originalHexDef)) {
-            return "\"\\t\"";
-        } else if ("%x0A".equals(originalHexDef)) {
-            return "\"\\n\"";
-        } else if ("%x22".equals(originalHexDef)) {
-            return "\"\\\"\"";
-        }
-        return "\\";
+        return SPECIAL_CHARACTER.get(originalHexDef);
     }
 }

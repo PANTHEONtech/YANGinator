@@ -10,6 +10,7 @@
 
 package tech.pantheon.yanginator.parser;
 
+import org.apache.commons.io.FilenameUtils;
 import tech.pantheon.yanginator.parser.services.GrammarKitRFCService;
 
 import java.io.File;
@@ -42,7 +43,7 @@ public class RFCParser {
         String path = "../../main/gen/yang-" + yangVersion;
         boolean isCreated = new File(path).mkdir();
         if (isCreated) {
-            File outputFile = new File(path + "/" + abnfGrammar.getName().split("\\.")[0] + "-grammar-kit.bnf");
+            File outputFile = new File(path + "/" + FilenameUtils.removeExtension(abnfGrammar.getName()) + "-grammar-kit.bnf");
             GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
         } else {
             File directoryToBeDeleted = new File(path);
@@ -60,10 +61,11 @@ public class RFCParser {
      * @param abnfGrammar the file containing .abnf grammar
      */
     private static void generateGrammar(final File abnfGrammar) {
-        String path = "../../main/gen/" + abnfGrammar.getName().split("\\.")[0];
+        String fileName = FilenameUtils.removeExtension(abnfGrammar.getName());
+        String path = "../../main/gen/" + fileName;
         boolean isCreated = new File(path).mkdir();
         if (isCreated) {
-            File outputFile = new File(path + "/" + abnfGrammar.getName().split("\\.")[0] + "-grammar-kit.bnf");
+            File outputFile = new File(path + "/" + fileName + "-grammar-kit.bnf");
             GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
         } else {
             File directoryToBeDeleted = new File(path);
