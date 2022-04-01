@@ -10,16 +10,14 @@
 
 package tech.pantheon.yanginator.plugin.external;
 
-import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
-
 import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.parser.GeneratedParserUtilBase.Parser;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 
 public class ExternalRules {
 
@@ -94,6 +92,96 @@ public class ExternalRules {
         for (boolean booleanList : listOfBooleanResults) {
             if (!booleanList) return false;
         }
+        return true;
+    }
+
+    /**
+     * For loop extracts hex ranges with characters that are forbidden and add those characters into charList,
+     * in addition char with hex code 0xFFFD is added manually even though it's not forbidden. This is because
+     * idea can't recognize some characters from forbidden ranges and replace them with this value.
+     * Second for loop extracts current yang-string from original text into variable text.
+     * Last for loop compares string characters with forbidden characters and stops at 1st match.
+     *
+     * @param psiBuilder Psi builder
+     * @param level      Level
+     * @param parser     parser for parsing current string
+     * @param strings    list of strings containing forbidden ranges for character
+     * @return return true if forbidden range doesn't contain any character of this string
+     */
+    public static boolean checkString(PsiBuilder psiBuilder, int level, Parser parser, String... strings) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+
+        final List<String> stringList = new ArrayList<>(List.of(strings));
+        final List<Character> charList = new ArrayList<>();
+        final Set<Character> separators = new HashSet<>(Set.of('\n', '\r', ' ', '\t'));
+
+        // 0xFFFD is for characters that can't be recognized by idea and are replaced by this value
+        charList.add((char) 0xFFFD);
+        for (String s : stringList) {
+            String current = s.substring(2);
+            String[] list = current.split("-");
+            int low = Integer.decode("0x" + list[0]);
+            int high = Integer.decode("0x" + list[1]);
+            for (int j = low; j <= high; j++) {
+                charList.add((char) j);
+            }
+        }
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
+        String text = "";
+        for (int i = psiBuilder.getCurrentOffset(); i < psiBuilder.getOriginalText().length(); i++) {
+            if (separators.contains(psiBuilder.getOriginalText().charAt(i))) {
+                text = psiBuilder.getOriginalText().subSequence(psiBuilder.getCurrentOffset(), i).toString();
+                break;
+            }
+        }
+        for (char c : text.toCharArray()) {
+            boolean result = charList.parallelStream().anyMatch(character -> character == c);
+            if (result) {
+                exit_section_(psiBuilder, marker, null, false);
+                return false;
+            }
+        }
+        parser.parse(psiBuilder, level);
+        exit_section_(psiBuilder, marker, null, true);
+        return true;
+    }
+
+    /**
+     * For loop extracts hex ranges with characters that are forbidden and add those characters into charList,
+     * in addition char with hex code 0xFFFD is added manually even though it's not forbidden. This is because
+     * idea can't recognize some characters from forbidden ranges and replace them with this value.
+     *
+     * @param psiBuilder Psi builder
+     * @param level      Level
+     * @param parser     parser for parsing current character
+     * @param strings    list of strings containing forbidden ranges for character
+     * @return return true if forbidden range doesn't contains current character
+     */
+
+    public static boolean checkChar(PsiBuilder psiBuilder, int level, Parser parser, String... strings) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+
+        final List<String> stringList = new ArrayList<>(List.of(strings));
+        final List<Character> charList = new ArrayList<>();
+        // 0xFFFD is for characters that can't be recognized by idea and are replaced by this value
+        charList.add((char) 0xFFFD);
+        for (String s : stringList) {
+            String current = s.substring(2);
+            String[] list = current.split("-");
+            int low = Integer.decode("0x" + list[0]);
+            int high = Integer.decode("0x" + list[1]);
+            for (int j = low; j <= high; j++) {
+                charList.add((char) j);
+            }
+        }
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
+        boolean result = charList.parallelStream().anyMatch(character -> consumeToken(psiBuilder, "" + character));
+        parser.parse(psiBuilder, level);
+        if (result) {
+            exit_section_(psiBuilder, marker, null, false);
+            return false;
+        }
+        exit_section_(psiBuilder, marker, null, true);
         return true;
     }
 }
