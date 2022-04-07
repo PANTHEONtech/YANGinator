@@ -1,0 +1,47 @@
+;; Instance Identifiers
+
+instance-identifier = 1*("/" (node-identifier *predicate))
+
+predicate           = "[" *WSP (predicate-expr / pos) *WSP "]"
+
+action-keyword           = %s"action"
+
+zero-integer-value  = 1*DIGIT
+
+CR                  = %x0D
+                     ; carriage return
+
+DIGIT               = %x30-39
+                     ; 0-9
+
+HEXDIG              = DIGIT /
+                     %x61 / %x62 / %x63 / %x64 / %x65 / %x66
+                     ; only lower-case a..f
+
+path-arg-str        = < a string that matches the rule
+                       path-arg >
+
+identifier-arg-str  = < a string that matches the rule >
+                     < identifier-arg >
+
+input-stmt          = input-keyword optsep
+                     "{" stmtsep
+                         ;; these stmts can appear in any order
+                         *((typedef-stmt /
+                            grouping-stmt) stmtsep)
+                         1*(data-def-stmt stmtsep)
+                     "}"
+
+date-arg            = 4DIGIT "-" 2DIGIT "-" 2DIGIT
+
+IPv6address   =                            6( h16 ":" ) ls32
+             /                       "::" 5( h16 ":" ) ls32
+             / [               h16 ] "::" 4( h16 ":" ) ls32
+             / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+             / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+             / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+             / [ *4( h16 ":" ) h16 ] "::"              ls32
+             / [ *5( h16 ":" ) h16 ] "::"              h16
+             / [ *6( h16 ":" ) h16 ] "::"
+
+h16           = 1*4HEXDIG

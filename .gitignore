@@ -18,3 +18,4 @@ intelij-plugin/compatibility-check.sh
 /jdks/
 /native/
 /wrapper/
+/rfc-parser/src/test/gen/

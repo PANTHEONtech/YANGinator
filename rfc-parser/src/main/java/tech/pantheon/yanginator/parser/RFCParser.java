@@ -18,16 +18,13 @@ import java.net.URISyntaxException;
 
 public class RFCParser {
     final static GrammarKitRFCService GRAMMARKIT_RFC_SERVICE = new GrammarKitRFCService();
+    private final static String YANG_PATH_PREFIX = "rfc-parser/src/main/gen/yang-";
+    private final static String GEN_PATH_PREFIX = "rfc-parser/src/main/gen/";
 
     public static void main(String[] args) throws URISyntaxException {
-        for (String arg : args) {
-            System.out.println(arg);
-        }
-
-        generateGrammar(GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/shared/rfc-3986.abnf"));
-        generateGrammar("1_0", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_0/yang-rfc-6020.abnf"));
-        // TODO Add support for YANG 1.1
-        generateGrammar("1_1", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"));
+        generateGrammar(GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/shared/rfc-3986.abnf"), GEN_PATH_PREFIX);
+        generateGrammar("1_0", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_0/yang-rfc-6020.abnf"), YANG_PATH_PREFIX);
+        generateGrammar("1_1", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"), YANG_PATH_PREFIX);
     }
 
     /**
@@ -38,17 +35,18 @@ public class RFCParser {
      *
      * @param yangVersion the name of directory to be created
      * @param abnfGrammar the file containing .abnf grammar for YANG format
+     * @param dstPath     path where generated files will be stored
      */
-    private static void generateGrammar(final String yangVersion, final File abnfGrammar) {
-        String path = "rfc-parser/src/main/gen/yang-" + yangVersion;
-        boolean isCreated = new File(path).mkdir();
+    public static void generateGrammar(final String yangVersion, final File abnfGrammar, final String dstPath) {
+        String path = dstPath + yangVersion;
+        boolean isCreated = new File(path).mkdirs();
         if (isCreated) {
             File outputFile = new File(path + "/" + FilenameUtils.removeExtension(abnfGrammar.getName()) + "-grammar-kit.bnf");
             GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
         } else {
             File directoryToBeDeleted = new File(path);
             deleteDirectory(directoryToBeDeleted);
-            generateGrammar(yangVersion, abnfGrammar);
+            generateGrammar(yangVersion, abnfGrammar, dstPath);
         }
     }
 
@@ -59,18 +57,19 @@ public class RFCParser {
      * gen directory, will be deleted automatically.
      *
      * @param abnfGrammar the file containing .abnf grammar
+     * @param dstPath     path where generated files will be stored
      */
-    private static void generateGrammar(final File abnfGrammar) {
+    public static void generateGrammar(final File abnfGrammar, final String dstPath) {
         String fileName = FilenameUtils.removeExtension(abnfGrammar.getName());
-        String path = "rfc-parser/src/main/gen/" + fileName;
-        boolean isCreated = new File(path).mkdir();
+        String path = dstPath + fileName;
+        boolean isCreated = new File(path).mkdirs();
         if (isCreated) {
             File outputFile = new File(path + "/" + fileName + "-grammar-kit.bnf");
             GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
         } else {
             File directoryToBeDeleted = new File(path);
             deleteDirectory(directoryToBeDeleted);
-            generateGrammar(abnfGrammar);
+            generateGrammar(abnfGrammar, dstPath);
         }
     }
 
@@ -81,7 +80,7 @@ public class RFCParser {
      * @return <code>true</code> if and only if the file or directory is
      * successfully deleted; <code>false</code> otherwise
      */
-    private static boolean deleteDirectory(File directoryToBeDeleted) {
+    public static boolean deleteDirectory(File directoryToBeDeleted) {
         File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
