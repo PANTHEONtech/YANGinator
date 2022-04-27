@@ -42,4 +42,4 @@ IPv6address ::= ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h1
   | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16
   | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"
 
-h16 ::= ( HEXDIG) | ( HEXDIG HEXDIG) | ( HEXDIG HEXDIG HEXDIG) | ( HEXDIG HEXDIG HEXDIG HEXDIG)
+h16 ::= (HEXDIG) | (HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG HEXDIG)
