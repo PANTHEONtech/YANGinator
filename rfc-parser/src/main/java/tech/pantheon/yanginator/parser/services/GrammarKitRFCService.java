@@ -54,7 +54,7 @@ public class GrammarKitRFCService {
      * @param inputFile the {@code File} to read
      * @return the list of strings
      */
-    private List<String> readInputFile(final File inputFile) {
+    public List<String> readInputFile(final File inputFile) {
         List<String> lines = new ArrayList<>();
         try (final BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile))) {
             while (bufferedReader.ready()) {
@@ -79,6 +79,10 @@ public class GrammarKitRFCService {
         List<String> result;
         result = GrammarKitRFCUtils.replaceAllAbnfTokens(oldGrammar);
         result = GrammarKitRFCUtils.deleteWhitespaces(result);
+        result = GrammarKitRFCUtils.rewriteNtoMMultiplier(result);
+        result = GrammarKitRFCUtils.rewriteDigitMultiplier(result, GrammarKitRFCUtils.MULTIPLIER_ZERO_TO_N_TIMES);
+        result = GrammarKitRFCUtils.rewriteDigitMultiplier(result, GrammarKitRFCUtils.MULTIPLIER_N_TIMES_WORD);
+        result = GrammarKitRFCUtils.rewriteDigitMultiplier(result, GrammarKitRFCUtils.MULTIPLIER_N_TIMES_PARENTHESES);
         result = GrammarKitRFCUtils.trimAndAppendOperator(result, "1*", "+");
         result = GrammarKitRFCUtils.trimAndAppendOperator(result, "*", "*");
         result = GrammarKitRFCUtils.replaceAsterWord(result, "1*");
@@ -95,7 +99,7 @@ public class GrammarKitRFCService {
      * @param outputFile the file into which will be the content of provided list written
      * @param lines      the list of strings
      */
-    private void writeIntoOutputFile(final File outputFile, final List<String> lines) {
+    public void writeIntoOutputFile(final File outputFile, final List<String> lines) {
         try (final PrintWriter printWriter = new PrintWriter(outputFile)) {
             lines.forEach(printWriter::println);
         } catch (final IOException e) {

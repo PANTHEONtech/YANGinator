@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrammarKitRFCUtils {
 
@@ -31,11 +33,15 @@ public class GrammarKitRFCUtils {
     private static final Pattern STRING_RULE_PATTERN = Pattern.compile(".*(?<statementStart>(<[\\s+\\w].*))$");
     private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("(?<hexadecimal>(%x\\d{1,2}\\w))");
     private static final Pattern HEXADECIMAL_RANGE_PATTERN = Pattern.compile("(?<hexadecimalRange>(%x\\d{1,2}\\w-\\d{1,2}\\w))");
+    private static final Pattern MULTIPLIER_N_TO_M_TIMES = Pattern.compile("(?<doubleBoundedMultiplier>\\d\\*\\d[a-zA-Z]{1,})");
+    public static final Pattern MULTIPLIER_ZERO_TO_N_TIMES = Pattern.compile("(?<nTimesMultiplier>\\*\\d\\(.*?\\))");
+    public static final Pattern MULTIPLIER_N_TIMES_PARENTHESES = Pattern.compile("(?<nTimesMultiplier>(\\s[2-9]\\(.*?\\)))");
+    public static final Pattern MULTIPLIER_N_TIMES_WORD = Pattern.compile("(?<nTimesMultiplier>\\s\\d[a-zA-Z]{1,})");
     private static final Map<String, String> SPECIAL_CHARACTER = Map.of(
             "%x0D", "\"\\r\"",
             "%x09", "\"\\t\"",
             "%x0A", "\"\\n\"",
-            "%x22", "\"\\\"\"",
+            "%x22", "'\"'",
             "%x5C", "\\");
 
     /**
@@ -51,6 +57,7 @@ public class GrammarKitRFCUtils {
         result = replaceBnfToken(result, "/", PIPE.getCharacterValue());
         result = replaceBnfToken(result, ABNF_COMMENT_START, "//");
         result = replaceBnfToken(result, " ; ", "// ");
+        result = replaceBnfToken(result, "%s", "");
 
         return result;
     }
@@ -66,16 +73,18 @@ public class GrammarKitRFCUtils {
     private static List<String> replaceBnfToken(final List<String> lines, final String abnfToken, final String bnfToken) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if (line.contains("\"" + abnfToken + "\"")) {
+            if (line.contains("\"" + abnfToken + "\"") || line.contains("\".." + abnfToken + "\"") || line.contains("\"" + abnfToken + abnfToken + "\"")) {
                 line = line.replaceAll(" " + abnfToken, " " + bnfToken);
             } else {
                 line = line.replaceAll(abnfToken, bnfToken);
+
             }
-            result.add(line);
+            result.add(line.stripTrailing());
         }
 
         return result;
     }
+
 
     /**
      * Returns a list of strings with all leading, trailing and inner line whitespaces
@@ -149,7 +158,7 @@ public class GrammarKitRFCUtils {
             matcher = multiplierRegex.matcher(concatenatedLines);
         }
 
-        return List.of(concatenatedLines.split("\n"));
+        return Stream.of(concatenatedLines.split("\n")).map(String::stripTrailing).collect(Collectors.toList());
     }
 
     /**
@@ -211,7 +220,7 @@ public class GrammarKitRFCUtils {
                 line = line.replace(oldWord, newWord);
                 matcher = asteriskRegex.matcher(line.trim());
             }
-            result.add(line);
+            result.add(line.stripTrailing());
         }
 
         return result;
@@ -235,8 +244,11 @@ public class GrammarKitRFCUtils {
                 String quotes = "\"\\\"\"";
                 String secondLineOfRule = lines.get(i + 1);
                 if (secondLineOfRule.contains("-arg")) {
-                    secondLineOfRule = secondLineOfRule.trim().replace(">", quotes);
                     String replacement = "";
+                    if (secondLineOfRule.contains("<")) {
+                        secondLineOfRule = secondLineOfRule.trim().replace("<", replacement);
+                    }
+                    secondLineOfRule = secondLineOfRule.trim().replace(">", quotes);
                     firstLineOfRule = firstLineOfRule.replace(originalString, replacement.concat(quotes).concat(" " + secondLineOfRule));
                 } else {
                     firstLineOfRule = firstLineOfRule
@@ -246,7 +258,7 @@ public class GrammarKitRFCUtils {
                 }
                 i++;
             }
-            result.add(firstLineOfRule);
+            result.add(firstLineOfRule.stripTrailing());
         }
 
         return result;
@@ -273,7 +285,7 @@ public class GrammarKitRFCUtils {
                 StringBuilder replacement = new StringBuilder();
                 while (hex <= hexUpperBoundary) {
                     if (hex == 34 || hex == 92) {
-                        replacement.append("'").append((char) hex).append("' |");
+                        replacement.append(" '").append((char) hex).append("' |");
                     } else {
                         replacement.append(" \"").append((char) hex).append("\" |");
                     }
@@ -283,7 +295,7 @@ public class GrammarKitRFCUtils {
                 line = line.replace(originalHexDef, replacement.toString());
 
             }
-            result.add(line);
+            result.add(line.stripTrailing());
         }
 
         return result;
@@ -313,7 +325,7 @@ public class GrammarKitRFCUtils {
                     }
                 }
             }
-            result.add(line);
+            result.add(line.stripTrailing());
         }
         return result;
     }
@@ -338,5 +350,83 @@ public class GrammarKitRFCUtils {
      */
     private static String transformSpecialChars(final String originalHexDef) {
         return SPECIAL_CHARACTER.get(originalHexDef);
+    }
+
+    /**
+     * Replaces each occurrence of a multiplier specifying min and max number of token repetition
+     * inside a rule. Multiplier together with token will be replaced by expanded rule.
+     *
+     * @param lines the list of strings in which multiplied tokens will be expanded.
+     * @return the list of strings in which multiplied tokens are expanded.
+     */
+    public static List<String> rewriteNtoMMultiplier(final List<String> lines) {
+        List<String> result = new ArrayList<>();
+
+        for (String line : lines) {
+            Matcher matcher = MULTIPLIER_N_TO_M_TIMES.matcher(line.trim());
+            if (matcher.find()) {
+                String oldRule = matcher.group("doubleBoundedMultiplier").trim();
+                int lowerBound = Integer.parseInt(String.valueOf(oldRule.charAt(0)));
+                int upperBound = Integer.parseInt(String.valueOf(oldRule.charAt(2)));
+                String ruleExcerptToRepeat = oldRule.substring(3);
+                String newRule = "";
+                while (lowerBound <= upperBound) {
+                    for (int i = 1; i <= lowerBound; i++) {
+                        if (i == 1) {
+                            newRule = newRule.concat("(" + ruleExcerptToRepeat);
+                        } else {
+                            newRule = newRule.concat(" " + ruleExcerptToRepeat);
+                        }
+
+                        if ((i == lowerBound) && (lowerBound != upperBound)) {
+                            newRule = newRule.concat(") | ");
+                        }
+                    }
+                    lowerBound++;
+                }
+                newRule = newRule.concat(")");
+                line = line.replace(oldRule, newRule);
+            }
+            result.add(line.stripTrailing());
+        }
+
+        return result;
+    }
+
+    /**
+     * Finds each occurrence of abnf simple-digit and zeto-to-N multiplier placed in front of
+     * parentheses "3( h16 ":" )", "*3( h16 ":" )" or word "4DIGIT". Then, tokens in direct contact with
+     * multiplier are expanded - written down as many times as the multiplier is saying.
+     *
+     * @param lines the list of strings in which multiplied tokens will be expanded.
+     * @return the list of strings in which multiplied tokens are expanded.
+     */
+    public static List<String> rewriteDigitMultiplier(final List<String> lines, final Pattern typeOfToken) {
+        List<String> result = new ArrayList<>();
+
+        for (String line : lines) {
+            Matcher matcher = typeOfToken.matcher(line.trim());
+            while (matcher.find()) {
+                String replacement = "";
+                String originalString = matcher.group("nTimesMultiplier");
+                String tokenToRepeat = originalString.substring(2);
+                int multiplier = Integer.parseInt(String.valueOf(originalString.charAt(1)));
+                if (typeOfToken.equals(MULTIPLIER_ZERO_TO_N_TIMES)) {
+                    tokenToRepeat = tokenToRepeat
+                            .replace(tokenToRepeat.charAt(0), '[')
+                            .replace(tokenToRepeat.charAt(tokenToRepeat.length() - 1), ']');
+                } else {
+                    tokenToRepeat = " " + tokenToRepeat;
+                }
+                while (multiplier > 0) {
+                    replacement = replacement.concat(tokenToRepeat);
+                    multiplier--;
+                }
+                line = line.replace(originalString, replacement);
+            }
+            result.add(line.stripTrailing());
+        }
+
+        return result;
     }
 }
