@@ -1,0 +1,332 @@
+%unicode
+
+UNDERSCORE = "_"
+ASTERISK = "*"
+BACK_SLASH = \\
+DOUBLE_QUOTE = \"
+SINGLE_QUOTE = [\'"'"]
+SEMICOLON = ";"
+COLON = ":"
+LEFT_BRACE = "{"
+RIGHT_BRACE = "}"
+DOT = "."
+DOUBLE_DOT = ".."
+DASH = "-"
+LEFT_PARENTHESIS = "("
+RIGHT_PARENTHESIS = ")"
+EQUALS = "="
+OPEN_BRACKET = "["
+CLOSED_BRACKET = "]"
+FORWARD_SLASH = "/"
+PIPE = "|"
+ZERO = "0"
+ONE = "1"
+TWO = "2"
+THREE = "3"
+FOUR = "4"
+FIVE = "5"
+SIX = "6"
+SEVEN = "7"
+EIGHT = "8"
+NINE = "9"
+HEXDIGIT = [a-f]
+LETTER = [a-zA-Z]
+EXCLAMATION_MARK = "!"
+HASH = "#"
+DOLLAR_SIGN = "$"
+PERCENT_SIGN = "%"
+AMPERSAND = "&"
+PLUS_SIGN = "+"
+COMMA = ","
+LESS_THAN_SIGN = "<"
+GREATER_THAN_SIGN = ">"
+QUESTION_MARK = "?"
+AT_SIGN = "@"
+CIRCUMFLEX_ACCENT = "^"
+GRAVE_ACCENT = "`"
+TILDE = "~"
+EOL = \R
+TAB = \t
+LINEFEED = \n
+CARRIAGE_RETURN = \r
+SPACE = [\s \x0B\f]
+OTHER_CHARACTER = "."
+BLOCK_COMMENT = "/*" ( [^*] | (\*+[^*/]) )*\*+\/
+DOUBLE_PIPE = "||"
+DOUBLE_COLON = "::"
+PARENT_FOLDER = "../"
+ALPHA = {LETTER}
+POSITIVE_NUMBER = {ONE} | {TWO} | {THREE} | {FOUR} | {FIVE} | {SIX} | {SEVEN} | {EIGHT} | {NINE}
+STRINGS_SINGLE_QUOTE = {BACK_SLASH}{SINGLE_QUOTE}
+STRINGS_DOUBLE_QUOTE = {BACK_SLASH}{DOUBLE_QUOTE}
+SINGLE_LINE_COMMENT_START = {FORWARD_SLASH}{2}
+NEW_LINE = {LINEFEED} | {CARRIAGE_RETURN}
+VERSION = "v"
+DOUBLE_FORWARD_SLASH = "//"
+HEXDIG = {HEXDIGIT}
+BLOCK_COMMENT_END = "*/"
+anyxml_keyword = "anyxml_keyword"
+argument_keyword = "argument_keyword"
+augment_keyword = "augment_keyword"
+base_keyword = "base_keyword"
+belongs_to_keyword = "belongs_to_keyword"
+bit_keyword = "bit_keyword"
+case_keyword = "case_keyword"
+choice_keyword = "choice_keyword"
+config_keyword = "config_keyword"
+contact_keyword = "contact_keyword"
+container_keyword = "container_keyword"
+default_keyword = "default_keyword"
+description_keyword = "description_keyword"
+enum_keyword = "enum_keyword"
+error_app_tag_keyword = "error_app_tag_keyword"
+error_message_keyword = "error_message_keyword"
+extension_keyword = "extension_keyword"
+deviation_keyword = "deviation_keyword"
+deviate_keyword = "deviate_keyword"
+feature_keyword = "feature_keyword"
+fraction_digits_keyword = "fraction_digits_keyword"
+grouping_keyword = "grouping_keyword"
+identity_keyword = "identity_keyword"
+if_feature_keyword = "if_feature_keyword"
+import_keyword = "import_keyword"
+include_keyword = "include_keyword"
+input_keyword = "input_keyword"
+key_keyword = "key_keyword"
+leaf_keyword = "leaf_keyword"
+leaf_list_keyword = "leaf_list_keyword"
+length_keyword = "length_keyword"
+list_keyword = "list_keyword"
+mandatory_keyword = "mandatory_keyword"
+max_elements_keyword = "max_elements_keyword"
+min_elements_keyword = "min_elements_keyword"
+module_keyword = "module_keyword"
+must_keyword = "must_keyword"
+namespace_keyword = "namespace_keyword"
+notification_keyword = "notification_keyword"
+ordered_by_keyword = "ordered_by_keyword"
+organization_keyword = "organization_keyword"
+output_keyword = "output_keyword"
+path_keyword = "path_keyword"
+pattern_keyword = "pattern_keyword"
+position_keyword = "position_keyword"
+prefix_keyword = "prefix_keyword"
+presence_keyword = "presence_keyword"
+range_keyword = "range_keyword"
+reference_keyword = "reference_keyword"
+refine_keyword = "refine_keyword"
+require_instance_keyword = "require_instance_keyword"
+revision_keyword = "revision_keyword"
+revision_date_keyword = "revision_date_keyword"
+rpc_keyword = "rpc_keyword"
+status_keyword = "status_keyword"
+submodule_keyword = "submodule_keyword"
+type_keyword = "type_keyword"
+typedef_keyword = "typedef_keyword"
+unique_keyword = "unique_keyword"
+units_keyword = "units_keyword"
+uses_keyword = "uses_keyword"
+value_keyword = "value_keyword"
+when_keyword = "when_keyword"
+yang_version_keyword = "yang_version_keyword"
+yin_element_keyword = "yin_element_keyword"
+current_keyword = "current_keyword"
+delete_keyword = "delete_keyword"
+deprecated_keyword = "deprecated_keyword"
+false_keyword = "false_keyword"
+add_keyword = "add_keyword"
+max_keyword = "max_keyword"
+min_keyword = "min_keyword"
+not_supported_keyword = "not_supported_keyword"
+obsolete_keyword = "obsolete_keyword"
+replace_keyword = "replace_keyword"
+system_keyword = "system_keyword"
+true_keyword = "true_keyword"
+unbounded_keyword = "unbounded_keyword"
+user_keyword = "user_keyword"
+semicolon = "semicolon"
+not_string = "not_string"
+string = "string"
+white_space = "white_space"
+date_arg = "date_arg"
+identifier = "identifier"
+extension_identifier = "extension_identifier"
+block_comment = "block_comment"
+single_line_comment = "single_line_comment"
+fs = "fs"
+a = "a"
+
+EOL=\R
+WHITE_SPACE=\s+
+
+
+%%
+<YYINITIAL> {
+  {WHITE_SPACE}                                         { return WHITE_SPACE; }
+
+  {LEFT_BRACE}                                          { return YANG_LEFT_BRACE; }
+  {RIGHT_BRACE}                                         { return YANG_RIGHT_BRACE; }
+  {DOUBLE_QUOTE < yang-version-arg DOUBLE_QUOTE}        { return YANG_DOUBLE_QUOTE < YANG-VERSION-ARG DOUBLE_QUOTE; }
+  {SEMICOLON}                                           { return YANG_SEMICOLON; }
+  {DOUBLE_QUOTE}                                        { return YANG_DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < yin-element-arg DOUBLE_QUOTE}         { return YANG_DOUBLE_QUOTE < YIN-ELEMENT-ARG DOUBLE_QUOTE; }
+  {LEFT_PARENTHESIS}                                    { return YANG_LEFT_PARENTHESIS; }
+  {RIGHT_PARENTHESIS}                                   { return YANG_RIGHT_PARENTHESIS; }
+  {DOUBLE_QUOTE < fraction-digits-arg DOUBLE_QUOTE}     { return YANG_DOUBLE_QUOTE < FRACTION-DIGITS-ARG DOUBLE_QUOTE; }
+  {ONE}                                                 { return YANG_ONE; }
+  {ZERO}                                                { return YANG_ZERO; }
+  {TWO}                                                 { return YANG_TWO; }
+  {THREE}                                               { return YANG_THREE; }
+  {FOUR}                                                { return YANG_FOUR; }
+  {FIVE}                                                { return YANG_FIVE; }
+  {SIX}                                                 { return YANG_SIX; }
+  {SEVEN}                                               { return YANG_SEVEN; }
+  {EIGHT}                                               { return YANG_EIGHT; }
+  {NINE}                                                { return YANG_NINE; }
+  {DOUBLE_QUOTE < modifier-arg DOUBLE_QUOTE}            { return YANG_DOUBLE_QUOTE < MODIFIER-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < require-instance-arg DOUBLE_QUOTE}    { return YANG_DOUBLE_QUOTE < REQUIRE-INSTANCE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < position-value-arg DOUBLE_QUOTE}      { return YANG_DOUBLE_QUOTE < POSITION-VALUE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < status-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < STATUS-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < config-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < CONFIG-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < mandatory-arg DOUBLE_QUOTE}           { return YANG_DOUBLE_QUOTE < MANDATORY-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < ordered-by-arg DOUBLE_QUOTE}          { return YANG_DOUBLE_QUOTE < ORDERED-BY-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < min-value-arg DOUBLE_QUOTE}           { return YANG_DOUBLE_QUOTE < MIN-VALUE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < max-value-arg DOUBLE_QUOTE}           { return YANG_DOUBLE_QUOTE < MAX-VALUE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < key-arg DOUBLE_QUOTE}                 { return YANG_DOUBLE_QUOTE < KEY-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < unique-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < UNIQUE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < refine-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < REFINE-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < uses-augment-arg DOUBLE_QUOTE}        { return YANG_DOUBLE_QUOTE < USES-AUGMENT-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < augment-arg DOUBLE_QUOTE}             { return YANG_DOUBLE_QUOTE < AUGMENT-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < deviation-arg DOUBLE_QUOTE}           { return YANG_DOUBLE_QUOTE < DEVIATION-ARG DOUBLE_QUOTE; }
+  {COLON}                                               { return YANG_COLON; }
+  {DOUBLE_QUOTE < range-arg DOUBLE_QUOTE}               { return YANG_DOUBLE_QUOTE < RANGE-ARG DOUBLE_QUOTE; }
+  {PIPE}                                                { return YANG_PIPE; }
+  {DOUBLE_DOT}                                          { return YANG_DOUBLE_DOT; }
+  {DOUBLE_QUOTE < length-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < LENGTH-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < date-arg DOUBLE_QUOTE}                { return YANG_DOUBLE_QUOTE < DATE-ARG DOUBLE_QUOTE; }
+  {DASH}                                                { return YANG_DASH; }
+  {FORWARD_SLASH}                                       { return YANG_FORWARD_SLASH; }
+  {OPEN_BRACKET}                                        { return YANG_OPEN_BRACKET; }
+  {CLOSED_BRACKET}                                      { return YANG_CLOSED_BRACKET; }
+  {EQUALS}                                              { return YANG_EQUALS; }
+  {DOT}                                                 { return YANG_DOT; }
+  {DOUBLE_QUOTE < path-arg DOUBLE_QUOTE}                { return YANG_DOUBLE_QUOTE < PATH-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < prefix-arg DOUBLE_QUOTE}              { return YANG_DOUBLE_QUOTE < PREFIX-ARG DOUBLE_QUOTE; }
+  {DOUBLE_QUOTE < identifier-arg DOUBLE_QUOTE}          { return YANG_DOUBLE_QUOTE < IDENTIFIER-ARG DOUBLE_QUOTE; }
+  {ALPHA}                                               { return YANG_ALPHA; }
+  {UNDERSCORE}                                          { return YANG_UNDERSCORE; }
+  {DOUBLE_QUOTE < identifier-ref-arg DOUBLE_QUOTE}      { return YANG_DOUBLE_QUOTE < IDENTIFIER-REF-ARG DOUBLE_QUOTE; }
+  {POSITIVE_NUMBER}                                     { return YANG_POSITIVE_NUMBER; }
+  {SINGLE_QUOTE}                                        { return YANG_SINGLE_QUOTE; }
+  {CARRIAGE_RETURN}                                     { return YANG_CARRIAGE_RETURN; }
+  {TAB}                                                 { return YANG_TAB; }
+  {LINEFEED}                                            { return YANG_LINEFEED; }
+  {QUESTION_MARK}                                       { return YANG_QUESTION_MARK; }
+  {HASH}                                                { return YANG_HASH; }
+  {DOUBLE_PIPE}                                         { return YANG_DOUBLE_PIPE; }
+  {PLUS_SIGN}                                           { return YANG_PLUS_SIGN; }
+  {AT_SIGN}                                             { return YANG_AT_SIGN; }
+  {VERSION}                                             { return YANG_VERSION; }
+  {HEXDIG}                                              { return YANG_HEXDIG; }
+  {DOUBLE_COLON}                                        { return YANG_DOUBLE_COLON; }
+  {PERCENT_SIGN}                                        { return YANG_PERCENT_SIGN; }
+  {TILDE}                                               { return YANG_TILDE; }
+  {EXCLAMATION_MARK}                                    { return YANG_EXCLAMATION_MARK; }
+  {DOLLAR_SIGN}                                         { return YANG_DOLLAR_SIGN; }
+  {AMPERSAND}                                           { return YANG_AMPERSAND; }
+  {ASTERISK}                                            { return YANG_ASTERISK; }
+  {COMMA}                                               { return YANG_COMMA; }
+  {anyxml_keyword}                                    { return YANG_ANYXML_KEYWORD; }
+  {argument_keyword}                                  { return YANG_ARGUMENT_KEYWORD; }
+  {augment_keyword}                                   { return YANG_AUGMENT_KEYWORD; }
+  {base_keyword}                                      { return YANG_BASE_KEYWORD; }
+  {belongs_to_keyword}                                { return YANG_BELONGS_TO_KEYWORD; }
+  {bit_keyword}                                       { return YANG_BIT_KEYWORD; }
+  {case_keyword}                                      { return YANG_CASE_KEYWORD; }
+  {choice_keyword}                                    { return YANG_CHOICE_KEYWORD; }
+  {config_keyword}                                    { return YANG_CONFIG_KEYWORD; }
+  {contact_keyword}                                   { return YANG_CONTACT_KEYWORD; }
+  {container_keyword}                                 { return YANG_CONTAINER_KEYWORD; }
+  {default_keyword}                                   { return YANG_DEFAULT_KEYWORD; }
+  {description_keyword}                               { return YANG_DESCRIPTION_KEYWORD; }
+  {enum_keyword}                                      { return YANG_ENUM_KEYWORD; }
+  {error_app_tag_keyword}                             { return YANG_ERROR_APP_TAG_KEYWORD; }
+  {error_message_keyword}                             { return YANG_ERROR_MESSAGE_KEYWORD; }
+  {extension_keyword}                                 { return YANG_EXTENSION_KEYWORD; }
+  {deviation_keyword}                                 { return YANG_DEVIATION_KEYWORD; }
+  {deviate_keyword}                                   { return YANG_DEVIATE_KEYWORD; }
+  {feature_keyword}                                   { return YANG_FEATURE_KEYWORD; }
+  {fraction_digits_keyword}                           { return YANG_FRACTION_DIGITS_KEYWORD; }
+  {grouping_keyword}                                  { return YANG_GROUPING_KEYWORD; }
+  {identity_keyword}                                  { return YANG_IDENTITY_KEYWORD; }
+  {if_feature_keyword}                                { return YANG_IF_FEATURE_KEYWORD; }
+  {import_keyword}                                    { return YANG_IMPORT_KEYWORD; }
+  {include_keyword}                                   { return YANG_INCLUDE_KEYWORD; }
+  {input_keyword}                                     { return YANG_INPUT_KEYWORD; }
+  {key_keyword}                                       { return YANG_KEY_KEYWORD; }
+  {leaf_keyword}                                      { return YANG_LEAF_KEYWORD; }
+  {leaf_list_keyword}                                 { return YANG_LEAF_LIST_KEYWORD; }
+  {length_keyword}                                    { return YANG_LENGTH_KEYWORD; }
+  {list_keyword}                                      { return YANG_LIST_KEYWORD; }
+  {mandatory_keyword}                                 { return YANG_MANDATORY_KEYWORD; }
+  {max_elements_keyword}                              { return YANG_MAX_ELEMENTS_KEYWORD; }
+  {min_elements_keyword}                              { return YANG_MIN_ELEMENTS_KEYWORD; }
+  {module_keyword}                                    { return YANG_MODULE_KEYWORD; }
+  {must_keyword}                                      { return YANG_MUST_KEYWORD; }
+  {namespace_keyword}                                 { return YANG_NAMESPACE_KEYWORD; }
+  {notification_keyword}                              { return YANG_NOTIFICATION_KEYWORD; }
+  {ordered_by_keyword}                                { return YANG_ORDERED_BY_KEYWORD; }
+  {organization_keyword}                              { return YANG_ORGANIZATION_KEYWORD; }
+  {output_keyword}                                    { return YANG_OUTPUT_KEYWORD; }
+  {path_keyword}                                      { return YANG_PATH_KEYWORD; }
+  {pattern_keyword}                                   { return YANG_PATTERN_KEYWORD; }
+  {position_keyword}                                  { return YANG_POSITION_KEYWORD; }
+  {prefix_keyword}                                    { return YANG_PREFIX_KEYWORD; }
+  {presence_keyword}                                  { return YANG_PRESENCE_KEYWORD; }
+  {range_keyword}                                     { return YANG_RANGE_KEYWORD; }
+  {reference_keyword}                                 { return YANG_REFERENCE_KEYWORD; }
+  {refine_keyword}                                    { return YANG_REFINE_KEYWORD; }
+  {require_instance_keyword}                          { return YANG_REQUIRE_INSTANCE_KEYWORD; }
+  {revision_keyword}                                  { return YANG_REVISION_KEYWORD; }
+  {revision_date_keyword}                             { return YANG_REVISION_DATE_KEYWORD; }
+  {rpc_keyword}                                       { return YANG_RPC_KEYWORD; }
+  {status_keyword}                                    { return YANG_STATUS_KEYWORD; }
+  {submodule_keyword}                                 { return YANG_SUBMODULE_KEYWORD; }
+  {type_keyword}                                      { return YANG_TYPE_KEYWORD; }
+  {typedef_keyword}                                   { return YANG_TYPEDEF_KEYWORD; }
+  {unique_keyword}                                    { return YANG_UNIQUE_KEYWORD; }
+  {units_keyword}                                     { return YANG_UNITS_KEYWORD; }
+  {uses_keyword}                                      { return YANG_USES_KEYWORD; }
+  {value_keyword}                                     { return YANG_VALUE_KEYWORD; }
+  {when_keyword}                                      { return YANG_WHEN_KEYWORD; }
+  {yang_version_keyword}                              { return YANG_YANG_VERSION_KEYWORD; }
+  {yin_element_keyword}                               { return YANG_YIN_ELEMENT_KEYWORD; }
+  {current_keyword}                                   { return YANG_CURRENT_KEYWORD; }
+  {delete_keyword}                                    { return YANG_DELETE_KEYWORD; }
+  {deprecated_keyword}                                { return YANG_DEPRECATED_KEYWORD; }
+  {false_keyword}                                     { return YANG_FALSE_KEYWORD; }
+  {add_keyword}                                       { return YANG_ADD_KEYWORD; }
+  {max_keyword}                                       { return YANG_MAX_KEYWORD; }
+  {min_keyword}                                       { return YANG_MIN_KEYWORD; }
+  {not_supported_keyword}                             { return YANG_NOT_SUPPORTED_KEYWORD; }
+  {obsolete_keyword}                                  { return YANG_OBSOLETE_KEYWORD; }
+  {replace_keyword}                                   { return YANG_REPLACE_KEYWORD; }
+  {system_keyword}                                    { return YANG_SYSTEM_KEYWORD; }
+  {true_keyword}                                      { return YANG_TRUE_KEYWORD; }
+  {unbounded_keyword}                                 { return YANG_UNBOUNDED_KEYWORD; }
+  {user_keyword}                                      { return YANG_USER_KEYWORD; }
+  {semicolon}                                         { return YANG_SEMICOLON; }
+  {not_string}                                        { return YANG_NOT_STRING; }
+  {string}                                            { return YANG_STRING; }
+  {white_space}                                       { return YANG_WHITE_SPACE; }
+  {date_arg}                                          { return YANG_DATE_ARG; }
+  {identifier}                                        { return YANG_IDENTIFIER; }
+  {extension_identifier}                              { return YANG_EXTENSION_IDENTIFIER; }
+  {block_comment}                                     { return YANG_BLOCK_COMMENT; }
+  {single_line_comment}                               { return YANG_SINGLE_LINE_COMMENT; }
+  {BLOCK_COMMENT_END}                                   { return YANG_BLOCK_COMMENT_END; }
+  {fs}                                                { return YANG_FS; }
+  {a}                                                 { return YANG_A; }
+
+
+}

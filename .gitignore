@@ -10,6 +10,7 @@ gradlew
 gradlew.bat
 
 intelij-plugin/compatibility-check.sh
+intelij-plugin-1-1/compatibility-check.sh
 
 /rfc-parser/src/main/gen/
 /.tmp/
