@@ -1,0 +1,37 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available
+ *   under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this
+ *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
+ */
+
+SPECIAL ::= ( ( LETTER | LETTER ) [LETTER |
+ SOMETHING LETTER] (LETTER | DOG | LETTER) LETTER )
+
+ SP ::= " "
+
+dec-octet ::= DIGIT // 0-9
+ | POSITIVE_NUMBER DIGIT // 10-99
+ | "1" 2DIGIT // 100-199
+ | "2" "0" | "1" | "2" | "3" | "4" DIGIT // 200-249
+ | "2" "5" "0" | "1" | "2" | "3" | "4" | "5" // 250-255
+
+fraction-digits-arg ::= ("1" ["0" | "1" | "2" | "3" | "4" |
+  "5" | "6" | "7" | "8"])
+  | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+DIGIT ::= "0" |
+ POSITIVE_NUMBER
+IPv6address ::= ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  |  "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [  h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16 ":"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"
+
+VCHAR ::= "!" |'"' | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | "0" | POSITIVE_NUMBER | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "[" |'\' | "]" | "^" | "_" | "`" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "{" | "|" | "}" | "~"
