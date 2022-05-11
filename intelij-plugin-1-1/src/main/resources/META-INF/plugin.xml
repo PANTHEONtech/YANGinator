@@ -29,6 +29,11 @@
         <lang.parserDefinition
                 language="yang-pantheon"
                 implementationClass="tech.pantheon.yanginator.plugin.YangParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="yang-pantheon"
+                                       implementationClass="tech.pantheon.yanginator.plugin.highlighter.YangSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.highlighter.YangColorSettingsPage"/>
+        <lang.braceMatcher language="yang-pantheon"
+                           implementationClass="tech.pantheon.yanginator.plugin.highlighter.YangPairedCurlyBraceMatcher"/>
         <!-- Annotator -->
         //TODO uncomment me when new .bnf is used
         <!-- annotator is commented because it shows error on yang "openconfig-interfaces-ext.yang"

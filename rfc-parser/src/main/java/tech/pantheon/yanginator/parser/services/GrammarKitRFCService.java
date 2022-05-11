@@ -178,7 +178,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.correctChanges(newGrammar);
         newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, rfc3986, "RFC 3986");
         newGrammar = GrammarKitRFCUtils.addHeader(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/header.txt")));
-       // newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/highlighter.bnf")), "HIGHLIGHTER STUFF");
+        //newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/highlighter.bnf")), "HIGHLIGHTER STUFF");
 
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
         return GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));

@@ -487,7 +487,7 @@ public class GrammarKitRFCUtils {
      * Checks every String in the list, if it contains @deprecatedDefinition it's put behind
      * two forward slashes.
      *
-     * @param lines         list of strings containing the definition
+     * @param lines                list of strings containing the definition
      * @param deprecatedDefinition exact name of definition (including ::= at the end of it)
      * @return list of string with commented deprecated definition
      */
@@ -539,11 +539,15 @@ public class GrammarKitRFCUtils {
                 while (matcher.find()) { // adding whitespace before and after (,),[,] that are not double quoted
                     int startIndex = matcher.start();
                     if (matcher.group(1) != null) {
-                        if (mergedLine.charAt(matcher.start() + index) != matcher.group(1).charAt(0)){ startIndex = matcher.start() + 1;}
-                        mergedLine = mergedLine.substring(0, startIndex + index) + " " + matcher.group(1) + " " + mergedLine.substring(startIndex + index +1) ;
-                    }else if(matcher.group(2) != null) {
-                        if (mergedLine.charAt(matcher.start() + index) != matcher.group(2).charAt(0)){ startIndex = matcher.start() + 1;}
-                        mergedLine = mergedLine.substring(0, startIndex + index) + " " + matcher.group(2) + " " + mergedLine.substring(startIndex + index +1) ;
+                        if (mergedLine.charAt(matcher.start() + index) != matcher.group(1).charAt(0)) {
+                            startIndex = matcher.start() + 1;
+                        }
+                        mergedLine = mergedLine.substring(0, startIndex + index) + " " + matcher.group(1) + " " + mergedLine.substring(startIndex + index + 1);
+                    } else if (matcher.group(2) != null) {
+                        if (mergedLine.charAt(matcher.start() + index) != matcher.group(2).charAt(0)) {
+                            startIndex = matcher.start() + 1;
+                        }
+                        mergedLine = mergedLine.substring(0, startIndex + index) + " " + matcher.group(2) + " " + mergedLine.substring(startIndex + index + 1);
                     }
 
                     index += 2;
@@ -562,8 +566,8 @@ public class GrammarKitRFCUtils {
 
                 matcher = BRACKETS_WITH_WHITESPACES.matcher(mergedLine);
                 index = 0;
-                while(matcher.find()){
-                    mergedLine = mergedLine.substring(0, matcher.start()   + index) + matcher.group(1) + mergedLine.substring(matcher.end()  + index);
+                while (matcher.find()) {
+                    mergedLine = mergedLine.substring(0, matcher.start() + index) + matcher.group(1) + mergedLine.substring(matcher.end() + index);
                     index -= 2;
 
                 }
@@ -751,9 +755,9 @@ public class GrammarKitRFCUtils {
     /**
      * Method extract definition from comment and defines the rule
      *
-     * @param lines   list of strings
-     * @param comment comment with definition
-     * @param delimiter   delimiter pointing at the beginning of definition in the comment
+     * @param lines     list of strings
+     * @param comment   comment with definition
+     * @param delimiter delimiter pointing at the beginning of definition in the comment
      * @return list of strings
      */
     private static List<String> commentRules(List<String> lines, String comment, String delimiter) {
@@ -846,8 +850,11 @@ public class GrammarKitRFCUtils {
     public static void addTransformedTokens(List<String> lines, List<FlexerToken> tokens) {
         for (String line : lines) {
             Matcher matcher = LEXER_TOKENS_PATTERN.matcher(line);
-            if (matcher.find())
-                tokens.add(new FlexerToken(matcher.group().substring(1, matcher.group().length() - 1), "\"" + matcher.group().substring(1, matcher.group().length() - 1) + "\"", true));
+            if (matcher.find()) {
+                String lexerValue = matcher.group().substring(1, matcher.group().length() - 1);
+                if (lexerValue.contains("keyword")){ lexerValue = lexerValue.substring(0,lexerValue.indexOf("_"));}
+                tokens.add(new FlexerToken(matcher.group().substring(1, matcher.group().length() - 1), "\"" + lexerValue + "\"", true));
+            }
         }
 
     }
@@ -880,7 +887,9 @@ public class GrammarKitRFCUtils {
         boolean unicode = false;
         for (String line : lines) {
             if (line.contains("unicode")) unicode = true;
-            if (!line.contains("WHITE_SPACE")) { result.add(line); }
+            if (!line.contains("WHITE_SPACE")) {
+                result.add(line);
+            }
             if (unicode) {
                 result.add("");
                 for (FlexerToken token : tokens) {

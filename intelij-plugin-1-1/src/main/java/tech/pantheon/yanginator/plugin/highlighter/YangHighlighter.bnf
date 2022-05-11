@@ -1,0 +1,239 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available
+ *   under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this
+ *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
+ */
+
+{
+parserClass="tech.pantheon.yanginator.plugin.highlighter.parser.YangParser"
+ // parserUtilClass="com.intellij.lang.yang.psi.parser.YangParserUtil"
+
+   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+    extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+    psiClassPrefix="Yang"
+    psiImplClassSuffix="Impl"
+    psiPackage="tech.pantheon.yanginator.plugin.highlighter.psi"
+    psiImplPackage="tech.pantheon.yanginator.plugin.highlighter.psi.impl"
+
+    elementTypeHolderClass="tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes"
+    elementTypePrefix="YANG_"
+    elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+    tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  /*extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.intellij.lang.psi"
+  psiImplPackage="com.intellij.lang.psi.impl"
+
+  elementTypeHolderClass="com.intellij.lang.yang.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="com.intellij.lang.yang.psi.YangElementType"
+  tokenTypeClass="com.intellij.lang.yang.psi.YangTokenType"*/
+
+  tokens = [
+      H_ANYXML_KEYWORD = 'anyxml'
+      H_ARGUMENT_KEYWORD    = 'argument'
+      H_AUGMENT_KEYWORD     = 'augment'
+      H_BASE_KEYWORD        = 'base'
+      H_BELONGS_TO_KEYWORD  = 'belongs-to'
+      H_BIT_KEYWORD         = 'bit'
+      H_CASE_KEYWORD        = 'case'
+      H_CHOICE_KEYWORD      = 'choice'
+      H_CONFIG_KEYWORD      = 'config'
+      H_CONTACT_KEYWORD     = 'contact'
+      H_CONTAINER_KEYWORD   = 'container'
+      H_DEFAULT_KEYWORD     = 'default'
+      H_DESCRIPTION_KEYWORD = 'description'
+      H_ENUM_KEYWORD        = 'enum'
+      H_ERROR_APP_TAG_KEYWORD = 'error-app-tag'
+      H_ERROR_MESSAGE_KEYWORD = 'error-message'
+      H_EXTENSION_KEYWORD   = 'extension'
+      H_DEVIATION_KEYWORD   = 'deviation'
+      H_DEVIATE_KEYWORD     = 'deviate'
+      H_FEATURE_KEYWORD     = 'feature'
+      H_FRACTION_DIGITS_KEYWORD = 'fraction-digits'
+      H_GROUPING_KEYWORD    = 'grouping'
+      H_IDENTITY_KEYWORD    = 'identity'
+      H_IF_FEATURE_KEYWORD  = 'if-feature'
+      H_IMPORT_KEYWORD      = 'import'
+      H_INCLUDE_KEYWORD     = 'include'
+      H_INPUT_KEYWORD       = 'input'
+      H_KEY_KEYWORD         = 'key'
+      H_LEAF_KEYWORD        = 'leaf'
+      H_LEAF_LIST_KEYWORD   = 'leaf-list'
+      H_LENGTH_KEYWORD      = 'length'
+      H_LIST_KEYWORD        = 'list'
+      H_MANDATORY_KEYWORD   = 'mandatory'
+      H_MAX_ELEMENTS_KEYWORD = 'max-elements'
+      H_MIN_ELEMENTS_KEYWORD = 'min-elements'
+      H_MODULE_KEYWORD      = 'module'
+      H_MUST_KEYWORD        = 'must'
+      H_NAMESPACE_KEYWORD   = 'namespace'
+      H_NOTIFICATION_KEYWORD= 'notification'
+      H_ORDERED_BY_KEYWORD  = 'ordered-by'
+      H_ORGANIZATION_KEYWORD= 'organization'
+
+      H_OUTPUT_KEYWORD      = 'output'
+      H_PATH_KEYWORD        = 'path'
+      H_PATTERN_KEYWORD     = 'pattern'
+      H_POSITION_KEYWORD    = 'position'
+      H_PREFIX_KEYWORD      = 'prefix'
+      H_PRESENCE_KEYWORD    = 'presence'
+      H_RANGE_KEYWORD       = 'range'
+      H_REFERENCE_KEYWORD   = 'reference'
+      H_REFINE_KEYWORD      = 'refine'
+      H_REQUIRE_INSTANCE_KEYWORD = 'require-instance'
+      H_REVISION_KEYWORD    = 'revision'
+      H_REVISION_DATE_KEYWORD = 'revision-date'
+      H_RPC_KEYWORD         = 'rpc'
+      H_STATUS_KEYWORD      = 'status'
+      H_SUBMODULE_KEYWORD   = 'submodule'
+      H_TYPE_KEYWORD        = 'type'
+      H_TYPEDEF_KEYWORD     = 'typedef'
+      H_UNIQUE_KEYWORD      = 'unique'
+      H_UNITS_KEYWORD       = 'units'
+      H_USES_KEYWORD        = 'uses'
+      H_VALUE_KEYWORD       = 'value'
+      H_WHEN_KEYWORD        = 'when'
+      H_YANG_VERSION_KEYWORD= 'yang-version'
+      H_YIN_ELEMENT_KEYWORD = 'yin-element'
+
+      // other keywords
+      H_CURRENT_KEYWORD     = 'current'
+      H_DELETE_KEYWORD      = 'delete'
+      H_DEPRECATED_KEYWORD  = 'deprecated'
+      H_FALSE_KEYWORD       = 'false'
+      H_ADD_KEYWORD         = 'add'
+      H_MAX_KEYWORD         = 'max'
+      H_MIN_KEYWORD         = 'min'
+      H_NOT_SUPPORTED_KEYWORD = 'not-supported'
+      H_OBSOLETE_KEYWORD    = 'obsolete'
+      H_REPLACE_KEYWORD     = 'replace'
+      H_SYSTEM_KEYWORD      = 'system'
+      H_TRUE_KEYWORD        = 'true'
+      H_UNBOUNDED_KEYWORD   = 'unbounded'
+      H_USER_KEYWORD        = 'user'
+
+      H_WHITE_SPACE = 'regexp:\s+'
+      H_STRING = "regexp:\"([^\"])*\""
+      H_DATE_ARG='regexp:[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'
+      H_IDENTIFIER = 'regexp:[a-zA-Z_][0-9a-zA-Z_\-.]*'
+      H_EXTENSION_IDENTIFIER = 'regexp:[a-zA-Z_][0-9a-zA-Z_\-.:]*'
+      H_BLOCK_COMMENT = 'regexp:/\*(([^*/])|//)*\*/'
+      H_SINGLE_LINE_COMMENT = 'regexp://([^\n])*'
+      H_SEMICOLON = ";"
+      H_OPERATORS = "+"
+      H_LEFT_BRACE = "{"
+      H_RIGHT_BRACE = "}"
+      H_INVALID_ESCAPE = 'regexp:\\([^rRtnsb])'
+      H_VALID_ESCAPE = 'regexp:\\[rRtnsb]'
+  ]
+  generateTokenAccessors=true
+}
+// element's definition in yang element is not important, only tokens because parser is not defined from this file
+
+yang ::= h-any-token (wsp h-any-token)*
+STMT ::=  H_IDENTIFIER wsp H_STRING wsp? ";"
+dummy ::= H_IDENTIFIER wsp? H_STRING? wsp?
+
+wsp ::= H_WHITE_SPACE+
+
+h-any-token ::= ( H_STRING | H_DATE_ARG | H_IDENTIFIER | H_EXTENSION_IDENTIFIER | H_BLOCK_COMMENT | H_SINGLE_LINE_COMMENT
+ | H_SEMICOLON  h-identifier-literal)
+h-identifier-literal ::=
+    H_ANYXML_KEYWORD          |
+    H_ARGUMENT_KEYWORD        |
+    H_AUGMENT_KEYWORD         |
+    H_BASE_KEYWORD            |
+    H_BELONGS_TO_KEYWORD      |
+    H_BIT_KEYWORD             |
+    H_CASE_KEYWORD            |
+    H_CHOICE_KEYWORD          |
+    H_CONFIG_KEYWORD          |
+    H_CONTACT_KEYWORD         |
+    H_CONTAINER_KEYWORD       |
+    H_DEFAULT_KEYWORD         |
+    H_DESCRIPTION_KEYWORD     |
+    H_ENUM_KEYWORD            |
+    H_ERROR_APP_TAG_KEYWORD   |
+    H_ERROR_MESSAGE_KEYWORD   |
+    H_EXTENSION_KEYWORD       |
+    H_DEVIATION_KEYWORD       |
+    H_DEVIATE_KEYWORD         |
+    H_FEATURE_KEYWORD         |
+    H_FRACTION_DIGITS_KEYWORD |
+    H_GROUPING_KEYWORD        |
+    H_IDENTITY_KEYWORD        |
+    H_IF_FEATURE_KEYWORD      |
+    H_IMPORT_KEYWORD          |
+    H_INCLUDE_KEYWORD         |
+    H_INPUT_KEYWORD           |
+    H_KEY_KEYWORD             |
+    H_LEAF_KEYWORD            |
+    H_LEAF_LIST_KEYWORD       |
+    H_LENGTH_KEYWORD          |
+    H_LIST_KEYWORD            |
+    H_MANDATORY_KEYWORD       |
+    H_MAX_ELEMENTS_KEYWORD    |
+    H_MIN_ELEMENTS_KEYWORD    |
+    H_MODULE_KEYWORD          |
+    H_MUST_KEYWORD            |
+    H_NAMESPACE_KEYWORD       |
+    H_NOTIFICATION_KEYWORD    |
+    H_ORDERED_BY_KEYWORD      |
+
+    H_ORGANIZATION_KEYWORD    |
+    H_OUTPUT_KEYWORD          |
+    H_PATH_KEYWORD            |
+    H_PATTERN_KEYWORD         |
+    H_POSITION_KEYWORD        |
+    H_PREFIX_KEYWORD          |
+    H_PRESENCE_KEYWORD        |
+    H_RANGE_KEYWORD           |
+    H_REFERENCE_KEYWORD       |
+    H_REFINE_KEYWORD          |
+    H_REQUIRE_INSTANCE_KEYWORD|
+    H_REVISION_KEYWORD        |
+    H_REVISION_DATE_KEYWORD   |
+    H_RPC_KEYWORD             |
+    H_STATUS_KEYWORD          |
+    H_SUBMODULE_KEYWORD       |
+    H_TYPE_KEYWORD            |
+    H_TYPEDEF_KEYWORD         |
+    H_UNIQUE_KEYWORD          |
+    H_UNITS_KEYWORD           |
+    H_USES_KEYWORD            |
+    H_VALUE_KEYWORD           |
+    H_WHEN_KEYWORD            |
+    H_YANG_VERSION_KEYWORD    |
+    H_YIN_ELEMENT_KEYWORD     |
+
+    // other keywords
+
+    H_CURRENT_KEYWORD         |
+    H_DELETE_KEYWORD          |
+    H_DEPRECATED_KEYWORD      |
+    H_FALSE_KEYWORD           |
+    H_ADD_KEYWORD             |
+    H_MAX_KEYWORD             |
+    H_MIN_KEYWORD             |
+    H_NOT_SUPPORTED_KEYWORD   |
+    H_OBSOLETE_KEYWORD        |
+    H_REPLACE_KEYWORD         |
+    H_SYSTEM_KEYWORD          |
+    H_TRUE_KEYWORD            |
+    H_UNBOUNDED_KEYWORD       |
+    H_USER_KEYWORD            |
+    H_SEMICOLON               |
+    H_OPERATORS               |
+    H_LEFT_BRACE              |
+    H_RIGHT_BRACE             |
+    H_INVALID_ESCAPE          |
+    H_VALID_ESCAPE
+
