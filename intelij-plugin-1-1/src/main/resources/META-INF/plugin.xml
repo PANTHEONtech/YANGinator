@@ -34,6 +34,13 @@
         <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.highlighter.YangColorSettingsPage"/>
         <lang.braceMatcher language="yang-pantheon"
                            implementationClass="tech.pantheon.yanginator.plugin.highlighter.YangPairedCurlyBraceMatcher"/>
+
+        <completion.contributor language="yang-pantheon"
+                                implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
+        <lang.foldingBuilder language="yang-pantheon"
+                             implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
+        <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
+
         <!-- Annotator -->
         //TODO uncomment me when new .bnf is used
         <!-- annotator is commented because it shows error on yang "openconfig-interfaces-ext.yang"
