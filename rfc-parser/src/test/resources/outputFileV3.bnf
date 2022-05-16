@@ -1,0 +1,153 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available
+ *   under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this
+ *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
+ */
+
+{
+ parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+ //TODO: will be implemented in later stages of development
+ //parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
+
+  implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+  extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="tech.pantheon.yanginator.plugin.psi"
+  psiImplPackage="tech.pantheon.yanginator.plugin.psi.impl"
+
+  elementTypeHolderClass="tech.pantheon.yanginator.plugin.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+  tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  //TODO: will be implemented in later stages of development
+  //extends(".*stmt|unknown_statement.*")=Statement
+
+  generateTokenAccessors=true
+}
+
+yang ::=  (module-stmt | submodule-stmt)
+tokens ::= BLOCK_COMMENT  // needed for parser generation
+
+SPECIAL ::= (   ALPHA   [ALPHA |
+ SOMETHING ALPHA] (ALPHA | DOG) ALPHA )
+
+ SP ::= " "
+
+dec-octet ::= DIGIT // 0-9
+  | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" DIGIT  // 10-99
+  |  "1" 2DIGIT   // 100-199
+  |  "2"   "0" | "1" | "2" | "3" | "4"  DIGIT  // 200-249
+  |  "2" "5"   "0" | "1" | "2" | "3" | "4" | "5"   // 250-255
+
+fraction-digits-arg ::= ("1" ["0" | "1" | "2" | "3" | "4" |
+  "5" | "6" | "7" | "8"])
+  | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+DIGIT ::= "0" |
+ "1" | "2"
+ "1" | "2" | "3" |
+ "4" | "5" |
+                                   "6" | "7" | "8" | "9"
+IPv6address ::= ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  |  "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [  h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16 ":"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"
+
+VCHAR ::= "!" |'"' | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "[" |'\' | "]" | "^" | "_" | "`" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "{" | "|" | "}" | "~"
+//////////////////////////////
+//
+// RFC 3986
+//
+//////////////////////////////
+
+URI ::= scheme COLON hier-part [ QUESTION_MARK query ] [ HASH fragment ]
+
+hier-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
+  | path-absolute
+  | path-rootless
+  | path-empty
+
+URI-reference ::= URI | relative-ref
+
+absolute-URI ::= scheme COLON hier-part [ QUESTION_MARK query ]
+
+relative-ref ::= relative-part [ QUESTION_MARK query ] [ HASH fragment ]
+
+relative-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
+  | path-absolute
+  | path-noscheme
+  | path-empty
+
+scheme ::= ALPHA ( ALPHA | DIGIT | PLUS_SIGN | DASH | DOT )*
+
+authority ::= [ userinfo AT_SIGN ] host [ COLON port ]
+userinfo ::= ( unreserved | pct-encoded | sub-delims | COLON )*
+host ::= IP-literal | IPv4address | reg-name
+port ::= DIGIT*
+
+IP-literal ::= OPEN_BRACKET ( IPv6address | IPvFuture ) CLOSED_BRACKET
+
+IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | sub-delims | COLON )+
+
+IPv6address ::= ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  |  DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [  h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ] h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  h16 COLON  ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  h16
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON
+
+h16 ::= (HEXDIG) | (HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG HEXDIG)
+ls32 ::= ( h16 COLON h16 ) | IPv4address
+IPv4address ::= dec-octet DOT dec-octet DOT dec-octet DOT dec-octet
+
+dec-octet ::= DIGIT // 0-9
+ |   POSITIVE_NUMBER   DIGIT // 10-99
+ | ONE DIGIT DIGIT // 100-199
+ | TWO ( ZERO | ONE | TWO | THREE | FOUR ) DIGIT // 200-249
+ | TWO FIVE ( ZERO | ONE | TWO | THREE | FOUR | FIVE ) // 250-255 deviation against original rfc 3986
+
+reg-name ::= ( unreserved | pct-encoded | sub-delims )*
+
+path ::= path-abempty // begins with FORWARD_SLASH or is empty
+  | path-absolute  // begins with FORWARD_SLASH but not DOUBLE_FORWARD_SLASH
+  | path-noscheme  // begins with a non-colon segment
+  | path-rootless  // begins with a segment
+  | path-empty  // zero characters
+
+path-abempty ::= ( FORWARD_SLASH segment )*
+path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
+path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
+path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
+path-empty ::= ZERO_LENGHT_STRING// pchar deviation against original rfc 3986
+segment ::= pchar*
+segment-nz ::= pchar+
+segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
+  // non-zero-length segment without any colon COLON
+
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+
+query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
+
+fragment ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
+
+pct-encoded ::= PERCENT_SIGN HEXDIG HEXDIG
+
+unreserved ::= ALPHA | DIGIT | DASH | DOT | UNDERSCORE | TILDE
+reserved ::= gen-delims | sub-delims
+gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
+sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
+  | ASTERISK | PLUS_SIGN | COMMA | SEMICOLON | EQUALS

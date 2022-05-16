@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
+{
+ parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+ //TODO: will be implemented in later stages of development
+ //parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
+
+  implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+  extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="tech.pantheon.yanginator.plugin.psi"
+  psiImplPackage="tech.pantheon.yanginator.plugin.psi.impl"
+
+  elementTypeHolderClass="tech.pantheon.yanginator.plugin.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+  tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  //TODO: will be implemented in later stages of development
+  //extends(".*stmt|unknown_statement.*")=Statement
+
+  generateTokenAccessors=true
+}
+
+yang ::=  (module-stmt | submodule-stmt)
+tokens ::= BLOCK_COMMENT  // needed for parser generation

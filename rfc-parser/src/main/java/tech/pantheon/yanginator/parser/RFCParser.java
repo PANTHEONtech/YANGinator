@@ -1,11 +1,10 @@
 /*
+ * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available under the
- *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- *   and is available at http://www.eclipse.org/legal/epl-v10.html
- *
+ *   This program and the accompanying materials are made available
+ *   under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this
+ *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
  */
 
 package tech.pantheon.yanginator.parser;
@@ -14,17 +13,25 @@ import org.apache.commons.io.FilenameUtils;
 import tech.pantheon.yanginator.parser.services.GrammarKitRFCService;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class RFCParser {
     final static GrammarKitRFCService GRAMMARKIT_RFC_SERVICE = new GrammarKitRFCService();
     private final static String YANG_PATH_PREFIX = "rfc-parser/src/main/gen/yang-";
     private final static String GEN_PATH_PREFIX = "rfc-parser/src/main/gen/";
+    private final static String PLUGIN_PATH = "intelij-plugin-1-1/src/main/gen/tech/pantheon/yanginator/plugin";
+
 
     public static void main(String[] args) throws URISyntaxException {
+        generateLexer("_YangLexer.flex", PLUGIN_PATH + "/lexer");
         generateGrammar(GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/shared/rfc-3986.abnf"), GEN_PATH_PREFIX);
         generateGrammar("1_0", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_0/yang-rfc-6020.abnf"), YANG_PATH_PREFIX);
         generateGrammar("1_1", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"), YANG_PATH_PREFIX);
+
     }
 
     /**
@@ -42,11 +49,40 @@ public class RFCParser {
         boolean isCreated = new File(path).mkdirs();
         if (isCreated) {
             File outputFile = new File(path + "/" + FilenameUtils.removeExtension(abnfGrammar.getName()) + "-grammar-kit.bnf");
-            GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
+            File outputFilev2 = new File(path + "/" + FilenameUtils.removeExtension(abnfGrammar.getName()) + "-grammar-kitv2.bnf");
+            File outputFilev3 = new File(PLUGIN_PATH + "/" + "YangGrammar.bnf");
+            GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile, outputFilev2, outputFilev3);
         } else {
             File directoryToBeDeleted = new File(path);
             deleteDirectory(directoryToBeDeleted);
             generateGrammar(yangVersion, abnfGrammar, dstPath);
+        }
+    }
+
+    public static void generateLexer(final String lexerFileName, final String dstPath) {
+        Path lexer = Paths.get(dstPath + "/" + lexerFileName);
+        if (!Files.exists(lexer)) {
+            boolean isCreated = new File(dstPath).mkdirs();
+            if (isCreated) {
+
+                File lexerFile = new File(dstPath + "/" + lexerFileName);
+                try {
+                    lexerFile.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                GRAMMARKIT_RFC_SERVICE.generateLexer(lexerFile, lexerFile);
+
+
+            } else {
+                File directoryToBeDeleted = new File(dstPath);
+                deleteDirectory(directoryToBeDeleted);
+                generateLexer(lexerFileName, dstPath);
+            }
+        } else {
+            File flexer = new File(dstPath + "/" + lexerFileName);
+            GRAMMARKIT_RFC_SERVICE.generateLexer(flexer, flexer);
         }
     }
 
@@ -65,7 +101,9 @@ public class RFCParser {
         boolean isCreated = new File(path).mkdirs();
         if (isCreated) {
             File outputFile = new File(path + "/" + fileName + "-grammar-kit.bnf");
-            GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile);
+            File outputFilev2 = new File(path + "/" + fileName + "-grammar-kitv2.bnf");
+            File outputFilev3 = new File(path + "/" + fileName + "-grammar-kitvFinal.bnf");
+            GRAMMARKIT_RFC_SERVICE.transformAbnfToBnf(abnfGrammar, outputFile, outputFilev2, outputFilev3);
         } else {
             File directoryToBeDeleted = new File(path);
             deleteDirectory(directoryToBeDeleted);
