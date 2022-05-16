@@ -10,11 +10,13 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
-public interface YangTypedefStmt extends YangNamedElement {
+import java.util.List;
+
+public interface YangTypedefStmt extends YangGeneratedReferenceType {
 
   @NotNull
   YangIdentifierArgStr getIdentifierArgStr();

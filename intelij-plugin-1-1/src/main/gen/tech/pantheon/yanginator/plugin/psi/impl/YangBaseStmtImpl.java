@@ -10,16 +10,18 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangBaseKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangStmtend;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
-public class YangBaseStmtImpl extends YangNamedElementImpl implements YangBaseStmt {
+public class YangBaseStmtImpl extends YangGeneratedReferenceTypeImpl implements YangBaseStmt {
 
   public YangBaseStmtImpl(@NotNull ASTNode node) {
     super(node);

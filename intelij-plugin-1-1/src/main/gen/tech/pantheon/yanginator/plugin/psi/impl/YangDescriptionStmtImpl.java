@@ -10,14 +10,16 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangDescriptionKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangStmtend;
+import tech.pantheon.yanginator.plugin.psi.YangString;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDescriptionStmtImpl extends YangNamedElementImpl implements YangDescriptionStmt {
 
@@ -36,21 +38,21 @@ public class YangDescriptionStmtImpl extends YangNamedElementImpl implements Yan
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangDescriptionKeyword getDescriptionKeyword() {
-    return findNotNullChildByClass(YangDescriptionKeyword.class);
+    return findChildByClass(YangDescriptionKeyword.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
+    return findChildByClass(YangSep.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
+    return findChildByClass(YangStmtend.class);
   }
 
   @Override

@@ -10,14 +10,25 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangSubDelims;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AMPERSAND;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ASTERISK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMMA;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOLLAR_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXCLAMATION_MARK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PLUS_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
 
 public class YangSubDelimsImpl extends YangNamedElementImpl implements YangSubDelims {
 

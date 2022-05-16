@@ -41,6 +41,10 @@
                              implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
         <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
 
+        <psi.referenceContributor language="yang-pantheon"
+                                  implementation="tech.pantheon.yanginator.plugin.reference.YangReferenceContributor"/>
+
+
         <!-- Annotator -->
         //TODO uncomment me when new .bnf is used
         <!-- annotator is commented because it shows error on yang "openconfig-interfaces-ext.yang"

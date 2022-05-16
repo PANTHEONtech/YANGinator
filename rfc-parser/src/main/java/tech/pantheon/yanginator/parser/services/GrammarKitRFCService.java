@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tech.pantheon.yanginator.parser.generator.Extension;
 import tech.pantheon.yanginator.parser.generator.FlexerToken;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -139,10 +140,10 @@ public class GrammarKitRFCService {
         }
     }
 
-    public File getFile(final String fileName)  {
-        try{
-            return  new File(this.getClass().getClassLoader().getResource(fileName).toURI());
-        }catch (final  URISyntaxException e) {
+    public File getFile(final String fileName) {
+        try {
+            return new File(this.getClass().getClassLoader().getResource(fileName).toURI());
+        } catch (final URISyntaxException e) {
             this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
         }
         return null;
@@ -158,7 +159,7 @@ public class GrammarKitRFCService {
         List<String> newGrammar = oldGrammar;
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"", "\"9\" | \"10\"", "POSITIVE_NUMBER");
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\"", "\"f\" | \"g\"", "HEXDIGIT");
-        newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"v\"", "\"v\" |","VERSION");
+        newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"v\"", "\"v\" |", "VERSION");
         return GrammarKitRFCUtils.replaceTokens(newGrammar, this.loadTokensFromXML(this.getFile("yang-rfc-grammar/tokens/tokens.xml")));
 
     }
@@ -167,21 +168,24 @@ public class GrammarKitRFCService {
      * Method adds custom rules and enhancements to bnf grammar
      *
      * @param oldGrammar list of strings with bnf grammar
-     * @param abnf  list of string with abnf grammar that contains ranges for yang-char
-     * @param input file with bnf grammar that needs to be added at the end of current bnf grammar
-     * @return  list of strings with final bnf grammar
+     * @param abnf       list of string with abnf grammar that contains ranges for yang-char
+     * @param input      file with bnf grammar that needs to be added at the end of current bnf grammar
+     * @return list of strings with final bnf grammar
      */
     public List<String> parseInputFilev3(List<String> oldGrammar, List<String> abnf, File input) {
         List<String> newGrammar = oldGrammar;
         List<String> rfc3986 = new ArrayList<>();
-        if (input!=null){rfc3986 = this.readInputFile(input);}
+        if (input != null) {
+            rfc3986 = this.readInputFile(input);
+        }
         newGrammar = GrammarKitRFCUtils.correctChanges(newGrammar);
         newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, rfc3986, "RFC 3986");
         newGrammar = GrammarKitRFCUtils.addHeader(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/header.txt")));
         //newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/highlighter.bnf")), "HIGHLIGHTER STUFF");
-
+        newGrammar = GrammarKitRFCUncomplaintUtils.quoteDescription(newGrammar);
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
-        return GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
+        newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
+        return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
 
 
     }
@@ -189,19 +193,19 @@ public class GrammarKitRFCService {
     /**
      * Method loads tokens from .xml file into list of FlexerTokens. Values in xml must follow next pattern:
      * <class>
-     *     <token>
-     *         <key>"value that needs to be replaced in bnf"</key> -> value ranges are put into [] e.g.: [a-z] -> use only 1 range per key
-     *         <key>"multiple values can be added like this"</key>
-     *         <value>NAME_OF_TOKEN_THAT_WILL_REPLACE_THE_VALUE</value>
-     *         <lexerOnly>true/false</lexerOnly> -> true if its not meant to be replaced in bnf but only used in lexer
-     *     </token>
-     *     <token>
-     *         ...
-     *     </token>
+     * <token>
+     * <key>"value that needs to be replaced in bnf"</key> -> value ranges are put into [] e.g.: [a-z] -> use only 1 range per key
+     * <key>"multiple values can be added like this"</key>
+     * <value>NAME_OF_TOKEN_THAT_WILL_REPLACE_THE_VALUE</value>
+     * <lexerOnly>true/false</lexerOnly> -> true if its not meant to be replaced in bnf but only used in lexer
+     * </token>
+     * <token>
+     * ...
+     * </token>
      * </class>
      *
      * @param filename .xml file with tokens
-     * @return  list of FlexerTokens with token values for lexer and values for replacing them in bnf
+     * @return list of FlexerTokens with token values for lexer and values for replacing them in bnf
      */
     public List<FlexerToken> loadTokensFromXML(final File filename) {
         List<FlexerToken> lines = new ArrayList<>();
@@ -216,35 +220,43 @@ public class GrammarKitRFCService {
                 Node node = nodeList.item(itr);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
-                    String name,lexerValue;
+                    String name, lexerValue;
                     boolean lexerOnly = false;
                     List<String> values = new ArrayList<>();
                     String merging = "";
                     int count = 0;
-                    for(int j = 0; j < eElement.getElementsByTagName("key").getLength(); j++){
+                    for (int j = 0; j < eElement.getElementsByTagName("key").getLength(); j++) {
 
                         String token = eElement.getElementsByTagName("key").item(j).getTextContent();
-                        if ((token.contains("\\") && token.contains("\"")) || token.contains(" ")){token = token.substring(1, token.length()- 1);} //removes quotes from \r etc..."\r" -> \r
-                        if (token.charAt(0)=='\''){token = "";}
-                        if (!token.equals("")){ count ++;}
-                        merging+= token;
+                        if ((token.contains("\\") && token.contains("\"")) || token.contains(" ")) {
+                            token = token.substring(1, token.length() - 1);
+                        } //removes quotes from \r etc..."\r" -> \r
+                        if (token.charAt(0) == '\'') {
+                            token = "";
+                        }
+                        if (!token.equals("")) {
+                            count++;
+                        }
+                        merging += token;
                         if (eElement.getElementsByTagName("key").item(j).getTextContent().charAt(0) == '[') {
                             String[] range = eElement.getElementsByTagName("key").item(j).getTextContent().split("-");
                             for (int i = range[0].codePointAt(1); i <= range[1].codePointAt(0); i++) {
                                 values.add("\"" + (char) i + "\"");
                             }
                         } else {
-                          values.add(eElement.getElementsByTagName("key").item(j).getTextContent());
+                            values.add(eElement.getElementsByTagName("key").item(j).getTextContent());
                         }
                     }
                     if (count > 1 && !merging.contains("{")) {
-                        lexerValue = "[" +merging.replace("[", "").replace("]","")+ "]";
+                        lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]";
                     } else {
-                       lexerValue = merging;
+                        lexerValue = merging;
                     }
-                    if (eElement.getElementsByTagName("lexerOnly").item(0).getTextContent().contains("true")){lexerOnly = true;}
+                    if (eElement.getElementsByTagName("lexerOnly").item(0).getTextContent().contains("true")) {
+                        lexerOnly = true;
+                    }
                     name = eElement.getElementsByTagName("value").item(0).getTextContent();
-                    FlexerToken fToken = new FlexerToken(name,lexerValue,lexerOnly);
+                    FlexerToken fToken = new FlexerToken(name, lexerValue, lexerOnly);
                     fToken.replaceValues(values);
                     lines.add(fToken);
                 }
@@ -255,6 +267,36 @@ public class GrammarKitRFCService {
 
         return lines;
 
+    }
+
+    public List<Extension> loadExtensionsFromXML(final File filename) {
+        List<Extension> result = new ArrayList<>();
+
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(filename);
+            doc.getDocumentElement().normalize();
+            NodeList nodeList = doc.getElementsByTagName("statement");
+            for (int itr = 0; itr < nodeList.getLength(); itr++) {
+                Node node = nodeList.item(itr);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    String name = element.getElementsByTagName("name").item(0).getTextContent();
+                    String pin = null;
+                    if (element.hasAttribute("pin")){
+                        pin = element.getElementsByTagName("pin").item(0).getTextContent();
+                    }
+                    String implementation = element.getElementsByTagName("implements").item(0).getTextContent();
+                    String extend = element.getElementsByTagName("extends").item(0).getTextContent();
+                    result.add(new Extension(name,pin,extend,implementation));
+                }
+            }
+        } catch (final IOException | SAXException | ParserConfigurationException e) {
+            this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
+        }
+
+        return result;
     }
 
 }

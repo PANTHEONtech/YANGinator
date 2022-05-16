@@ -99,7 +99,7 @@ data-def-stmt ::= container-stmt |
 yang-version-stmt ::= yang-version-keyword sep yang-version-arg-str
   stmtend
 
-yang-version-arg-str ::= DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
+yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
 
 yang-version-arg ::= "1.1"
 
@@ -137,7 +137,7 @@ organization-stmt ::= organization-keyword sep string stmtend
 
 contact-stmt ::= contact-keyword sep string stmtend
 
-description-stmt ::= description-keyword sep string stmtend
+description-stmt ::= description-keyword sep string | ( DOUBLE_QUOTE string DOUBLE_QUOTE ) stmtend
 
 reference-stmt ::= reference-keyword sep string stmtend
 
@@ -174,7 +174,7 @@ argument-stmt ::= argument-keyword sep identifier-arg-str optsep
 yin-element-stmt ::= yin-element-keyword sep yin-element-arg-str
   stmtend
 
-yin-element-arg-str ::= DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
+yin-element-arg-str ::= yin-element-arg | DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
 
 yin-element-arg ::= true-keyword | false-keyword
 
@@ -189,9 +189,17 @@ identity-stmt ::= identity-keyword sep identifier-arg-str optsep
   [reference-stmt]>>
   RIGHT_BRACE) stmtsep
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 base-stmt ::= base-keyword sep identifier-ref-arg-str
   stmtend
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 feature-stmt ::= feature-keyword sep identifier-arg-str optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
@@ -228,12 +236,20 @@ typedef-stmt ::= typedef-keyword sep identifier-arg-str optsep
   [reference-stmt]>>
   RIGHT_BRACE stmtsep
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 type-stmt ::= type-keyword sep identifier-ref-arg-str optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   [type-body-stmts]
   RIGHT_BRACE) stmtsep
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 type-body-stmts ::= numerical-restrictions |
   decimal64-specification |
   string-restrictions |
@@ -264,7 +280,7 @@ decimal64-specification ::= // these stmts can appear in any order
 fraction-digits-stmt ::= fraction-digits-keyword sep
   fraction-digits-arg-str stmtend
 
-fraction-digits-arg-str ::= DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
+fraction-digits-arg-str ::= fraction-digits-arg | DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
 
 fraction-digits-arg ::= (ONE [ZERO | ONE | TWO | THREE | FOUR |
   FIVE | SIX | SEVEN | EIGHT])
@@ -297,7 +313,7 @@ pattern-stmt ::= pattern-keyword sep string optsep
 
 modifier-stmt ::= modifier-keyword sep modifier-arg-str stmtend
 
-modifier-arg-str ::= DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
+modifier-arg-str ::= modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
 
 modifier-arg ::= invert-match-keyword
 
@@ -326,7 +342,7 @@ path-stmt ::= path-keyword sep path-arg-str stmtend
 require-instance-stmt ::= require-instance-keyword sep
   require-instance-arg-str stmtend
 
-require-instance-arg-str ::= DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
+require-instance-arg-str ::= require-instance-arg | DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
 
 require-instance-arg ::= true-keyword | false-keyword
 
@@ -356,13 +372,13 @@ bit-stmt ::= bit-keyword sep identifier-arg-str optsep
 position-stmt ::= position-keyword sep
   position-value-arg-str stmtend
 
-position-value-arg-str ::= DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
+position-value-arg-str ::= position-value-arg | DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
 
 position-value-arg ::= non-negative-integer-value
 
 status-stmt ::= status-keyword sep status-arg-str stmtend
 
-status-arg-str ::= DOUBLE_QUOTE status-arg DOUBLE_QUOTE
+status-arg-str ::= status-arg | DOUBLE_QUOTE status-arg DOUBLE_QUOTE
 
 status-arg ::= current-keyword |
   obsolete-keyword |
@@ -371,14 +387,14 @@ status-arg ::= current-keyword |
 config-stmt ::= config-keyword sep
   config-arg-str stmtend
 
-config-arg-str ::= DOUBLE_QUOTE config-arg DOUBLE_QUOTE
+config-arg-str ::= config-arg | DOUBLE_QUOTE config-arg DOUBLE_QUOTE
 
 config-arg ::= true-keyword | false-keyword
 
 mandatory-stmt ::= mandatory-keyword sep
   mandatory-arg-str stmtend
 
-mandatory-arg-str ::= DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
+mandatory-arg-str ::= mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
 
 mandatory-arg ::= true-keyword | false-keyword
 
@@ -387,7 +403,7 @@ presence-stmt ::= presence-keyword sep string stmtend
 ordered-by-stmt ::= ordered-by-keyword sep
   ordered-by-arg-str stmtend
 
-ordered-by-arg-str ::= DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
+ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
 
 ordered-by-arg ::= user-keyword | system-keyword
 
@@ -408,14 +424,14 @@ error-app-tag-stmt ::= error-app-tag-keyword sep string stmtend
 min-elements-stmt ::= min-elements-keyword sep
   min-value-arg-str stmtend
 
-min-value-arg-str ::= DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
+min-value-arg-str ::= min-value-arg | DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
 
 min-value-arg ::= non-negative-integer-value
 
 max-elements-stmt ::= max-elements-keyword sep
   max-value-arg-str stmtend
 
-max-value-arg-str ::= DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
+max-value-arg-str ::= max-value-arg | DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
 
 max-value-arg ::= unbounded-keyword |
   positive-integer-value
@@ -437,6 +453,10 @@ grouping-stmt ::= grouping-keyword sep identifier-arg-str optsep
   notification-stmt*>>
   RIGHT_BRACE) stmtsep
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 container-stmt ::= container-keyword sep identifier-arg-str optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
@@ -512,13 +532,13 @@ list-stmt ::= list-keyword sep identifier-arg-str optsep
 
 key-stmt ::= key-keyword sep key-arg-str stmtend
 
-key-arg-str ::= DOUBLE_QUOTE key-arg DOUBLE_QUOTE
+key-arg-str ::= key-arg | DOUBLE_QUOTE key-arg DOUBLE_QUOTE
 
 key-arg ::= node-identifier (sep node-identifier)*
 
 unique-stmt ::= unique-keyword sep unique-arg-str stmtend
 
-unique-arg-str ::= DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
+unique-arg-str ::= unique-arg | DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
 
 unique-arg ::= descendant-schema-nodeid
   (sep descendant-schema-nodeid)*
@@ -599,6 +619,10 @@ uses-stmt ::= uses-keyword sep identifier-ref-arg-str optsep
   uses-augment-stmt*>>
   RIGHT_BRACE) stmtsep
 
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
 refine-stmt ::= refine-keyword sep refine-arg-str optsep
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -614,7 +638,7 @@ refine-stmt ::= refine-keyword sep refine-arg-str optsep
   [reference-stmt]>>
   RIGHT_BRACE stmtsep
 
-refine-arg-str ::= DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
+refine-arg-str ::= refine-arg | DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
 
 refine-arg ::= descendant-schema-nodeid
 
@@ -630,7 +654,7 @@ uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep
   action-stmt | notification-stmt)+>>
   RIGHT_BRACE stmtsep
 
-uses-augment-arg-str ::= DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
+uses-augment-arg-str ::= uses-augment-arg | DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
 
 uses-augment-arg ::= descendant-schema-nodeid
 
@@ -646,7 +670,7 @@ augment-stmt ::= augment-keyword sep augment-arg-str optsep
   action-stmt | notification-stmt)+>>
   RIGHT_BRACE stmtsep
 
-augment-arg-str ::= DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
+augment-arg-str ::= augment-arg | DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
 
 augment-arg ::= absolute-schema-nodeid
 
@@ -726,7 +750,7 @@ deviation-stmt ::= deviation-keyword sep
   deviate-delete-stmt)+)>>
   RIGHT_BRACE stmtsep
 
-deviation-arg-str ::= DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
+deviation-arg-str ::= deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
 
 deviation-arg ::= absolute-schema-nodeid
 
@@ -859,7 +883,7 @@ yang-stmt ::= action-stmt |
   yin-element-stmt
 // Ranges
 
-range-arg-str ::= DOUBLE_QUOTE range-arg DOUBLE_QUOTE
+range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
 
 range-arg ::= range-part (optsep PIPE optsep range-part)*
 
@@ -870,7 +894,7 @@ range-boundary ::= min-keyword | max-keyword |
   integer-value | decimal-value
 // Lengths
 
-length-arg-str ::= DOUBLE_QUOTE length-arg DOUBLE_QUOTE
+length-arg-str ::= length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE
 
 length-arg ::= length-part (optsep PIPE optsep length-part)*
 
@@ -881,7 +905,7 @@ length-boundary ::= min-keyword | max-keyword |
   non-negative-integer-value
 // Date
 
-date-arg-str ::= DOUBLE_QUOTE date-arg DOUBLE_QUOTE
+date-arg-str ::= date-arg | DOUBLE_QUOTE date-arg DOUBLE_QUOTE
 
 date-arg ::= DIGIT DIGIT DIGIT DIGIT DASH DIGIT DIGIT DASH DIGIT DIGIT
 // Schema Node Identifiers
@@ -916,7 +940,7 @@ pos ::= OPEN_BRACKET WSP* positive-integer-value WSP* CLOSED_BRACKET
 quoted-string ::= (DQUOTE string DQUOTE) | (SQUOTE string SQUOTE)
 // leafref path
 
-path-arg-str ::= DOUBLE_QUOTE path-arg DOUBLE_QUOTE
+path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE
 
 path-arg ::= absolute-path | relative-path
 
@@ -1033,20 +1057,20 @@ not-keyword ::= "not"
 current-function-invocation ::= current-keyword WSP* LEFT_PARENTHESIS WSP* RIGHT_PARENTHESIS
 //; Basic Rules
 
-prefix-arg-str ::= DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
+prefix-arg-str ::= prefix-arg | DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
 
 prefix-arg ::= prefix
 
 prefix ::= identifier
 
-identifier-arg-str ::= DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+identifier-arg-str ::= identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
 
 identifier-arg ::= identifier
 
 identifier ::= (ALPHA | UNDERSCORE)
   (ALPHA | DIGIT | UNDERSCORE | DASH | DOT)*
 
-identifier-ref-arg-str ::= DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+identifier-ref-arg-str ::= identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
 
 identifier-ref-arg ::= identifier-ref
 
@@ -1065,7 +1089,7 @@ yang-string ::=<<checkString yang-char* "%xD800-DFFF"
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
 // return, and line feed but excluding the other C0 control
 // characters, the surrogate blocks, and the noncharacters
-yang-char ::= ( ALPHA | DIGIT ) // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
+yang-char ::= ( ALPHA | DIGIT | SPACE ) // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
 //  // exclude surrogate blocks %xD800-DFFF
 //  %xE000-FDCF | // exclude noncharacters %xFDD0-FDEF
 //  %xFDF0-FFFD | // exclude noncharacters %xFFFE-FFFF

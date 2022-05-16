@@ -10,14 +10,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangBinarySpecification;
+import tech.pantheon.yanginator.plugin.psi.YangBitsSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangDecimal64Specification;
+import tech.pantheon.yanginator.plugin.psi.YangEnumSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangIdentityrefSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangInstanceIdentifierSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangLeafrefSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangNumericalRestrictions;
+import tech.pantheon.yanginator.plugin.psi.YangStringRestrictions;
+import tech.pantheon.yanginator.plugin.psi.YangTypeBodyStmts;
+import tech.pantheon.yanginator.plugin.psi.YangUnionSpecification;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangTypeBodyStmtsImpl extends YangNamedElementImpl implements YangTypeBodyStmts {
 

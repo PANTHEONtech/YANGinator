@@ -10,18 +10,404 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.parser;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.lang.PsiParser;
+import com.intellij.psi.tree.IElementType;
 
+import static com.intellij.lang.parser.GeneratedParserUtilBase.TRUE_CONDITION;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._COLLAPSE_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._NONE_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.adapt_builder_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeTokens;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.current_position_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.empty_element_parsed_guard_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIs;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.lang.PsiParser;
-import com.intellij.lang.LightPsiParser;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ACTION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ACTION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ADD_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ADD_KEYWORD_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHA;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AMPERSAND;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AND_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ANYDATA_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ANYDATA_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ANYXML_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ANYXML_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ARGUMENT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ARGUMENT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ASTERISK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AUGMENT_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AUGMENT_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AUGMENT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AUGMENT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AUTHORITY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BASE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BASE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BELONGS_TO_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BELONGS_TO_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BINARY_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BITS_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BODY_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CASE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CASE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHOICE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHOICE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CLOSED_BRACKET;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMMA;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONFIG_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONFIG_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONFIG_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONFIG_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONTACT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONTACT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONTAINER_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONTAINER_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CRLF;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CURRENT_FUNCTION_INVOCATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CURRENT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DATA_DEF_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DATE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DATE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DECIMAL_64_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DECIMAL_VALUE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEC_OCTET;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEFAULT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEFAULT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DELETE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DELETE_KEYWORD_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEPRECATED_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCENDANT_PATH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCENDANT_SCHEMA_NODEID;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCRIPTION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCRIPTION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_ADD_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_DELETE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_NOT_SUPPORTED_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATE_REPLACE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATION_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATION_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEVIATION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DIGIT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOLLAR_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_COLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_DOT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_SLASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_QUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DQUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EIGHT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_APP_TAG_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_APP_TAG_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_MESSAGE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_MESSAGE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXCLAMATION_MARK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXTENSION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXTENSION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FALSE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FEATURE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FEATURE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FIVE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FOUR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRAGMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GEN_DELIMS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GROUPING_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GROUPING_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HEXDIG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HIER_PART;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HOST;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HTAB;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_H_16;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER_REF;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER_REF_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTIFIER_REF_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTITYREF_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTITY_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IDENTITY_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_EXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_EXPR_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_FACTOR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IF_FEATURE_TERM;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INSTANCE_IDENTIFIER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INSTANCE_IDENTIFIER_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INTEGER_VALUE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INTEGER_VALUE_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INVERT_MATCH_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IP_LITERAL;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_I_PV_4_ADDRESS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_I_PV_6_ADDRESS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_I_PV_FUTURE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_PREDICATE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_PREDICATE_EXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_KEY_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAFREF_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_PREDICATE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_PREDICATE_EXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_LIST_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEAF_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_BOUNDARY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_PART;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LENGTH_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LF;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINE_BREAK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINKAGE_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LIST_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LIST_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LS_32;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MANDATORY_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MANDATORY_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MANDATORY_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MANDATORY_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_ELEMENTS_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_ELEMENTS_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_VALUE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MAX_VALUE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_META_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_ELEMENTS_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_ELEMENTS_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_VALUE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MIN_VALUE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODIFIER_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODIFIER_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODIFIER_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODIFIER_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODULE_HEADER_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODULE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MODULE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MUST_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_MUST_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NAMESPACE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NAMESPACE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NINE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NODE_IDENTIFIER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NON_NEGATIVE_INTEGER_VALUE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NON_ZERO_DIGIT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOTIFICATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOTIFICATION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOT_SUPPORTED_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NOT_SUPPORTED_KEYWORD_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NUMERICAL_RESTRICTIONS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OBSOLETE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ONE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPEN_BRACKET;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPTSEP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORGANIZATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORGANIZATION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OR_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OUTPUT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OUTPUT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PARENT_FOLDER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_ABEMPTY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_ABSOLUTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_EMPTY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_EQUALITY_EXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_KEY_EXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_NOSCHEME;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_PREDICATE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_ROOTLESS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATH_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATTERN_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PATTERN_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PCHAR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PCT_ENCODED;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PERCENT_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PIPE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PLUS_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PORT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITION_VALUE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITION_VALUE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITIVE_INTEGER_VALUE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITIVE_NUMBER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PREFIX;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PREFIX_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PREFIX_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PREFIX_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PREFIX_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PRESENCE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PRESENCE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUERY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUOTED_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_BOUNDARY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_PART;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFERENCE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFERENCE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFINE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFINE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFINE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REFINE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REG_NAME;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_PART;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_PATH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_REF;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REL_PATH_KEYEXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REPLACE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REPLACE_KEYWORD_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REQUIRE_INSTANCE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REQUIRE_INSTANCE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REQUIRE_INSTANCE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REQUIRE_INSTANCE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RESERVED;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_DATE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_DATE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_DATE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REVISION_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RPC_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RPC_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SCHEMA_NODEID;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SCHEME;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT_NZ;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT_NZ_NC;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SHORT_CASE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STMTEND;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STMTSEP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRING_RESTRICTIONS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SUBMODULE_HEADER_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SUBMODULE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SUBMODULE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SUB_DELIMS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SYSTEM_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TILDE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TOKENS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TRUE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPEDEF_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPEDEF_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPE_BODY_STMTS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TYPE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNBOUNDED_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNDERSCORE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNION_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNIQUE_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNIQUE_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNIQUE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNIQUE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNITS_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNITS_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNKNOWN_STATEMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNRESERVED;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_URI;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_URI_REFERENCE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_URI_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USERINFO;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USER_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USES_AUGMENT_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USES_AUGMENT_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USES_AUGMENT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USES_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_USES_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VALUE_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VALUE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VERSION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WSP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_CHAR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_ARG;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_ARG_STR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_INTEGER_VALUE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGHT_STRING;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
@@ -1879,16 +2265,27 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
+  // augment-arg | DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
   public static boolean augment_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "augment_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    if (!nextTokenIs(b, "<augment arg str>", YANG_DOUBLE_QUOTE, YANG_FORWARD_SLASH)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_AUGMENT_ARG_STR, "<augment arg str>");
+    r = augment_arg(b, l + 1);
+    if (!r) r = augment_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
+  private static boolean augment_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "augment_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && augment_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_AUGMENT_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2605,16 +3002,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE config-arg DOUBLE_QUOTE
+  // config-arg | DOUBLE_QUOTE config-arg DOUBLE_QUOTE
   public static boolean config_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "config_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_CONFIG_ARG_STR, "<config arg str>");
+    r = config_arg(b, l + 1);
+    if (!r) r = config_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE config-arg DOUBLE_QUOTE
+  private static boolean config_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "config_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && config_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_CONFIG_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2977,16 +3384,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE date-arg DOUBLE_QUOTE
+  // date-arg | DOUBLE_QUOTE date-arg DOUBLE_QUOTE
   public static boolean date_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "date_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_DATE_ARG_STR, "<date arg str>");
+    r = date_arg(b, l + 1);
+    if (!r) r = date_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE date-arg DOUBLE_QUOTE
+  private static boolean date_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "date_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && date_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_DATE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3270,16 +3687,49 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // description-keyword sep string stmtend
+  // description-keyword sep string | ( DOUBLE_QUOTE string DOUBLE_QUOTE ) stmtend
   public static boolean description_stmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "description_stmt")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_DESCRIPTION_STMT, "<description stmt>");
+    r = description_stmt_0(b, l + 1);
+    if (!r) r = description_stmt_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // description-keyword sep string
+  private static boolean description_stmt_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "description_stmt_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = description_keyword(b, l + 1);
     r = r && sep(b, l + 1);
     r = r && string(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ( DOUBLE_QUOTE string DOUBLE_QUOTE ) stmtend
+  private static boolean description_stmt_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "description_stmt_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = description_stmt_1_0(b, l + 1);
     r = r && stmtend(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DOUBLE_QUOTE string DOUBLE_QUOTE
+  private static boolean description_stmt_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "description_stmt_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, YANG_DOUBLE_QUOTE);
+    r = r && string(b, l + 1);
+    r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3683,16 +4133,27 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
+  // deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
   public static boolean deviation_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deviation_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    if (!nextTokenIs(b, "<deviation arg str>", YANG_DOUBLE_QUOTE, YANG_FORWARD_SLASH)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_DEVIATION_ARG_STR, "<deviation arg str>");
+    r = deviation_arg(b, l + 1);
+    if (!r) r = deviation_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
+  private static boolean deviation_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deviation_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && deviation_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_DEVIATION_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4247,16 +4708,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
+  // fraction-digits-arg | DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
   public static boolean fraction_digits_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fraction_digits_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_FRACTION_DIGITS_ARG_STR, "<fraction digits arg str>");
+    r = fraction_digits_arg(b, l + 1);
+    if (!r) r = fraction_digits_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
+  private static boolean fraction_digits_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fraction_digits_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && fraction_digits_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_FRACTION_DIGITS_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4628,16 +5099,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+  // identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
   public static boolean identifier_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_IDENTIFIER_ARG_STR, "<identifier arg str>");
+    r = identifier_arg(b, l + 1);
+    if (!r) r = identifier_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+  private static boolean identifier_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && identifier_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_IDENTIFIER_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4685,16 +5166,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+  // identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
   public static boolean identifier_ref_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier_ref_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_IDENTIFIER_REF_ARG_STR, "<identifier ref arg str>");
+    r = identifier_ref_arg(b, l + 1);
+    if (!r) r = identifier_ref_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+  private static boolean identifier_ref_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "identifier_ref_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && identifier_ref_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_IDENTIFIER_REF_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -5408,16 +5899,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE key-arg DOUBLE_QUOTE
+  // key-arg | DOUBLE_QUOTE key-arg DOUBLE_QUOTE
   public static boolean key_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "key_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_KEY_ARG_STR, "<key arg str>");
+    r = key_arg(b, l + 1);
+    if (!r) r = key_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE key-arg DOUBLE_QUOTE
+  private static boolean key_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "key_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && key_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_KEY_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -5919,16 +6420,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE length-arg DOUBLE_QUOTE
+  // length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE
   public static boolean length_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "length_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_LENGTH_ARG_STR, "<length arg str>");
+    r = length_arg(b, l + 1);
+    if (!r) r = length_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE length-arg DOUBLE_QUOTE
+  private static boolean length_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "length_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && length_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_LENGTH_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -6366,16 +6877,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
+  // mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
   public static boolean mandatory_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mandatory_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_MANDATORY_ARG_STR, "<mandatory arg str>");
+    r = mandatory_arg(b, l + 1);
+    if (!r) r = mandatory_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
+  private static boolean mandatory_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mandatory_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && mandatory_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_MANDATORY_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -6456,16 +6977,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
+  // max-value-arg | DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
   public static boolean max_value_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "max_value_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_MAX_VALUE_ARG_STR, "<max value arg str>");
+    r = max_value_arg(b, l + 1);
+    if (!r) r = max_value_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
+  private static boolean max_value_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "max_value_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && max_value_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_MAX_VALUE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -6562,16 +7093,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
+  // min-value-arg | DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
   public static boolean min_value_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "min_value_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_MIN_VALUE_ARG_STR, "<min value arg str>");
+    r = min_value_arg(b, l + 1);
+    if (!r) r = min_value_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
+  private static boolean min_value_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "min_value_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && min_value_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_MIN_VALUE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -6587,16 +7128,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
+  // modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
   public static boolean modifier_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "modifier_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_MODIFIER_ARG_STR, "<modifier arg str>");
+    r = modifier_arg(b, l + 1);
+    if (!r) r = modifier_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
+  private static boolean modifier_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "modifier_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && modifier_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_MODIFIER_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -7133,16 +7684,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
+  // ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
   public static boolean ordered_by_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ordered_by_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_ORDERED_BY_ARG_STR, "<ordered by arg str>");
+    r = ordered_by_arg(b, l + 1);
+    if (!r) r = ordered_by_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
+  private static boolean ordered_by_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ordered_by_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && ordered_by_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_ORDERED_BY_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -7388,16 +7949,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE path-arg DOUBLE_QUOTE
+  // path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE
   public static boolean path_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_PATH_ARG_STR, "<path arg str>");
+    r = path_arg(b, l + 1);
+    if (!r) r = path_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE path-arg DOUBLE_QUOTE
+  private static boolean path_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && path_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_PATH_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -7848,16 +8419,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
+  // position-value-arg | DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
   public static boolean position_value_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "position_value_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_POSITION_VALUE_ARG_STR, "<position value arg str>");
+    r = position_value_arg(b, l + 1);
+    if (!r) r = position_value_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
+  private static boolean position_value_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "position_value_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && position_value_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_POSITION_VALUE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -7910,16 +8491,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
+  // prefix-arg | DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
   public static boolean prefix_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "prefix_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_PREFIX_ARG_STR, "<prefix arg str>");
+    r = prefix_arg(b, l + 1);
+    if (!r) r = prefix_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
+  private static boolean prefix_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "prefix_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && prefix_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_PREFIX_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -8071,16 +8662,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE range-arg DOUBLE_QUOTE
+  // range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
   public static boolean range_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "range_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_RANGE_ARG_STR, "<range arg str>");
+    r = range_arg(b, l + 1);
+    if (!r) r = range_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE range-arg DOUBLE_QUOTE
+  private static boolean range_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "range_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && range_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_RANGE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -8270,16 +8871,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
+  // refine-arg | DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
   public static boolean refine_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "refine_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_REFINE_ARG_STR, "<refine arg str>");
+    r = refine_arg(b, l + 1);
+    if (!r) r = refine_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
+  private static boolean refine_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "refine_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && refine_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_REFINE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -8698,16 +9309,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
+  // require-instance-arg | DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
   public static boolean require_instance_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "require_instance_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_REQUIRE_INSTANCE_ARG_STR, "<require instance arg str>");
+    r = require_instance_arg(b, l + 1);
+    if (!r) r = require_instance_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
+  private static boolean require_instance_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "require_instance_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && require_instance_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_REQUIRE_INSTANCE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -8753,11 +9374,10 @@ public class YangParser implements PsiParser, LightPsiParser {
   // date-arg-str
   public static boolean revision_date(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "revision_date")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, YANG_REVISION_DATE, "<revision date>");
     r = date_arg_str(b, l + 1);
-    exit_section_(b, m, YANG_REVISION_DATE, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -9197,16 +9817,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE status-arg DOUBLE_QUOTE
+  // status-arg | DOUBLE_QUOTE status-arg DOUBLE_QUOTE
   public static boolean status_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "status_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_STATUS_ARG_STR, "<status arg str>");
+    r = status_arg(b, l + 1);
+    if (!r) r = status_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE status-arg DOUBLE_QUOTE
+  private static boolean status_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "status_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && status_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_STATUS_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -9683,16 +10313,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
+  // unique-arg | DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
   public static boolean unique_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unique_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_UNIQUE_ARG_STR, "<unique arg str>");
+    r = unique_arg(b, l + 1);
+    if (!r) r = unique_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
+  private static boolean unique_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unique_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && unique_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_UNIQUE_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -9936,16 +10576,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
+  // uses-augment-arg | DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
   public static boolean uses_augment_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "uses_augment_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_USES_AUGMENT_ARG_STR, "<uses augment arg str>");
+    r = uses_augment_arg(b, l + 1);
+    if (!r) r = uses_augment_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
+  private static boolean uses_augment_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "uses_augment_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && uses_augment_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_USES_AUGMENT_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -10303,13 +10953,14 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ALPHA | DIGIT
+  // ALPHA | DIGIT | SPACE
   public static boolean yang_char(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "yang_char")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, YANG_YANG_CHAR, "<yang char>");
     r = consumeToken(b, YANG_ALPHA);
     if (!r) r = DIGIT(b, l + 1);
+    if (!r) r = consumeToken(b, YANG_SPACE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -10508,16 +11159,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
+  // yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
   public static boolean yang_version_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "yang_version_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_YANG_VERSION_ARG_STR, "<yang version arg str>");
+    r = yang_version_arg(b, l + 1);
+    if (!r) r = yang_version_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
+  private static boolean yang_version_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "yang_version_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && yang_version_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_YANG_VERSION_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -10560,16 +11221,26 @@ public class YangParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
+  // yin-element-arg | DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
   public static boolean yin_element_arg_str(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "yin_element_arg_str")) return false;
-    if (!nextTokenIs(b, YANG_DOUBLE_QUOTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, YANG_YIN_ELEMENT_ARG_STR, "<yin element arg str>");
+    r = yin_element_arg(b, l + 1);
+    if (!r) r = yin_element_arg_str_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
+  private static boolean yin_element_arg_str_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "yin_element_arg_str_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, YANG_DOUBLE_QUOTE);
     r = r && yin_element_arg(b, l + 1);
     r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-    exit_section_(b, m, YANG_YIN_ELEMENT_ARG_STR, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 

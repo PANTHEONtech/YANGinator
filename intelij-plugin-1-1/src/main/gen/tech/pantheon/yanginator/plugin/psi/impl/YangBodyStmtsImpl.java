@@ -10,14 +10,24 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangAugmentStmt;
+import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
+import tech.pantheon.yanginator.plugin.psi.YangDataDefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDeviationStmt;
+import tech.pantheon.yanginator.plugin.psi.YangExtensionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangFeatureStmt;
+import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangNotificationStmt;
+import tech.pantheon.yanginator.plugin.psi.YangRpcStmt;
+import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyStmts {
 

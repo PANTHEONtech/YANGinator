@@ -10,16 +10,28 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangGroupingKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
-public class YangGroupingStmtImpl extends YangNamedElementImpl implements YangGroupingStmt {
+import java.util.List;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
+
+public class YangGroupingStmtImpl extends YangGeneratedReferenceTypeImpl implements YangGroupingStmt {
 
   public YangGroupingStmtImpl(@NotNull ASTNode node) {
     super(node);

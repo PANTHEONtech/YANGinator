@@ -10,8 +10,9 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public class YangVisitor extends PsiElementVisitor {
 
@@ -156,7 +157,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitBaseStmt(@NotNull YangBaseStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitBelongsToKeyword(@NotNull YangBelongsToKeyword o) {
@@ -416,7 +417,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitGroupingStmt(@NotNull YangGroupingStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitH16(@NotNull YangH16 o) {
@@ -460,7 +461,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitIdentityStmt(@NotNull YangIdentityStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitIdentityrefSpecification(@NotNull YangIdentityrefSpecification o) {
@@ -1172,7 +1173,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeStmt(@NotNull YangTypeStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitTypedefKeyword(@NotNull YangTypedefKeyword o) {
@@ -1180,7 +1181,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitTypedefStmt(@NotNull YangTypedefStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitUnboundedKeyword(@NotNull YangUnboundedKeyword o) {
@@ -1252,7 +1253,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitUsesStmt(@NotNull YangUsesStmt o) {
-    visitNamedElement(o);
+    visitGeneratedReferenceType(o);
   }
 
   public void visitValueKeyword(@NotNull YangValueKeyword o) {
@@ -1316,6 +1317,10 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitZeroIntegerValue(@NotNull YangZeroIntegerValue o) {
+    visitNamedElement(o);
+  }
+
+  public void visitGeneratedReferenceType(@NotNull YangGeneratedReferenceType o) {
     visitNamedElement(o);
   }
 

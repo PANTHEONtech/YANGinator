@@ -9,6 +9,7 @@
 package tech.pantheon.yanginator.parser.services;
 
 import com.google.common.io.BaseEncoding;
+import tech.pantheon.yanginator.parser.generator.Extension;
 import tech.pantheon.yanginator.parser.generator.FlexerToken;
 import tech.pantheon.yanginator.parser.types.BnfTokenType;
 
@@ -256,6 +257,7 @@ public class GrammarKitRFCUtils {
                     }
                     secondLineOfRule = secondLineOfRule.trim().replace(">", quotes);
                     firstLineOfRule = firstLineOfRule.replace(originalString, replacement.concat(quotes).concat(" " + secondLineOfRule));
+                    firstLineOfRule = firstLineOfRule.substring(0,firstLineOfRule.indexOf('"') - 1) + " " + secondLineOfRule.replace(quotes,"| ") + firstLineOfRule.substring(firstLineOfRule.indexOf('"'));
                 } else {
                     firstLineOfRule = firstLineOfRule
                             .replace("<", "//")
@@ -991,7 +993,7 @@ public class GrammarKitRFCUtils {
             if (line.isBlank()) comment = false;
             if (comment) line = "// " + line;
             if (line.contains("yang-char ::=")) {
-                line = line.substring(0, line.indexOf("=") + 1) + " ( ALPHA | DIGIT ) //" + line.substring(line.indexOf("=") + 1);
+                line = line.substring(0, line.indexOf("=") + 1) + " ( ALPHA | DIGIT | SPACE ) //" + line.substring(line.indexOf("=") + 1);
                 comment = true;
             }
             result.add(line);
@@ -1041,6 +1043,44 @@ public class GrammarKitRFCUtils {
             }
             result.add(line);
         }
+        return result;
+    }
+
+    /**
+     * Adds extensions to the selected statements in the bnf
+     *
+     * @param lines list of strings
+     * @param extensions list of extensions
+     * @return list of strings
+     */
+    public static List<String> linkReferenceStmts(List<String> lines , List<Extension> extensions){
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        Extension foundExtension = null;
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (!found) {
+                for (Extension extension : extensions) {
+                    if (line.contains(extension.getStatement())) {
+                        found = true;
+                        foundExtension = extension;
+                        break;
+                    }
+                }
+            }
+            result.add(line);
+            if (found && i + 1 < lines.size() && lines.get(i + 1).contains(" ::=")){
+                result.add("{");
+                if (foundExtension.getPin() != null){
+                    result.add("pin = "+foundExtension.getPin());
+                }
+                result.add("implements=" + foundExtension.getImplementation());
+                result.add("extends=" + foundExtension.getExtension());
+                result.add("}");
+                found = false;
+            }
+        }
+
         return result;
     }
 }

@@ -18,9 +18,9 @@ HEXDIG ::= DIGIT |
   "a" | "b" | "c" | "d" | "e" | "f"
   // only lower-case a..f
 
-path-arg-str ::= "\"" path-arg "\""
+path-arg-str ::= path-arg | "\"" path-arg "\""
 
-identifier-arg-str ::= "\"" identifier-arg "\""
+identifier-arg-str ::= identifier-arg | "\"" identifier-arg "\""
 
 input-stmt ::= input-keyword optsep
   "{" stmtsep

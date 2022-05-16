@@ -5,4 +5,12 @@ module "custom-test" {
   namespace "http://open.net/yang/vlan";
 
   prefix "oc-vlan";
+  description "description with spaces";
+  typedef something {
+  type else;
+  }
+
+  typedef defi {
+  type something;
+  }
 }

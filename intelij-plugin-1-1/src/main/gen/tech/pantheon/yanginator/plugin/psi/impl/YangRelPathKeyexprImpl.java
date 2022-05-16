@@ -10,14 +10,16 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
-import tech.pantheon.yanginator.plugin.psi.*;
+import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
+import tech.pantheon.yanginator.plugin.psi.YangRelPathKeyexpr;
+import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
 
 public class YangRelPathKeyexprImpl extends YangNamedElementImpl implements YangRelPathKeyexpr {
 
