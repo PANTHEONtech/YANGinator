@@ -9,11 +9,11 @@ checkstyle {
 
 checkstyleMain {
     //source has to be pointed at src/main/java, thats why it is a List
-    source = List.of('intelij-plugin/src/main/java', 'intelij-plugin-1-1/src/main/java', 'rfc-parser/src/main/java', 'intelij-plugin/src/main/resources', 'intelij-plugin-1-1/src/main/resources')
+    source = List.of('intelij-plugin-1-1/src/main/java', 'rfc-parser/src/main/java', 'intelij-plugin-1-1/src/main/resources')
 }
 
 checkstyleTest {
-    source = List.of('intelij-plugin/src/test/java', 'intelij-plugin-1-1/src/test/java', "rfc-parser/src/test")
+    source = List.of('intelij-plugin-1-1/src/test/java', 'rfc-parser/src/test/java')
 }
 
 group 'tech.pantheon.YANGinator'
