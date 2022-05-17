@@ -1061,9 +1061,8 @@ identifier-ref-arg  = identifier-ref
 
 identifier-ref      = [prefix ":"] identifier
 
-string              = < an unquoted string, as returned by >
-                     < the scanner, that matches the rule >
-                     < yang-string >
+string              = < an unquoted string as returned by the scanner, that matches the rule
+                      < yang-string >
 
 yang-string         = *yang-char
 

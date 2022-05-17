@@ -1,0 +1,71 @@
+module  "custom-test"  {
+ yang-version  "1.1";
+
+ namespace   "http://open.net/yang/vlan";
+
+ prefix  "oc-vlan";
+ import  openconfig-vlan-types  { prefix  oc-vlan-types; }
+ description  "this is a description";
+
+ typedef  "match-set-options-type"  {
+    type  something;
+     default  ANY;
+     description  "Options";
+
+   }
+
+  typedef  "interface-status"  {
+     type  "string"  {
+
+     }
+   }
+
+   typedef  interface-name-or-index  {
+     type  "interface-status"  {
+
+     }
+   }
+
+   notification  "interface-state-change"  {
+     leaf  "name"  {
+       type  "interface-name-or-index";
+     }
+
+     leaf  "admin-status"  {
+       type  "interface-status";
+     }
+
+     leaf  "oper-status"  {
+       type  "interface-status";
+     }
+   }
+
+   notification  "interface-deleted"  {
+     leaf  "name"  {
+       type  interface-name-or-index;
+     }
+   }
+   grouping  vlan-config  {
+       description  "VLAN configuration container";
+
+       leaf  vlan-id  {
+         type  oc-vlan-types:vlan-id;
+         description  "Interface VLAN id";
+       }
+       list  new-list  {
+
+            container  new-container {
+                description  "New container";
+                leaf  new-leaf  {
+                   type  vlan-id;
+                }
+            }
+        }
+       leaf  name  {
+         type  string;
+         description  "Interface VLAN name";
+       }
+
+     }
+
+}
