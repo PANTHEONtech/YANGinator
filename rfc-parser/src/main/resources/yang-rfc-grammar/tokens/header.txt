@@ -1,0 +1,26 @@
+{
+ parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+ //TODO: will be implemented in later stages of development
+ //parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
+
+  implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+  extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="tech.pantheon.yanginator.plugin.psi"
+  psiImplPackage="tech.pantheon.yanginator.plugin.psi.impl"
+
+  elementTypeHolderClass="tech.pantheon.yanginator.plugin.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+  tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  //TODO: will be implemented in later stages of development
+  //extends(".*stmt|unknown_statement.*")=Statement
+
+  generateTokenAccessors=true
+}
+
+yang ::=  (module-stmt | submodule-stmt)
+tokens ::= BLOCK_COMMENT  // needed for parser generation

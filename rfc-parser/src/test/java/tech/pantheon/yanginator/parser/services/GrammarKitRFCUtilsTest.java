@@ -12,6 +12,9 @@ package tech.pantheon.yanginator.parser.services;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tech.pantheon.yanginator.parser.services.testData.TestDataUtils.createList;
 
 class GrammarKitRFCUtilsTest {
+
 
     @Test
     void replaceAllAbnfTokens() throws URISyntaxException {
@@ -123,4 +127,18 @@ class GrammarKitRFCUtilsTest {
         List<String> result = GrammarKitRFCUtils.replaceHexadecimal(inputList);
         assertEquals(referenceList, result);
     }
+
+    @Test
+    void uniqueCombinationTest() throws URISyntaxException {
+        List<String> testList = createList("inputFileV2.bnf");
+        File outputFile = new File("../rfc-parser/src/test/resources/outputUniqueCombination.bnf");
+        List<String> result = GrammarKitRFCUtils.replaceWords(testList, "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"", "\"9\" | \"10\"", "POSITIVE_NUMBER");
+        try (final PrintWriter printWriter = new PrintWriter(outputFile)) {
+            result.forEach(printWriter::println);
+        } catch (final IOException ignored) {
+        }
+        List<String> correct = createList("correctOutputUniqueCombination.bnf");
+        assertEquals(result, correct);
+    }
+
 }

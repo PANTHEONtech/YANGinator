@@ -1,0 +1,172 @@
+/*
+ *
+ *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ *   and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
+h_identifier-literal ::=
+    H_ANYXML_KEYWORD          |
+    H_ARGUMENT_KEYWORD        |
+    H_AUGMENT_KEYWORD         |
+    H_BASE_KEYWORD            |
+    H_BELONGS_TO_KEYWORD      |
+    H_BIT_KEYWORD             |
+    H_CASE_KEYWORD            |
+    H_CHOICE_KEYWORD          |
+    H_CONFIG_KEYWORD          |
+    H_CONTACT_KEYWORD         |
+    H_CONTAINER_KEYWORD       |
+    H_DEFAULT_KEYWORD         |
+    H_DESCRIPTION_KEYWORD     |
+    H_ENUM_KEYWORD            |
+    H_ERROR_APP_TAG_KEYWORD   |
+    H_ERROR_MESSAGE_KEYWORD   |
+    H_EXTENSION_KEYWORD       |
+    H_DEVIATION_KEYWORD       |
+    H_DEVIATE_KEYWORD         |
+    H_FEATURE_KEYWORD         |
+    H_FRACTION_DIGITS_KEYWORD |
+    H_GROUPING_KEYWORD        |
+    H_IDENTITY_KEYWORD        |
+    H_IF_FEATURE_KEYWORD      |
+    H_IMPORT_KEYWORD          |
+    H_INCLUDE_KEYWORD         |
+    H_INPUT_KEYWORD           |
+    H_KEY_KEYWORD             |
+    H_LEAF_KEYWORD            |
+    H_LEAF_LIST_KEYWORD       |
+    H_LENGTH_KEYWORD          |
+    H_LIST_KEYWORD            |
+    H_MANDATORY_KEYWORD       |
+    H_MAX_ELEMENTS_KEYWORD    |
+    H_MIN_ELEMENTS_KEYWORD    |
+    H_MODULE_KEYWORD          |
+    H_MUST_KEYWORD            |
+    H_NAMESPACE_KEYWORD       |
+    H_NOTIFICATION_KEYWORD    |
+    H_ORDERED_BY_KEYWORD      |
+
+    H_ORGANIZATION_KEYWORD    |
+    H_OUTPUT_KEYWORD          |
+    H_PATH_KEYWORD            |
+    H_PATTERN_KEYWORD         |
+    H_POSITION_KEYWORD        |
+    H_PREFIX_KEYWORD          |
+    H_PRESENCE_KEYWORD        |
+    H_RANGE_KEYWORD           |
+    H_REFERENCE_KEYWORD       |
+    H_REFINE_KEYWORD          |
+    H_REQUIRE_INSTANCE_KEYWORD|
+    H_REVISION_KEYWORD        |
+    H_REVISION_DATE_KEYWORD   |
+    H_RPC_KEYWORD             |
+    H_STATUS_KEYWORD          |
+    H_SUBMODULE_KEYWORD       |
+    H_TYPE_KEYWORD            |
+    H_TYPEDEF_KEYWORD         |
+    H_UNIQUE_KEYWORD          |
+    H_UNITS_KEYWORD           |
+    H_USES_KEYWORD            |
+    H_VALUE_KEYWORD           |
+    H_WHEN_KEYWORD            |
+    H_YANG_VERSION_KEYWORD    |
+    H_YIN_ELEMENT_KEYWORD     |
+
+    // other keywords
+
+    H_CURRENT_KEYWORD         |
+    H_DELETE_KEYWORD          |
+    H_DEPRECATED_KEYWORD      |
+    H_FALSE_KEYWORD           |
+    H_ADD_KEYWORD             |
+    H_MAX_KEYWORD             |
+    H_MIN_KEYWORD             |
+    H_NOT_SUPPORTED_KEYWORD   |
+    H_OBSOLETE_KEYWORD        |
+    H_REPLACE_KEYWORD         |
+    H_SYSTEM_KEYWORD          |
+    H_TRUE_KEYWORD            |
+    H_UNBOUNDED_KEYWORD       |
+    H_USER_KEYWORD            |
+    H_SEMICOLON
+
+// u just need to add tokens from highlighter there so u can generate parser code only from this file
+highlighter-tokens ::= H_NOT_STRING | H_STRING | H_WHITE_SPACE | H_DATE_ARG | H_IDENTIFIER |  H_EXTENSION_IDENTIFIER |
+    H_BLOCK_COMMENT | H_SINGLE_LINE_COMMENT | BLOCK_COMMENT_END | H_FS | H_A
+
+private Statements ::= StatementWithSemi*
+private StatementWithSemi ::= Statement (SEMICOLON |& RIGHT_BRACE) { pin=1 recoverWhile=StatementRecover }
+Statement ::=
+    deviate-replace-stmt
+  | deviate-delete-stmt
+  | deviate-add-stmt
+  | deviate-not-supported-stmt
+  | deviation-stmt
+  | notification-stmt
+  | output-stmt
+  | input-stmt
+  | rpc-stmt
+  | when-stmt
+  | augment-stmt
+  | uses-augment-stmt
+  | refine-stmt
+  | uses-stmt
+  | anyxml-stmt
+  | case-stmt
+  | short-case-stmt
+  | choice-stmt
+  | unique-stmt
+  | key-stmt
+  | list-stmt
+  | leaf-list-stmt
+  | leaf-stmt
+  | container-stmt
+  | grouping-stmt
+  | value-stmt
+  | max-elements-stmt
+  | min-elements-stmt
+  | error-app-tag-stmt
+  | error-message-stmt
+  | must-stmt
+  | ordered-by-stmt
+  | presence-stmt
+  | mandatory-stmt
+  | config-stmt
+  | status-stmt
+  | position-stmt
+  | bit-stmt
+  | require-instance-stmt
+  | path-stmt
+  | enum-stmt
+  | default-stmt
+  | pattern-stmt
+  | length-stmt
+  | fraction-digits-stmt
+  | range-stmt
+  | type-stmt
+  | typedef-stmt
+  | if-feature-stmt
+  | feature-stmt
+  | base-stmt
+  | identity-stmt
+  | yin-element-stmt
+  | argument-stmt
+  | extension-stmt
+  | revision-date-stmt
+  | revision-stmt
+  | units-stmt
+  | reference-stmt
+  | description-stmt
+  | contact-stmt
+  | organization-stmt
+  | belongs-to-stmt
+  | prefix-stmt
+  | namespace-stmt
+  | include-stmt
+  | import-stmt
+  | yang-version-stmt
+  | unknown-statement

@@ -1,4 +1,4 @@
 rootProject.name = 'YANGinator'
 
-include 'rfc-parser', 'intelij-plugin'
+include 'rfc-parser', 'intelij-plugin-1-1'
 
