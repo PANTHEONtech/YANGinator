@@ -72,16 +72,6 @@ VCHAR ::= "!" |'"' | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," |
 //
 //////////////////////////////
 
-/*
- *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available under the
- *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- *   and is available at http://www.eclipse.org/legal/epl-v10.html
- *
- */
-
 URI ::= scheme COLON hier-part [ QUESTION_MARK query ] [ HASH fragment ]
 
 hier-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
