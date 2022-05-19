@@ -14,18 +14,21 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface YangDescriptionStmt extends YangNamedElement {
+public interface YangDescriptionStmt extends YangYangStmt {
 
-  @Nullable
+  @NotNull
   YangDescriptionKeyword getDescriptionKeyword();
 
   @Nullable
-  YangSep getSep();
-
-  @Nullable
-  YangStmtend getStmtend();
+  YangQuotedString getQuotedString();
 
   @NotNull
+  YangSep getSep();
+
+  @NotNull
+  YangStmtend getStmtend();
+
+  @Nullable
   YangString getString();
 
 }

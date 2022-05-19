@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangContainerStmt extends YangNamedElement {
+public interface YangContainerStmt extends YangYangStmt {
 
   @NotNull
   YangContainerKeyword getContainerKeyword();

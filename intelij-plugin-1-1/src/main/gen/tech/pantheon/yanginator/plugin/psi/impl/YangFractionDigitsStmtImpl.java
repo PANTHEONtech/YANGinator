@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangFractionDigitsStmtImpl extends YangNamedElementImpl implements YangFractionDigitsStmt {
+public class YangFractionDigitsStmtImpl extends YangYangStmtImpl implements YangFractionDigitsStmt {
 
   public YangFractionDigitsStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitFractionDigitsStmt(this);
   }

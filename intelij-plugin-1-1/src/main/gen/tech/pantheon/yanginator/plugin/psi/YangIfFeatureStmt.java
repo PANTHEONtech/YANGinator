@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangIfFeatureStmt extends YangNamedElement {
+public interface YangIfFeatureStmt extends YangYangStmt {
 
   @NotNull
   YangIfFeatureExprStr getIfFeatureExprStr();

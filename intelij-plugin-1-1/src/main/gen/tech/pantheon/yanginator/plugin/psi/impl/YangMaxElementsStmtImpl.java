@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangMaxElementsStmtImpl extends YangNamedElementImpl implements YangMaxElementsStmt {
+public class YangMaxElementsStmtImpl extends YangYangStmtImpl implements YangMaxElementsStmt {
 
   public YangMaxElementsStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitMaxElementsStmt(this);
   }

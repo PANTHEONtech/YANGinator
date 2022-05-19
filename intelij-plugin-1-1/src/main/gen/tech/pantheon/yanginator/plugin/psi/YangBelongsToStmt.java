@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangBelongsToStmt extends YangNamedElement {
+public interface YangBelongsToStmt extends YangYangStmt {
 
   @NotNull
   YangBelongsToKeyword getBelongsToKeyword();

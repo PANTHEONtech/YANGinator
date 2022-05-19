@@ -1075,8 +1075,12 @@ public class GrammarKitRFCUtils {
                 if (foundExtension.getPin() != null){
                     result.add("pin = "+foundExtension.getPin());
                 }
-                result.add("implements=" + foundExtension.getImplementation());
-                result.add("extends=" + foundExtension.getExtension());
+                if (foundExtension.getImplementation() != null) {
+                    result.add("implements=" + foundExtension.getImplementation());
+                }
+                if  (foundExtension.getExtension() != null) {
+                    result.add("extends=" + foundExtension.getExtension());
+                }
                 result.add("}");
                 found = false;
             }
@@ -1084,4 +1088,5 @@ public class GrammarKitRFCUtils {
 
         return result;
     }
+
 }

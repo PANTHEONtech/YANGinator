@@ -10,8 +10,6 @@
 
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
- //TODO: will be implemented in later stages of development
- //parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
   extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
@@ -26,8 +24,7 @@
   elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
   tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
 
-  //TODO: will be implemented in later stages of development
-  //extends(".*stmt|unknown_statement.*")=Statement
+  extends(".*stmt|unknown_statement.*")=yang-stmt
 
   generateTokenAccessors=true
 }
@@ -138,7 +135,7 @@ organization-stmt ::= organization-keyword sep string stmtend
 
 contact-stmt ::= contact-keyword sep string stmtend
 
-description-stmt ::= description-keyword sep string | ( DOUBLE_QUOTE string DOUBLE_QUOTE ) stmtend
+description-stmt ::= description-keyword sep string stmtend | description-keyword sep quoted-string stmtend
 
 reference-stmt ::= reference-keyword sep string stmtend
 
@@ -739,16 +736,18 @@ notification-stmt ::= notification-keyword sep
   data-def-stmt*>>
   RIGHT_BRACE) stmtsep
 
+deviation-stmt-body-args ::= deviate-not-supported-stmt |
+  (deviate-add-stmt |
+  deviate-replace-stmt |
+  deviate-delete-stmt)+
+
 deviation-stmt ::= deviation-keyword sep
   deviation-arg-str optsep
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
 <<anyOrder  [description-stmt]
   [reference-stmt]
-  (deviate-not-supported-stmt |
-  (deviate-add-stmt |
-  deviate-replace-stmt |
-  deviate-delete-stmt)+)>>
+  deviation-stmt-body-args>>
   RIGHT_BRACE stmtsep
 
 deviation-arg-str ::= deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE

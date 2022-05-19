@@ -94,7 +94,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitActionStmt(@NotNull YangActionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitAddKeyword(@NotNull YangAddKeyword o) {
@@ -114,7 +114,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitAnydataStmt(@NotNull YangAnydataStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitAnyxmlKeyword(@NotNull YangAnyxmlKeyword o) {
@@ -122,7 +122,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitAnyxmlStmt(@NotNull YangAnyxmlStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitArgumentKeyword(@NotNull YangArgumentKeyword o) {
@@ -130,7 +130,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitArgumentStmt(@NotNull YangArgumentStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitAugmentArg(@NotNull YangAugmentArg o) {
@@ -146,7 +146,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitAugmentStmt(@NotNull YangAugmentStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitAuthority(@NotNull YangAuthority o) {
@@ -166,7 +166,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitBelongsToStmt(@NotNull YangBelongsToStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitBinarySpecification(@NotNull YangBinarySpecification o) {
@@ -178,7 +178,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitBitStmt(@NotNull YangBitStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitBitsSpecification(@NotNull YangBitsSpecification o) {
@@ -194,7 +194,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitCaseStmt(@NotNull YangCaseStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitChoiceKeyword(@NotNull YangChoiceKeyword o) {
@@ -202,7 +202,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitChoiceStmt(@NotNull YangChoiceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitConfigArg(@NotNull YangConfigArg o) {
@@ -218,7 +218,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitConfigStmt(@NotNull YangConfigStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitContactKeyword(@NotNull YangContactKeyword o) {
@@ -226,7 +226,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitContactStmt(@NotNull YangContactStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitContainerKeyword(@NotNull YangContainerKeyword o) {
@@ -234,7 +234,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitContainerStmt(@NotNull YangContainerStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitCurrentFunctionInvocation(@NotNull YangCurrentFunctionInvocation o) {
@@ -246,7 +246,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitDataDefStmt(@NotNull YangDataDefStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDateArg(@NotNull YangDateArg o) {
@@ -274,7 +274,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitDefaultStmt(@NotNull YangDefaultStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeleteKeyword(@NotNull YangDeleteKeyword o) {
@@ -302,15 +302,15 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitDescriptionStmt(@NotNull YangDescriptionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeviateAddStmt(@NotNull YangDeviateAddStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeviateDeleteStmt(@NotNull YangDeviateDeleteStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeviateKeyword(@NotNull YangDeviateKeyword o) {
@@ -318,11 +318,11 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitDeviateNotSupportedStmt(@NotNull YangDeviateNotSupportedStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeviateReplaceStmt(@NotNull YangDeviateReplaceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitDeviationArg(@NotNull YangDeviationArg o) {
@@ -338,6 +338,10 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitDeviationStmt(@NotNull YangDeviationStmt o) {
+    visitYangStmt(o);
+  }
+
+  public void visitDeviationStmtBodyArgs(@NotNull YangDeviationStmtBodyArgs o) {
     visitNamedElement(o);
   }
 
@@ -350,7 +354,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumStmt(@NotNull YangEnumStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitErrorAppTagKeyword(@NotNull YangErrorAppTagKeyword o) {
@@ -358,7 +362,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitErrorAppTagStmt(@NotNull YangErrorAppTagStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitErrorMessageKeyword(@NotNull YangErrorMessageKeyword o) {
@@ -366,7 +370,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitErrorMessageStmt(@NotNull YangErrorMessageStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitExtensionKeyword(@NotNull YangExtensionKeyword o) {
@@ -374,7 +378,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitExtensionStmt(@NotNull YangExtensionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitFalseKeyword(@NotNull YangFalseKeyword o) {
@@ -386,7 +390,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitFeatureStmt(@NotNull YangFeatureStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitFractionDigitsArg(@NotNull YangFractionDigitsArg o) {
@@ -402,7 +406,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitFractionDigitsStmt(@NotNull YangFractionDigitsStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitFragment(@NotNull YangFragment o) {
@@ -486,7 +490,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitIfFeatureStmt(@NotNull YangIfFeatureStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitIfFeatureTerm(@NotNull YangIfFeatureTerm o) {
@@ -498,7 +502,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitImportStmt(@NotNull YangImportStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitIncludeKeyword(@NotNull YangIncludeKeyword o) {
@@ -506,7 +510,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitIncludeStmt(@NotNull YangIncludeStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitInputKeyword(@NotNull YangInputKeyword o) {
@@ -514,7 +518,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitInputStmt(@NotNull YangInputStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitInstanceIdentifier(@NotNull YangInstanceIdentifier o) {
@@ -558,7 +562,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitKeyStmt(@NotNull YangKeyStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitLeafKeyword(@NotNull YangLeafKeyword o) {
@@ -578,11 +582,11 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitLeafListStmt(@NotNull YangLeafListStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitLeafStmt(@NotNull YangLeafStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitLeafrefSpecification(@NotNull YangLeafrefSpecification o) {
@@ -610,7 +614,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitLengthStmt(@NotNull YangLengthStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitLineBreak(@NotNull YangLineBreak o) {
@@ -626,7 +630,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitListStmt(@NotNull YangListStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitLs32(@NotNull YangLs32 o) {
@@ -646,7 +650,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitMandatoryStmt(@NotNull YangMandatoryStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitMaxElementsKeyword(@NotNull YangMaxElementsKeyword o) {
@@ -654,7 +658,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitMaxElementsStmt(@NotNull YangMaxElementsStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitMaxKeyword(@NotNull YangMaxKeyword o) {
@@ -678,7 +682,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitMinElementsStmt(@NotNull YangMinElementsStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitMinKeyword(@NotNull YangMinKeyword o) {
@@ -706,7 +710,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitModifierStmt(@NotNull YangModifierStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitModuleHeaderStmts(@NotNull YangModuleHeaderStmts o) {
@@ -718,7 +722,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitModuleStmt(@NotNull YangModuleStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitMustKeyword(@NotNull YangMustKeyword o) {
@@ -726,7 +730,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitMustStmt(@NotNull YangMustStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitNamespaceKeyword(@NotNull YangNamespaceKeyword o) {
@@ -734,7 +738,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitNamespaceStmt(@NotNull YangNamespaceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitNodeIdentifier(@NotNull YangNodeIdentifier o) {
@@ -766,7 +770,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitNotificationStmt(@NotNull YangNotificationStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitNumericalRestrictions(@NotNull YangNumericalRestrictions o) {
@@ -798,7 +802,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitOrderedByStmt(@NotNull YangOrderedByStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitOrganizationKeyword(@NotNull YangOrganizationKeyword o) {
@@ -806,7 +810,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitOrganizationStmt(@NotNull YangOrganizationStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitOutputKeyword(@NotNull YangOutputKeyword o) {
@@ -814,7 +818,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitOutputStmt(@NotNull YangOutputStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitPath(@NotNull YangPath o) {
@@ -866,7 +870,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitPathStmt(@NotNull YangPathStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitPatternKeyword(@NotNull YangPatternKeyword o) {
@@ -874,7 +878,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitPatternStmt(@NotNull YangPatternStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitPchar(@NotNull YangPchar o) {
@@ -898,7 +902,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitPositionStmt(@NotNull YangPositionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitPositionValueArg(@NotNull YangPositionValueArg o) {
@@ -930,7 +934,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitPrefixStmt(@NotNull YangPrefixStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitPresenceKeyword(@NotNull YangPresenceKeyword o) {
@@ -938,7 +942,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitPresenceStmt(@NotNull YangPresenceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitQuery(@NotNull YangQuery o) {
@@ -970,7 +974,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRangeStmt(@NotNull YangRangeStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitReferenceKeyword(@NotNull YangReferenceKeyword o) {
@@ -978,7 +982,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitReferenceStmt(@NotNull YangReferenceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitRefineArg(@NotNull YangRefineArg o) {
@@ -994,7 +998,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRefineStmt(@NotNull YangRefineStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitRegName(@NotNull YangRegName o) {
@@ -1038,7 +1042,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRequireInstanceStmt(@NotNull YangRequireInstanceStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitReserved(@NotNull YangReserved o) {
@@ -1054,7 +1058,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRevisionDateStmt(@NotNull YangRevisionDateStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitRevisionKeyword(@NotNull YangRevisionKeyword o) {
@@ -1062,7 +1066,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRevisionStmt(@NotNull YangRevisionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitRevisionStmts(@NotNull YangRevisionStmts o) {
@@ -1074,7 +1078,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitRpcStmt(@NotNull YangRpcStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitSchemaNodeid(@NotNull YangSchemaNodeid o) {
@@ -1102,7 +1106,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitShortCaseStmt(@NotNull YangShortCaseStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitStatusArg(@NotNull YangStatusArg o) {
@@ -1118,7 +1122,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitStatusStmt(@NotNull YangStatusStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitStmtend(@NotNull YangStmtend o) {
@@ -1150,7 +1154,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitSubmoduleStmt(@NotNull YangSubmoduleStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitSystemKeyword(@NotNull YangSystemKeyword o) {
@@ -1206,7 +1210,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitUniqueStmt(@NotNull YangUniqueStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitUnitsKeyword(@NotNull YangUnitsKeyword o) {
@@ -1214,7 +1218,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitUnitsStmt(@NotNull YangUnitsStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitUnknownStatement(@NotNull YangUnknownStatement o) {
@@ -1246,7 +1250,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitUsesAugmentStmt(@NotNull YangUsesAugmentStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitUsesKeyword(@NotNull YangUsesKeyword o) {
@@ -1262,7 +1266,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitValueStmt(@NotNull YangValueStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitWhenKeyword(@NotNull YangWhenKeyword o) {
@@ -1270,7 +1274,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitWhenStmt(@NotNull YangWhenStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitYangChar(@NotNull YangYangChar o) {
@@ -1298,7 +1302,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitYangVersionStmt(@NotNull YangYangVersionStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitYinElementArg(@NotNull YangYinElementArg o) {
@@ -1314,7 +1318,7 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitYinElementStmt(@NotNull YangYinElementStmt o) {
-    visitNamedElement(o);
+    visitYangStmt(o);
   }
 
   public void visitZeroIntegerValue(@NotNull YangZeroIntegerValue o) {

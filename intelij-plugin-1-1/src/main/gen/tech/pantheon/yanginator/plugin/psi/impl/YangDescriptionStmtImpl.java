@@ -17,17 +17,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangDescriptionStmtImpl extends YangNamedElementImpl implements YangDescriptionStmt {
+public class YangDescriptionStmtImpl extends YangYangStmtImpl implements YangDescriptionStmt {
 
   public YangDescriptionStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitDescriptionStmt(this);
   }
@@ -39,27 +41,33 @@ public class YangDescriptionStmtImpl extends YangNamedElementImpl implements Yan
   }
 
   @Override
-  @Nullable
+  @NotNull
   public YangDescriptionKeyword getDescriptionKeyword() {
-    return findChildByClass(YangDescriptionKeyword.class);
+    return findNotNullChildByClass(YangDescriptionKeyword.class);
   }
 
   @Override
   @Nullable
-  public YangSep getSep() {
-    return findChildByClass(YangSep.class);
-  }
-
-  @Override
-  @Nullable
-  public YangStmtend getStmtend() {
-    return findChildByClass(YangStmtend.class);
+  public YangQuotedString getQuotedString() {
+    return findChildByClass(YangQuotedString.class);
   }
 
   @Override
   @NotNull
+  public YangSep getSep() {
+    return findNotNullChildByClass(YangSep.class);
+  }
+
+  @Override
+  @NotNull
+  public YangStmtend getStmtend() {
+    return findNotNullChildByClass(YangStmtend.class);
+  }
+
+  @Override
+  @Nullable
   public YangString getString() {
-    return findNotNullChildByClass(YangString.class);
+    return findChildByClass(YangString.class);
   }
 
 }

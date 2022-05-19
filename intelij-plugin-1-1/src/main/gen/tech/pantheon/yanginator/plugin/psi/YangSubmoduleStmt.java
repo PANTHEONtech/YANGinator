@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangSubmoduleStmt extends YangNamedElement {
+public interface YangSubmoduleStmt extends YangYangStmt {
 
   @NotNull
   YangBodyStmts getBodyStmts();

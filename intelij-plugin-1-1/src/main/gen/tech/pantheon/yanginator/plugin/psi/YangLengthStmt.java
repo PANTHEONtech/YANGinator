@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangLengthStmt extends YangNamedElement {
+public interface YangLengthStmt extends YangYangStmt {
 
   @NotNull
   YangLengthArgStr getLengthArgStr();

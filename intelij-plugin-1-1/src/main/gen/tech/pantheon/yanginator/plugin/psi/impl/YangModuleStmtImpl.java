@@ -34,12 +34,13 @@ import java.util.List;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
-public class YangModuleStmtImpl extends YangNamedElementImpl implements YangModuleStmt {
+public class YangModuleStmtImpl extends YangYangStmtImpl implements YangModuleStmt {
 
   public YangModuleStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitModuleStmt(this);
   }

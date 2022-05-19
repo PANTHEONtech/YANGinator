@@ -1,0 +1,14 @@
+module "openconfig-policy-types" {
+
+  yang-version "1.1";
+
+  namespace "http://openconfig.net/yang/policy-types";
+  prefix "oc-pol-types";
+
+  contact me;
+  description "desx";
+
+  typedef something-new {
+    type any;
+  }
+}

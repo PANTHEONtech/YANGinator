@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangErrorAppTagStmt extends YangNamedElement {
+public interface YangErrorAppTagStmt extends YangYangStmt {
 
   @NotNull
   YangErrorAppTagKeyword getErrorAppTagKeyword();

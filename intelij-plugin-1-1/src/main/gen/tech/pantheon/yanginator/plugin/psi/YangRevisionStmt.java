@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangRevisionStmt extends YangNamedElement {
+public interface YangRevisionStmt extends YangYangStmt {
 
   @NotNull
   YangOptsep getOptsep();

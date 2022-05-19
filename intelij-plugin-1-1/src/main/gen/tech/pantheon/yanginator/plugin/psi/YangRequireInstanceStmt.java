@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangRequireInstanceStmt extends YangNamedElement {
+public interface YangRequireInstanceStmt extends YangYangStmt {
 
   @NotNull
   YangRequireInstanceArgStr getRequireInstanceArgStr();

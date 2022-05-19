@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangRpcStmt extends YangNamedElement {
+public interface YangRpcStmt extends YangYangStmt {
 
   @NotNull
   YangIdentifierArgStr getIdentifierArgStr();

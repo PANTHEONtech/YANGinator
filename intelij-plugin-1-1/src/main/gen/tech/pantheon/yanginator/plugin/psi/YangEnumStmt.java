@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangEnumStmt extends YangNamedElement {
+public interface YangEnumStmt extends YangYangStmt {
 
   @NotNull
   YangEnumKeyword getEnumKeyword();

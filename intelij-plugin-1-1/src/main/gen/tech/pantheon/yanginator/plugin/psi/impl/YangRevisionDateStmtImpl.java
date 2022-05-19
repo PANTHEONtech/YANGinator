@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangRevisionDateStmtImpl extends YangNamedElementImpl implements YangRevisionDateStmt {
+public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRevisionDateStmt {
 
   public YangRevisionDateStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitRevisionDateStmt(this);
   }

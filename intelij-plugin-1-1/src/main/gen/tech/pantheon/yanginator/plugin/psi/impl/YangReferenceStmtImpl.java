@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangReferenceStmtImpl extends YangNamedElementImpl implements YangReferenceStmt {
+public class YangReferenceStmtImpl extends YangYangStmtImpl implements YangReferenceStmt {
 
   public YangReferenceStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitReferenceStmt(this);
   }

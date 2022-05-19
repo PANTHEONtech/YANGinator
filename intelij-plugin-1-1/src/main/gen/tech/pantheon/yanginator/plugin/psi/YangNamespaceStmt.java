@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangNamespaceStmt extends YangNamedElement {
+public interface YangNamespaceStmt extends YangYangStmt {
 
   @NotNull
   YangNamespaceKeyword getNamespaceKeyword();

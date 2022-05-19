@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangRefineStmt extends YangNamedElement {
+public interface YangRefineStmt extends YangYangStmt {
 
   @NotNull
   YangOptsep getOptsep();

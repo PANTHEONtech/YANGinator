@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangDeviationStmt extends YangNamedElement {
+public interface YangDeviationStmt extends YangYangStmt {
 
   @NotNull
   YangDeviationArgStr getDeviationArgStr();
