@@ -180,7 +180,6 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.correctChanges(newGrammar);
         newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, rfc3986, "RFC 3986");
         newGrammar = GrammarKitRFCUtils.addHeader(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/header.txt")));
-        //newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/highlighter.bnf")), "HIGHLIGHTER STUFF");
         newGrammar = GrammarKitRFCUncomplaintUtils.quoteDescription(newGrammar);
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
         newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
@@ -283,12 +282,16 @@ public class GrammarKitRFCService {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     String name = element.getElementsByTagName("name").item(0).getTextContent();
-                    String pin = null;
-                    if (element.hasAttribute("pin")){
+                    String pin = null,implementation = null,extend = null;
+                    if (element.getElementsByTagName("pin").item(0) != null ){
                         pin = element.getElementsByTagName("pin").item(0).getTextContent();
                     }
-                    String implementation = element.getElementsByTagName("implements").item(0).getTextContent();
-                    String extend = element.getElementsByTagName("extends").item(0).getTextContent();
+                    if (element.getElementsByTagName("implements").item(0) != null ){
+                        implementation = element.getElementsByTagName("implements").item(0).getTextContent();
+                    }
+                    if (element.getElementsByTagName("extends").item(0) != null ){
+                        extend = element.getElementsByTagName("extends").item(0).getTextContent();
+                    }
                     result.add(new Extension(name,pin,extend,implementation));
                 }
             }

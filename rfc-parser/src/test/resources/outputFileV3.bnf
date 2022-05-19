@@ -1,5 +1,9 @@
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+  parserImports=[
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
+  ]
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
   extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"

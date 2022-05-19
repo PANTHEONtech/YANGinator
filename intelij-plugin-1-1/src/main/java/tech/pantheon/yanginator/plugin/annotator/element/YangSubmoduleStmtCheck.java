@@ -38,6 +38,5 @@ public class YangSubmoduleStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangRevisionStmts.class);
         minOne.check(element, holder, YangBodyStmts.class);
         maxOne.check(element, holder, YangBodyStmts.class);
-       // minOne.simpleCheck(element, holder, YangSubmoduleHeaderStmts.class);
     }
 }

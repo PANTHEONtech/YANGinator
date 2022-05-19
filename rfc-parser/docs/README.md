@@ -8,9 +8,6 @@ path = intelij-plugin/src/main/gen/tech/pantheon/yanginator/plugin
 * Right-click your BNF file again and select "Generate JFlex Lexer", select your path into lexer directory(path/lexer) with name _YangLexer.flex
 * Run RFCParser.main() again
 * Right-click on _YangLexer.flex and select "Run JFlex Generator"
-* Open YangParser.java that is located in path/parser and add these imports :
-* import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
-* import static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString;
   
 ## Transformation of ABNF to BNF
 
