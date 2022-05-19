@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangCaseStmt extends YangNamedElement {
+public interface YangCaseStmt extends YangYangStmt {
 
   @NotNull
   YangCaseKeyword getCaseKeyword();

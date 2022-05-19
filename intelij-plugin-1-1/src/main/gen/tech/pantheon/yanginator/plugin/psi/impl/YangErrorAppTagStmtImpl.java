@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangErrorAppTagStmtImpl extends YangNamedElementImpl implements YangErrorAppTagStmt {
+public class YangErrorAppTagStmtImpl extends YangYangStmtImpl implements YangErrorAppTagStmt {
 
   public YangErrorAppTagStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitErrorAppTagStmt(this);
   }

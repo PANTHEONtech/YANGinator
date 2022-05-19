@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangMaxElementsStmt extends YangNamedElement {
+public interface YangMaxElementsStmt extends YangYangStmt {
 
   @NotNull
   YangMaxElementsKeyword getMaxElementsKeyword();

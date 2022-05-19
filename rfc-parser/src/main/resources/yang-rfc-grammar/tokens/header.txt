@@ -1,7 +1,5 @@
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
- //TODO: will be implemented in later stages of development
- //parserUtilClass="tech.pantheon.yanginator.plugin.parser.YangParserUtil"
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
   extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
@@ -16,8 +14,7 @@
   elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
   tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
 
-  //TODO: will be implemented in later stages of development
-  //extends(".*stmt|unknown_statement.*")=Statement
+  extends(".*stmt|unknown_statement.*")=yang-stmt
 
   generateTokenAccessors=true
 }

@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangPathStmt extends YangNamedElement {
+public interface YangPathStmt extends YangYangStmt {
 
   @NotNull
   YangPathArgStr getPathArgStr();

@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangYangVersionStmt extends YangNamedElement {
+public interface YangYangVersionStmt extends YangYangStmt {
 
   @NotNull
   YangSep getSep();

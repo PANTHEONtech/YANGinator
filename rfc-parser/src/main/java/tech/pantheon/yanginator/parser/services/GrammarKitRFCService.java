@@ -75,10 +75,7 @@ public class GrammarKitRFCService {
         List<String> oldLexer = this.readInputFile(inputFile);
         List<FlexerToken> tokens = null;
         tokens = this.loadTokensFromXML(this.getFile("yang-rfc-grammar/tokens/tokens.xml"));
-
         oldLexer = GrammarKitRFCUtils.replaceQuotes(oldLexer);
-        /*oldLexer = GrammarKitRFCUtils.transformH_Tokens(oldLexer);
-        GrammarKitRFCUtils.addTransformedTokens(oldLexer, tokens);*/
         oldLexer = GrammarKitRFCUtils.addTokensIntoLexer(oldLexer, tokens);
         this.writeIntoOutputFile(outputFile, oldLexer);
     }
@@ -187,6 +184,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUncomplaintUtils.quoteDescription(newGrammar);
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
         newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
+        newGrammar = GrammarKitRFCUncomplaintUtils.splitDeviationStmt(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
 
 

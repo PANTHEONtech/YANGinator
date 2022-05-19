@@ -18,33 +18,15 @@ import java.util.List;
 public interface YangBodyStmts extends YangNamedElement {
 
   @NotNull
-  List<YangAugmentStmt> getAugmentStmtList();
-
-  @NotNull
-  List<YangDataDefStmt> getDataDefStmtList();
-
-  @NotNull
-  List<YangDeviationStmt> getDeviationStmtList();
-
-  @NotNull
-  List<YangExtensionStmt> getExtensionStmtList();
-
-  @NotNull
-  List<YangFeatureStmt> getFeatureStmtList();
-
-  @NotNull
   List<YangGroupingStmt> getGroupingStmtList();
 
   @NotNull
   List<YangIdentityStmt> getIdentityStmtList();
 
   @NotNull
-  List<YangNotificationStmt> getNotificationStmtList();
-
-  @NotNull
-  List<YangRpcStmt> getRpcStmtList();
-
-  @NotNull
   List<YangTypedefStmt> getTypedefStmtList();
+
+  @NotNull
+  List<YangYangStmt> getYangStmtList();
 
 }

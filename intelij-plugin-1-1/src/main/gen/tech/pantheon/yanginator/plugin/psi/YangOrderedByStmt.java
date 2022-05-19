@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangOrderedByStmt extends YangNamedElement {
+public interface YangOrderedByStmt extends YangYangStmt {
 
   @NotNull
   YangOrderedByArgStr getOrderedByArgStr();

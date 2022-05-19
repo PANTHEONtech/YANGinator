@@ -81,6 +81,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangDeviateReplaceStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationKeywordImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtBodyArgsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDigitImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDquoteImpl;
@@ -280,7 +281,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentNzImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentNzNcImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSepImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangShortCaseStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSpImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusArgImpl;
@@ -411,6 +411,7 @@ public interface YangTypes {
   IElementType YANG_DEVIATION_ARG_STR = new YangElementType("YANG_DEVIATION_ARG_STR");
   IElementType YANG_DEVIATION_KEYWORD = new YangElementType("YANG_DEVIATION_KEYWORD");
   IElementType YANG_DEVIATION_STMT = new YangElementType("YANG_DEVIATION_STMT");
+  IElementType YANG_DEVIATION_STMT_BODY_ARGS = new YangElementType("YANG_DEVIATION_STMT_BODY_ARGS");
   IElementType YANG_DIGIT = new YangElementType("YANG_DIGIT");
   IElementType YANG_DQUOTE = new YangElementType("YANG_DQUOTE");
   IElementType YANG_ENUM_KEYWORD = new YangElementType("YANG_ENUM_KEYWORD");
@@ -928,6 +929,9 @@ public interface YangTypes {
       }
       else if (type == YANG_DEVIATION_STMT) {
         return new YangDeviationStmtImpl(node);
+      }
+      else if (type == YANG_DEVIATION_STMT_BODY_ARGS) {
+        return new YangDeviationStmtBodyArgsImpl(node);
       }
       else if (type == YANG_DIGIT) {
         return new YangDigitImpl(node);
@@ -1522,9 +1526,6 @@ public interface YangTypes {
       }
       else if (type == YANG_SEP) {
         return new YangSepImpl(node);
-      }
-      else if (type == YANG_SHORT_CASE_STMT) {
-        return new YangShortCaseStmtImpl(node);
       }
       else if (type == YANG_SP) {
         return new YangSpImpl(node);

@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangDeviateNotSupportedStmt extends YangNamedElement {
+public interface YangDeviateNotSupportedStmt extends YangYangStmt {
 
   @NotNull
   YangDeviateKeyword getDeviateKeyword();

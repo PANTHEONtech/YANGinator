@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangReferenceStmt extends YangNamedElement {
+public interface YangReferenceStmt extends YangYangStmt {
 
   @NotNull
   YangReferenceKeyword getReferenceKeyword();

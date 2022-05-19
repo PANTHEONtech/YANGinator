@@ -15,18 +15,12 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangAugmentStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
-import tech.pantheon.yanginator.plugin.psi.YangDataDefStmt;
-import tech.pantheon.yanginator.plugin.psi.YangDeviationStmt;
-import tech.pantheon.yanginator.plugin.psi.YangExtensionStmt;
-import tech.pantheon.yanginator.plugin.psi.YangFeatureStmt;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
-import tech.pantheon.yanginator.plugin.psi.YangNotificationStmt;
-import tech.pantheon.yanginator.plugin.psi.YangRpcStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
 
 import java.util.List;
 
@@ -48,36 +42,6 @@ public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyS
 
   @Override
   @NotNull
-  public List<YangAugmentStmt> getAugmentStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangAugmentStmt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangDataDefStmt> getDataDefStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDataDefStmt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangDeviationStmt> getDeviationStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDeviationStmt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangExtensionStmt> getExtensionStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangExtensionStmt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangFeatureStmt> getFeatureStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangFeatureStmt.class);
-  }
-
-  @Override
-  @NotNull
   public List<YangGroupingStmt> getGroupingStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangGroupingStmt.class);
   }
@@ -90,20 +54,14 @@ public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyS
 
   @Override
   @NotNull
-  public List<YangNotificationStmt> getNotificationStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNotificationStmt.class);
-  }
-
-  @Override
-  @NotNull
-  public List<YangRpcStmt> getRpcStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRpcStmt.class);
-  }
-
-  @Override
-  @NotNull
   public List<YangTypedefStmt> getTypedefStmtList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmt.class);
+  }
+
+  @Override
+  @NotNull
+  public List<YangYangStmt> getYangStmtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
   }
 
 }

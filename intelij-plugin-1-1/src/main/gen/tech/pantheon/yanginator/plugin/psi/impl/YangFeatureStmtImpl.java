@@ -31,12 +31,13 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
 
-public class YangFeatureStmtImpl extends YangNamedElementImpl implements YangFeatureStmt {
+public class YangFeatureStmtImpl extends YangYangStmtImpl implements YangFeatureStmt {
 
   public YangFeatureStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitFeatureStmt(this);
   }

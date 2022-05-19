@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangFractionDigitsStmt extends YangNamedElement {
+public interface YangFractionDigitsStmt extends YangYangStmt {
 
   @NotNull
   YangFractionDigitsArgStr getFractionDigitsArgStr();

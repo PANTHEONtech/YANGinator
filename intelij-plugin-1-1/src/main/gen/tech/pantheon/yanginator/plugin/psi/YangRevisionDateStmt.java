@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangRevisionDateStmt extends YangNamedElement {
+public interface YangRevisionDateStmt extends YangYangStmt {
 
   @NotNull
   YangRevisionDate getRevisionDate();

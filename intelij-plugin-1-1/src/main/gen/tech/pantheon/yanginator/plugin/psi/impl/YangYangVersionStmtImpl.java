@@ -21,12 +21,13 @@ import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
-public class YangYangVersionStmtImpl extends YangNamedElementImpl implements YangYangVersionStmt {
+public class YangYangVersionStmtImpl extends YangYangStmtImpl implements YangYangVersionStmt {
 
   public YangYangVersionStmtImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull YangVisitor visitor) {
     visitor.visitYangVersionStmt(this);
   }

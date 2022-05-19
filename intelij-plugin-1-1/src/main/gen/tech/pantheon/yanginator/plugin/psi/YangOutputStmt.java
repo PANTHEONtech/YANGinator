@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangOutputStmt extends YangNamedElement {
+public interface YangOutputStmt extends YangYangStmt {
 
   @NotNull
   YangOptsep getOptsep();

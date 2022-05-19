@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface YangPresenceStmt extends YangNamedElement {
+public interface YangPresenceStmt extends YangYangStmt {
 
   @NotNull
   YangPresenceKeyword getPresenceKeyword();
