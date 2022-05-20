@@ -21,7 +21,7 @@ public class YangCompletionContributorPopUp {
     private final List<String> currentTypedefNames;
     private final List<String> currentIdentityNames;
     private final List<String> importedIdentifiers;
-    public String prefixMatcher = "";
+    public StringBuilder prefixMatcher = new StringBuilder();
 
     public static final YangCompletionContributorPopUp POP_UP = new YangCompletionContributorPopUp();
 
@@ -53,7 +53,7 @@ public class YangCompletionContributorPopUp {
         return importedIdentifiers;
     }
 
-    public void setPrefixMatcher(String prefixMatcher) {
-        this.prefixMatcher = prefixMatcher;
+    public void setPrefixMatcher(StringBuilder prefixMatcher) {
+        this.prefixMatcher = prefixMatcher.reverse();
     }
 }
