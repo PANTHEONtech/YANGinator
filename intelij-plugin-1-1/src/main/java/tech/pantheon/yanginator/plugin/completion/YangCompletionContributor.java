@@ -32,7 +32,6 @@ import static tech.pantheon.yanginator.plugin.completion.YangCompletionContribut
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
 
 public class YangCompletionContributor extends CompletionContributor {
-
     public YangCompletionContributor() {
         // YANG KEYWORDS
         extend(CompletionType.BASIC, not(or(AFTER_TYPE_KEYWORD, AFTER_USES_KEYWORD, AFTER_BASE_KEYWORD,
@@ -44,7 +43,6 @@ public class YangCompletionContributor extends CompletionContributor {
                         YANG_STATEMENTS.forEach(s -> resultSet.withPrefixMatcher(
                                         String.valueOf(POP_UP.prefixMatcher))
                                 .addElement(LookupElementBuilder.create(s).withTypeText("yang-keyword")));
-
                     }
                 });
         // BUILT-IN TYPES
@@ -85,7 +83,6 @@ public class YangCompletionContributor extends CompletionContributor {
                 POP_UP.getCurrentTypedefNames().forEach(s -> resultSet.withPrefixMatcher(
                                 String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("typedef").bold()));
-
             }
         });
         // IDENTITY VALUES
@@ -98,7 +95,6 @@ public class YangCompletionContributor extends CompletionContributor {
                         .addElement(LookupElementBuilder.create(s).withTypeText("identity").bold()));
             }
         });
-
         // IMPORTED IDENTIFIER VALUES
         extend(CompletionType.BASIC, or(AFTER_IDENTIFIER, AFTER_PSI_ERROR_ELEMENT), new CompletionProvider<>() {
             public void addCompletions(@NotNull CompletionParameters parameters,
@@ -106,7 +102,6 @@ public class YangCompletionContributor extends CompletionContributor {
                                        @NotNull CompletionResultSet resultSet) {
                 POP_UP.getImportedIdentifiers().forEach(s -> resultSet
                         .addElement(LookupElementBuilder.create(s).bold()));
-
             }
         });
     }

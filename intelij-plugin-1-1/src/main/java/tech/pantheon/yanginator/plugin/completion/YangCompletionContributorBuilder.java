@@ -29,24 +29,10 @@ import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.psi.YangFile;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.COLON_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.DOT_YANG_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.EMPTY_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.LEFT_BRACE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.QUOTES_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SEMICOLON_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TO_WORDS_RGX;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.*;
 
 public class YangCompletionContributorBuilder implements FoldingBuilder {
 
@@ -56,23 +42,16 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
         psiNode = node.getPsi();
-
-
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
-
         setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
-
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
-
         var importedIdentifiers = findAllImportedIdentifiers();
         setImportedIdentifiers(importedIdentifiers, YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers());
         updateImportedIdentifiers(importedIdentifiers);
 
         YangCompletionContributorPopUp.POP_UP.setPrefixMatcher(new StringBuilder());
-
-
         return new FoldingDescriptor[0];
     }
 
@@ -85,8 +64,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
             values.removeIf(e -> e.length() < 1);
         }
     }
-
-
 
     @NotNull
     private IElementType getYangKeyword(List<String> currentIdentifiers) {
@@ -156,8 +133,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private String getImportKeyword(PsiElement e) {
         StringBuilder importIdentifier = new StringBuilder();
         var prevSibling = e.getPrevSibling() == null ? null : e.getPrevSibling();
-
-
         while (prevSibling != null) {
             if (isNotSpaceOrBrace(prevSibling)) {
                 if (isElementYangType(prevSibling, YangTypes.YANG_IMPORT_KEYWORD)) {
@@ -170,10 +145,9 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return "";
     }
 
-
-    private void createImportIdentifier(StringBuilder prefixIdentifier, PsiElement prevSibling ) {
+    private void createImportIdentifier(StringBuilder prefixIdentifier, PsiElement prevSibling) {
         if (isNotForbiddenCharacter(prevSibling)) {
-            prefixIdentifier.append(new StringBuilder(prevSibling.getText()).reverse());    // sssssssss
+            prefixIdentifier.append(new StringBuilder(prevSibling.getText()).reverse());
         } else {
             prefixIdentifier.append(prevSibling.getPrevSibling().getText());
         }
@@ -196,8 +170,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private String getIdentifier(PsiElement e) {
         StringBuilder prefixIdentifier = new StringBuilder();
         var nextSibling = e.getNextSibling() == null ? null : e.getNextSibling();
-        var prevSibling = e.getPrevSibling() == null ? null : e.getPrevSibling();
-
         while (nextSibling != null) {
             if (!isElementYangType(nextSibling, YangTypes.YANG_SPACE)) {
                 if (isElementYangType(nextSibling, YangTypes.YANG_LEFT_BRACE)) {
@@ -213,7 +185,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     @Nullable
     private PsiElement getNotNullSibling(PsiElement nextSibling) {
         if (nextSibling.getNextSibling() == null) {
-            nextSibling = nonNullElementAt(nextSibling.getTextOffset() + nextSibling.getTextLength() );  //+ nextSibling.getTextLength()
+            nextSibling = nonNullElementAt(nextSibling.getTextOffset() + nextSibling.getTextLength());
         } else if (isComment(nextSibling)) {
             nextSibling = null;
         } else {
@@ -267,7 +239,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private void setCompletionValues(@NotNull List<PsiElement> psiElements, List<String> values, IElementType yangType) {
         updateValues(values);
         psiElements.stream()
-                .filter(e -> isElementYangType(e, yangType) && isElementYangType(e.getPrevSibling(),yangType))
+                .filter(e -> isElementYangType(e, yangType) && isElementYangType(e.getPrevSibling(), yangType))
                 .forEach(e -> values.add(getIdentifier(e)));
         values.removeIf(e -> e.length() < 1);
     }

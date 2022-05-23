@@ -19,10 +19,12 @@ import com.intellij.psi.PsiTreeChangeListener;
 import com.intellij.psi.util.PsiEditorUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
-
     private String tmp = "";
+    Set<String> CHAR_SET = new HashSet<>(Set.of(" ","\n" ,"\r" ,"\t"));
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
@@ -31,7 +33,6 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                 || event.getFile().getNode().getPsi() == null) {
             return;
         }
-
         setDefaultTmpString();
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
@@ -43,9 +44,8 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
     private void setDefaultTmpString() {
         this.tmp = "";
     }
-
     private void getPrevSiblingsValues(PsiElement prevPsiElement) {
-        if (prevPsiElement != null && !prevPsiElement.getText().equals("\n") && !prevPsiElement.getText().equals(" ")) {
+        if (prevPsiElement != null && !CHAR_SET.contains(prevPsiElement.getText())) {
             tmp += prevPsiElement.getText();
             prevPsiElement = prevPsiElement.getPrevSibling();
             getPrevSiblingsValues(prevPsiElement);
