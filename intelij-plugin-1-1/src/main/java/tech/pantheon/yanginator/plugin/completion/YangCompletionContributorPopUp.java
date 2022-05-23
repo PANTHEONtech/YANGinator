@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 public class YangCompletionContributorPopUp {
+    public static final YangCompletionContributorPopUp POP_UP = new YangCompletionContributorPopUp();
     private final Map<String, String> prefixToYangModule;
     private final List<String> currentGroupingNames;
     private final List<String> currentTypedefNames;
     private final List<String> currentIdentityNames;
     private final List<String> importedIdentifiers;
     public StringBuilder prefixMatcher = new StringBuilder();
-
-    public static final YangCompletionContributorPopUp POP_UP = new YangCompletionContributorPopUp();
 
     private YangCompletionContributorPopUp() {
         this.prefixToYangModule = new HashMap<>();

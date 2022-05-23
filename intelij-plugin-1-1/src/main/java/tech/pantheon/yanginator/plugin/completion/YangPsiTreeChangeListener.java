@@ -33,7 +33,6 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                 || event.getFile().getNode().getPsi() == null) {
             return;
         }
-
         setDefaultTmpString();
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
