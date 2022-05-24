@@ -2,6 +2,7 @@
 [![License](https://img.shields.io/github/license/PANTHEONtech/YANGinator)](https://github.com/PANTHEONtech/YANGinator/blob/master/LICENSE)
 [![Java CI with Gradle](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml/badge.svg)](https://github.com/PANTHEONtech/YANGinator/actions/workflows/gradle.yml)
 [![InteliJ Compatibility Verification](https://github.com/PANTHEONtech/YANGinator/actions/workflows/compatibility.yml/badge.svg?event=schedule)](https://github.com/PANTHEONtech/YANGinator/blob/master/compatible.version)
+[![Known Vulnerabilities](https://snyk.io/test/github/PANTHEONtech/YANGinator/badge.svg)](https://snyk.io/test/github/PANTHEONtech/YANGinator)
 
 
 YANGinator | An IntelliJ YANG Validation Plugin
