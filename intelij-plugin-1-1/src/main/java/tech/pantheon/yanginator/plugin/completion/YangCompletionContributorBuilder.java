@@ -56,21 +56,16 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
         psiNode = node.getPsi();
-
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
-
         setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
-
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
-
         var importedIdentifiers = findAllImportedIdentifiers();
         setImportedIdentifiers(importedIdentifiers, YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers());
         updateImportedIdentifiers(importedIdentifiers);
 
-        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher("");
-
+        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher(new StringBuilder());
         return new FoldingDescriptor[0];
     }
 
@@ -83,7 +78,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
             values.removeIf(e -> e.length() < 1);
         }
     }
-
 
     @NotNull
     private IElementType getYangKeyword(List<String> currentIdentifiers) {
@@ -169,7 +163,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         if (isNotForbiddenCharacter(prevSibling)) {
             prefixIdentifier.append(new StringBuilder(prevSibling.getText()).reverse());
         } else {
-            prefixIdentifier.append(prevSibling.getText());
+            prefixIdentifier.append(prevSibling.getPrevSibling().getText());
         }
     }
 
@@ -190,7 +184,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private String getIdentifier(PsiElement e) {
         StringBuilder prefixIdentifier = new StringBuilder();
         var nextSibling = e.getNextSibling() == null ? null : e.getNextSibling();
-
         while (nextSibling != null) {
             if (!isElementYangType(nextSibling, YangTypes.YANG_SPACE)) {
                 if (isElementYangType(nextSibling, YangTypes.YANG_LEFT_BRACE)) {
@@ -260,7 +253,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private void setCompletionValues(@NotNull List<PsiElement> psiElements, List<String> values, IElementType yangType) {
         updateValues(values);
         psiElements.stream()
-                .filter(e -> isElementYangType(e, yangType))
+                .filter(e -> isElementYangType(e, yangType) && isElementYangType(e.getPrevSibling(), yangType))
                 .forEach(e -> values.add(getIdentifier(e)));
         values.removeIf(e -> e.length() < 1);
     }
