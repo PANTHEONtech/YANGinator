@@ -29,10 +29,24 @@ import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.psi.YangFile;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.*;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.COLON_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.DOT_YANG_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.EMPTY_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.LEFT_BRACE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.QUOTES_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SEMICOLON_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TO_WORDS_RGX;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
 
 public class YangCompletionContributorBuilder implements FoldingBuilder {
 
