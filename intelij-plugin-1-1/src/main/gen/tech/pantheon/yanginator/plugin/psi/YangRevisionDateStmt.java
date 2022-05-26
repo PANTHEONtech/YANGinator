@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangRevisionDateStmt extends YangYangStmt {
 
-  @NotNull
-  YangRevisionDate getRevisionDate();
+    @NotNull
+    YangRevisionDate getRevisionDate();
 
-  @NotNull
-  YangRevisionDateKeyword getRevisionDateKeyword();
+    @NotNull
+    YangRevisionDateKeyword getRevisionDateKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

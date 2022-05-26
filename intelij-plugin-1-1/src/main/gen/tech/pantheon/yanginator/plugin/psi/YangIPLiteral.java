@@ -17,16 +17,16 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangIPLiteral extends YangNamedElement {
 
-  @Nullable
-  YangIPv6Address getIPv6Address();
+    @Nullable
+    YangIPv6Address getIPv6Address();
 
-  @Nullable
-  YangIPvFuture getIPvFuture();
+    @Nullable
+    YangIPvFuture getIPvFuture();
 
-  @NotNull
-  PsiElement getClosedBracket();
+    @NotNull
+    PsiElement getClosedBracket();
 
-  @NotNull
-  PsiElement getOpenBracket();
+    @NotNull
+    PsiElement getOpenBracket();
 
 }

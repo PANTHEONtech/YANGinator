@@ -25,48 +25,48 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangPathImpl extends YangNamedElementImpl implements YangPath {
 
-  public YangPathImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPath(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPath(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangPathAbempty getPathAbempty() {
-    return findChildByClass(YangPathAbempty.class);
-  }
+    @Override
+    @Nullable
+    public YangPathAbempty getPathAbempty() {
+        return findChildByClass(YangPathAbempty.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathAbsolute getPathAbsolute() {
-    return findChildByClass(YangPathAbsolute.class);
-  }
+    @Override
+    @Nullable
+    public YangPathAbsolute getPathAbsolute() {
+        return findChildByClass(YangPathAbsolute.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathEmpty getPathEmpty() {
-    return findChildByClass(YangPathEmpty.class);
-  }
+    @Override
+    @Nullable
+    public YangPathEmpty getPathEmpty() {
+        return findChildByClass(YangPathEmpty.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathNoscheme getPathNoscheme() {
-    return findChildByClass(YangPathNoscheme.class);
-  }
+    @Override
+    @Nullable
+    public YangPathNoscheme getPathNoscheme() {
+        return findChildByClass(YangPathNoscheme.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathRootless getPathRootless() {
-    return findChildByClass(YangPathRootless.class);
-  }
+    @Override
+    @Nullable
+    public YangPathRootless getPathRootless() {
+        return findChildByClass(YangPathRootless.class);
+    }
 
 }

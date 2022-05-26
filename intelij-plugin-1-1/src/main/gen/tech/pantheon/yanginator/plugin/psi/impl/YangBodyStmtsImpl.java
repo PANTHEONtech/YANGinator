@@ -26,42 +26,42 @@ import java.util.List;
 
 public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyStmts {
 
-  public YangBodyStmtsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangBodyStmtsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitBodyStmts(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitBodyStmts(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangGroupingStmt> getGroupingStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangGroupingStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangGroupingStmt> getGroupingStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangGroupingStmt.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangIdentityStmt> getIdentityStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangIdentityStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangIdentityStmt> getIdentityStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangIdentityStmt.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangTypedefStmt> getTypedefStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangTypedefStmt> getTypedefStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypedefStmt.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangYangStmt> getYangStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangYangStmt> getYangStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
+    }
 
 }

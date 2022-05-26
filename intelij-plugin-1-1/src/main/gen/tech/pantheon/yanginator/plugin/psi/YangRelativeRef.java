@@ -17,19 +17,19 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangRelativeRef extends YangNamedElement {
 
-  @Nullable
-  YangFragment getFragment();
+    @Nullable
+    YangFragment getFragment();
 
-  @Nullable
-  YangQuery getQuery();
+    @Nullable
+    YangQuery getQuery();
 
-  @NotNull
-  YangRelativePart getRelativePart();
+    @NotNull
+    YangRelativePart getRelativePart();
 
-  @Nullable
-  PsiElement getHash();
+    @Nullable
+    PsiElement getHash();
 
-  @Nullable
-  PsiElement getQuestionMark();
+    @Nullable
+    PsiElement getQuestionMark();
 
 }

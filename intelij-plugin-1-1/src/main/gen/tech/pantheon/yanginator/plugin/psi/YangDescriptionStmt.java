@@ -16,19 +16,19 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangDescriptionStmt extends YangYangStmt {
 
-  @NotNull
-  YangDescriptionKeyword getDescriptionKeyword();
+    @NotNull
+    YangDescriptionKeyword getDescriptionKeyword();
 
-  @Nullable
-  YangQuotedString getQuotedString();
+    @Nullable
+    YangQuotedString getQuotedString();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
-  @Nullable
-  YangString getString();
+    @Nullable
+    YangString getString();
 
 }

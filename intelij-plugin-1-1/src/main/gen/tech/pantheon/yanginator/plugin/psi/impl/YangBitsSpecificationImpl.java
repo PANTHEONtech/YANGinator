@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangBitsSpecificationImpl extends YangNamedElementImpl implements YangBitsSpecification {
 
-  public YangBitsSpecificationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangBitsSpecificationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitBitsSpecification(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitBitsSpecification(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangBitStmt> getBitStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBitStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangBitStmt> getBitStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBitStmt.class);
+    }
 
 }

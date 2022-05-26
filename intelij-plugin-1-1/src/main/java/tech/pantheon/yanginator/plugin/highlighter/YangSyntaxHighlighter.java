@@ -138,6 +138,7 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
         if (type == YANG_H_VALID_ESCAPE) {
             return pack(LEGAL);
         }
+
         if (
                 YANG_H_ANYXML_KEYWORD == type ||
                         YANG_H_ARGUMENT_KEYWORD == type ||

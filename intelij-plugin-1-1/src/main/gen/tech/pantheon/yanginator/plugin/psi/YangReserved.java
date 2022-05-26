@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangReserved extends YangNamedElement {
 
-  @Nullable
-  YangGenDelims getGenDelims();
+    @Nullable
+    YangGenDelims getGenDelims();
 
-  @Nullable
-  YangSubDelims getSubDelims();
+    @Nullable
+    YangSubDelims getSubDelims();
 
 }

@@ -24,30 +24,30 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
 
 public class YangNonNegativeIntegerValueImpl extends YangNamedElementImpl implements YangNonNegativeIntegerValue {
 
-  public YangNonNegativeIntegerValueImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangNonNegativeIntegerValueImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitNonNegativeIntegerValue(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitNonNegativeIntegerValue(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangPositiveIntegerValue getPositiveIntegerValue() {
-    return findChildByClass(YangPositiveIntegerValue.class);
-  }
+    @Override
+    @Nullable
+    public YangPositiveIntegerValue getPositiveIntegerValue() {
+        return findChildByClass(YangPositiveIntegerValue.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getZero() {
-    return findChildByType(YANG_ZERO);
-  }
+    @Override
+    @Nullable
+    public PsiElement getZero() {
+        return findChildByType(YANG_ZERO);
+    }
 
 }

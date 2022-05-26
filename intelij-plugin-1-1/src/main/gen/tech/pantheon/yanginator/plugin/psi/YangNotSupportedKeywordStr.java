@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangNotSupportedKeywordStr extends YangNamedElement {
 
-  @NotNull
-  YangNotSupportedKeyword getNotSupportedKeyword();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    YangNotSupportedKeyword getNotSupportedKeyword();
 
 }

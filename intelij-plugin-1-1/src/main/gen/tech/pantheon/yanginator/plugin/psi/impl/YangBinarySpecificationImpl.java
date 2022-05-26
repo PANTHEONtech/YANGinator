@@ -14,31 +14,30 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBinarySpecification;
 import tech.pantheon.yanginator.plugin.psi.YangLengthStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangBinarySpecificationImpl extends YangNamedElementImpl implements YangBinarySpecification {
 
-  public YangBinarySpecificationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangBinarySpecificationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitBinarySpecification(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitBinarySpecification(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangLengthStmt getLengthStmt() {
-    return findChildByClass(YangLengthStmt.class);
-  }
+    @Override
+    @NotNull
+    public YangLengthStmt getLengthStmt() {
+        return findNotNullChildByClass(YangLengthStmt.class);
+    }
 
 }

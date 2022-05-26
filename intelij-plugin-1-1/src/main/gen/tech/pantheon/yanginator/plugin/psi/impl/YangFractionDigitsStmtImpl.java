@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangFractionDigitsStmtImpl extends YangYangStmtImpl implements YangFractionDigitsStmt {
 
-  public YangFractionDigitsStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangFractionDigitsStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitFractionDigitsStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitFractionDigitsStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangFractionDigitsArgStr getFractionDigitsArgStr() {
-    return findNotNullChildByClass(YangFractionDigitsArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangFractionDigitsArgStr getFractionDigitsArgStr() {
+        return findNotNullChildByClass(YangFractionDigitsArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangFractionDigitsKeyword getFractionDigitsKeyword() {
-    return findNotNullChildByClass(YangFractionDigitsKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangFractionDigitsKeyword getFractionDigitsKeyword() {
+        return findNotNullChildByClass(YangFractionDigitsKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

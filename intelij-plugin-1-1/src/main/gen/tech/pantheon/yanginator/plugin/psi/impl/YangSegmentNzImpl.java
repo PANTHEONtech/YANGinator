@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangSegmentNzImpl extends YangNamedElementImpl implements YangSegmentNz {
 
-  public YangSegmentNzImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSegmentNzImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSegmentNz(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSegmentNz(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangPchar> getPcharList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPchar.class);
-  }
+    @Override
+    @NotNull
+    public List<YangPchar> getPcharList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPchar.class);
+    }
 
 }

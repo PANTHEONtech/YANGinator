@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangMaxValueArgStr extends YangNamedElement {
 
-  @NotNull
-  YangMaxValueArg getMaxValueArg();
+    @NotNull
+    YangMaxValueArg getMaxValueArg();
 
 }

@@ -156,7 +156,7 @@ public class GrammarKitRFCService {
      */
     public List<String> parseInputFilev2(List<String> oldGrammar) {
         List<String> newGrammar = oldGrammar;
-        newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"", "\"9\" | \"10\"", "POSITIVE_NUMBER");
+        //newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"", "\"9\" | \"10\"", "POSITIVE_NUMBER");
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\"", "\"f\" | \"g\"", "HEXDIGIT");
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"v\"", "\"v\" |", "VERSION");
         return GrammarKitRFCUtils.replaceTokens(newGrammar, this.loadTokensFromXML(this.getFile("yang-rfc-grammar/tokens/tokens.xml")));
@@ -180,10 +180,9 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.correctChanges(newGrammar);
         newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, rfc3986, "RFC 3986");
         newGrammar = GrammarKitRFCUtils.addHeader(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/header.txt")));
-        newGrammar = GrammarKitRFCUncomplaintUtils.quoteDescription(newGrammar);
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
         newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
-        newGrammar = GrammarKitRFCUncomplaintUtils.splitDeviationStmt(newGrammar);
+        newGrammar = GrammarKitRFCUncomplaintUtils.additionalAdjustments(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
 
 

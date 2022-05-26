@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangIPv4Address extends YangNamedElement {
 
-  @NotNull
-  List<YangDecOctet> getDecOctetList();
+    @NotNull
+    List<YangDecOctet> getDecOctetList();
 
 }

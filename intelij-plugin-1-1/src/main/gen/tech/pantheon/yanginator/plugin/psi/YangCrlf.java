@@ -15,10 +15,10 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangCrlf extends YangNamedElement {
 
-  @NotNull
-  YangCr getCr();
+    @NotNull
+    YangCr getCr();
 
-  @NotNull
-  YangLf getLf();
+    @NotNull
+    YangLf getLf();
 
 }

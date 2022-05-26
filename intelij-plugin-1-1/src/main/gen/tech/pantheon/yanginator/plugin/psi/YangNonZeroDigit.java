@@ -12,11 +12,35 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangNonZeroDigit extends YangNamedElement {
 
-  @NotNull
-  PsiElement getPositiveNumber();
+    @Nullable
+    PsiElement getEight();
+
+    @Nullable
+    PsiElement getFive();
+
+    @Nullable
+    PsiElement getFour();
+
+    @Nullable
+    PsiElement getNine();
+
+    @Nullable
+    PsiElement getOne();
+
+    @Nullable
+    PsiElement getSeven();
+
+    @Nullable
+    PsiElement getSix();
+
+    @Nullable
+    PsiElement getThree();
+
+    @Nullable
+    PsiElement getTwo();
 
 }

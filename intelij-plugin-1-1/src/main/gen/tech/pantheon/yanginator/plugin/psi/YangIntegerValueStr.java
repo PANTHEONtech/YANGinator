@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangIntegerValueStr extends YangNamedElement {
 
-  @NotNull
-  YangIntegerValue getIntegerValue();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    YangIntegerValue getIntegerValue();
 
 }

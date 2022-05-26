@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangURIReference extends YangNamedElement {
 
-  @Nullable
-  YangUri getUri();
+    @Nullable
+    YangUri getUri();
 
-  @Nullable
-  YangRelativeRef getRelativeRef();
+    @Nullable
+    YangRelativeRef getRelativeRef();
 
 }

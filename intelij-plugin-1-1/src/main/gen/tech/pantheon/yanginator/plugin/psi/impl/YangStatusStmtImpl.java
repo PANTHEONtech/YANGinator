@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangStatusStmtImpl extends YangYangStmtImpl implements YangStatusStmt {
 
-  public YangStatusStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangStatusStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitStatusStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitStatusStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStatusArgStr getStatusArgStr() {
-    return findNotNullChildByClass(YangStatusArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangStatusArgStr getStatusArgStr() {
+        return findNotNullChildByClass(YangStatusArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStatusKeyword getStatusKeyword() {
-    return findNotNullChildByClass(YangStatusKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangStatusKeyword getStatusKeyword() {
+        return findNotNullChildByClass(YangStatusKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

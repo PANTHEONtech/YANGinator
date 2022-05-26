@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDateArgStrImpl extends YangNamedElementImpl implements YangDateArgStr {
 
-  public YangDateArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDateArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDateArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDateArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangDateArg getDateArg() {
-    return findNotNullChildByClass(YangDateArg.class);
-  }
+    @Override
+    @NotNull
+    public YangDateArg getDateArg() {
+        return findNotNullChildByClass(YangDateArg.class);
+    }
 
 }

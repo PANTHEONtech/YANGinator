@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangMinValueArgStr extends YangNamedElement {
 
-  @NotNull
-  YangMinValueArg getMinValueArg();
+    @NotNull
+    YangMinValueArg getMinValueArg();
 
 }

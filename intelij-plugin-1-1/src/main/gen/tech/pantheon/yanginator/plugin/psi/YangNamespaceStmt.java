@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangNamespaceStmt extends YangYangStmt {
 
-  @NotNull
-  YangNamespaceKeyword getNamespaceKeyword();
+    @NotNull
+    YangNamespaceKeyword getNamespaceKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
-  @NotNull
-  YangUriStr getUriStr();
+    @NotNull
+    YangUriStr getUriStr();
 
 }

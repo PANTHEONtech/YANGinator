@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangLf extends YangNamedElement {
 
-  @NotNull
-  PsiElement getLinefeed();
+    @NotNull
+    PsiElement getLinefeed();
 
 }

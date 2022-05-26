@@ -14,31 +14,30 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangNumericalRestrictions;
 import tech.pantheon.yanginator.plugin.psi.YangRangeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangNumericalRestrictionsImpl extends YangNamedElementImpl implements YangNumericalRestrictions {
 
-  public YangNumericalRestrictionsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangNumericalRestrictionsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitNumericalRestrictions(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitNumericalRestrictions(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangRangeStmt getRangeStmt() {
-    return findChildByClass(YangRangeStmt.class);
-  }
+    @Override
+    @NotNull
+    public YangRangeStmt getRangeStmt() {
+        return findNotNullChildByClass(YangRangeStmt.class);
+    }
 
 }

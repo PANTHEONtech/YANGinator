@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangYinElementStmt;
 
 public class YangYinElementStmtImpl extends YangYangStmtImpl implements YangYinElementStmt {
 
-  public YangYinElementStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangYinElementStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitYinElementStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitYinElementStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
-  @Override
-  @NotNull
-  public YangYinElementArgStr getYinElementArgStr() {
-    return findNotNullChildByClass(YangYinElementArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangYinElementArgStr getYinElementArgStr() {
+        return findNotNullChildByClass(YangYinElementArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangYinElementKeyword getYinElementKeyword() {
-    return findNotNullChildByClass(YangYinElementKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangYinElementKeyword getYinElementKeyword() {
+        return findNotNullChildByClass(YangYinElementKeyword.class);
+    }
 
 }

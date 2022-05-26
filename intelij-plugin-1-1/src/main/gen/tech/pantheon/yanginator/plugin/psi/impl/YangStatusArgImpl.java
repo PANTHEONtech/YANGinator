@@ -23,36 +23,36 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangStatusArgImpl extends YangNamedElementImpl implements YangStatusArg {
 
-  public YangStatusArgImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangStatusArgImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitStatusArg(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitStatusArg(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangCurrentKeyword getCurrentKeyword() {
-    return findChildByClass(YangCurrentKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangCurrentKeyword getCurrentKeyword() {
+        return findChildByClass(YangCurrentKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangDeprecatedKeyword getDeprecatedKeyword() {
-    return findChildByClass(YangDeprecatedKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangDeprecatedKeyword getDeprecatedKeyword() {
+        return findChildByClass(YangDeprecatedKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangObsoleteKeyword getObsoleteKeyword() {
-    return findChildByClass(YangObsoleteKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangObsoleteKeyword getObsoleteKeyword() {
+        return findChildByClass(YangObsoleteKeyword.class);
+    }
 
 }

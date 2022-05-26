@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangModuleHeaderStmtsImpl extends YangNamedElementImpl implements YangModuleHeaderStmts {
 
-  public YangModuleHeaderStmtsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangModuleHeaderStmtsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitModuleHeaderStmts(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitModuleHeaderStmts(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

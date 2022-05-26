@@ -18,10 +18,10 @@ import java.util.List;
 
 public interface YangPathAbsolute extends YangNamedElement {
 
-  @NotNull
-  List<YangSegment> getSegmentList();
+    @NotNull
+    List<YangSegment> getSegmentList();
 
-  @Nullable
-  YangSegmentNz getSegmentNz();
+    @Nullable
+    YangSegmentNz getSegmentNz();
 
 }

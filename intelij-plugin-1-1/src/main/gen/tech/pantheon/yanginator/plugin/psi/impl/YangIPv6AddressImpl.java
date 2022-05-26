@@ -28,36 +28,36 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_COLON;
 
 public class YangIPv6AddressImpl extends YangNamedElementImpl implements YangIPv6Address {
 
-  public YangIPv6AddressImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIPv6AddressImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIPv6Address(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIPv6Address(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangH16> getH16List() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangH16.class);
-  }
+    @Override
+    @NotNull
+    public List<YangH16> getH16List() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangH16.class);
+    }
 
-  @Override
-  @Nullable
-  public YangLs32 getLs32() {
-    return findChildByClass(YangLs32.class);
-  }
+    @Override
+    @Nullable
+    public YangLs32 getLs32() {
+        return findChildByClass(YangLs32.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getDoubleColon() {
-    return findChildByType(YANG_DOUBLE_COLON);
-  }
+    @Override
+    @Nullable
+    public PsiElement getDoubleColon() {
+        return findChildByType(YANG_DOUBLE_COLON);
+    }
 
 }

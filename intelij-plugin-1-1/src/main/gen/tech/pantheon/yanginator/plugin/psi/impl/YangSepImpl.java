@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangSepImpl extends YangNamedElementImpl implements YangSep {
 
-  public YangSepImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSepImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSep(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSep(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
-  }
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
 
 }

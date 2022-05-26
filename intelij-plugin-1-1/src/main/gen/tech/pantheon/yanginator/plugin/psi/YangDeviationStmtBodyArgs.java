@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangDeviationStmtBodyArgs extends YangNamedElement {
 
-  @NotNull
-  List<YangYangStmt> getYangStmtList();
+    @NotNull
+    List<YangYangStmt> getYangStmtList();
 
 }

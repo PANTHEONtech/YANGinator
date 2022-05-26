@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangEnumSpecification extends YangNamedElement {
 
-  @NotNull
-  List<YangEnumStmt> getEnumStmtList();
+    @NotNull
+    List<YangEnumStmt> getEnumStmtList();
 
 }

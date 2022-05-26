@@ -10,6 +10,10 @@
 
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+  parserImports=[
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
+  ]
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
   extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
@@ -121,7 +125,7 @@ include-stmt ::= include-keyword sep identifier-arg-str optsep
 
 namespace-stmt ::= namespace-keyword sep uri-str stmtend
 
-uri-str ::= URI | ( DOUBLE_QUOTE URI DOUBLE_QUOTE ) // a string that matches the rule  < URI in RFC 3986
+uri-str ::= URI | ( DQUOTE URI DQUOTE ) // a string that matches the rule  < URI in RFC 3986
 
 prefix-stmt ::= prefix-keyword sep prefix-arg-str stmtend
 
@@ -131,15 +135,15 @@ belongs-to-stmt ::= belongs-to-keyword sep identifier-arg-str
   prefix-stmt
   RIGHT_BRACE stmtsep
 
-organization-stmt ::= organization-keyword sep string stmtend
+organization-stmt ::= organization-keyword sep ( quoted-string | string ) stmtend
 
-contact-stmt ::= contact-keyword sep string stmtend
+contact-stmt ::= contact-keyword sep ( quoted-string | string ) stmtend
 
-description-stmt ::= description-keyword sep string stmtend | description-keyword sep quoted-string stmtend
+description-stmt ::= description-keyword sep ( quoted-string | string ) stmtend
 
-reference-stmt ::= reference-keyword sep string stmtend
+reference-stmt ::= reference-keyword sep ( quoted-string | string ) stmtend
 
-units-stmt ::= units-keyword sep string stmtend
+units-stmt ::= units-keyword sep ( quoted-string | string ) stmtend
 
 revision-stmt ::= revision-keyword sep revision-date optsep
   (SEMICOLON |
@@ -211,7 +215,7 @@ feature-stmt ::= feature-keyword sep identifier-arg-str optsep
 if-feature-stmt ::= if-feature-keyword sep if-feature-expr-str
   stmtend
 
-if-feature-expr-str ::= if-feature-expr | ( DOUBLE_QUOTE if-feature-expr DOUBLE_QUOTE ) // a string that matches the rule  < if-feature-expr
+if-feature-expr-str ::= if-feature-expr | ( DQUOTE if-feature-expr DQUOTE ) // a string that matches the rule  < if-feature-expr
 
 if-feature-expr ::= if-feature-term
   [sep or-keyword sep if-feature-expr]
@@ -259,7 +263,7 @@ type-body-stmts ::= numerical-restrictions |
   union-specification |
   binary-specification
 
-numerical-restrictions ::= [range-stmt]
+numerical-restrictions ::= range-stmt
 
 range-stmt ::= range-keyword sep range-arg-str optsep
   (SEMICOLON |
@@ -286,7 +290,7 @@ fraction-digits-arg ::= (ONE [ZERO | ONE | TWO | THREE | FOUR |
 
 string-restrictions ::= // these stmts can appear in any order
 <<anyOrder  [length-stmt]
-  pattern-stmt*
+  pattern-stmt+
 >>
 length-stmt ::= length-keyword sep length-arg-str optsep
   (SEMICOLON |
@@ -298,7 +302,7 @@ length-stmt ::= length-keyword sep length-arg-str optsep
   [reference-stmt]>>
   RIGHT_BRACE) stmtsep
 
-pattern-stmt ::= pattern-keyword sep string optsep
+pattern-stmt ::= pattern-keyword sep ( quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -315,11 +319,11 @@ modifier-arg-str ::= modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
 
 modifier-arg ::= invert-match-keyword
 
-default-stmt ::= default-keyword sep string stmtend
+default-stmt ::= default-keyword sep ( quoted-string | string ) stmtend
 
 enum-specification ::= enum-stmt+
 
-enum-stmt ::= enum-keyword sep string optsep
+enum-stmt ::= enum-keyword sep ( quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -345,14 +349,14 @@ require-instance-arg-str ::= require-instance-arg | DOUBLE_QUOTE require-instanc
 require-instance-arg ::= true-keyword | false-keyword
 
 instance-identifier-specification ::=
-  [require-instance-stmt]
+  require-instance-stmt
 
 identityref-specification ::=
   base-stmt+
 
 union-specification ::= type-stmt+
 
-binary-specification ::= [length-stmt]
+binary-specification ::= length-stmt
 
 bits-specification ::= bit-stmt+
 
@@ -396,7 +400,7 @@ mandatory-arg-str ::= mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
 
 mandatory-arg ::= true-keyword | false-keyword
 
-presence-stmt ::= presence-keyword sep string stmtend
+presence-stmt ::= presence-keyword sep ( quoted-string | string ) stmtend
 
 ordered-by-stmt ::= ordered-by-keyword sep
   ordered-by-arg-str stmtend
@@ -405,7 +409,7 @@ ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
 
 ordered-by-arg ::= user-keyword | system-keyword
 
-must-stmt ::= must-keyword sep string optsep
+must-stmt ::= must-keyword sep ( quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -415,9 +419,9 @@ must-stmt ::= must-keyword sep string optsep
   [reference-stmt]>>
   RIGHT_BRACE) stmtsep
 
-error-message-stmt ::= error-message-keyword sep string stmtend
+error-message-stmt ::= error-message-keyword sep ( quoted-string | string ) stmtend
 
-error-app-tag-stmt ::= error-app-tag-keyword sep string stmtend
+error-app-tag-stmt ::= error-app-tag-keyword sep ( quoted-string | string ) stmtend
 
 min-elements-stmt ::= min-elements-keyword sep
   min-value-arg-str stmtend
@@ -436,7 +440,7 @@ max-value-arg ::= unbounded-keyword |
 
 value-stmt ::= value-keyword sep integer-value-str stmtend
 
-integer-value-str ::= integer-value | ( DOUBLE_QUOTE integer-value DOUBLE_QUOTE ) // a string that matches the rule  < integer-value
+integer-value-str ::= integer-value | ( DQUOTE integer-value DQUOTE ) // a string that matches the rule  < integer-value
 
 grouping-stmt ::= grouping-keyword sep identifier-arg-str optsep
   (SEMICOLON |
@@ -668,11 +672,11 @@ augment-stmt ::= augment-keyword sep augment-arg-str optsep
   action-stmt | notification-stmt)+>>
   RIGHT_BRACE stmtsep
 
-augment-arg-str ::= augment-arg | DOUBLE_QUOTE augment-arg DOUBLE_QUOTE
+augment-arg-str ::= augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE)
 
 augment-arg ::= absolute-schema-nodeid
 
-when-stmt ::= when-keyword sep string optsep
+when-stmt ::= when-keyword sep ( quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -795,13 +799,13 @@ deviate-replace-stmt ::= deviate-keyword sep replace-keyword-str optsep
   [max-elements-stmt]>>
   RIGHT_BRACE) stmtsep
 
-not-supported-keyword-str ::= not-supported-keyword | ( DOUBLE_QUOTE not-supported-keyword DOUBLE_QUOTE ) // a string that matches the rule  < not-supported-keyword
+not-supported-keyword-str ::= not-supported-keyword | ( DQUOTE not-supported-keyword DQUOTE ) // a string that matches the rule  < not-supported-keyword
 
-add-keyword-str ::= add-keyword | ( DOUBLE_QUOTE add-keyword DOUBLE_QUOTE ) // a string that matches the rule  < add-keyword
+add-keyword-str ::= add-keyword | ( DQUOTE add-keyword DQUOTE ) // a string that matches the rule  < add-keyword
 
-delete-keyword-str ::= delete-keyword | ( DOUBLE_QUOTE delete-keyword DOUBLE_QUOTE ) // a string that matches the rule  < delete-keyword
+delete-keyword-str ::= delete-keyword | ( DQUOTE delete-keyword DQUOTE ) // a string that matches the rule  < delete-keyword
 
-replace-keyword-str ::= replace-keyword | ( DOUBLE_QUOTE replace-keyword DOUBLE_QUOTE ) // a string that matches the rule  < replace-keyword
+replace-keyword-str ::= replace-keyword | ( DQUOTE replace-keyword DQUOTE ) // a string that matches the rule  < replace-keyword
 // represents the usage of an extension
 unknown-statement ::= prefix COLON identifier [sep string] optsep
   (SEMICOLON |
@@ -937,10 +941,10 @@ leaf-list-predicate-expr ::= DOT WSP* EQUALS WSP* quoted-string
 
 pos ::= OPEN_BRACKET WSP* positive-integer-value WSP* CLOSED_BRACKET
 
-quoted-string ::= (DQUOTE string DQUOTE) | (SQUOTE string SQUOTE)
+quoted-string ::= (DQUOTE quoted-vchar (string-splitter quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)
 // leafref path
 
-path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE
+path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
 
 path-arg ::= absolute-path | relative-path
 
@@ -1089,7 +1093,7 @@ yang-string ::=<<checkString yang-char* "%xD800-DFFF"
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
 // return, and line feed but excluding the other C0 control
 // characters, the surrogate blocks, and the noncharacters
-yang-char ::= ( ALPHA | DIGIT | SPACE ) // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
+yang-char ::=VCHAR // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
 //  // exclude surrogate blocks %xD800-DFFF
 //  %xE000-FDCF | // exclude noncharacters %xFDD0-FDEF
 //  %xFDF0-FFFD | // exclude noncharacters %xFFFE-FFFF
@@ -1126,11 +1130,11 @@ sep ::= (WSP | line-break)+
 
 optsep ::= (WSP | line-break)*
 
-stmtsep ::= (WSP | line-break | unknown-statement)*
+stmtsep ::= (WSP | line-break | unknown-statement | comment)*
 
 line-break ::= CRLF | LF
 
-non-zero-digit ::=   POSITIVE_NUMBER  
+non-zero-digit ::= ( ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE )
 
 decimal-value ::= integer-value (DOT zero-integer-value)
 
@@ -1147,8 +1151,8 @@ CR ::= CARRIAGE_RETURN
 CRLF ::= CR LF
   // Internet standard newline
 
-DIGIT ::= ( ZERO | POSITIVE_NUMBER  )
- // 0-9
+DIGIT ::= ( ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE )
+  // 0-9
 
 DQUOTE ::= DOUBLE_QUOTE
   // double quote
@@ -1214,10 +1218,10 @@ ls32 ::= ( h16 COLON h16 ) | IPv4address
 IPv4address ::= dec-octet DOT dec-octet DOT dec-octet DOT dec-octet
 
 dec-octet ::= DIGIT // 0-9
- |   POSITIVE_NUMBER   DIGIT // 10-99
- | ONE DIGIT DIGIT // 100-199
- | TWO ( ZERO | ONE | TWO | THREE | FOUR ) DIGIT // 200-249
- | TWO FIVE ( ZERO | ONE | TWO | THREE | FOUR | FIVE ) // 250-255 deviation against original rfc 3986
+  | ( ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE ) DIGIT  // 10-99
+  | ONE DIGIT DIGIT  // 100-199
+  | TWO ( ZERO | ONE | TWO | THREE | FOUR ) DIGIT  // 200-249
+  | TWO FIVE ( ZERO | ONE | TWO | THREE | FOUR | FIVE )  // 250-255 deviation against original rfc 3986
 
 reg-name ::= ( unreserved | pct-encoded | sub-delims )*
 
@@ -1249,4 +1253,12 @@ unreserved ::= ALPHA | DIGIT | DASH | DOT | UNDERSCORE | TILDE
 reserved ::= gen-delims | sub-delims
 gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
-  | ASTERISK | PLUS_SIGN | COMMA | SEMICOLON | EQUALS
+  | ASTERISK | PLUS_SIGN | COMMA | EQUALS
+
+string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)
+
+quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)
+
+quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED | CARRIAGE_RETURN)*
+
+VCHAR ::= (APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | PARENT_FOLDER )

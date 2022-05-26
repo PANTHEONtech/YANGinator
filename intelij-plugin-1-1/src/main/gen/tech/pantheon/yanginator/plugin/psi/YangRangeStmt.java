@@ -19,28 +19,28 @@ import java.util.List;
 
 public interface YangRangeStmt extends YangYangStmt {
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangRangeArgStr getRangeArgStr();
+    @NotNull
+    YangRangeArgStr getRangeArgStr();
 
-  @NotNull
-  YangRangeKeyword getRangeKeyword();
+    @NotNull
+    YangRangeKeyword getRangeKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @Nullable
-  PsiElement getLeftBrace();
+    @Nullable
+    PsiElement getLeftBrace();
 
-  @Nullable
-  PsiElement getRightBrace();
+    @Nullable
+    PsiElement getRightBrace();
 
-  @Nullable
-  PsiElement getSemicolon();
+    @Nullable
+    PsiElement getSemicolon();
 
 }

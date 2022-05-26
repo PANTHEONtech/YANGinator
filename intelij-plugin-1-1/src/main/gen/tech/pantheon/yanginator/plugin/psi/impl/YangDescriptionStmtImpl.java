@@ -25,49 +25,49 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDescriptionStmtImpl extends YangYangStmtImpl implements YangDescriptionStmt {
 
-  public YangDescriptionStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDescriptionStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDescriptionStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDescriptionStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangDescriptionKeyword getDescriptionKeyword() {
-    return findNotNullChildByClass(YangDescriptionKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangDescriptionKeyword getDescriptionKeyword() {
+        return findNotNullChildByClass(YangDescriptionKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangQuotedString getQuotedString() {
-    return findChildByClass(YangQuotedString.class);
-  }
+    @Override
+    @Nullable
+    public YangQuotedString getQuotedString() {
+        return findChildByClass(YangQuotedString.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
-  @Override
-  @Nullable
-  public YangString getString() {
-    return findChildByClass(YangString.class);
-  }
+    @Override
+    @Nullable
+    public YangString getString() {
+        return findChildByClass(YangString.class);
+    }
 
 }

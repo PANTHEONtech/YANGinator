@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
 
 public class YangHtabImpl extends YangNamedElementImpl implements YangHtab {
 
-  public YangHtabImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangHtabImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitHtab(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitHtab(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getTab() {
-    return findNotNullChildByType(YANG_TAB);
-  }
+    @Override
+    @NotNull
+    public PsiElement getTab() {
+        return findNotNullChildByType(YANG_TAB);
+    }
 
 }

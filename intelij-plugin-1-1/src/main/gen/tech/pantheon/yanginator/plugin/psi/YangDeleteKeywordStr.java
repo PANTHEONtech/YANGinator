@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangDeleteKeywordStr extends YangNamedElement {
 
-  @NotNull
-  YangDeleteKeyword getDeleteKeyword();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    YangDeleteKeyword getDeleteKeyword();
 
 }

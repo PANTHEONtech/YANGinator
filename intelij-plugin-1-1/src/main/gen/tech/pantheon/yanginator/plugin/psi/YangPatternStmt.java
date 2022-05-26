@@ -19,28 +19,31 @@ import java.util.List;
 
 public interface YangPatternStmt extends YangYangStmt {
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangPatternKeyword getPatternKeyword();
+    @NotNull
+    YangPatternKeyword getPatternKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @Nullable
+    YangQuotedString getQuotedString();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangString getString();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @Nullable
-  PsiElement getLeftBrace();
+    @Nullable
+    YangString getString();
 
-  @Nullable
-  PsiElement getRightBrace();
+    @Nullable
+    PsiElement getLeftBrace();
 
-  @Nullable
-  PsiElement getSemicolon();
+    @Nullable
+    PsiElement getRightBrace();
+
+    @Nullable
+    PsiElement getSemicolon();
 
 }

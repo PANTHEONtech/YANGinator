@@ -16,22 +16,22 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangRelativePart extends YangNamedElement {
 
-  @Nullable
-  YangAuthority getAuthority();
+    @Nullable
+    YangAuthority getAuthority();
 
-  @Nullable
-  YangPathAbempty getPathAbempty();
+    @Nullable
+    YangPathAbempty getPathAbempty();
 
-  @Nullable
-  YangPathAbsolute getPathAbsolute();
+    @Nullable
+    YangPathAbsolute getPathAbsolute();
 
-  @Nullable
-  YangPathEmpty getPathEmpty();
+    @Nullable
+    YangPathEmpty getPathEmpty();
 
-  @Nullable
-  YangPathNoscheme getPathNoscheme();
+    @Nullable
+    YangPathNoscheme getPathNoscheme();
 
-  @Nullable
-  PsiElement getDoubleForwardSlash();
+    @Nullable
+    PsiElement getDoubleForwardSlash();
 
 }

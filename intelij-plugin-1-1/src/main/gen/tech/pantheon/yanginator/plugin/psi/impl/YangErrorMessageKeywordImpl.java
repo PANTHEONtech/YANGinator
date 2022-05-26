@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangErrorMessageKeywordImpl extends YangNamedElementImpl implements YangErrorMessageKeyword {
 
-  public YangErrorMessageKeywordImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangErrorMessageKeywordImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitErrorMessageKeyword(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitErrorMessageKeyword(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

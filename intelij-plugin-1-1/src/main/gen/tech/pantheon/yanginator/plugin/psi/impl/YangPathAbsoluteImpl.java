@@ -25,30 +25,30 @@ import java.util.List;
 
 public class YangPathAbsoluteImpl extends YangNamedElementImpl implements YangPathAbsolute {
 
-  public YangPathAbsoluteImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathAbsoluteImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathAbsolute(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathAbsolute(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSegment> getSegmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSegment> getSegmentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
+    }
 
-  @Override
-  @Nullable
-  public YangSegmentNz getSegmentNz() {
-    return findChildByClass(YangSegmentNz.class);
-  }
+    @Override
+    @Nullable
+    public YangSegmentNz getSegmentNz() {
+        return findChildByClass(YangSegmentNz.class);
+    }
 
 }

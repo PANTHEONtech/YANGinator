@@ -800,7 +800,7 @@ public class GrammarKitRFCUtils {
 
     private static String commentRulesDoubleQuoted(String line, String rule) {
         String lineBeginning = line.substring(0, line.indexOf("=") + 1);
-        return lineBeginning + " " + rule + " | ( DOUBLE_QUOTE " + rule + " DOUBLE_QUOTE )" + line.substring(lineBeginning.length());
+        return lineBeginning + " " + rule + " | ( DQUOTE " + rule + " DQUOTE )" + line.substring(lineBeginning.length());
     }
 
     /**
@@ -994,11 +994,12 @@ public class GrammarKitRFCUtils {
             if (line.isBlank()) comment = false;
             if (comment) line = "// " + line;
             if (line.contains("yang-char ::=")) {
-                line = line.substring(0, line.indexOf("=") + 1) + " ( ALPHA | DIGIT | SPACE ) //" + line.substring(line.indexOf("=") + 1);
+                line = line.substring(0, line.indexOf("=") + 1) + "VCHAR //" + line.substring(line.indexOf("=") + 1);
                 comment = true;
             }
             result.add(line);
         }
+
         return result;
     }
 

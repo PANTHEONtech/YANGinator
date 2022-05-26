@@ -28,54 +28,54 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_
 
 public class YangRelativePartImpl extends YangNamedElementImpl implements YangRelativePart {
 
-  public YangRelativePartImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRelativePartImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRelativePart(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRelativePart(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangAuthority getAuthority() {
-    return findChildByClass(YangAuthority.class);
-  }
+    @Override
+    @Nullable
+    public YangAuthority getAuthority() {
+        return findChildByClass(YangAuthority.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathAbempty getPathAbempty() {
-    return findChildByClass(YangPathAbempty.class);
-  }
+    @Override
+    @Nullable
+    public YangPathAbempty getPathAbempty() {
+        return findChildByClass(YangPathAbempty.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathAbsolute getPathAbsolute() {
-    return findChildByClass(YangPathAbsolute.class);
-  }
+    @Override
+    @Nullable
+    public YangPathAbsolute getPathAbsolute() {
+        return findChildByClass(YangPathAbsolute.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathEmpty getPathEmpty() {
-    return findChildByClass(YangPathEmpty.class);
-  }
+    @Override
+    @Nullable
+    public YangPathEmpty getPathEmpty() {
+        return findChildByClass(YangPathEmpty.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPathNoscheme getPathNoscheme() {
-    return findChildByClass(YangPathNoscheme.class);
-  }
+    @Override
+    @Nullable
+    public YangPathNoscheme getPathNoscheme() {
+        return findChildByClass(YangPathNoscheme.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getDoubleForwardSlash() {
-    return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
-  }
+    @Override
+    @Nullable
+    public PsiElement getDoubleForwardSlash() {
+        return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
+    }
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangScheme extends YangNamedElement {
 
-  @NotNull
-  List<YangDigit> getDigitList();
+    @NotNull
+    List<YangDigit> getDigitList();
 
 }

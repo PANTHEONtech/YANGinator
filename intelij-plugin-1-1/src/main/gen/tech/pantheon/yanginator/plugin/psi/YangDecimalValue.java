@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangDecimalValue extends YangNamedElement {
 
-  @NotNull
-  YangIntegerValue getIntegerValue();
+    @NotNull
+    YangIntegerValue getIntegerValue();
 
-  @NotNull
-  YangZeroIntegerValue getZeroIntegerValue();
+    @NotNull
+    YangZeroIntegerValue getZeroIntegerValue();
 
-  @NotNull
-  PsiElement getDot();
+    @NotNull
+    PsiElement getDot();
 
 }

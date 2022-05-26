@@ -15,13 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangStatusArg extends YangNamedElement {
 
-  @Nullable
-  YangCurrentKeyword getCurrentKeyword();
+    @Nullable
+    YangCurrentKeyword getCurrentKeyword();
 
-  @Nullable
-  YangDeprecatedKeyword getDeprecatedKeyword();
+    @Nullable
+    YangDeprecatedKeyword getDeprecatedKeyword();
 
-  @Nullable
-  YangObsoleteKeyword getObsoleteKeyword();
+    @Nullable
+    YangObsoleteKeyword getObsoleteKeyword();
 
 }

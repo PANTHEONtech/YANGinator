@@ -134,6 +134,8 @@ parserClass="tech.pantheon.yanginator.plugin.highlighter.parser.YangParser"
       H_RIGHT_BRACE = "}"
       H_INVALID_ESCAPE = 'regexp:\\([^rRtnsb])'
       H_VALID_ESCAPE = 'regexp:\\[rRtnsb]'
+      H_DIGIT='regexp:[0-9]'
+      H_NON_WORD='regexp:\W'
   ]
   generateTokenAccessors=true
 }
@@ -236,5 +238,7 @@ h-identifier-literal ::=
     H_LEFT_BRACE              |
     H_RIGHT_BRACE             |
     H_INVALID_ESCAPE          |
-    H_VALID_ESCAPE
+    H_VALID_ESCAPE            |
+    H_DIGIT                   |
+    H_NON_WORD
 

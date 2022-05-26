@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangConfigArg extends YangNamedElement {
 
-  @Nullable
-  YangFalseKeyword getFalseKeyword();
+    @Nullable
+    YangFalseKeyword getFalseKeyword();
 
-  @Nullable
-  YangTrueKeyword getTrueKeyword();
+    @Nullable
+    YangTrueKeyword getTrueKeyword();
 
 }

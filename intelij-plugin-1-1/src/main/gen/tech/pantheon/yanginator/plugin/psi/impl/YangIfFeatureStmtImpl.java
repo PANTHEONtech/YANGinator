@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangIfFeatureStmtImpl extends YangYangStmtImpl implements YangIfFeatureStmt {
 
-  public YangIfFeatureStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIfFeatureStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIfFeatureStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIfFeatureStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangIfFeatureExprStr getIfFeatureExprStr() {
-    return findNotNullChildByClass(YangIfFeatureExprStr.class);
-  }
+    @Override
+    @NotNull
+    public YangIfFeatureExprStr getIfFeatureExprStr() {
+        return findNotNullChildByClass(YangIfFeatureExprStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangIfFeatureKeyword getIfFeatureKeyword() {
-    return findNotNullChildByClass(YangIfFeatureKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangIfFeatureKeyword getIfFeatureKeyword() {
+        return findNotNullChildByClass(YangIfFeatureKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

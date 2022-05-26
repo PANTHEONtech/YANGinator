@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangQueryImpl extends YangNamedElementImpl implements YangQuery {
 
-  public YangQueryImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangQueryImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitQuery(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitQuery(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangPchar> getPcharList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPchar.class);
-  }
+    @Override
+    @NotNull
+    public List<YangPchar> getPcharList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPchar.class);
+    }
 
 }

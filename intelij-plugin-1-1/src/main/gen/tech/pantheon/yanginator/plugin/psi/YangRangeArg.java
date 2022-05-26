@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangRangeArg extends YangNamedElement {
 
-  @NotNull
-  List<YangOptsep> getOptsepList();
+    @NotNull
+    List<YangOptsep> getOptsepList();
 
-  @NotNull
-  List<YangRangePart> getRangePartList();
+    @NotNull
+    List<YangRangePart> getRangePartList();
 
 }

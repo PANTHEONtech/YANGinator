@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangSegmentNz extends YangNamedElement {
 
-  @NotNull
-  List<YangPchar> getPcharList();
+    @NotNull
+    List<YangPchar> getPcharList();
 
 }

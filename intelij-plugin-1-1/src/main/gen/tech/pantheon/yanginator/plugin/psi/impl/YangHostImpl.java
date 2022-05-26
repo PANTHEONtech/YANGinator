@@ -23,36 +23,36 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangHostImpl extends YangNamedElementImpl implements YangHost {
 
-  public YangHostImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangHostImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitHost(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitHost(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangIPLiteral getIPLiteral() {
-    return findChildByClass(YangIPLiteral.class);
-  }
+    @Override
+    @Nullable
+    public YangIPLiteral getIPLiteral() {
+        return findChildByClass(YangIPLiteral.class);
+    }
 
-  @Override
-  @Nullable
-  public YangIPv4Address getIPv4Address() {
-    return findChildByClass(YangIPv4Address.class);
-  }
+    @Override
+    @Nullable
+    public YangIPv4Address getIPv4Address() {
+        return findChildByClass(YangIPv4Address.class);
+    }
 
-  @Override
-  @Nullable
-  public YangRegName getRegName() {
-    return findChildByClass(YangRegName.class);
-  }
+    @Override
+    @Nullable
+    public YangRegName getRegName() {
+        return findChildByClass(YangRegName.class);
+    }
 
 }

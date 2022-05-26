@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangModifierStmtImpl extends YangYangStmtImpl implements YangModifierStmt {
 
-  public YangModifierStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangModifierStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitModifierStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitModifierStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangModifierArgStr getModifierArgStr() {
-    return findNotNullChildByClass(YangModifierArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangModifierArgStr getModifierArgStr() {
+        return findNotNullChildByClass(YangModifierArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangModifierKeyword getModifierKeyword() {
-    return findNotNullChildByClass(YangModifierKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangModifierKeyword getModifierKeyword() {
+        return findNotNullChildByClass(YangModifierKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

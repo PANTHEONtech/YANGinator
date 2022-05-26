@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangIfFeatureStmt extends YangYangStmt {
 
-  @NotNull
-  YangIfFeatureExprStr getIfFeatureExprStr();
+    @NotNull
+    YangIfFeatureExprStr getIfFeatureExprStr();
 
-  @NotNull
-  YangIfFeatureKeyword getIfFeatureKeyword();
+    @NotNull
+    YangIfFeatureKeyword getIfFeatureKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

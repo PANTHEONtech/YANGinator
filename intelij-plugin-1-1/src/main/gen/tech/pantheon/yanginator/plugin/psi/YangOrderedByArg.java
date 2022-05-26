@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangOrderedByArg extends YangNamedElement {
 
-  @Nullable
-  YangSystemKeyword getSystemKeyword();
+    @Nullable
+    YangSystemKeyword getSystemKeyword();
 
-  @Nullable
-  YangUserKeyword getUserKeyword();
+    @Nullable
+    YangUserKeyword getUserKeyword();
 
 }

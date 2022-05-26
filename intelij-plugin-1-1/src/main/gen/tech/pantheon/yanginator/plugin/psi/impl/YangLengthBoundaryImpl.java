@@ -23,36 +23,36 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangLengthBoundaryImpl extends YangNamedElementImpl implements YangLengthBoundary {
 
-  public YangLengthBoundaryImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangLengthBoundaryImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitLengthBoundary(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitLengthBoundary(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangMaxKeyword getMaxKeyword() {
-    return findChildByClass(YangMaxKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangMaxKeyword getMaxKeyword() {
+        return findChildByClass(YangMaxKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangMinKeyword getMinKeyword() {
-    return findChildByClass(YangMinKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangMinKeyword getMinKeyword() {
+        return findChildByClass(YangMinKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangNonNegativeIntegerValue getNonNegativeIntegerValue() {
-    return findChildByClass(YangNonNegativeIntegerValue.class);
-  }
+    @Override
+    @Nullable
+    public YangNonNegativeIntegerValue getNonNegativeIntegerValue() {
+        return findChildByClass(YangNonNegativeIntegerValue.class);
+    }
 
 }

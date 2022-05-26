@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangBitsSpecification extends YangNamedElement {
 
-  @NotNull
-  List<YangBitStmt> getBitStmtList();
+    @NotNull
+    List<YangBitStmt> getBitStmtList();
 
 }

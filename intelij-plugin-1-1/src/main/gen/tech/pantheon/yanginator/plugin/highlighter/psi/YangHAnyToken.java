@@ -17,28 +17,28 @@ import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 
 public interface YangHAnyToken extends YangNamedElement {
 
-  @Nullable
-  YangHIdentifierLiteral getHIdentifierLiteral();
+    @Nullable
+    YangHIdentifierLiteral getHIdentifierLiteral();
 
-  @Nullable
-  PsiElement getHBlockComment();
+    @Nullable
+    PsiElement getHBlockComment();
 
-  @Nullable
-  PsiElement getHDateArg();
+    @Nullable
+    PsiElement getHDateArg();
 
-  @Nullable
-  PsiElement getHExtensionIdentifier();
+    @Nullable
+    PsiElement getHExtensionIdentifier();
 
-  @Nullable
-  PsiElement getHIdentifier();
+    @Nullable
+    PsiElement getHIdentifier();
 
-  @Nullable
-  PsiElement getHSemicolon();
+    @Nullable
+    PsiElement getHSemicolon();
 
-  @Nullable
-  PsiElement getHSingleLineComment();
+    @Nullable
+    PsiElement getHSingleLineComment();
 
-  @Nullable
-  PsiElement getHString();
+    @Nullable
+    PsiElement getHString();
 
 }

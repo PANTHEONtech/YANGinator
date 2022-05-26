@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangPositionKeywordImpl extends YangNamedElementImpl implements YangPositionKeyword {
 
-  public YangPositionKeywordImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPositionKeywordImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPositionKeyword(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPositionKeyword(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

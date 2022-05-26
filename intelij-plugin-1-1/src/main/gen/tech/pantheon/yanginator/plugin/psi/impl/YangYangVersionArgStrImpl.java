@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
 
 public class YangYangVersionArgStrImpl extends YangNamedElementImpl implements YangYangVersionArgStr {
 
-  public YangYangVersionArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangYangVersionArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitYangVersionArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitYangVersionArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangYangVersionArg getYangVersionArg() {
-    return findNotNullChildByClass(YangYangVersionArg.class);
-  }
+    @Override
+    @NotNull
+    public YangYangVersionArg getYangVersionArg() {
+        return findNotNullChildByClass(YangYangVersionArg.class);
+    }
 
 }

@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangUsesAugmentArgStrImpl extends YangNamedElementImpl implements YangUsesAugmentArgStr {
 
-  public YangUsesAugmentArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangUsesAugmentArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitUsesAugmentArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitUsesAugmentArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangUsesAugmentArg getUsesAugmentArg() {
-    return findNotNullChildByClass(YangUsesAugmentArg.class);
-  }
+    @Override
+    @NotNull
+    public YangUsesAugmentArg getUsesAugmentArg() {
+        return findNotNullChildByClass(YangUsesAugmentArg.class);
+    }
 
 }

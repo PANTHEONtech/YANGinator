@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangIfFeatureExprStr extends YangNamedElement {
 
-  @NotNull
-  YangIfFeatureExpr getIfFeatureExpr();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    YangIfFeatureExpr getIfFeatureExpr();
 
 }

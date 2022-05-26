@@ -17,16 +17,16 @@ import java.util.List;
 
 public interface YangInstanceIdentifier extends YangNamedElement {
 
-  @NotNull
-  List<YangKeyPredicate> getKeyPredicateList();
+    @NotNull
+    List<YangKeyPredicate> getKeyPredicateList();
 
-  @NotNull
-  List<YangLeafListPredicate> getLeafListPredicateList();
+    @NotNull
+    List<YangLeafListPredicate> getLeafListPredicateList();
 
-  @NotNull
-  List<YangNodeIdentifier> getNodeIdentifierList();
+    @NotNull
+    List<YangNodeIdentifier> getNodeIdentifierList();
 
-  @NotNull
-  List<YangPos> getPosList();
+    @NotNull
+    List<YangPos> getPosList();
 
 }

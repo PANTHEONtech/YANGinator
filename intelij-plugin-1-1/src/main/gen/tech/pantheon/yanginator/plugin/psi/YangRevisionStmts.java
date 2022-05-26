@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangRevisionStmts extends YangNamedElement {
 
-  @NotNull
-  List<YangRevisionStmt> getRevisionStmtList();
+    @NotNull
+    List<YangRevisionStmt> getRevisionStmtList();
 
 }

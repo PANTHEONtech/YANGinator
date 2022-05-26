@@ -15,19 +15,19 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangPath extends YangNamedElement {
 
-  @Nullable
-  YangPathAbempty getPathAbempty();
+    @Nullable
+    YangPathAbempty getPathAbempty();
 
-  @Nullable
-  YangPathAbsolute getPathAbsolute();
+    @Nullable
+    YangPathAbsolute getPathAbsolute();
 
-  @Nullable
-  YangPathEmpty getPathEmpty();
+    @Nullable
+    YangPathEmpty getPathEmpty();
 
-  @Nullable
-  YangPathNoscheme getPathNoscheme();
+    @Nullable
+    YangPathNoscheme getPathNoscheme();
 
-  @Nullable
-  YangPathRootless getPathRootless();
+    @Nullable
+    YangPathRootless getPathRootless();
 
 }

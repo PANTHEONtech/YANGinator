@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangPathRootless extends YangNamedElement {
 
-  @NotNull
-  List<YangSegment> getSegmentList();
+    @NotNull
+    List<YangSegment> getSegmentList();
 
-  @NotNull
-  YangSegmentNz getSegmentNz();
+    @NotNull
+    YangSegmentNz getSegmentNz();
 
 }

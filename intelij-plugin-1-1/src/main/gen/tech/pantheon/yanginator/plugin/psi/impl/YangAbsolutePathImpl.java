@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangAbsolutePathImpl extends YangNamedElementImpl implements YangAbsolutePath {
 
-  public YangAbsolutePathImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangAbsolutePathImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitAbsolutePath(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitAbsolutePath(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangNodeIdentifier> getNodeIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
-  }
+    @Override
+    @NotNull
+    public List<YangNodeIdentifier> getNodeIdentifierList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangPathPredicate> getPathPredicateList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathPredicate.class);
-  }
+    @Override
+    @NotNull
+    public List<YangPathPredicate> getPathPredicateList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathPredicate.class);
+    }
 
 }

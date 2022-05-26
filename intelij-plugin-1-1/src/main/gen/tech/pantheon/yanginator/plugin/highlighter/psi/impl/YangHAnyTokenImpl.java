@@ -31,66 +31,66 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_S
 
 public class YangHAnyTokenImpl extends YangNamedElementImpl implements YangHAnyToken {
 
-  public YangHAnyTokenImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangHAnyTokenImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitHAnyToken(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitHAnyToken(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangHIdentifierLiteral getHIdentifierLiteral() {
-    return findChildByClass(YangHIdentifierLiteral.class);
-  }
+    @Override
+    @Nullable
+    public YangHIdentifierLiteral getHIdentifierLiteral() {
+        return findChildByClass(YangHIdentifierLiteral.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHBlockComment() {
-    return findChildByType(YANG_H_BLOCK_COMMENT);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHBlockComment() {
+        return findChildByType(YANG_H_BLOCK_COMMENT);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHDateArg() {
-    return findChildByType(YANG_H_DATE_ARG);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHDateArg() {
+        return findChildByType(YANG_H_DATE_ARG);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHExtensionIdentifier() {
-    return findChildByType(YANG_H_EXTENSION_IDENTIFIER);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHExtensionIdentifier() {
+        return findChildByType(YANG_H_EXTENSION_IDENTIFIER);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHIdentifier() {
-    return findChildByType(YANG_H_IDENTIFIER);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHIdentifier() {
+        return findChildByType(YANG_H_IDENTIFIER);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHSemicolon() {
-    return findChildByType(YANG_H_SEMICOLON);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHSemicolon() {
+        return findChildByType(YANG_H_SEMICOLON);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHSingleLineComment() {
-    return findChildByType(YANG_H_SINGLE_LINE_COMMENT);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHSingleLineComment() {
+        return findChildByType(YANG_H_SINGLE_LINE_COMMENT);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHString() {
-    return findChildByType(YANG_H_STRING);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHString() {
+        return findChildByType(YANG_H_STRING);
+    }
 
 }

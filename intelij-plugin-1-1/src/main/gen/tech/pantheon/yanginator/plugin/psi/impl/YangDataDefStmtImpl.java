@@ -19,19 +19,19 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDataDefStmtImpl extends YangYangStmtImpl implements YangDataDefStmt {
 
-  public YangDataDefStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDataDefStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDataDefStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDataDefStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

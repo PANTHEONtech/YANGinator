@@ -28,36 +28,36 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_DOT;
 
 public class YangRangePartImpl extends YangNamedElementImpl implements YangRangePart {
 
-  public YangRangePartImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRangePartImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRangePart(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRangePart(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangOptsep> getOptsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangOptsep> getOptsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangRangeBoundary> getRangeBoundaryList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRangeBoundary.class);
-  }
+    @Override
+    @NotNull
+    public List<YangRangeBoundary> getRangeBoundaryList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRangeBoundary.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getDoubleDot() {
-    return findChildByType(YANG_DOUBLE_DOT);
-  }
+    @Override
+    @Nullable
+    public PsiElement getDoubleDot() {
+        return findChildByType(YANG_DOUBLE_DOT);
+    }
 
 }

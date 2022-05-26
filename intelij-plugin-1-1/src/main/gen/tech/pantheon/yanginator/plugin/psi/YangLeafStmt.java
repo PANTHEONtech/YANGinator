@@ -18,25 +18,25 @@ import java.util.List;
 
 public interface YangLeafStmt extends YangYangStmt {
 
-  @NotNull
-  YangIdentifierArgStr getIdentifierArgStr();
+    @NotNull
+    YangIdentifierArgStr getIdentifierArgStr();
 
-  @NotNull
-  YangLeafKeyword getLeafKeyword();
+    @NotNull
+    YangLeafKeyword getLeafKeyword();
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @NotNull
-  PsiElement getLeftBrace();
+    @NotNull
+    PsiElement getLeftBrace();
 
-  @NotNull
-  PsiElement getRightBrace();
+    @NotNull
+    PsiElement getRightBrace();
 
 }

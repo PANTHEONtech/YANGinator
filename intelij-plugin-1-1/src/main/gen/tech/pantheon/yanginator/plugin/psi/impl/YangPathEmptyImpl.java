@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGHT_STR
 
 public class YangPathEmptyImpl extends YangNamedElementImpl implements YangPathEmpty {
 
-  public YangPathEmptyImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathEmptyImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathEmpty(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathEmpty(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getZeroLenghtString() {
-    return findNotNullChildByType(YANG_ZERO_LENGHT_STRING);
-  }
+    @Override
+    @NotNull
+    public PsiElement getZeroLenghtString() {
+        return findNotNullChildByType(YANG_ZERO_LENGHT_STRING);
+    }
 
 }

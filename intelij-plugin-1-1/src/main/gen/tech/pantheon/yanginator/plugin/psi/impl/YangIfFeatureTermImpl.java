@@ -26,42 +26,42 @@ import java.util.List;
 
 public class YangIfFeatureTermImpl extends YangNamedElementImpl implements YangIfFeatureTerm {
 
-  public YangIfFeatureTermImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIfFeatureTermImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIfFeatureTerm(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIfFeatureTerm(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangAndKeyword getAndKeyword() {
-    return findChildByClass(YangAndKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangAndKeyword getAndKeyword() {
+        return findChildByClass(YangAndKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangIfFeatureFactor getIfFeatureFactor() {
-    return findNotNullChildByClass(YangIfFeatureFactor.class);
-  }
+    @Override
+    @NotNull
+    public YangIfFeatureFactor getIfFeatureFactor() {
+        return findNotNullChildByClass(YangIfFeatureFactor.class);
+    }
 
-  @Override
-  @Nullable
-  public YangIfFeatureTerm getIfFeatureTerm() {
-    return findChildByClass(YangIfFeatureTerm.class);
-  }
+    @Override
+    @Nullable
+    public YangIfFeatureTerm getIfFeatureTerm() {
+        return findChildByClass(YangIfFeatureTerm.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSep> getSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSep> getSepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+    }
 
 }

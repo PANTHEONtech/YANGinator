@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangConfigStmt extends YangYangStmt {
 
-  @NotNull
-  YangConfigArgStr getConfigArgStr();
+    @NotNull
+    YangConfigArgStr getConfigArgStr();
 
-  @NotNull
-  YangConfigKeyword getConfigKeyword();
+    @NotNull
+    YangConfigKeyword getConfigKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

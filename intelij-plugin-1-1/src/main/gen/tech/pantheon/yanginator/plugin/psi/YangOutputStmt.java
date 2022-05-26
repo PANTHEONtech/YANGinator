@@ -18,19 +18,19 @@ import java.util.List;
 
 public interface YangOutputStmt extends YangYangStmt {
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangOutputKeyword getOutputKeyword();
+    @NotNull
+    YangOutputKeyword getOutputKeyword();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @NotNull
-  PsiElement getLeftBrace();
+    @NotNull
+    PsiElement getLeftBrace();
 
-  @NotNull
-  PsiElement getRightBrace();
+    @NotNull
+    PsiElement getRightBrace();
 
 }

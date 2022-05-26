@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangPathNoscheme extends YangNamedElement {
 
-  @NotNull
-  List<YangSegment> getSegmentList();
+    @NotNull
+    List<YangSegment> getSegmentList();
 
-  @NotNull
-  YangSegmentNzNc getSegmentNzNc();
+    @NotNull
+    YangSegmentNzNc getSegmentNzNc();
 
 }

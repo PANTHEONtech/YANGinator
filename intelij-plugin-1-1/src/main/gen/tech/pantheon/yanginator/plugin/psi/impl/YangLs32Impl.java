@@ -28,36 +28,36 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 
 public class YangLs32Impl extends YangNamedElementImpl implements YangLs32 {
 
-  public YangLs32Impl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangLs32Impl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitLs32(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitLs32(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangIPv4Address getIPv4Address() {
-    return findChildByClass(YangIPv4Address.class);
-  }
+    @Override
+    @Nullable
+    public YangIPv4Address getIPv4Address() {
+        return findChildByClass(YangIPv4Address.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangH16> getH16List() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangH16.class);
-  }
+    @Override
+    @NotNull
+    public List<YangH16> getH16List() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangH16.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getColon() {
-    return findChildByType(YANG_COLON);
-  }
+    @Override
+    @Nullable
+    public PsiElement getColon() {
+        return findChildByType(YANG_COLON);
+    }
 
 }

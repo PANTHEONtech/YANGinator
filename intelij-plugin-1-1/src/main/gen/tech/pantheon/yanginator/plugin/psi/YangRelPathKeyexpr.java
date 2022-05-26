@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangRelPathKeyexpr extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  List<YangNodeIdentifier> getNodeIdentifierList();
+    @NotNull
+    List<YangNodeIdentifier> getNodeIdentifierList();
 
 }

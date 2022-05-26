@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN
 
 public class YangCrImpl extends YangNamedElementImpl implements YangCr {
 
-  public YangCrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangCrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitCr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitCr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getCarriageReturn() {
-    return findNotNullChildByType(YANG_CARRIAGE_RETURN);
-  }
+    @Override
+    @NotNull
+    public PsiElement getCarriageReturn() {
+        return findNotNullChildByType(YANG_CARRIAGE_RETURN);
+    }
 
 }

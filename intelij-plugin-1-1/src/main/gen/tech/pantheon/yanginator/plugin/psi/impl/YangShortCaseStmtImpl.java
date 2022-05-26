@@ -19,19 +19,19 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public abstract class YangShortCaseStmtImpl extends YangYangStmtImpl implements YangShortCaseStmt {
 
-  public YangShortCaseStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangShortCaseStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitShortCaseStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitShortCaseStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

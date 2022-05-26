@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangUniqueArg extends YangNamedElement {
 
-  @NotNull
-  List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList();
+    @NotNull
+    List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList();
 
-  @NotNull
-  List<YangSep> getSepList();
+    @NotNull
+    List<YangSep> getSepList();
 
 }

@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT;
 
 public class YangTokensImpl extends YangNamedElementImpl implements YangTokens {
 
-  public YangTokensImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangTokensImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitTokens(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitTokens(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getBlockComment() {
-    return findNotNullChildByType(YANG_BLOCK_COMMENT);
-  }
+    @Override
+    @NotNull
+    public PsiElement getBlockComment() {
+        return findNotNullChildByType(YANG_BLOCK_COMMENT);
+    }
 
 }

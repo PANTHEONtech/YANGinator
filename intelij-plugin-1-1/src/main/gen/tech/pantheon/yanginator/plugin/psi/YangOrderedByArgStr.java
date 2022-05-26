@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangOrderedByArgStr extends YangNamedElement {
 
-  @NotNull
-  YangOrderedByArg getOrderedByArg();
+    @NotNull
+    YangOrderedByArg getOrderedByArg();
 
 }

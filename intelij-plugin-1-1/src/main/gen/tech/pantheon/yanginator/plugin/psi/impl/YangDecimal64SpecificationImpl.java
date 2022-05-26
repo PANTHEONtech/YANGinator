@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDecimal64SpecificationImpl extends YangNamedElementImpl implements YangDecimal64Specification {
 
-  public YangDecimal64SpecificationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDecimal64SpecificationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDecimal64Specification(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDecimal64Specification(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

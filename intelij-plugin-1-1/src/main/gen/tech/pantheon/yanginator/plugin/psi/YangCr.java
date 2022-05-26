@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangCr extends YangNamedElement {
 
-  @NotNull
-  PsiElement getCarriageReturn();
+    @NotNull
+    PsiElement getCarriageReturn();
 
 }

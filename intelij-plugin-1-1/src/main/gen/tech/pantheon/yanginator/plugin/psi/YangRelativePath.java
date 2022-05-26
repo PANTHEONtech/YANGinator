@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangRelativePath extends YangNamedElement {
 
-  @NotNull
-  YangDescendantPath getDescendantPath();
+    @NotNull
+    YangDescendantPath getDescendantPath();
 
 }

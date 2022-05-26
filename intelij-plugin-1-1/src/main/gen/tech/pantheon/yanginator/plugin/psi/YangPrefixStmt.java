@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangPrefixStmt extends YangYangStmt {
 
-  @NotNull
-  YangPrefixArgStr getPrefixArgStr();
+    @NotNull
+    YangPrefixArgStr getPrefixArgStr();
 
-  @NotNull
-  YangPrefixKeyword getPrefixKeyword();
+    @NotNull
+    YangPrefixKeyword getPrefixKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

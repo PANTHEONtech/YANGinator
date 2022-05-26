@@ -16,22 +16,37 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangDecOctet extends YangNamedElement {
 
-  @Nullable
-  YangDigit getDigit();
+    @Nullable
+    YangDigit getDigit();
 
-  @Nullable
-  PsiElement getFour();
+    @Nullable
+    PsiElement getEight();
 
-  @Nullable
-  PsiElement getOne();
+    @Nullable
+    PsiElement getFive();
 
-  @Nullable
-  PsiElement getPositiveNumber();
+    @Nullable
+    PsiElement getFour();
 
-  @Nullable
-  PsiElement getThree();
+    @Nullable
+    PsiElement getNine();
 
-  @Nullable
-  PsiElement getZero();
+    @Nullable
+    PsiElement getOne();
+
+    @Nullable
+    PsiElement getSeven();
+
+    @Nullable
+    PsiElement getSix();
+
+    @Nullable
+    PsiElement getThree();
+
+    @Nullable
+    PsiElement getTwo();
+
+    @Nullable
+    PsiElement getZero();
 
 }

@@ -1,15 +1,19 @@
 module   "custom-test"   {
- yang-version   "1.1";
- namespace    "http://open.net/yang/vlan";
+ yang-version "1.1";
  prefix  "oc-vlan";
+ namespace    "http://open.net/yang/vlan";
 
- import   openconfig-vlan-types   { prefix   oc-vlan-types; }
- description   "this is a description";
+ import openconfig-vlan-types { prefix   oc-vlan-types; }
+
+ contact asddsa;
+ description "this asdasds";
 
 
- typedef   "match-set-options-type"   {
-    type   something;
-     default   ANY;
+ typedef   match-set-options-type   {
+    type   something {
+
+    }
+               default   ANY;
      description   "Options";
 
    }
@@ -44,27 +48,53 @@ module   "custom-test"   {
        type   interface-name-or-index;
      }
    }
-   grouping   vlan-config   {
+   grouping vlan-config {
        description   "VLAN configuration container";
 
        leaf   vlan-id   {
          type   oc-vlan-types:vlan-id;
          description   "Interface VLAN id";
        }
+
        list   new-list   {
 
-            container   new-container  {
+             container   new-container  {
                 description   "New container";
                 leaf   new-leaf   {
                    type   vlan-id;
                 }
             }
-        }
+       }
        leaf   name   {
          type   string;
          description   "Interface VLAN name";
        }
 
-     }
+          leaf statuss {
+            type enumeration {
+              enum  active;
+              enum SUSPENDED;
+            }
+            default ACTIVE;
+            description "Admin state of the VLAN";
+          }
+       }
+     container ethernet {
 
+typedef scheduler-group-ref-type {
+type leafref {
+path
+'/dot1q:bridges'+
+ '/dot1q:bridge'+
+ '/dot1q:component'+
+ '/ats:scheduler-groups'+
+                       '/ats:scheduler-group-instance-table'+
+                       '/ats:scheduler-group-instance-id';
+                                                       }
+description
+"This type is used to refer to an ATS scheduler group instance.";
 }
+}
+   }
+
+

@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangLineBreak extends YangNamedElement {
 
-  @Nullable
-  YangCrlf getCrlf();
+    @Nullable
+    YangCrlf getCrlf();
 
-  @Nullable
-  YangLf getLf();
+    @Nullable
+    YangLf getLf();
 
 }

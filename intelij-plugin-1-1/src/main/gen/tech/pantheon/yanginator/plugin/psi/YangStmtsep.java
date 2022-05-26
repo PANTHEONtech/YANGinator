@@ -17,13 +17,13 @@ import java.util.List;
 
 public interface YangStmtsep extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  List<YangLineBreak> getLineBreakList();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
-  @NotNull
-  List<YangUnknownStatement> getUnknownStatementList();
+    @NotNull
+    List<YangUnknownStatement> getUnknownStatementList();
 
 }

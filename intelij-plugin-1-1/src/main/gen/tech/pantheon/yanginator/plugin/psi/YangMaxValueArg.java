@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangMaxValueArg extends YangNamedElement {
 
-  @Nullable
-  YangPositiveIntegerValue getPositiveIntegerValue();
+    @Nullable
+    YangPositiveIntegerValue getPositiveIntegerValue();
 
-  @Nullable
-  YangUnboundedKeyword getUnboundedKeyword();
+    @Nullable
+    YangUnboundedKeyword getUnboundedKeyword();
 
 }

@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangKeyArg extends YangNamedElement {
 
-  @NotNull
-  List<YangNodeIdentifier> getNodeIdentifierList();
+    @NotNull
+    List<YangNodeIdentifier> getNodeIdentifierList();
 
-  @NotNull
-  List<YangSep> getSepList();
+    @NotNull
+    List<YangSep> getSepList();
 
 }

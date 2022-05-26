@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangRefineArg extends YangNamedElement {
 
-  @NotNull
-  YangDescendantSchemaNodeid getDescendantSchemaNodeid();
+    @NotNull
+    YangDescendantSchemaNodeid getDescendantSchemaNodeid();
 
 }

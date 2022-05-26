@@ -32,66 +32,66 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHES
 
 public class YangIfFeatureFactorImpl extends YangNamedElementImpl implements YangIfFeatureFactor {
 
-  public YangIfFeatureFactorImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIfFeatureFactorImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIfFeatureFactor(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIfFeatureFactor(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangIdentifierRefArg getIdentifierRefArg() {
-    return findChildByClass(YangIdentifierRefArg.class);
-  }
+    @Override
+    @Nullable
+    public YangIdentifierRefArg getIdentifierRefArg() {
+        return findChildByClass(YangIdentifierRefArg.class);
+    }
 
-  @Override
-  @Nullable
-  public YangIfFeatureExpr getIfFeatureExpr() {
-    return findChildByClass(YangIfFeatureExpr.class);
-  }
+    @Override
+    @Nullable
+    public YangIfFeatureExpr getIfFeatureExpr() {
+        return findChildByClass(YangIfFeatureExpr.class);
+    }
 
-  @Override
-  @Nullable
-  public YangIfFeatureFactor getIfFeatureFactor() {
-    return findChildByClass(YangIfFeatureFactor.class);
-  }
+    @Override
+    @Nullable
+    public YangIfFeatureFactor getIfFeatureFactor() {
+        return findChildByClass(YangIfFeatureFactor.class);
+    }
 
-  @Override
-  @Nullable
-  public YangNotKeyword getNotKeyword() {
-    return findChildByClass(YangNotKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangNotKeyword getNotKeyword() {
+        return findChildByClass(YangNotKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangOptsep> getOptsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangOptsep> getOptsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    }
 
-  @Override
-  @Nullable
-  public YangSep getSep() {
-    return findChildByClass(YangSep.class);
-  }
+    @Override
+    @Nullable
+    public YangSep getSep() {
+        return findChildByClass(YangSep.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getLeftParenthesis() {
-    return findChildByType(YANG_LEFT_PARENTHESIS);
-  }
+    @Override
+    @Nullable
+    public PsiElement getLeftParenthesis() {
+        return findChildByType(YANG_LEFT_PARENTHESIS);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getRightParenthesis() {
-    return findChildByType(YANG_RIGHT_PARENTHESIS);
-  }
+    @Override
+    @Nullable
+    public PsiElement getRightParenthesis() {
+        return findChildByType(YANG_RIGHT_PARENTHESIS);
+    }
 
 }

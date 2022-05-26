@@ -29,49 +29,49 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
 public class YangOutputStmtImpl extends YangYangStmtImpl implements YangOutputStmt {
 
-  public YangOutputStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangOutputStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitOutputStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitOutputStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangOptsep getOptsep() {
-    return findNotNullChildByClass(YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public YangOptsep getOptsep() {
+        return findNotNullChildByClass(YangOptsep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangOutputKeyword getOutputKeyword() {
-    return findNotNullChildByClass(YangOutputKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangOutputKeyword getOutputKeyword() {
+        return findNotNullChildByClass(YangOutputKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangStmtsep> getStmtsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangStmtsep> getStmtsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getLeftBrace() {
-    return findNotNullChildByType(YANG_LEFT_BRACE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getLeftBrace() {
+        return findNotNullChildByType(YANG_LEFT_BRACE);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getRightBrace() {
-    return findNotNullChildByType(YANG_RIGHT_BRACE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getRightBrace() {
+        return findNotNullChildByType(YANG_RIGHT_BRACE);
+    }
 
 }

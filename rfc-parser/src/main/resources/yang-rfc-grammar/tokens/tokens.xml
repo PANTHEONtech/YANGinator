@@ -351,5 +351,10 @@
         <value>ZERO_LENGHT_STRING</value>
         <lexerOnly>false</lexerOnly>
     </token>
+    <token>
+        <key>"’"</key>
+        <value>APOSTROPHE</value>
+        <lexerOnly>false</lexerOnly>
+    </token>
 
 </class>

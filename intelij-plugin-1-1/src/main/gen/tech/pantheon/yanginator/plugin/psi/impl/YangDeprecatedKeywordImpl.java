@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDeprecatedKeywordImpl extends YangNamedElementImpl implements YangDeprecatedKeyword {
 
-  public YangDeprecatedKeywordImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDeprecatedKeywordImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDeprecatedKeyword(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDeprecatedKeyword(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

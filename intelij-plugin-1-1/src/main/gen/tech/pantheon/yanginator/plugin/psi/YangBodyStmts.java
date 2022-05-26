@@ -17,16 +17,16 @@ import java.util.List;
 
 public interface YangBodyStmts extends YangNamedElement {
 
-  @NotNull
-  List<YangGroupingStmt> getGroupingStmtList();
+    @NotNull
+    List<YangGroupingStmt> getGroupingStmtList();
 
-  @NotNull
-  List<YangIdentityStmt> getIdentityStmtList();
+    @NotNull
+    List<YangIdentityStmt> getIdentityStmtList();
 
-  @NotNull
-  List<YangTypedefStmt> getTypedefStmtList();
+    @NotNull
+    List<YangTypedefStmt> getTypedefStmtList();
 
-  @NotNull
-  List<YangYangStmt> getYangStmtList();
+    @NotNull
+    List<YangYangStmt> getYangStmtList();
 
 }

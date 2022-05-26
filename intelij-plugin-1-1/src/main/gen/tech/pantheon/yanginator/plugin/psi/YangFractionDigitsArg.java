@@ -16,31 +16,31 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangFractionDigitsArg extends YangNamedElement {
 
-  @Nullable
-  PsiElement getEight();
+    @Nullable
+    PsiElement getEight();
 
-  @Nullable
-  PsiElement getFive();
+    @Nullable
+    PsiElement getFive();
 
-  @Nullable
-  PsiElement getFour();
+    @Nullable
+    PsiElement getFour();
 
-  @Nullable
-  PsiElement getNine();
+    @Nullable
+    PsiElement getNine();
 
-  @Nullable
-  PsiElement getSeven();
+    @Nullable
+    PsiElement getSeven();
 
-  @Nullable
-  PsiElement getSix();
+    @Nullable
+    PsiElement getSix();
 
-  @Nullable
-  PsiElement getThree();
+    @Nullable
+    PsiElement getThree();
 
-  @Nullable
-  PsiElement getTwo();
+    @Nullable
+    PsiElement getTwo();
 
-  @Nullable
-  PsiElement getZero();
+    @Nullable
+    PsiElement getZero();
 
 }

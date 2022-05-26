@@ -28,42 +28,42 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
 
 public class YangKeyPredicateExprImpl extends YangNamedElementImpl implements YangKeyPredicateExpr {
 
-  public YangKeyPredicateExprImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangKeyPredicateExprImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitKeyPredicateExpr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitKeyPredicateExpr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public YangNodeIdentifier getNodeIdentifier() {
-    return findNotNullChildByClass(YangNodeIdentifier.class);
-  }
+    @Override
+    @NotNull
+    public YangNodeIdentifier getNodeIdentifier() {
+        return findNotNullChildByClass(YangNodeIdentifier.class);
+    }
 
-  @Override
-  @NotNull
-  public YangQuotedString getQuotedString() {
-    return findNotNullChildByClass(YangQuotedString.class);
-  }
+    @Override
+    @NotNull
+    public YangQuotedString getQuotedString() {
+        return findNotNullChildByClass(YangQuotedString.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getEquals() {
-    return findNotNullChildByType(YANG_EQUALS);
-  }
+    @Override
+    @NotNull
+    public PsiElement getEquals() {
+        return findNotNullChildByType(YANG_EQUALS);
+    }
 
 }

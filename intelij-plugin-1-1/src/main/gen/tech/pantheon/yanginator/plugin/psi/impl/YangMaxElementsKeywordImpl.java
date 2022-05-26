@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangMaxElementsKeywordImpl extends YangNamedElementImpl implements YangMaxElementsKeyword {
 
-  public YangMaxElementsKeywordImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangMaxElementsKeywordImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitMaxElementsKeyword(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitMaxElementsKeyword(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

@@ -17,44 +17,51 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
+import tech.pantheon.yanginator.plugin.psi.YangQuotedVchar;
 import tech.pantheon.yanginator.plugin.psi.YangSquote;
-import tech.pantheon.yanginator.plugin.psi.YangString;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
 
 public class YangQuotedStringImpl extends YangNamedElementImpl implements YangQuotedString {
 
-  public YangQuotedStringImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangQuotedStringImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitQuotedString(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitQuotedString(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangDquote> getDquoteList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSquote> getSquoteList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSquote> getSquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
+    }
 
-  @Override
-  @NotNull
-  public YangString getString() {
-    return findNotNullChildByClass(YangString.class);
-  }
+    @Override
+    @NotNull
+    public List<YangQuotedVchar> getQuotedVcharList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangQuotedVchar.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
+    }
 
 }

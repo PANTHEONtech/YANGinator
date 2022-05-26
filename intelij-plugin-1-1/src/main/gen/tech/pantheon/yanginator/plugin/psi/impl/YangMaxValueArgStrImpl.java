@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangMaxValueArgStrImpl extends YangNamedElementImpl implements YangMaxValueArgStr {
 
-  public YangMaxValueArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangMaxValueArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitMaxValueArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitMaxValueArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangMaxValueArg getMaxValueArg() {
-    return findNotNullChildByClass(YangMaxValueArg.class);
-  }
+    @Override
+    @NotNull
+    public YangMaxValueArg getMaxValueArg() {
+        return findNotNullChildByClass(YangMaxValueArg.class);
+    }
 
 }

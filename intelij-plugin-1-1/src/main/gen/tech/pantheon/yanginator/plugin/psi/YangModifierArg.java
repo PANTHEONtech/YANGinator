@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangModifierArg extends YangNamedElement {
 
-  @NotNull
-  YangInvertMatchKeyword getInvertMatchKeyword();
+    @NotNull
+    YangInvertMatchKeyword getInvertMatchKeyword();
 
 }

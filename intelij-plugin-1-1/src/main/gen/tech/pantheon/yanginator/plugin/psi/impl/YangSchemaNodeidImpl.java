@@ -22,30 +22,30 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangSchemaNodeidImpl extends YangNamedElementImpl implements YangSchemaNodeid {
 
-  public YangSchemaNodeidImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSchemaNodeidImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSchemaNodeid(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSchemaNodeid(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangAbsoluteSchemaNodeid getAbsoluteSchemaNodeid() {
-    return findChildByClass(YangAbsoluteSchemaNodeid.class);
-  }
+    @Override
+    @Nullable
+    public YangAbsoluteSchemaNodeid getAbsoluteSchemaNodeid() {
+        return findChildByClass(YangAbsoluteSchemaNodeid.class);
+    }
 
-  @Override
-  @Nullable
-  public YangDescendantSchemaNodeid getDescendantSchemaNodeid() {
-    return findChildByClass(YangDescendantSchemaNodeid.class);
-  }
+    @Override
+    @Nullable
+    public YangDescendantSchemaNodeid getDescendantSchemaNodeid() {
+        return findChildByClass(YangDescendantSchemaNodeid.class);
+    }
 
 }

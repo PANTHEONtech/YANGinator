@@ -22,30 +22,30 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangURIReferenceImpl extends YangNamedElementImpl implements YangURIReference {
 
-  public YangURIReferenceImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangURIReferenceImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitURIReference(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitURIReference(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangUri getUri() {
-    return findChildByClass(YangUri.class);
-  }
+    @Override
+    @Nullable
+    public YangUri getUri() {
+        return findChildByClass(YangUri.class);
+    }
 
-  @Override
-  @Nullable
-  public YangRelativeRef getRelativeRef() {
-    return findChildByClass(YangRelativeRef.class);
-  }
+    @Override
+    @Nullable
+    public YangRelativeRef getRelativeRef() {
+        return findChildByClass(YangRelativeRef.class);
+    }
 
 }

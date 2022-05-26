@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangMaxElementsStmt extends YangYangStmt {
 
-  @NotNull
-  YangMaxElementsKeyword getMaxElementsKeyword();
+    @NotNull
+    YangMaxElementsKeyword getMaxElementsKeyword();
 
-  @NotNull
-  YangMaxValueArgStr getMaxValueArgStr();
+    @NotNull
+    YangMaxValueArgStr getMaxValueArgStr();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

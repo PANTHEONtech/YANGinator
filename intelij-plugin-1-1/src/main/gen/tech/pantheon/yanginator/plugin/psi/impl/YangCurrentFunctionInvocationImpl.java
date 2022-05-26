@@ -28,42 +28,42 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHES
 
 public class YangCurrentFunctionInvocationImpl extends YangNamedElementImpl implements YangCurrentFunctionInvocation {
 
-  public YangCurrentFunctionInvocationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangCurrentFunctionInvocationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitCurrentFunctionInvocation(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitCurrentFunctionInvocation(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public YangCurrentKeyword getCurrentKeyword() {
-    return findNotNullChildByClass(YangCurrentKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangCurrentKeyword getCurrentKeyword() {
+        return findNotNullChildByClass(YangCurrentKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getLeftParenthesis() {
-    return findNotNullChildByType(YANG_LEFT_PARENTHESIS);
-  }
+    @Override
+    @NotNull
+    public PsiElement getLeftParenthesis() {
+        return findNotNullChildByType(YANG_LEFT_PARENTHESIS);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getRightParenthesis() {
-    return findNotNullChildByType(YANG_RIGHT_PARENTHESIS);
-  }
+    @Override
+    @NotNull
+    public PsiElement getRightParenthesis() {
+        return findNotNullChildByType(YANG_RIGHT_PARENTHESIS);
+    }
 
 }

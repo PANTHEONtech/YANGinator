@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangUnionSpecification extends YangNamedElement {
 
-  @NotNull
-  List<YangTypeStmt> getTypeStmtList();
+    @NotNull
+    List<YangTypeStmt> getTypeStmtList();
 
 }

@@ -36,90 +36,90 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
 
 public class YangUnknownStatementImpl extends YangNamedElementImpl implements YangUnknownStatement {
 
-  public YangUnknownStatementImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangUnknownStatementImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitUnknownStatement(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitUnknownStatement(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangIdentifier getIdentifier() {
-    return findNotNullChildByClass(YangIdentifier.class);
-  }
+    @Override
+    @NotNull
+    public YangIdentifier getIdentifier() {
+        return findNotNullChildByClass(YangIdentifier.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangOptsep> getOptsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangOptsep> getOptsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangPrefix getPrefix() {
-    return findNotNullChildByClass(YangPrefix.class);
-  }
+    @Override
+    @NotNull
+    public YangPrefix getPrefix() {
+        return findNotNullChildByClass(YangPrefix.class);
+    }
 
-  @Override
-  @Nullable
-  public YangSep getSep() {
-    return findChildByClass(YangSep.class);
-  }
+    @Override
+    @Nullable
+    public YangSep getSep() {
+        return findChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtsep getStmtsep() {
-    return findNotNullChildByClass(YangStmtsep.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtsep getStmtsep() {
+        return findNotNullChildByClass(YangStmtsep.class);
+    }
 
-  @Override
-  @Nullable
-  public YangString getString() {
-    return findChildByClass(YangString.class);
-  }
+    @Override
+    @Nullable
+    public YangString getString() {
+        return findChildByClass(YangString.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangUnknownStatement> getUnknownStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
-  }
+    @Override
+    @NotNull
+    public List<YangUnknownStatement> getUnknownStatementList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangYangStmt> getYangStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangYangStmt> getYangStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getColon() {
-    return findNotNullChildByType(YANG_COLON);
-  }
+    @Override
+    @NotNull
+    public PsiElement getColon() {
+        return findNotNullChildByType(YANG_COLON);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getLeftBrace() {
-    return findChildByType(YANG_LEFT_BRACE);
-  }
+    @Override
+    @Nullable
+    public PsiElement getLeftBrace() {
+        return findChildByType(YANG_LEFT_BRACE);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getRightBrace() {
-    return findChildByType(YANG_RIGHT_BRACE);
-  }
+    @Override
+    @Nullable
+    public PsiElement getRightBrace() {
+        return findChildByType(YANG_RIGHT_BRACE);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getSemicolon() {
-    return findChildByType(YANG_SEMICOLON);
-  }
+    @Override
+    @Nullable
+    public PsiElement getSemicolon() {
+        return findChildByType(YANG_SEMICOLON);
+    }
 
 }

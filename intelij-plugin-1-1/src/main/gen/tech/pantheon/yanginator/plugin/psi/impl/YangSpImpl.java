@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
 
 public class YangSpImpl extends YangNamedElementImpl implements YangSp {
 
-  public YangSpImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSpImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSp(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSp(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getSpace() {
-    return findNotNullChildByType(YANG_SPACE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getSpace() {
+        return findNotNullChildByType(YANG_SPACE);
+    }
 
 }
