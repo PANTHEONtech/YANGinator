@@ -33,16 +33,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GrammarKitRFCService {
-
     private final Logger logger;
-
     public final String FILE_NOT_FOUND_MESSAGE = "File not found";
-
-
     public GrammarKitRFCService() {
         this.logger = Logger.getLogger(GrammarKitRFCService.class.getName());
     }
-
     /**
      * Transforms abnf input file to bnf output file. Provided input file
      * (Augmented Backus–Naur form) is stored in <code>oldGrammar</code> - list
@@ -63,7 +58,6 @@ public class GrammarKitRFCService {
         this.writeIntoOutputFile(outputFilev3, newGrammar);
 
     }
-
     /**
      * Transforms the generated lexer file into valid form
      * with added tokens used in bnf for parsing
@@ -79,7 +73,6 @@ public class GrammarKitRFCService {
         oldLexer = GrammarKitRFCUtils.addTokensIntoLexer(oldLexer, tokens);
         this.writeIntoOutputFile(outputFile, oldLexer);
     }
-
     /**
      * Returns a list of strings with content of <code>inputFile</code>
      *
@@ -97,7 +90,6 @@ public class GrammarKitRFCService {
         }
         return lines;
     }
-
     /**
      * Transforms a list of strings <code>oldGrammar</code> from Augmented
      * Backus–Naur form to Backus–Naur form. New list of strings formatted
@@ -123,7 +115,6 @@ public class GrammarKitRFCService {
         result = GrammarKitRFCUtils.replaceHexadecimal(result);
         return GrammarKitRFCUtils.rewriteStringRules(result);
     }
-
     /**
      * Writes the content of given list o strings
      * (transformed bnf grammar) into <code>outputFile</code>
@@ -138,7 +129,6 @@ public class GrammarKitRFCService {
             this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
         }
     }
-
     public File getFile(final String fileName) {
         try {
             return new File(this.getClass().getClassLoader().getResource(fileName).toURI());
@@ -147,7 +137,6 @@ public class GrammarKitRFCService {
         }
         return null;
     }
-
     /**
      * Replace tokens in the bnf to increase the parsing speed
      *
@@ -156,13 +145,10 @@ public class GrammarKitRFCService {
      */
     public List<String> parseInputFilev2(List<String> oldGrammar) {
         List<String> newGrammar = oldGrammar;
-        //newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"", "\"9\" | \"10\"", "POSITIVE_NUMBER");
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\"", "\"f\" | \"g\"", "HEXDIGIT");
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"v\"", "\"v\" |", "VERSION");
         return GrammarKitRFCUtils.replaceTokens(newGrammar, this.loadTokensFromXML(this.getFile("yang-rfc-grammar/tokens/tokens.xml")));
-
     }
-
     /**
      * Method adds custom rules and enhancements to bnf grammar
      *
@@ -184,10 +170,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
         newGrammar = GrammarKitRFCUncomplaintUtils.additionalAdjustments(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
-
-
     }
-
     /**
      * Method loads tokens from .xml file into list of FlexerTokens. Values in xml must follow next pattern:
      * <class>
@@ -207,7 +190,6 @@ public class GrammarKitRFCService {
      */
     public List<FlexerToken> loadTokensFromXML(final File filename) {
         List<FlexerToken> lines = new ArrayList<>();
-
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -224,7 +206,6 @@ public class GrammarKitRFCService {
                     String merging = "";
                     int count = 0;
                     for (int j = 0; j < eElement.getElementsByTagName("key").getLength(); j++) {
-
                         String token = eElement.getElementsByTagName("key").item(j).getTextContent();
                         if ((token.contains("\\") && token.contains("\"")) || token.contains(" ")) {
                             token = token.substring(1, token.length() - 1);
@@ -262,14 +243,10 @@ public class GrammarKitRFCService {
         } catch (final IOException | SAXException | ParserConfigurationException e) {
             this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
         }
-
         return lines;
-
     }
-
     public List<Extension> loadExtensionsFromXML(final File filename) {
         List<Extension> result = new ArrayList<>();
-
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -297,8 +274,6 @@ public class GrammarKitRFCService {
         } catch (final IOException | SAXException | ParserConfigurationException e) {
             this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
         }
-
         return result;
     }
-
 }

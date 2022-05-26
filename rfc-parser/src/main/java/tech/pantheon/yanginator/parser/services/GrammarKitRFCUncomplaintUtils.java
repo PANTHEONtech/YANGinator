@@ -40,17 +40,14 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             for (String stmt : stmts) {
                 if (line.contains(stmt)) {
-                   // line = line.substring(0,line.indexOf("sep") + 3 ) + " (quoted-string | string) stmtend";
                     line = line.replace("string","( quoted-string | string )");
                 }
                 if (line.contains("quoted-string ::=")){
                     line = line.replace(" string", " quoted-vchar");
                 }
             }
-
             result.add(line);
         }
-
         return result;
     }
     /**
@@ -82,9 +79,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 result.add(line);
                 found = false;
             }
-
         }
-
         return result;
     }
     /**
@@ -116,7 +111,6 @@ public class GrammarKitRFCUncomplaintUtils {
                     restriction = false;
                 }
             }
-
             result.add(line);
         }
         return result;
@@ -161,7 +155,6 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
         lines.add("VCHAR ::= (APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | PARENT_FOLDER )");
-
     }
     /**
      * Path can be quoted according to validators.
@@ -175,7 +168,6 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("path-arg-str ::=")){
                 line = line + " | quoted-path-arg";
             }
-
             result.add(line);
         }
         return result;
@@ -192,7 +184,6 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("augment-arg-str ::= augment-arg")){
                 line = "augment-arg-str ::= augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE)";
             }
-
             result.add(line);
         }
         return result;
@@ -207,7 +198,6 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
-
     /**
      * Allowing single and multi-line comments in yang 1.1 according to validator.
      *
@@ -226,5 +216,4 @@ public class GrammarKitRFCUncomplaintUtils {
         result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )");
         return result;
     }
-
 }
