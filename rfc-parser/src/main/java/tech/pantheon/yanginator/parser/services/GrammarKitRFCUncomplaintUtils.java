@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrammarKitRFCUncomplaintUtils {
-
     public static List<String> additionalAdjustments(List<String> lines){
         List<String> result = quoteStmts(lines);
         result = splitDeviationStmt(result);
@@ -24,9 +23,8 @@ public class GrammarKitRFCUncomplaintUtils {
         result = quotedAugmentArg(result);
         result = quotedPath(result);
         result = quotedStringSplitter(result);
-        return result;
+        return allowComments(result);
     }
-
     /**
      * Allows stmts to be quoted. It's not explicitly defined in rfc
      * but according to multiple validators it's allowed.
@@ -55,7 +53,6 @@ public class GrammarKitRFCUncomplaintUtils {
 
         return result;
     }
-
     /**
      * Part of the definition is extracted to the separate statement to allow
      * annotator to check for duplicities. Doesn't change the logic of the grammar.
@@ -90,7 +87,6 @@ public class GrammarKitRFCUncomplaintUtils {
 
         return result;
     }
-
     /**
      * Allowing parser to move on the next statement instead of matching 1st statement as empty
      * in type-body-stmts. Logic was intended this way.
@@ -125,7 +121,6 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
-
     /**
      * Removes semicolon from sub-delims allowing parser to match it as stmtend
      * after URI;
@@ -148,7 +143,6 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
-
     /**
      * Method adds additional rules to the grammar.
      * string-splitter allows that some stmts can be in multiple strings joined with +
@@ -169,7 +163,6 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("VCHAR ::= (APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | PARENT_FOLDER )");
 
     }
-
     /**
      * Path can be quoted according to validators.
      *
@@ -187,7 +180,6 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
-
     /**
      * augment-arg can be quoted according to validators.
      *
@@ -216,5 +208,23 @@ public class GrammarKitRFCUncomplaintUtils {
         return result;
     }
 
+    /**
+     * Allowing single and multi-line comments in yang 1.1 according to validator.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> allowComments(List<String> lines){
+        List<String> result  = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("stmtsep ::=")){
+                line = "stmtsep ::= (WSP | line-break | unknown-statement | comment)*";
+            }
+            result.add(line);
+        }
+        result.add("");
+        result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )");
+        return result;
+    }
 
 }

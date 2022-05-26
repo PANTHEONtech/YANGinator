@@ -152,6 +152,7 @@ EOL=\R
   {CIRCUMFLEX_ACCENT}       { return YANG_CIRCUMFLEX_ACCENT; }
   {GRAVE_ACCENT}            { return YANG_GRAVE_ACCENT; }
 
+
 }
 
 [^] { return BAD_CHARACTER; }

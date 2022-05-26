@@ -3110,6 +3110,30 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
+    // BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )
+    public static boolean comment(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "comment")) return false;
+        if (!nextTokenIs(b, "<comment>", YANG_BLOCK_COMMENT, YANG_DOUBLE_FORWARD_SLASH)) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_COMMENT, "<comment>");
+        r = consumeToken(b, YANG_BLOCK_COMMENT);
+        if (!r) r = comment_1(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // DOUBLE_FORWARD_SLASH string
+    private static boolean comment_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "comment_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_DOUBLE_FORWARD_SLASH);
+        r = r && string(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
     // true-keyword | false-keyword
     public static boolean config_arg(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "config_arg")) return false;
@@ -10284,7 +10308,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = WSP(b, l + 1);
         if (!r) r = line_break(b, l + 1);
         if (!r) r = unknown_statement(b, l + 1);
-        if (!r) r = consumeToken(b, YANG_COMMENT);
+        if (!r) r = comment(b, l + 1);
         return r;
     }
 
