@@ -17,10 +17,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangIntegerValue extends YangNamedElement {
 
-  @NotNull
-  YangNonNegativeIntegerValue getNonNegativeIntegerValue();
+    @NotNull
+    YangNonNegativeIntegerValue getNonNegativeIntegerValue();
 
-  @Nullable
-  PsiElement getDash();
+    @Nullable
+    PsiElement getDash();
 
 }

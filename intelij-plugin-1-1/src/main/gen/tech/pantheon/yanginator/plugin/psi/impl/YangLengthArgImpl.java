@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangLengthArgImpl extends YangNamedElementImpl implements YangLengthArg {
 
-  public YangLengthArgImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangLengthArgImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitLengthArg(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitLengthArg(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangLengthPart> getLengthPartList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLengthPart.class);
-  }
+    @Override
+    @NotNull
+    public List<YangLengthPart> getLengthPartList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLengthPart.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangOptsep> getOptsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangOptsep> getOptsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    }
 
 }

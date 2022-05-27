@@ -19,35 +19,91 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangDigit;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_POSITIVE_NUMBER;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EIGHT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FIVE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FOUR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NINE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ONE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
 
 public class YangDigitImpl extends YangNamedElementImpl implements YangDigit {
 
-  public YangDigitImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDigitImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDigit(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDigit(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getPositiveNumber() {
-    return findChildByType(YANG_POSITIVE_NUMBER);
-  }
+    @Override
+    @Nullable
+    public PsiElement getEight() {
+        return findChildByType(YANG_EIGHT);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getZero() {
-    return findChildByType(YANG_ZERO);
-  }
+    @Override
+    @Nullable
+    public PsiElement getFive() {
+        return findChildByType(YANG_FIVE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getFour() {
+        return findChildByType(YANG_FOUR);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getNine() {
+        return findChildByType(YANG_NINE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getOne() {
+        return findChildByType(YANG_ONE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getSeven() {
+        return findChildByType(YANG_SEVEN);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getSix() {
+        return findChildByType(YANG_SIX);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getThree() {
+        return findChildByType(YANG_THREE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getTwo() {
+        return findChildByType(YANG_TWO);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getZero() {
+        return findChildByType(YANG_ZERO);
+    }
 
 }

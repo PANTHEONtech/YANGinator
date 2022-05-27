@@ -24,30 +24,30 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DASH;
 
 public class YangIntegerValueImpl extends YangNamedElementImpl implements YangIntegerValue {
 
-  public YangIntegerValueImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIntegerValueImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIntegerValue(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIntegerValue(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangNonNegativeIntegerValue getNonNegativeIntegerValue() {
-    return findNotNullChildByClass(YangNonNegativeIntegerValue.class);
-  }
+    @Override
+    @NotNull
+    public YangNonNegativeIntegerValue getNonNegativeIntegerValue() {
+        return findNotNullChildByClass(YangNonNegativeIntegerValue.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getDash() {
-    return findChildByType(YANG_DASH);
-  }
+    @Override
+    @Nullable
+    public PsiElement getDash() {
+        return findChildByType(YANG_DASH);
+    }
 
 }

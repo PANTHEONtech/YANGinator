@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangWsp extends YangNamedElement {
 
-  @Nullable
-  YangHtab getHtab();
+    @Nullable
+    YangHtab getHtab();
 
-  @Nullable
-  YangSp getSp();
+    @Nullable
+    YangSp getSp();
 
 }

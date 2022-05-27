@@ -28,42 +28,42 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
 
 public class YangPathKeyExprImpl extends YangNamedElementImpl implements YangPathKeyExpr {
 
-  public YangPathKeyExprImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathKeyExprImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathKeyExpr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathKeyExpr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public YangCurrentFunctionInvocation getCurrentFunctionInvocation() {
-    return findNotNullChildByClass(YangCurrentFunctionInvocation.class);
-  }
+    @Override
+    @NotNull
+    public YangCurrentFunctionInvocation getCurrentFunctionInvocation() {
+        return findNotNullChildByClass(YangCurrentFunctionInvocation.class);
+    }
 
-  @Override
-  @NotNull
-  public YangRelPathKeyexpr getRelPathKeyexpr() {
-    return findNotNullChildByClass(YangRelPathKeyexpr.class);
-  }
+    @Override
+    @NotNull
+    public YangRelPathKeyexpr getRelPathKeyexpr() {
+        return findNotNullChildByClass(YangRelPathKeyexpr.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getForwardSlash() {
-    return findNotNullChildByType(YANG_FORWARD_SLASH);
-  }
+    @Override
+    @NotNull
+    public PsiElement getForwardSlash() {
+        return findNotNullChildByType(YANG_FORWARD_SLASH);
+    }
 
 }

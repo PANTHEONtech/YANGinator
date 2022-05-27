@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangRangeArgStr extends YangNamedElement {
 
-  @NotNull
-  YangRangeArg getRangeArg();
+    @NotNull
+    YangRangeArg getRangeArg();
 
 }

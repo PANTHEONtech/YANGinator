@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangRevisionStmtsImpl extends YangNamedElementImpl implements YangRevisionStmts {
 
-  public YangRevisionStmtsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRevisionStmtsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRevisionStmts(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRevisionStmts(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangRevisionStmt> getRevisionStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRevisionStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangRevisionStmt> getRevisionStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRevisionStmt.class);
+    }
 
 }

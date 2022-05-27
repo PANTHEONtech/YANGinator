@@ -25,36 +25,36 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 
 public class YangNodeIdentifierImpl extends YangNamedElementImpl implements YangNodeIdentifier {
 
-  public YangNodeIdentifierImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangNodeIdentifierImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitNodeIdentifier(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitNodeIdentifier(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangIdentifier getIdentifier() {
-    return findNotNullChildByClass(YangIdentifier.class);
-  }
+    @Override
+    @NotNull
+    public YangIdentifier getIdentifier() {
+        return findNotNullChildByClass(YangIdentifier.class);
+    }
 
-  @Override
-  @Nullable
-  public YangPrefix getPrefix() {
-    return findChildByClass(YangPrefix.class);
-  }
+    @Override
+    @Nullable
+    public YangPrefix getPrefix() {
+        return findChildByClass(YangPrefix.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getColon() {
-    return findChildByType(YANG_COLON);
-  }
+    @Override
+    @Nullable
+    public PsiElement getColon() {
+        return findChildByType(YANG_COLON);
+    }
 
 }

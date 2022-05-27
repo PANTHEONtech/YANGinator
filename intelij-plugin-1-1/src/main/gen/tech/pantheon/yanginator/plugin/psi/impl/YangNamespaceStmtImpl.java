@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangNamespaceStmtImpl extends YangYangStmtImpl implements YangNamespaceStmt {
 
-  public YangNamespaceStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangNamespaceStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitNamespaceStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitNamespaceStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangNamespaceKeyword getNamespaceKeyword() {
-    return findNotNullChildByClass(YangNamespaceKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangNamespaceKeyword getNamespaceKeyword() {
+        return findNotNullChildByClass(YangNamespaceKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
-  @Override
-  @NotNull
-  public YangUriStr getUriStr() {
-    return findNotNullChildByClass(YangUriStr.class);
-  }
+    @Override
+    @NotNull
+    public YangUriStr getUriStr() {
+        return findNotNullChildByClass(YangUriStr.class);
+    }
 
 }

@@ -27,48 +27,48 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
 
 public class YangRelativeRefImpl extends YangNamedElementImpl implements YangRelativeRef {
 
-  public YangRelativeRefImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRelativeRefImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRelativeRef(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRelativeRef(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangFragment getFragment() {
-    return findChildByClass(YangFragment.class);
-  }
+    @Override
+    @Nullable
+    public YangFragment getFragment() {
+        return findChildByClass(YangFragment.class);
+    }
 
-  @Override
-  @Nullable
-  public YangQuery getQuery() {
-    return findChildByClass(YangQuery.class);
-  }
+    @Override
+    @Nullable
+    public YangQuery getQuery() {
+        return findChildByClass(YangQuery.class);
+    }
 
-  @Override
-  @NotNull
-  public YangRelativePart getRelativePart() {
-    return findNotNullChildByClass(YangRelativePart.class);
-  }
+    @Override
+    @NotNull
+    public YangRelativePart getRelativePart() {
+        return findNotNullChildByClass(YangRelativePart.class);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHash() {
-    return findChildByType(YANG_HASH);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHash() {
+        return findChildByType(YANG_HASH);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getQuestionMark() {
-    return findChildByType(YANG_QUESTION_MARK);
-  }
+    @Override
+    @Nullable
+    public PsiElement getQuestionMark() {
+        return findChildByType(YANG_QUESTION_MARK);
+    }
 
 }

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangSp extends YangNamedElement {
 
-  @NotNull
-  PsiElement getSpace();
+    @NotNull
+    PsiElement getSpace();
 
 }

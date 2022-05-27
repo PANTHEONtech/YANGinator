@@ -18,9 +18,13 @@ import com.intellij.psi.tree.IElementType;
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHA;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AMPERSAND;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_APOSTROPHE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ASTERISK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BACK_SLASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CIRCUMFLEX_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CLOSED_BRACKET;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMMA;
@@ -37,9 +41,13 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXCLAMATION_MAR
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FIVE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FOUR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GRAVE_ACCENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GREATER_THAN_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LESS_THAN_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NINE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ONE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPEN_BRACKET;
@@ -55,6 +63,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TILDE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
@@ -91,7 +100,7 @@ public class _YangLexer implements FlexLexer {
      * at the beginning of a line
      * l is of the form l = 2*k, k a non negative integer
      */
-    private static final int ZZ_LEXSTATE[] = {
+    private static final int[] ZZ_LEXSTATE = {
             0, 0
     };
 
@@ -105,20 +114,20 @@ public class _YangLexer implements FlexLexer {
     }
 
     /* The ZZ_CMAP_Z table has 68 entries */
-    static final char ZZ_CMAP_Z[] = zzUnpackCMap(
+    static final char[] ZZ_CMAP_Z = zzUnpackCMap(
             "\1\0\103\200");
 
     /* The ZZ_CMAP_Y table has 256 entries */
-    static final char ZZ_CMAP_Y[] = zzUnpackCMap(
+    static final char[] ZZ_CMAP_Y = zzUnpackCMap(
             "\1\0\1\1\53\2\1\3\22\2\1\4\37\2\1\3\237\2");
 
     /* The ZZ_CMAP_A table has 640 entries */
-    static final char ZZ_CMAP_A[] = zzUnpackCMap(
-            "\11\0\5\47\22\0\1\47\1\35\1\3\1\36\1\37\1\40\1\41\1\4\1\13\1\14\1\2\1\42\1" +
-                    "\43\1\12\1\11\1\20\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\6\1" +
-                    "\5\1\0\1\15\1\0\1\44\1\45\32\34\1\16\1\0\1\17\1\0\1\1\1\0\32\34\1\7\1\21\1" +
-                    "\10\1\46\6\0\1\47\32\0\1\47\337\0\1\47\177\0\13\47\35\0\2\47\5\0\1\47\57\0" +
-                    "\1\47\40\0");
+    static final char[] ZZ_CMAP_A = zzUnpackCMap(
+            "\11\0\1\57\1\55\2\54\1\56\22\0\1\54\1\36\1\4\1\37\1\40\1\41\1\42\1\5\1\14" +
+                    "\1\15\1\2\1\43\1\44\1\13\1\12\1\21\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1\32" +
+                    "\1\33\1\34\1\7\1\6\1\45\1\16\1\46\1\47\1\50\32\35\1\17\1\3\1\20\1\51\1\1\1" +
+                    "\52\32\35\1\10\1\22\1\11\1\53\6\0\1\54\32\0\1\54\337\0\1\54\177\0\13\54\16" +
+                    "\0\1\60\16\0\2\54\5\0\1\54\57\0\1\54\40\0");
 
     /**
      * Translates DFA states to action switch labels.
@@ -131,10 +140,12 @@ public class _YangLexer implements FlexLexer {
                     "\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30" +
                     "\1\31\1\32\1\33\1\34\1\35\1\36\1\37\1\40" +
                     "\1\41\1\42\1\43\1\44\1\45\1\46\1\47\1\50" +
-                    "\1\51\1\52\1\53\1\0\1\54\1\55\1\0\1\56";
+                    "\1\51\1\52\1\53\1\54\1\55\1\56\1\57\1\60" +
+                    "\1\61\1\62\1\63\1\64\1\0\1\65\1\66\1\0" +
+                    "\1\67";
 
     private static int[] zzUnpackAction() {
-        int[] result = new int[48];
+        int[] result = new int[57];
         int offset = 0;
         offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
         return result;
@@ -159,15 +170,17 @@ public class _YangLexer implements FlexLexer {
     private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
 
     private static final String ZZ_ROWMAP_PACKED_0 =
-            "\0\0\0\50\0\50\0\50\0\50\0\50\0\50\0\120" +
-                    "\0\50\0\50\0\170\0\50\0\50\0\50\0\50\0\50" +
-                    "\0\50\0\240\0\50\0\50\0\50\0\50\0\50\0\50" +
-                    "\0\50\0\50\0\50\0\50\0\50\0\50\0\50\0\50" +
-                    "\0\50\0\50\0\50\0\50\0\50\0\50\0\50\0\50" +
-                    "\0\50\0\50\0\310\0\360\0\50\0\50\0\u0118\0\50";
+            "\0\0\0\61\0\61\0\61\0\61\0\61\0\61\0\61" +
+                    "\0\142\0\61\0\61\0\223\0\61\0\61\0\61\0\61" +
+                    "\0\61\0\61\0\304\0\61\0\61\0\61\0\61\0\61" +
+                    "\0\61\0\61\0\61\0\61\0\61\0\61\0\61\0\61" +
+                    "\0\61\0\61\0\61\0\61\0\61\0\61\0\61\0\61" +
+                    "\0\61\0\61\0\61\0\61\0\61\0\61\0\61\0\61" +
+                    "\0\61\0\61\0\61\0\365\0\u0126\0\61\0\61\0\u0157" +
+                    "\0\61";
 
     private static int[] zzUnpackRowMap() {
-        int[] result = new int[48];
+        int[] result = new int[57];
         int offset = 0;
         offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
         return result;
@@ -195,12 +208,13 @@ public class _YangLexer implements FlexLexer {
                     "\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31" +
                     "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\1\41" +
                     "\1\42\1\43\1\44\1\45\1\46\1\47\1\50\1\51" +
-                    "\56\0\1\52\52\0\1\53\40\0\1\54\15\0\1\55" +
-                    "\47\0\1\56\27\0\2\54\1\57\47\54\1\57\15\54" +
-                    "\1\60\27\54";
+                    "\1\52\1\53\1\54\1\55\1\56\1\57\1\60\1\61" +
+                    "\1\62\70\0\1\63\63\0\1\64\50\0\1\65\16\0" +
+                    "\1\66\60\0\1\67\37\0\2\65\1\70\60\65\1\70" +
+                    "\16\65\1\71\37\65";
 
     private static int[] zzUnpackTrans() {
-        int[] result = new int[320];
+        int[] result = new int[392];
         int offset = 0;
         offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
         return result;
@@ -238,11 +252,11 @@ public class _YangLexer implements FlexLexer {
     private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
     private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\1\1\6\11\1\1\2\11\1\1\6\11\1\1\30\11" +
+            "\1\1\7\11\1\1\2\11\1\1\6\11\1\1\40\11" +
                     "\1\1\1\0\2\11\1\0\1\11";
 
     private static int[] zzUnpackAttribute() {
-        int[] result = new int[48];
+        int[] result = new int[57];
         int offset = 0;
         offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
         return result;
@@ -263,7 +277,7 @@ public class _YangLexer implements FlexLexer {
     /**
      * the input device
      */
-    private java.io.Reader zzReader;
+    private final java.io.Reader zzReader;
 
     /**
      * the current state of the DFA
@@ -319,7 +333,7 @@ public class _YangLexer implements FlexLexer {
 
     /* user code: */
     public _YangLexer() {
-        this((java.io.Reader) null);
+        this(null);
     }
 
 
@@ -565,277 +579,331 @@ public class _YangLexer implements FlexLexer {
                         return YANG_ZERO_LENGHT_STRING;
                     }
                     // fall through
-                    case 47:
+                    case 56:
                         break;
                     case 2: {
                         return BAD_CHARACTER;
                     }
                     // fall through
-                    case 48:
+                    case 57:
                         break;
                     case 3: {
                         return YANG_UNDERSCORE;
                     }
                     // fall through
-                    case 49:
+                    case 58:
                         break;
                     case 4: {
                         return YANG_ASTERISK;
                     }
                     // fall through
-                    case 50:
-                        break;
-                    case 5: {
-                        return YANG_DOUBLE_QUOTE;
-                    }
-                    // fall through
-                    case 51:
-                        break;
-                    case 6: {
-                        return YANG_SINGLE_QUOTE;
-                    }
-                    // fall through
-                    case 52:
-                        break;
-                    case 7: {
-                        return YANG_SEMICOLON;
-                    }
-                    // fall through
-                    case 53:
-                        break;
-                    case 8: {
-                        return YANG_COLON;
-                    }
-                    // fall through
-                    case 54:
-                        break;
-                    case 9: {
-                        return YANG_LEFT_BRACE;
-                    }
-                    // fall through
-                    case 55:
-                        break;
-                    case 10: {
-                        return YANG_RIGHT_BRACE;
-                    }
-                    // fall through
-                    case 56:
-                        break;
-                    case 11: {
-                        return YANG_DOT;
-                    }
-                    // fall through
-                    case 57:
-                        break;
-                    case 12: {
-                        return YANG_DASH;
-                    }
-                    // fall through
-                    case 58:
-                        break;
-                    case 13: {
-                        return YANG_LEFT_PARENTHESIS;
-                    }
-                    // fall through
                     case 59:
                         break;
-                    case 14: {
-                        return YANG_RIGHT_PARENTHESIS;
+                    case 5: {
+                        return YANG_BACK_SLASH;
                     }
                     // fall through
                     case 60:
                         break;
-                    case 15: {
-                        return YANG_EQUALS;
+                    case 6: {
+                        return YANG_DOUBLE_QUOTE;
                     }
                     // fall through
                     case 61:
                         break;
-                    case 16: {
-                        return YANG_OPEN_BRACKET;
+                    case 7: {
+                        return YANG_SINGLE_QUOTE;
                     }
                     // fall through
                     case 62:
                         break;
-                    case 17: {
-                        return YANG_CLOSED_BRACKET;
+                    case 8: {
+                        return YANG_SEMICOLON;
                     }
                     // fall through
                     case 63:
                         break;
-                    case 18: {
-                        return YANG_FORWARD_SLASH;
+                    case 9: {
+                        return YANG_COLON;
                     }
                     // fall through
                     case 64:
                         break;
-                    case 19: {
-                        return YANG_PIPE;
+                    case 10: {
+                        return YANG_LEFT_BRACE;
                     }
                     // fall through
                     case 65:
                         break;
-                    case 20: {
-                        return YANG_ZERO;
+                    case 11: {
+                        return YANG_RIGHT_BRACE;
                     }
                     // fall through
                     case 66:
                         break;
-                    case 21: {
-                        return YANG_ONE;
+                    case 12: {
+                        return YANG_DOT;
                     }
                     // fall through
                     case 67:
                         break;
-                    case 22: {
-                        return YANG_TWO;
+                    case 13: {
+                        return YANG_DASH;
                     }
                     // fall through
                     case 68:
                         break;
-                    case 23: {
-                        return YANG_THREE;
+                    case 14: {
+                        return YANG_LEFT_PARENTHESIS;
                     }
                     // fall through
                     case 69:
                         break;
-                    case 24: {
-                        return YANG_FOUR;
+                    case 15: {
+                        return YANG_RIGHT_PARENTHESIS;
                     }
                     // fall through
                     case 70:
                         break;
-                    case 25: {
-                        return YANG_FIVE;
+                    case 16: {
+                        return YANG_EQUALS;
                     }
                     // fall through
                     case 71:
                         break;
-                    case 26: {
-                        return YANG_SIX;
+                    case 17: {
+                        return YANG_OPEN_BRACKET;
                     }
                     // fall through
                     case 72:
                         break;
-                    case 27: {
-                        return YANG_SEVEN;
+                    case 18: {
+                        return YANG_CLOSED_BRACKET;
                     }
                     // fall through
                     case 73:
                         break;
-                    case 28: {
-                        return YANG_EIGHT;
+                    case 19: {
+                        return YANG_FORWARD_SLASH;
                     }
                     // fall through
                     case 74:
                         break;
-                    case 29: {
-                        return YANG_NINE;
+                    case 20: {
+                        return YANG_PIPE;
                     }
                     // fall through
                     case 75:
                         break;
-                    case 30: {
-                        return YANG_ALPHA;
+                    case 21: {
+                        return YANG_ZERO;
                     }
                     // fall through
                     case 76:
                         break;
-                    case 31: {
-                        return YANG_EXCLAMATION_MARK;
+                    case 22: {
+                        return YANG_ONE;
                     }
                     // fall through
                     case 77:
                         break;
-                    case 32: {
-                        return YANG_HASH;
+                    case 23: {
+                        return YANG_TWO;
                     }
                     // fall through
                     case 78:
                         break;
-                    case 33: {
-                        return YANG_DOLLAR_SIGN;
+                    case 24: {
+                        return YANG_THREE;
                     }
                     // fall through
                     case 79:
                         break;
-                    case 34: {
-                        return YANG_PERCENT_SIGN;
+                    case 25: {
+                        return YANG_FOUR;
                     }
                     // fall through
                     case 80:
                         break;
-                    case 35: {
-                        return YANG_AMPERSAND;
+                    case 26: {
+                        return YANG_FIVE;
                     }
                     // fall through
                     case 81:
                         break;
-                    case 36: {
-                        return YANG_PLUS_SIGN;
+                    case 27: {
+                        return YANG_SIX;
                     }
                     // fall through
                     case 82:
                         break;
-                    case 37: {
-                        return YANG_COMMA;
+                    case 28: {
+                        return YANG_SEVEN;
                     }
                     // fall through
                     case 83:
                         break;
-                    case 38: {
-                        return YANG_QUESTION_MARK;
+                    case 29: {
+                        return YANG_EIGHT;
                     }
                     // fall through
                     case 84:
                         break;
-                    case 39: {
-                        return YANG_AT_SIGN;
+                    case 30: {
+                        return YANG_NINE;
                     }
                     // fall through
                     case 85:
                         break;
-                    case 40: {
-                        return YANG_TILDE;
+                    case 31: {
+                        return YANG_ALPHA;
                     }
                     // fall through
                     case 86:
                         break;
-                    case 41: {
-                        return YANG_SPACE;
+                    case 32: {
+                        return YANG_EXCLAMATION_MARK;
                     }
                     // fall through
                     case 87:
                         break;
-                    case 42: {
-                        return YANG_DOUBLE_COLON;
+                    case 33: {
+                        return YANG_HASH;
                     }
                     // fall through
                     case 88:
                         break;
-                    case 43: {
-                        return YANG_DOUBLE_DOT;
+                    case 34: {
+                        return YANG_DOLLAR_SIGN;
                     }
                     // fall through
                     case 89:
                         break;
-                    case 44: {
-                        return YANG_DOUBLE_FORWARD_SLASH;
+                    case 35: {
+                        return YANG_PERCENT_SIGN;
                     }
                     // fall through
                     case 90:
                         break;
-                    case 45: {
-                        return YANG_PARENT_FOLDER;
+                    case 36: {
+                        return YANG_AMPERSAND;
                     }
                     // fall through
                     case 91:
                         break;
-                    case 46: {
-                        return YANG_BLOCK_COMMENT;
+                    case 37: {
+                        return YANG_PLUS_SIGN;
                     }
                     // fall through
                     case 92:
+                        break;
+                    case 38: {
+                        return YANG_COMMA;
+                    }
+                    // fall through
+                    case 93:
+                        break;
+                    case 39: {
+                        return YANG_LESS_THAN_SIGN;
+                    }
+                    // fall through
+                    case 94:
+                        break;
+                    case 40: {
+                        return YANG_GREATER_THAN_SIGN;
+                    }
+                    // fall through
+                    case 95:
+                        break;
+                    case 41: {
+                        return YANG_QUESTION_MARK;
+                    }
+                    // fall through
+                    case 96:
+                        break;
+                    case 42: {
+                        return YANG_AT_SIGN;
+                    }
+                    // fall through
+                    case 97:
+                        break;
+                    case 43: {
+                        return YANG_CIRCUMFLEX_ACCENT;
+                    }
+                    // fall through
+                    case 98:
+                        break;
+                    case 44: {
+                        return YANG_GRAVE_ACCENT;
+                    }
+                    // fall through
+                    case 99:
+                        break;
+                    case 45: {
+                        return YANG_TILDE;
+                    }
+                    // fall through
+                    case 100:
+                        break;
+                    case 46: {
+                        return YANG_SPACE;
+                    }
+                    // fall through
+                    case 101:
+                        break;
+                    case 47: {
+                        return YANG_LINEFEED;
+                    }
+                    // fall through
+                    case 102:
+                        break;
+                    case 48: {
+                        return YANG_CARRIAGE_RETURN;
+                    }
+                    // fall through
+                    case 103:
+                        break;
+                    case 49: {
+                        return YANG_TAB;
+                    }
+                    // fall through
+                    case 104:
+                        break;
+                    case 50: {
+                        return YANG_APOSTROPHE;
+                    }
+                    // fall through
+                    case 105:
+                        break;
+                    case 51: {
+                        return YANG_DOUBLE_COLON;
+                    }
+                    // fall through
+                    case 106:
+                        break;
+                    case 52: {
+                        return YANG_DOUBLE_DOT;
+                    }
+                    // fall through
+                    case 107:
+                        break;
+                    case 53: {
+                        return YANG_DOUBLE_FORWARD_SLASH;
+                    }
+                    // fall through
+                    case 108:
+                        break;
+                    case 54: {
+                        return YANG_PARENT_FOLDER;
+                    }
+                    // fall through
+                    case 109:
+                        break;
+                    case 55: {
+                        return YANG_BLOCK_COMMENT;
+                    }
+                    // fall through
+                    case 110:
                         break;
                     default:
                         zzScanError(ZZ_NO_MATCH);

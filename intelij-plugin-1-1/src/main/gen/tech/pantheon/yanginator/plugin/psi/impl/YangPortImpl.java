@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangPortImpl extends YangNamedElementImpl implements YangPort {
 
-  public YangPortImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPortImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPort(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPort(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangDigit> getDigitList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDigit> getDigitList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
+    }
 
 }

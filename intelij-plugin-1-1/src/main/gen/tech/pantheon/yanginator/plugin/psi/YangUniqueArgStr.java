@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangUniqueArgStr extends YangNamedElement {
 
-  @NotNull
-  YangUniqueArg getUniqueArg();
+    @NotNull
+    YangUniqueArg getUniqueArg();
 
 }

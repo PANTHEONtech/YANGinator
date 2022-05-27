@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangFractionDigitsArgStrImpl extends YangNamedElementImpl implements YangFractionDigitsArgStr {
 
-  public YangFractionDigitsArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangFractionDigitsArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitFractionDigitsArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitFractionDigitsArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangFractionDigitsArg getFractionDigitsArg() {
-    return findNotNullChildByClass(YangFractionDigitsArg.class);
-  }
+    @Override
+    @NotNull
+    public YangFractionDigitsArg getFractionDigitsArg() {
+        return findNotNullChildByClass(YangFractionDigitsArg.class);
+    }
 
 }

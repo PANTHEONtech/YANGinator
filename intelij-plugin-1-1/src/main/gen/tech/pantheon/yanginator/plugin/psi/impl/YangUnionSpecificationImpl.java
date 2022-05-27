@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangUnionSpecificationImpl extends YangNamedElementImpl implements YangUnionSpecification {
 
-  public YangUnionSpecificationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangUnionSpecificationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitUnionSpecification(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitUnionSpecification(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangTypeStmt> getTypeStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypeStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangTypeStmt> getTypeStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangTypeStmt.class);
+    }
 
 }

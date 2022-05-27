@@ -19,13 +19,13 @@ import java.util.List;
 
 public interface YangIPv6Address extends YangNamedElement {
 
-  @NotNull
-  List<YangH16> getH16List();
+    @NotNull
+    List<YangH16> getH16List();
 
-  @Nullable
-  YangLs32 getLs32();
+    @Nullable
+    YangLs32 getLs32();
 
-  @Nullable
-  PsiElement getDoubleColon();
+    @Nullable
+    PsiElement getDoubleColon();
 
 }

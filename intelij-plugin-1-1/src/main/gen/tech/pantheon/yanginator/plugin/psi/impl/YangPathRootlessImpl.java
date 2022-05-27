@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangPathRootlessImpl extends YangNamedElementImpl implements YangPathRootless {
 
-  public YangPathRootlessImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathRootlessImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathRootless(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathRootless(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSegment> getSegmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSegment> getSegmentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSegmentNz getSegmentNz() {
-    return findNotNullChildByClass(YangSegmentNz.class);
-  }
+    @Override
+    @NotNull
+    public YangSegmentNz getSegmentNz() {
+        return findNotNullChildByClass(YangSegmentNz.class);
+    }
 
 }

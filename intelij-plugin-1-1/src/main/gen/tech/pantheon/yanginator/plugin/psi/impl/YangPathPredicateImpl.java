@@ -28,42 +28,42 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPEN_BRACKET;
 
 public class YangPathPredicateImpl extends YangNamedElementImpl implements YangPathPredicate {
 
-  public YangPathPredicateImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathPredicateImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathPredicate(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathPredicate(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public YangPathEqualityExpr getPathEqualityExpr() {
-    return findNotNullChildByClass(YangPathEqualityExpr.class);
-  }
+    @Override
+    @NotNull
+    public YangPathEqualityExpr getPathEqualityExpr() {
+        return findNotNullChildByClass(YangPathEqualityExpr.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getClosedBracket() {
-    return findNotNullChildByType(YANG_CLOSED_BRACKET);
-  }
+    @Override
+    @NotNull
+    public PsiElement getClosedBracket() {
+        return findNotNullChildByType(YANG_CLOSED_BRACKET);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getOpenBracket() {
-    return findNotNullChildByType(YANG_OPEN_BRACKET);
-  }
+    @Override
+    @NotNull
+    public PsiElement getOpenBracket() {
+        return findNotNullChildByType(YANG_OPEN_BRACKET);
+    }
 
 }

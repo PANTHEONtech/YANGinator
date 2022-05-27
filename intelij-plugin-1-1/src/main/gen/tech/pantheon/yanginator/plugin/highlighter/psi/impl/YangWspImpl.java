@@ -20,18 +20,18 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl;
 
 public class YangWspImpl extends YangNamedElementImpl implements YangWsp {
 
-  public YangWspImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangWspImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitWsp(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitWsp(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

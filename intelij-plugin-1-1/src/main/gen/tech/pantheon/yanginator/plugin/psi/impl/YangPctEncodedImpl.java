@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PERCENT_SIGN;
 
 public class YangPctEncodedImpl extends YangNamedElementImpl implements YangPctEncoded {
 
-  public YangPctEncodedImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPctEncodedImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPctEncoded(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPctEncoded(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getPercentSign() {
-    return findNotNullChildByType(YANG_PERCENT_SIGN);
-  }
+    @Override
+    @NotNull
+    public PsiElement getPercentSign() {
+        return findNotNullChildByType(YANG_PERCENT_SIGN);
+    }
 
 }

@@ -11,11 +11,11 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public interface YangNumericalRestrictions extends YangNamedElement {
 
-  @Nullable
-  YangRangeStmt getRangeStmt();
+    @NotNull
+    YangRangeStmt getRangeStmt();
 
 }

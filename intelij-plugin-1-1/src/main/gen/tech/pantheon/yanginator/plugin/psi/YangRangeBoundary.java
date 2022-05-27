@@ -15,16 +15,16 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangRangeBoundary extends YangNamedElement {
 
-  @Nullable
-  YangDecimalValue getDecimalValue();
+    @Nullable
+    YangDecimalValue getDecimalValue();
 
-  @Nullable
-  YangIntegerValue getIntegerValue();
+    @Nullable
+    YangIntegerValue getIntegerValue();
 
-  @Nullable
-  YangMaxKeyword getMaxKeyword();
+    @Nullable
+    YangMaxKeyword getMaxKeyword();
 
-  @Nullable
-  YangMinKeyword getMinKeyword();
+    @Nullable
+    YangMinKeyword getMinKeyword();
 
 }

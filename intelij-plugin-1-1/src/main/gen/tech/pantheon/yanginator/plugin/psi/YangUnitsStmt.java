@@ -12,19 +12,23 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangUnitsStmt extends YangYangStmt {
 
-  @NotNull
-  YangSep getSep();
+    @Nullable
+    YangQuotedString getQuotedString();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangString getString();
+    @NotNull
+    YangStmtend getStmtend();
 
-  @NotNull
-  YangUnitsKeyword getUnitsKeyword();
+    @Nullable
+    YangString getString();
+
+    @NotNull
+    YangUnitsKeyword getUnitsKeyword();
 
 }

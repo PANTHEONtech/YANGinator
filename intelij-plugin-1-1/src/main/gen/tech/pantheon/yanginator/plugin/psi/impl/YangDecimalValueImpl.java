@@ -24,36 +24,36 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
 
 public class YangDecimalValueImpl extends YangNamedElementImpl implements YangDecimalValue {
 
-  public YangDecimalValueImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDecimalValueImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDecimalValue(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDecimalValue(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangIntegerValue getIntegerValue() {
-    return findNotNullChildByClass(YangIntegerValue.class);
-  }
+    @Override
+    @NotNull
+    public YangIntegerValue getIntegerValue() {
+        return findNotNullChildByClass(YangIntegerValue.class);
+    }
 
-  @Override
-  @NotNull
-  public YangZeroIntegerValue getZeroIntegerValue() {
-    return findNotNullChildByClass(YangZeroIntegerValue.class);
-  }
+    @Override
+    @NotNull
+    public YangZeroIntegerValue getZeroIntegerValue() {
+        return findNotNullChildByClass(YangZeroIntegerValue.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getDot() {
-    return findNotNullChildByType(YANG_DOT);
-  }
+    @Override
+    @NotNull
+    public PsiElement getDot() {
+        return findNotNullChildByType(YANG_DOT);
+    }
 
 }

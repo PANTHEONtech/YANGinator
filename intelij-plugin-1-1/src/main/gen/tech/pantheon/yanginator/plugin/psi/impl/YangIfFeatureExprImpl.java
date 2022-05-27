@@ -26,42 +26,42 @@ import java.util.List;
 
 public class YangIfFeatureExprImpl extends YangNamedElementImpl implements YangIfFeatureExpr {
 
-  public YangIfFeatureExprImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIfFeatureExprImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIfFeatureExpr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIfFeatureExpr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangIfFeatureExpr getIfFeatureExpr() {
-    return findChildByClass(YangIfFeatureExpr.class);
-  }
+    @Override
+    @Nullable
+    public YangIfFeatureExpr getIfFeatureExpr() {
+        return findChildByClass(YangIfFeatureExpr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangIfFeatureTerm getIfFeatureTerm() {
-    return findNotNullChildByClass(YangIfFeatureTerm.class);
-  }
+    @Override
+    @NotNull
+    public YangIfFeatureTerm getIfFeatureTerm() {
+        return findNotNullChildByClass(YangIfFeatureTerm.class);
+    }
 
-  @Override
-  @Nullable
-  public YangOrKeyword getOrKeyword() {
-    return findChildByClass(YangOrKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangOrKeyword getOrKeyword() {
+        return findChildByClass(YangOrKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSep> getSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSep> getSepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+    }
 
 }

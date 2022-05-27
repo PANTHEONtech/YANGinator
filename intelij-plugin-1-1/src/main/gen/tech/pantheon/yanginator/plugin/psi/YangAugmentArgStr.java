@@ -13,9 +13,17 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangAugmentArgStr extends YangNamedElement {
 
-  @NotNull
-  YangAugmentArg getAugmentArg();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    List<YangAugmentArg> getAugmentArgList();
+
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
 
 }

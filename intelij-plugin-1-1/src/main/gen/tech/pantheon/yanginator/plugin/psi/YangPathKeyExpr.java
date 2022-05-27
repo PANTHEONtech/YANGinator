@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangPathKeyExpr extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  YangCurrentFunctionInvocation getCurrentFunctionInvocation();
+    @NotNull
+    YangCurrentFunctionInvocation getCurrentFunctionInvocation();
 
-  @NotNull
-  YangRelPathKeyexpr getRelPathKeyexpr();
+    @NotNull
+    YangRelPathKeyexpr getRelPathKeyexpr();
 
-  @NotNull
-  PsiElement getForwardSlash();
+    @NotNull
+    PsiElement getForwardSlash();
 
 }

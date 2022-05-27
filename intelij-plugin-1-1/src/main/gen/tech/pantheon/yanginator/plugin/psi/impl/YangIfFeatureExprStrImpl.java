@@ -13,31 +13,41 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExpr;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExprStr;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
+import java.util.List;
+
 public class YangIfFeatureExprStrImpl extends YangNamedElementImpl implements YangIfFeatureExprStr {
 
-  public YangIfFeatureExprStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIfFeatureExprStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIfFeatureExprStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIfFeatureExprStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangIfFeatureExpr getIfFeatureExpr() {
-    return findNotNullChildByClass(YangIfFeatureExpr.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
+
+    @Override
+    @NotNull
+    public YangIfFeatureExpr getIfFeatureExpr() {
+        return findNotNullChildByClass(YangIfFeatureExpr.class);
+    }
 
 }

@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_QUOTE;
 
 public class YangDquoteImpl extends YangNamedElementImpl implements YangDquote {
 
-  public YangDquoteImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDquoteImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDquote(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDquote(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getDoubleQuote() {
-    return findNotNullChildByType(YANG_DOUBLE_QUOTE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getDoubleQuote() {
+        return findNotNullChildByType(YANG_DOUBLE_QUOTE);
+    }
 
 }

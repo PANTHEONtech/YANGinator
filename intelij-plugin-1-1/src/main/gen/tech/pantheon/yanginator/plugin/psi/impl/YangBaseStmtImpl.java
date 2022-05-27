@@ -24,42 +24,42 @@ import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
 public class YangBaseStmtImpl extends YangGeneratedReferenceTypeImpl implements YangBaseStmt {
 
-  public YangBaseStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangBaseStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitBaseStmt(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitBaseStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangBaseKeyword getBaseKeyword() {
-    return findNotNullChildByClass(YangBaseKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangBaseKeyword getBaseKeyword() {
+        return findNotNullChildByClass(YangBaseKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangIdentifierRefArgStr getIdentifierRefArgStr() {
-    return findNotNullChildByClass(YangIdentifierRefArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangIdentifierRefArgStr getIdentifierRefArgStr() {
+        return findNotNullChildByClass(YangIdentifierRefArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

@@ -16,16 +16,16 @@ import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public interface YangBaseStmt extends YangGeneratedReferenceType {
 
-  @NotNull
-  YangBaseKeyword getBaseKeyword();
+    @NotNull
+    YangBaseKeyword getBaseKeyword();
 
-  @NotNull
-  YangIdentifierRefArgStr getIdentifierRefArgStr();
+    @NotNull
+    YangIdentifierRefArgStr getIdentifierRefArgStr();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

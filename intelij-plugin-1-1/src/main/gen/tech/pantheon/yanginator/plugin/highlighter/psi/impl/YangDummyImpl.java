@@ -29,36 +29,36 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_S
 
 public class YangDummyImpl extends YangNamedElementImpl implements YangDummy {
 
-  public YangDummyImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDummyImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDummy(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDummy(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangWsp> getWspList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
-  }
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getHIdentifier() {
-    return findNotNullChildByType(YANG_H_IDENTIFIER);
-  }
+    @Override
+    @NotNull
+    public PsiElement getHIdentifier() {
+        return findNotNullChildByType(YANG_H_IDENTIFIER);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHString() {
-    return findChildByType(YANG_H_STRING);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHString() {
+        return findChildByType(YANG_H_STRING);
+    }
 
 }

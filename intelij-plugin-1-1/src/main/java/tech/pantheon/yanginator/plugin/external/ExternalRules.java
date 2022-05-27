@@ -120,18 +120,23 @@ public class ExternalRules {
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
         String text = "";
         for (int i = psiBuilder.getCurrentOffset(); i < psiBuilder.getOriginalText().length(); i++) {
-            if (separators.contains(psiBuilder.getOriginalText().charAt(i))) {
+            if (psiBuilder.getOriginalText().charAt(i)== ';' || psiBuilder.getOriginalText().charAt(i)== '"' ) {
                 text = psiBuilder.getOriginalText().subSequence(psiBuilder.getCurrentOffset(), i).toString();
                 break;
             }
         }
+
         for (char c : text.toCharArray()) {
-            boolean result = charList.parallelStream().anyMatch(character -> character == c);
+            boolean result = charList.parallelStream().anyMatch(character -> character.equals(c));
             if (result) {
+                psiBuilder.advanceLexer();
+                parser.parse(psiBuilder, level);
                 exit_section_(psiBuilder, marker, null, false);
                 return false;
             }
+
         }
+
         parser.parse(psiBuilder, level);
         exit_section_(psiBuilder, marker, null, true);
         return true;

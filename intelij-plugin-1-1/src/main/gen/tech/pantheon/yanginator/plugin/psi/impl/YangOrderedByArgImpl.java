@@ -22,30 +22,30 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangOrderedByArgImpl extends YangNamedElementImpl implements YangOrderedByArg {
 
-  public YangOrderedByArgImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangOrderedByArgImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitOrderedByArg(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitOrderedByArg(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangSystemKeyword getSystemKeyword() {
-    return findChildByClass(YangSystemKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangSystemKeyword getSystemKeyword() {
+        return findChildByClass(YangSystemKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangUserKeyword getUserKeyword() {
-    return findChildByClass(YangUserKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangUserKeyword getUserKeyword() {
+        return findChildByClass(YangUserKeyword.class);
+    }
 
 }

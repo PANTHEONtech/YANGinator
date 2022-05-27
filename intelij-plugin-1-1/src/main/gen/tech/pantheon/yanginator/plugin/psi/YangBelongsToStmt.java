@@ -18,28 +18,28 @@ import java.util.List;
 
 public interface YangBelongsToStmt extends YangYangStmt {
 
-  @NotNull
-  YangBelongsToKeyword getBelongsToKeyword();
+    @NotNull
+    YangBelongsToKeyword getBelongsToKeyword();
 
-  @NotNull
-  YangIdentifierArgStr getIdentifierArgStr();
+    @NotNull
+    YangIdentifierArgStr getIdentifierArgStr();
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangPrefixStmt getPrefixStmt();
+    @NotNull
+    YangPrefixStmt getPrefixStmt();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @NotNull
-  PsiElement getLeftBrace();
+    @NotNull
+    PsiElement getLeftBrace();
 
-  @NotNull
-  PsiElement getRightBrace();
+    @NotNull
+    PsiElement getRightBrace();
 
 }

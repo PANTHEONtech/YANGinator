@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangPositiveIntegerValue extends YangNamedElement {
 
-  @NotNull
-  List<YangDigit> getDigitList();
+    @NotNull
+    List<YangDigit> getDigitList();
 
-  @NotNull
-  YangNonZeroDigit getNonZeroDigit();
+    @NotNull
+    YangNonZeroDigit getNonZeroDigit();
 
 }

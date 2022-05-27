@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangPathEqualityExpr extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  YangNodeIdentifier getNodeIdentifier();
+    @NotNull
+    YangNodeIdentifier getNodeIdentifier();
 
-  @NotNull
-  YangPathKeyExpr getPathKeyExpr();
+    @NotNull
+    YangPathKeyExpr getPathKeyExpr();
 
-  @NotNull
-  PsiElement getEquals();
+    @NotNull
+    PsiElement getEquals();
 
 }

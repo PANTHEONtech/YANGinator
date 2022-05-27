@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangTokens extends YangNamedElement {
 
-  @NotNull
-  PsiElement getBlockComment();
+    @NotNull
+    PsiElement getBlockComment();
 
 }

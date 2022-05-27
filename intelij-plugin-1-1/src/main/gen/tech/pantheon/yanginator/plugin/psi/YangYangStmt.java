@@ -15,22 +15,22 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangYangStmt extends YangNamedElement {
 
-  @Nullable
-  YangBaseStmt getBaseStmt();
+    @Nullable
+    YangBaseStmt getBaseStmt();
 
-  @Nullable
-  YangGroupingStmt getGroupingStmt();
+    @Nullable
+    YangGroupingStmt getGroupingStmt();
 
-  @Nullable
-  YangIdentityStmt getIdentityStmt();
+    @Nullable
+    YangIdentityStmt getIdentityStmt();
 
-  @Nullable
-  YangTypeStmt getTypeStmt();
+    @Nullable
+    YangTypeStmt getTypeStmt();
 
-  @Nullable
-  YangTypedefStmt getTypedefStmt();
+    @Nullable
+    YangTypedefStmt getTypedefStmt();
 
-  @Nullable
-  YangUsesStmt getUsesStmt();
+    @Nullable
+    YangUsesStmt getUsesStmt();
 
 }

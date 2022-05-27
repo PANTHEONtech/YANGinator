@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangPctEncoded extends YangNamedElement {
 
-  @NotNull
-  PsiElement getPercentSign();
+    @NotNull
+    PsiElement getPercentSign();
 
 }

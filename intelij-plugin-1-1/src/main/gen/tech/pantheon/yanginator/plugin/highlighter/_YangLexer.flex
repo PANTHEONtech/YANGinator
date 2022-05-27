@@ -32,8 +32,10 @@ H_IDENTIFIER=[a-zA-Z_][0-9a-zA-Z_\-.]*
 H_EXTENSION_IDENTIFIER=[a-zA-Z_][0-9a-zA-Z_\-.:]*
 H_BLOCK_COMMENT="/"\*(([^*/])|"//")*\*"/"
 H_SINGLE_LINE_COMMENT="//"([^\n])*
-H_INVALID_ESCAPE=\\([^rRtns])
-H_VALID_ESCAPE=\\[rRtns]
+H_INVALID_ESCAPE=\\([^rRtnsb])
+H_VALID_ESCAPE=\\[rRtnsb]
+H_DIGIT=[0-9]
+H_NON_WORD=[^a-zA-Z_0-9]
 
 %%
 <YYINITIAL> {
@@ -132,6 +134,8 @@ H_VALID_ESCAPE=\\[rRtns]
   {H_SINGLE_LINE_COMMENT}       { return YANG_H_SINGLE_LINE_COMMENT; }
   {H_INVALID_ESCAPE}            { return YANG_H_INVALID_ESCAPE; }
   {H_VALID_ESCAPE}              { return YANG_H_VALID_ESCAPE; }
+  {H_DIGIT}                     { return YANG_H_DIGIT; }
+  {H_NON_WORD}                  { return YANG_H_NON_WORD; }
 
 }
 

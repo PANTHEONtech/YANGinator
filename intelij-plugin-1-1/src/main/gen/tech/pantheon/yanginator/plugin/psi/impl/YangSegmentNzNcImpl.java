@@ -25,36 +25,36 @@ import java.util.List;
 
 public class YangSegmentNzNcImpl extends YangNamedElementImpl implements YangSegmentNzNc {
 
-  public YangSegmentNzNcImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSegmentNzNcImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSegmentNzNc(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSegmentNzNc(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangPctEncoded> getPctEncodedList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPctEncoded.class);
-  }
+    @Override
+    @NotNull
+    public List<YangPctEncoded> getPctEncodedList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPctEncoded.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSubDelims> getSubDelimsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSubDelims.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSubDelims> getSubDelimsList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSubDelims.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangUnreserved> getUnreservedList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnreserved.class);
-  }
+    @Override
+    @NotNull
+    public List<YangUnreserved> getUnreservedList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnreserved.class);
+    }
 
 }

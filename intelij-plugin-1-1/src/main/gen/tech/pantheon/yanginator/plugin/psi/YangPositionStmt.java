@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangPositionStmt extends YangYangStmt {
 
-  @NotNull
-  YangPositionKeyword getPositionKeyword();
+    @NotNull
+    YangPositionKeyword getPositionKeyword();
 
-  @NotNull
-  YangPositionValueArgStr getPositionValueArgStr();
+    @NotNull
+    YangPositionValueArgStr getPositionValueArgStr();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

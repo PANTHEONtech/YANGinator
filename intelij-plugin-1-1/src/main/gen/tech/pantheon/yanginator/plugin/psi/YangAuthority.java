@@ -17,19 +17,19 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangAuthority extends YangNamedElement {
 
-  @NotNull
-  YangHost getHost();
+    @NotNull
+    YangHost getHost();
 
-  @Nullable
-  YangPort getPort();
+    @Nullable
+    YangPort getPort();
 
-  @Nullable
-  YangUserinfo getUserinfo();
+    @Nullable
+    YangUserinfo getUserinfo();
 
-  @Nullable
-  PsiElement getAtSign();
+    @Nullable
+    PsiElement getAtSign();
 
-  @Nullable
-  PsiElement getColon();
+    @Nullable
+    PsiElement getColon();
 
 }

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangFractionDigitsArgStr extends YangNamedElement {
 
-  @NotNull
-  YangFractionDigitsArg getFractionDigitsArg();
+    @NotNull
+    YangFractionDigitsArg getFractionDigitsArg();
 
 }

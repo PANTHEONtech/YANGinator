@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangStmt extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  PsiElement getHIdentifier();
+    @NotNull
+    PsiElement getHIdentifier();
 
-  @NotNull
-  PsiElement getHSemicolon();
+    @NotNull
+    PsiElement getHSemicolon();
 
-  @NotNull
-  PsiElement getHString();
+    @NotNull
+    PsiElement getHString();
 
 }

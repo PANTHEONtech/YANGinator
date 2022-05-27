@@ -15,34 +15,34 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangTypeBodyStmts extends YangNamedElement {
 
-  @Nullable
-  YangBinarySpecification getBinarySpecification();
+    @Nullable
+    YangBinarySpecification getBinarySpecification();
 
-  @Nullable
-  YangBitsSpecification getBitsSpecification();
+    @Nullable
+    YangBitsSpecification getBitsSpecification();
 
-  @Nullable
-  YangDecimal64Specification getDecimal64Specification();
+    @Nullable
+    YangDecimal64Specification getDecimal64Specification();
 
-  @Nullable
-  YangEnumSpecification getEnumSpecification();
+    @Nullable
+    YangEnumSpecification getEnumSpecification();
 
-  @Nullable
-  YangIdentityrefSpecification getIdentityrefSpecification();
+    @Nullable
+    YangIdentityrefSpecification getIdentityrefSpecification();
 
-  @Nullable
-  YangInstanceIdentifierSpecification getInstanceIdentifierSpecification();
+    @Nullable
+    YangInstanceIdentifierSpecification getInstanceIdentifierSpecification();
 
-  @Nullable
-  YangLeafrefSpecification getLeafrefSpecification();
+    @Nullable
+    YangLeafrefSpecification getLeafrefSpecification();
 
-  @Nullable
-  YangNumericalRestrictions getNumericalRestrictions();
+    @Nullable
+    YangNumericalRestrictions getNumericalRestrictions();
 
-  @Nullable
-  YangStringRestrictions getStringRestrictions();
+    @Nullable
+    YangStringRestrictions getStringRestrictions();
 
-  @Nullable
-  YangUnionSpecification getUnionSpecification();
+    @Nullable
+    YangUnionSpecification getUnionSpecification();
 
 }

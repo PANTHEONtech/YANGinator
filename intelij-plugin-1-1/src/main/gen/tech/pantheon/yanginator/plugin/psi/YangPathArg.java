@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangPathArg extends YangNamedElement {
 
-  @Nullable
-  YangAbsolutePath getAbsolutePath();
+    @Nullable
+    YangAbsolutePath getAbsolutePath();
 
-  @Nullable
-  YangRelativePath getRelativePath();
+    @Nullable
+    YangRelativePath getRelativePath();
 
 }

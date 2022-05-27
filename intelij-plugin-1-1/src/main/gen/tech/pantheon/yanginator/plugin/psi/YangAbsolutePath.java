@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangAbsolutePath extends YangNamedElement {
 
-  @NotNull
-  List<YangNodeIdentifier> getNodeIdentifierList();
+    @NotNull
+    List<YangNodeIdentifier> getNodeIdentifierList();
 
-  @NotNull
-  List<YangPathPredicate> getPathPredicateList();
+    @NotNull
+    List<YangPathPredicate> getPathPredicateList();
 
 }

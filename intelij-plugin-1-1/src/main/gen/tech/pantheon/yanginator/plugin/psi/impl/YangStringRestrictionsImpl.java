@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangStringRestrictionsImpl extends YangNamedElementImpl implements YangStringRestrictions {
 
-  public YangStringRestrictionsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangStringRestrictionsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitStringRestrictions(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitStringRestrictions(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

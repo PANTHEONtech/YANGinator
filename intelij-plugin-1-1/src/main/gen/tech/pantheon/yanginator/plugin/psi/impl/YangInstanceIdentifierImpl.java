@@ -26,42 +26,42 @@ import java.util.List;
 
 public class YangInstanceIdentifierImpl extends YangNamedElementImpl implements YangInstanceIdentifier {
 
-  public YangInstanceIdentifierImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangInstanceIdentifierImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitInstanceIdentifier(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitInstanceIdentifier(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangKeyPredicate> getKeyPredicateList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangKeyPredicate.class);
-  }
+    @Override
+    @NotNull
+    public List<YangKeyPredicate> getKeyPredicateList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangKeyPredicate.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangLeafListPredicate> getLeafListPredicateList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLeafListPredicate.class);
-  }
+    @Override
+    @NotNull
+    public List<YangLeafListPredicate> getLeafListPredicateList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLeafListPredicate.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangNodeIdentifier> getNodeIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
-  }
+    @Override
+    @NotNull
+    public List<YangNodeIdentifier> getNodeIdentifierList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangPos> getPosList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPos.class);
-  }
+    @Override
+    @NotNull
+    public List<YangPos> getPosList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPos.class);
+    }
 
 }

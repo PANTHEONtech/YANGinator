@@ -18,40 +18,40 @@ import java.util.List;
 
 public interface YangSubmoduleStmt extends YangYangStmt {
 
-  @NotNull
-  YangBodyStmts getBodyStmts();
+    @NotNull
+    YangBodyStmts getBodyStmts();
 
-  @NotNull
-  YangIdentifierArgStr getIdentifierArgStr();
+    @NotNull
+    YangIdentifierArgStr getIdentifierArgStr();
 
-  @NotNull
-  YangLinkageStmts getLinkageStmts();
+    @NotNull
+    YangLinkageStmts getLinkageStmts();
 
-  @NotNull
-  YangMetaStmts getMetaStmts();
+    @NotNull
+    YangMetaStmts getMetaStmts();
 
-  @NotNull
-  List<YangOptsep> getOptsepList();
+    @NotNull
+    List<YangOptsep> getOptsepList();
 
-  @NotNull
-  YangRevisionStmts getRevisionStmts();
+    @NotNull
+    YangRevisionStmts getRevisionStmts();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtsep getStmtsep();
+    @NotNull
+    YangStmtsep getStmtsep();
 
-  @NotNull
-  YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();
+    @NotNull
+    YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();
 
-  @NotNull
-  YangSubmoduleKeyword getSubmoduleKeyword();
+    @NotNull
+    YangSubmoduleKeyword getSubmoduleKeyword();
 
-  @NotNull
-  PsiElement getLeftBrace();
+    @NotNull
+    PsiElement getLeftBrace();
 
-  @NotNull
-  PsiElement getRightBrace();
+    @NotNull
+    PsiElement getRightBrace();
 
 }

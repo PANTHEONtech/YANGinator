@@ -12,19 +12,23 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangErrorAppTagStmt extends YangYangStmt {
 
-  @NotNull
-  YangErrorAppTagKeyword getErrorAppTagKeyword();
+    @NotNull
+    YangErrorAppTagKeyword getErrorAppTagKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @Nullable
+    YangQuotedString getQuotedString();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangString getString();
+    @NotNull
+    YangStmtend getStmtend();
+
+    @Nullable
+    YangString getString();
 
 }

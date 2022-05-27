@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangLeafListPredicate extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  YangLeafListPredicateExpr getLeafListPredicateExpr();
+    @NotNull
+    YangLeafListPredicateExpr getLeafListPredicateExpr();
 
-  @NotNull
-  PsiElement getClosedBracket();
+    @NotNull
+    PsiElement getClosedBracket();
 
-  @NotNull
-  PsiElement getOpenBracket();
+    @NotNull
+    PsiElement getOpenBracket();
 
 }

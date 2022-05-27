@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangIfFeatureExpr extends YangNamedElement {
 
-  @Nullable
-  YangIfFeatureExpr getIfFeatureExpr();
+    @Nullable
+    YangIfFeatureExpr getIfFeatureExpr();
 
-  @NotNull
-  YangIfFeatureTerm getIfFeatureTerm();
+    @NotNull
+    YangIfFeatureTerm getIfFeatureTerm();
 
-  @Nullable
-  YangOrKeyword getOrKeyword();
+    @Nullable
+    YangOrKeyword getOrKeyword();
 
-  @NotNull
-  List<YangSep> getSepList();
+    @NotNull
+    List<YangSep> getSepList();
 
 }

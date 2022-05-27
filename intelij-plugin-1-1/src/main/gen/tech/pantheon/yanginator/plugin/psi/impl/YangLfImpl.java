@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
 
 public class YangLfImpl extends YangNamedElementImpl implements YangLf {
 
-  public YangLfImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangLfImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitLf(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitLf(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getLinefeed() {
-    return findNotNullChildByType(YANG_LINEFEED);
-  }
+    @Override
+    @NotNull
+    public PsiElement getLinefeed() {
+        return findNotNullChildByType(YANG_LINEFEED);
+    }
 
 }

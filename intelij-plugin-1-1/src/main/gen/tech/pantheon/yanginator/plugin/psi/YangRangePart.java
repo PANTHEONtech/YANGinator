@@ -19,13 +19,13 @@ import java.util.List;
 
 public interface YangRangePart extends YangNamedElement {
 
-  @NotNull
-  List<YangOptsep> getOptsepList();
+    @NotNull
+    List<YangOptsep> getOptsepList();
 
-  @NotNull
-  List<YangRangeBoundary> getRangeBoundaryList();
+    @NotNull
+    List<YangRangeBoundary> getRangeBoundaryList();
 
-  @Nullable
-  PsiElement getDoubleDot();
+    @Nullable
+    PsiElement getDoubleDot();
 
 }

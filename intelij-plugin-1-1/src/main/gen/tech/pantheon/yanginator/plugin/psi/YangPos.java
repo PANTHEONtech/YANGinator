@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangPos extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  YangPositiveIntegerValue getPositiveIntegerValue();
+    @NotNull
+    YangPositiveIntegerValue getPositiveIntegerValue();
 
-  @NotNull
-  PsiElement getClosedBracket();
+    @NotNull
+    PsiElement getClosedBracket();
 
-  @NotNull
-  PsiElement getOpenBracket();
+    @NotNull
+    PsiElement getOpenBracket();
 
 }

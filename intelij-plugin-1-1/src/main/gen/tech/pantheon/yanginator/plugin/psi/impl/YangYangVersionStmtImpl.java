@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
 public class YangYangVersionStmtImpl extends YangYangStmtImpl implements YangYangVersionStmt {
 
-  public YangYangVersionStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangYangVersionStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitYangVersionStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitYangVersionStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
-  @Override
-  @NotNull
-  public YangYangVersionArgStr getYangVersionArgStr() {
-    return findNotNullChildByClass(YangYangVersionArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangYangVersionArgStr getYangVersionArgStr() {
+        return findNotNullChildByClass(YangYangVersionArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangYangVersionKeyword getYangVersionKeyword() {
-    return findNotNullChildByClass(YangYangVersionKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangYangVersionKeyword getYangVersionKeyword() {
+        return findNotNullChildByClass(YangYangVersionKeyword.class);
+    }
 
 }

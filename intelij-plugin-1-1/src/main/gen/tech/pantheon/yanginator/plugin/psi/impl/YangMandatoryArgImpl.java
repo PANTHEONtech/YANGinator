@@ -22,30 +22,30 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangMandatoryArgImpl extends YangNamedElementImpl implements YangMandatoryArg {
 
-  public YangMandatoryArgImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangMandatoryArgImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitMandatoryArg(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitMandatoryArg(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangFalseKeyword getFalseKeyword() {
-    return findChildByClass(YangFalseKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangFalseKeyword getFalseKeyword() {
+        return findChildByClass(YangFalseKeyword.class);
+    }
 
-  @Override
-  @Nullable
-  public YangTrueKeyword getTrueKeyword() {
-    return findChildByClass(YangTrueKeyword.class);
-  }
+    @Override
+    @Nullable
+    public YangTrueKeyword getTrueKeyword() {
+        return findChildByClass(YangTrueKeyword.class);
+    }
 
 }

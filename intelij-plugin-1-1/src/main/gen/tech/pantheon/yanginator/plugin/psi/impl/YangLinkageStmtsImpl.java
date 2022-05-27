@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangLinkageStmtsImpl extends YangNamedElementImpl implements YangLinkageStmts {
 
-  public YangLinkageStmtsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangLinkageStmtsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitLinkageStmts(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitLinkageStmts(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

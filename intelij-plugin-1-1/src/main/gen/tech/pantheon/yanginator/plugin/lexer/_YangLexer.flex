@@ -87,6 +87,7 @@ DOUBLE_FORWARD_SLASH = "//"
 HEXDIG = {HEXDIGIT}
 BLOCK_COMMENT_END = "*/"
 ZERO_LENGHT_STRING = ""
+APOSTROPHE = "’"
 
 EOL=\R
 
@@ -123,12 +124,11 @@ EOL=\R
   {PARENT_FOLDER}           { return YANG_PARENT_FOLDER; }
   {ALPHA}                   { return YANG_ALPHA; }
   {UNDERSCORE}              { return YANG_UNDERSCORE; }
-  {SPACE}                   { return YANG_SPACE; }
-  {POSITIVE_NUMBER}         { return YANG_POSITIVE_NUMBER; }
   {SINGLE_QUOTE}            { return YANG_SINGLE_QUOTE; }
   {CARRIAGE_RETURN}         { return YANG_CARRIAGE_RETURN; }
   {TAB}                     { return YANG_TAB; }
   {LINEFEED}                { return YANG_LINEFEED; }
+  {SPACE}                   { return YANG_SPACE; }
   {QUESTION_MARK}           { return YANG_QUESTION_MARK; }
   {HASH}                    { return YANG_HASH; }
   {DOUBLE_FORWARD_SLASH}    { return YANG_DOUBLE_FORWARD_SLASH; }
@@ -145,6 +145,12 @@ EOL=\R
   {AMPERSAND}               { return YANG_AMPERSAND; }
   {ASTERISK}                { return YANG_ASTERISK; }
   {COMMA}                   { return YANG_COMMA; }
+  {APOSTROPHE}              { return YANG_APOSTROPHE; }
+  {LESS_THAN_SIGN}          { return YANG_LESS_THAN_SIGN; }
+  {GREATER_THAN_SIGN}       { return YANG_GREATER_THAN_SIGN; }
+  {BACK_SLASH}              { return YANG_BACK_SLASH; }
+  {CIRCUMFLEX_ACCENT}       { return YANG_CIRCUMFLEX_ACCENT; }
+  {GRAVE_ACCENT}            { return YANG_GRAVE_ACCENT; }
 
 
 }

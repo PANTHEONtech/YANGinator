@@ -51,7 +51,7 @@ public class MinOneElementCheck implements ElementCheck {
         final PsiElement[] children = element.getChildren();
         for (Class<?> c : elementClasses) {
             for (PsiElement child : children) {
-                childrenCount += Arrays.stream(child.getChildren()).filter(c::isInstance).count();
+                childrenCount += Arrays.stream(child.getClass().getInterfaces()).filter(c::equals).count();
             }
         }
         if (childrenCount < 1) {

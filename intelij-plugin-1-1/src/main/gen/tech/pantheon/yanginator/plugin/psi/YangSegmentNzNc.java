@@ -17,13 +17,13 @@ import java.util.List;
 
 public interface YangSegmentNzNc extends YangNamedElement {
 
-  @NotNull
-  List<YangPctEncoded> getPctEncodedList();
+    @NotNull
+    List<YangPctEncoded> getPctEncodedList();
 
-  @NotNull
-  List<YangSubDelims> getSubDelimsList();
+    @NotNull
+    List<YangSubDelims> getSubDelimsList();
 
-  @NotNull
-  List<YangUnreserved> getUnreservedList();
+    @NotNull
+    List<YangUnreserved> getUnreservedList();
 
 }

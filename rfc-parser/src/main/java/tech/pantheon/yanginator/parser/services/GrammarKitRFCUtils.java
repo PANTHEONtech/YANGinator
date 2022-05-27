@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GrammarKitRFCUtils {
-
     private static final BnfTokenType PIPE = new BnfTokenType("|", "PIPE");
     private static final String BNFEqual = "::=";
     private static final String ABNF_COMMENT_START = ";;";
@@ -39,7 +38,6 @@ public class GrammarKitRFCUtils {
     private static final Pattern HEXADECIMAL_RANGE_PATTERN = Pattern.compile("(?<hexadecimalRange>(%x\\d{1,2}\\w-\\d{1,2}\\w))");
     private static final Pattern BRACKETS_UNQUOTED_PATTERN = Pattern.compile("[^\\\"](\\(|\\[|\\)|\\])|(\\(|\\[|\\)|\\])[^\\\"]");
     private static final Pattern BRACKETS_WITH_WHITESPACES = Pattern.compile(" (\\(|\\[|\\)|\\]) ");
-    private static final Pattern LEXER_TOKENS_PATTERN = Pattern.compile("\\{[a-z]+[\\_]*[a-z]*(.[^\\}])*\\}");
     private static final Pattern MULTIPLIER_N_TO_M_TIMES = Pattern.compile("(?<doubleBoundedMultiplier>\\d\\*\\d[a-zA-Z]{1,})");
     public static final Pattern MULTIPLIER_ZERO_TO_N_TIMES = Pattern.compile("(?<nTimesMultiplier>\\*\\d\\(.*?\\))");
     public static final Pattern MULTIPLIER_N_TIMES_PARENTHESES = Pattern.compile("(?<nTimesMultiplier>(\\s[2-9]\\(.*?\\)))");
@@ -51,7 +49,6 @@ public class GrammarKitRFCUtils {
             "%x0A", "\"\\n\"",
             "%x22", "'\"'",
             "%x5C", "\\");
-
     /**
      * Replaces each occurrence of an abnfTokens in provided list with a bnfTokens.
      * Gathers one or more calls for {@link #replaceBnfToken} method.
@@ -66,10 +63,8 @@ public class GrammarKitRFCUtils {
         result = replaceBnfToken(result, ABNF_COMMENT_START, "//");
         result = replaceBnfToken(result, " ; ", "// ");
         result = replaceBnfToken(result, "%s", "");
-
         return result;
     }
-
     /**
      * Replaces each occurrence of an abnfToken in provided list with a bnfToken.
      *
@@ -85,15 +80,11 @@ public class GrammarKitRFCUtils {
                 line = line.replaceAll(" " + abnfToken, " " + bnfToken);
             } else {
                 line = line.replaceAll(abnfToken, bnfToken);
-
             }
             result.add(line.stripTrailing());
         }
-
         return result;
     }
-
-
     /**
      * Returns a list of strings with all leading, trailing and inner line whitespaces
      * replaced so that the returned list if formatted accordingly to .bnf convention.
@@ -110,10 +101,8 @@ public class GrammarKitRFCUtils {
                 result.add(line.replaceAll("\\s{2,}", "  "));
             }
         }
-
         return result;
     }
-
     /**
      * Removes each occurrence of abnf operator (for example "*" or "1*") placed in front of
      * parentheses "*(...)" or brackets "1*[...]" using {@link #removeOperator}.
@@ -132,7 +121,6 @@ public class GrammarKitRFCUtils {
         } else if (oldOperator.equals("1*")) {
             multiplierRegex = DIGIT_ASTERISK_MULTIPLIER_PATTERN;
         }
-
         String concatenatedLines = String.join("\n", lines);
         Matcher matcher = Objects.requireNonNull(multiplierRegex).matcher(concatenatedLines);
         int newOperatorIndex;
@@ -149,7 +137,6 @@ public class GrammarKitRFCUtils {
                 if (stringCrawler > concatenatedLines.length()) {
                     break;
                 }
-
                 if (concatenatedLines.charAt(stringCrawler) == '(') {
                     openingParentheses++;
                 } else if (concatenatedLines.charAt(stringCrawler) == (')') && openingParentheses != 0) {
@@ -165,10 +152,8 @@ public class GrammarKitRFCUtils {
             }
             matcher = multiplierRegex.matcher(concatenatedLines);
         }
-
         return Stream.of(concatenatedLines.split("\n")).map(String::stripTrailing).collect(Collectors.toList());
     }
-
     /**
      * Removes the operator at specified position in provided string.
      *
@@ -182,7 +167,6 @@ public class GrammarKitRFCUtils {
         sb.delete(position, position + operator.length() - 1);
         return sb.toString();
     }
-
     /**
      * Adds the operator at specified position in provided string.
      *
@@ -196,7 +180,6 @@ public class GrammarKitRFCUtils {
         sb.insert(position + 1, operator);
         return sb.toString();
     }
-
     /**
      * Removes each occurrence of abnf operator (for example "*" or "1*") placed in front of
      * a string (for example "*WSP", "1*DIGIT") using {@link #removeOperator}.
@@ -217,7 +200,6 @@ public class GrammarKitRFCUtils {
             asteriskRegex = WORD_MULTIPLIER_DIGIT_ASTERISK;
             replacement = "+";
         }
-
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             Matcher matcher = Objects.requireNonNull(asteriskRegex).matcher(line.trim());
@@ -230,10 +212,8 @@ public class GrammarKitRFCUtils {
             }
             result.add(line.stripTrailing());
         }
-
         return result;
     }
-
     /**
      * Returns a list of string in which string rules are modified. Each string rule
      * in provided list contains commentaries enclosed in angle brackets ("<...>").
@@ -258,7 +238,7 @@ public class GrammarKitRFCUtils {
                     }
                     secondLineOfRule = secondLineOfRule.trim().replace(">", quotes);
                     firstLineOfRule = firstLineOfRule.replace(originalString, replacement.concat(quotes).concat(" " + secondLineOfRule));
-                    firstLineOfRule = firstLineOfRule.substring(0,firstLineOfRule.indexOf('"') - 1) + " " + secondLineOfRule.replace(quotes,"| ") + firstLineOfRule.substring(firstLineOfRule.indexOf('"'));
+                    firstLineOfRule = firstLineOfRule.substring(0, firstLineOfRule.indexOf('"') - 1) + " " + secondLineOfRule.replace(quotes, "| ") + firstLineOfRule.substring(firstLineOfRule.indexOf('"'));
                 } else {
                     firstLineOfRule = firstLineOfRule
                             .replace("<", "//")
@@ -269,10 +249,8 @@ public class GrammarKitRFCUtils {
             }
             result.add(firstLineOfRule.stripTrailing());
         }
-
         return result;
     }
-
     /**
      * Replaces each occurrence of a hexadecimal range of values with corresponding characters.
      *
@@ -281,7 +259,6 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> replaceHexadecimalRange(List<String> lines) {
         List<String> result = new ArrayList<>();
-
         for (String line : lines) {
             Matcher matcher = HEXADECIMAL_RANGE_PATTERN.matcher(line.trim());
             while (matcher.find()) {
@@ -301,18 +278,14 @@ public class GrammarKitRFCUtils {
                     }
                     hex++;
                 }
-
                 replacement = new StringBuilder(replacement.substring(0, replacement.length() - 2));
                 replacement.append(" )");
                 line = line.replace(originalHexDef, replacement.toString());
-
             }
             result.add(line.stripTrailing());
         }
-
         return result;
     }
-
     /**
      * Replaces each occurrence of single hexadecimal value with corresponding character.
      *
@@ -321,7 +294,6 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> replaceHexadecimal(List<String> lines) {
         List<String> result = new ArrayList<>();
-
         for (String line : lines) {
             Matcher matcher = HEXADECIMAL_PATTERN.matcher(line.trim());
             while (matcher.find()) {
@@ -341,7 +313,6 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
-
     /**
      * Returns {@code true} if the string is hexadecimal representation
      * of: '\r', '\t', '\n', '"', or '\'.
@@ -352,7 +323,6 @@ public class GrammarKitRFCUtils {
     private static boolean isSpecialCharacter(final String originalHexDef) {
         return SPECIAL_CHARACTER.containsKey(originalHexDef);
     }
-
     /**
      * Transforms hexadecimal value of given string into its string representation
      * if the string is equal to: '\r', '\t', '\n', '"', or '\'.
@@ -363,7 +333,6 @@ public class GrammarKitRFCUtils {
     private static String transformSpecialChars(final String originalHexDef) {
         return SPECIAL_CHARACTER.get(originalHexDef);
     }
-
     /**
      * Replaces each occurrence of a multiplier specifying min and max number of token repetition
      * inside a rule. Multiplier together with token will be replaced by expanded rule.
@@ -373,7 +342,6 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> rewriteNtoMMultiplier(final List<String> lines) {
         List<String> result = new ArrayList<>();
-
         for (String line : lines) {
             Matcher matcher = MULTIPLIER_N_TO_M_TIMES.matcher(line.trim());
             if (matcher.find()) {
@@ -389,7 +357,6 @@ public class GrammarKitRFCUtils {
                         } else {
                             newRule = newRule.concat(" " + ruleExcerptToRepeat);
                         }
-
                         if ((i == lowerBound) && (lowerBound != upperBound)) {
                             newRule = newRule.concat(") | ");
                         }
@@ -401,14 +368,11 @@ public class GrammarKitRFCUtils {
             }
             result.add(line.stripTrailing());
         }
-
         return result;
     }
-
     private static String extractDefinition(String line) {
         return line.contains("::=") ? line.substring(line.indexOf("=") + 1) : line;
     }
-
     /**
      * Finds each occurrence of abnf simple-digit and zeto-to-N multiplier placed in front of
      * parentheses "3( h16 ":" )", "*3( h16 ":" )" or word "4DIGIT". Then, tokens in direct contact with
@@ -419,7 +383,6 @@ public class GrammarKitRFCUtils {
      */
     public static List<String> rewriteDigitMultiplier(final List<String> lines, final Pattern typeOfToken) {
         List<String> result = new ArrayList<>();
-
         for (String line : lines) {
             Matcher matcher = typeOfToken.matcher(line.trim());
             while (matcher.find()) {
@@ -442,10 +405,8 @@ public class GrammarKitRFCUtils {
             }
             result.add(line.stripTrailing());
         }
-
         return result;
     }
-
     /**
      * Checks every String in the list if it contains substrings that need to be replaced
      * and replace them. It does not remove duplicates.
@@ -462,7 +423,6 @@ public class GrammarKitRFCUtils {
                             lines) {
                         String replacedLine = line.replace(value, token.getName());
                         lines.set(lines.indexOf(line), replacedLine);
-
                     }
                 }
             }
@@ -483,7 +443,6 @@ public class GrammarKitRFCUtils {
         replacement = commentRules(replacement, "a string that matches the rule", "<");
         replacement = commentRules(replacement, "an unquoted string as returned by the scanner", "<");
         return xmlStartFor6020(replacement, "An identifier MUST NOT start with (('X'|'x') ('M'|'m') ('L'|'l'))");
-
     }
 
     /**
@@ -511,7 +470,6 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
-
 
     /**
      * Method checks every line for special combination given as <code>wordToBeReplaced</code>, if the combination is found
@@ -552,7 +510,6 @@ public class GrammarKitRFCUtils {
                         }
                         mergedLine = mergedLine.substring(0, startIndex + index) + " " + matcher.group(2) + " " + mergedLine.substring(startIndex + index + 1);
                     }
-
                     index += 2;
                 }
                 if (excludedCombination != null) {
@@ -560,19 +517,16 @@ public class GrammarKitRFCUtils {
                             && !mergedLine.replace(LINE_DELIMITER, "").replace(" ", "").contains(excludedCombination.replace(" ", ""))) {
                         mergedLine = uniqueCombination(mergedLine, wordToBeReplaced, replacement);
                         mergedLine = findDuplicates(mergedLine, replacement, replacement);
-
                     }
                 } else if (mergedLine.replace(LINE_DELIMITER, "").replace(" ", "").contains(wordToBeReplaced.replace(" ", ""))) {
                     mergedLine = findDuplicates(mergedLine, wordToBeReplaced, replacement);
                 }
                 // removes additionally added whitespaces in while cycle above
-
                 matcher = BRACKETS_WITH_WHITESPACES.matcher(mergedLine);
                 index = 0;
                 while (matcher.find()) {
                     mergedLine = mergedLine.substring(0, matcher.start() + index) + matcher.group(1) + mergedLine.substring(matcher.end() + index);
                     index -= 2;
-
                 }
                 String[] newLines = mergedLine.split(LINE_DELIMITER);
                 for (String newLine : newLines) { // split string into lines before merging
@@ -613,7 +567,6 @@ public class GrammarKitRFCUtils {
             spaces++;
             stringWithWord = stringWithWord.substring(1); // looking for the beginning of the combination that needs to be repalced
         }
-
         index += spaces;
         return mergedLine.substring(0, index) +
                 replacement +                               // replacing the part with combination with replacement
@@ -680,7 +633,6 @@ public class GrammarKitRFCUtils {
                 }
             }
         }
-
         replaceDuplicates(words, positionsWithDuplicate, replaced, 0, words.size() - 1, wordToBeReplaced, replacement);
         for (String word : replaced) {
             if (!word.equals("")) {
@@ -692,9 +644,7 @@ public class GrammarKitRFCUtils {
                     newLine += " ";
                 }
             }
-
         }
-
         return newLine;
     }
 
@@ -731,7 +681,6 @@ public class GrammarKitRFCUtils {
                 if (counter > 1 && (after || before)) {
                     if (!words.get(i).contains(USED_ELEMENT))
                         replaced[i] = words.get(i).replace(duplicate, "");  // current word is a duplicate, so it's replaced by empty string
-
                     words.set(i, USED_ELEMENT);
                     if (before) {
                         replaced[i - 1] = "";  // OR before duplicate is removed with duplicate
@@ -740,7 +689,6 @@ public class GrammarKitRFCUtils {
                         words.set(i + 1, USED_ELEMENT);
                         i++;
                     }
-
                 }
                 words.set(i, USED_ELEMENT);
                 positionsWithDuplicate.remove((Integer) i);  // current position is removed from duplicates because have been already dealt with
@@ -749,7 +697,6 @@ public class GrammarKitRFCUtils {
                     replaced[i] = replaced[i - 1];
                     replaced[i - 1] = words.get(i);
                 } else replaced[i] = words.get(i);
-
                 words.set(i, USED_ELEMENT);
             }
         }
@@ -765,7 +712,6 @@ public class GrammarKitRFCUtils {
      */
     private static List<String> commentRules(List<String> lines, String comment, String delimiter) {
         List<String> result = new ArrayList<>();
-
         for (String line : lines) {
             if (line.contains(comment)) {
                 String rule = "";
@@ -787,7 +733,6 @@ public class GrammarKitRFCUtils {
                     line = commentRulesDoubleQuoted(line, rule);
                 }
             }
-
             result.add(line);
         }
         return result;
@@ -800,7 +745,7 @@ public class GrammarKitRFCUtils {
 
     private static String commentRulesDoubleQuoted(String line, String rule) {
         String lineBeginning = line.substring(0, line.indexOf("=") + 1);
-        return lineBeginning + " " + rule + " | ( DOUBLE_QUOTE " + rule + " DOUBLE_QUOTE )" + line.substring(lineBeginning.length());
+        return lineBeginning + " " + rule + " | ( DQUOTE " + rule + " DQUOTE )" + line.substring(lineBeginning.length());
     }
 
     /**
@@ -825,44 +770,6 @@ public class GrammarKitRFCUtils {
     }
 
     /**
-     * Removes H_ sign from highlighter tokens and transforms them into loverCase
-     *
-     * @param lines list of strings
-     * @return list of strings with transformed highlighter tokens
-     */
-    public static List<String> transformH_Tokens(List<String> lines) {
-        List<String> result = new ArrayList<>();
-        for (String line : lines) {
-
-            if (line.contains("{H_")) {
-                line = line.replaceFirst("\\{H_", "{");
-                line = line.substring(0, line.indexOf("return")).toLowerCase() + line.substring(line.indexOf("return"));
-            }
-            if (line.contains("_H_")) line = line.replace("_H_", "_");
-            result.add(line);
-        }
-        return result;
-    }
-
-    /**
-     * Adds transformed highlighter tokens into list of FlexerTokens
-     *
-     * @param lines  list of strings
-     * @param tokens list of FlexerTokens
-     */
-    public static void addTransformedTokens(List<String> lines, List<FlexerToken> tokens) {
-        for (String line : lines) {
-            Matcher matcher = LEXER_TOKENS_PATTERN.matcher(line);
-            if (matcher.find()) {
-                String lexerValue = matcher.group().substring(1, matcher.group().length() - 1);
-                if (lexerValue.contains("keyword")){ lexerValue = lexerValue.substring(0,lexerValue.indexOf("_"));}
-                tokens.add(new FlexerToken(matcher.group().substring(1, matcher.group().length() - 1), "\"" + lexerValue + "\"", true));
-            }
-        }
-
-    }
-
-    /**
      * Adds additional information at the beginning of the list with bnf grammar
      *
      * @param lines list of strings with bnf grammar
@@ -875,7 +782,6 @@ public class GrammarKitRFCUtils {
         result.addAll(lines);
         return result;
     }
-
 
     /**
      * Tokens used in the bnf grammar are added into lexer file
@@ -897,7 +803,6 @@ public class GrammarKitRFCUtils {
                 result.add("");
                 for (FlexerToken token : tokens) {
                     String tokenLine = token.getName() + " = " + token.getLexerValue();
-
                     result.add(tokenLine);
                 }
             }
@@ -926,7 +831,6 @@ public class GrammarKitRFCUtils {
         result.add(start);
         result.add("");
         result.addAll(list2);
-
         return result;
     }
 
@@ -936,7 +840,7 @@ public class GrammarKitRFCUtils {
      *
      * @param lines   list of strings containing comment
      * @param comment string with additional negated definition in parentheses
-     * @return
+     * @return list of strings
      */
     private static List<String> xmlStartFor6020(List<String> lines, String comment) {
         List<String> result = new ArrayList<>();
@@ -954,7 +858,6 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
-
 
     /**
      * Method adds anyOrder external rule at the correct places in the list
@@ -994,7 +897,7 @@ public class GrammarKitRFCUtils {
             if (line.isBlank()) comment = false;
             if (comment) line = "// " + line;
             if (line.contains("yang-char ::=")) {
-                line = line.substring(0, line.indexOf("=") + 1) + " ( ALPHA | DIGIT | SPACE ) //" + line.substring(line.indexOf("=") + 1);
+                line = line.substring(0, line.indexOf("=") + 1) + "VCHAR //" + line.substring(line.indexOf("=") + 1);
                 comment = true;
             }
             result.add(line);
@@ -1009,7 +912,6 @@ public class GrammarKitRFCUtils {
      * @param abnf list of Strings with original abnf grammar
      * @return list of Strings with extracted ranges for yang-char
      */
-
     public static List<String> extractRangesFromABNF(List<String> abnf) {
         List<String> ranges = new ArrayList<>();
         boolean atChar = false;
@@ -1050,11 +952,11 @@ public class GrammarKitRFCUtils {
     /**
      * Adds extensions to the selected statements in the bnf
      *
-     * @param lines list of strings
+     * @param lines      list of strings
      * @param extensions list of extensions
      * @return list of strings
      */
-    public static List<String> linkReferenceStmts(List<String> lines , List<Extension> extensions){
+    public static List<String> linkReferenceStmts(List<String> lines, List<Extension> extensions) {
         List<String> result = new ArrayList<>();
         boolean found = false;
         Extension foundExtension = null;
@@ -1070,23 +972,21 @@ public class GrammarKitRFCUtils {
                 }
             }
             result.add(line);
-            if (found && i + 1 < lines.size() && lines.get(i + 1).contains(" ::=")){
+            if (found && i + 1 < lines.size() && lines.get(i + 1).contains(" ::=")) {
                 result.add("{");
-                if (foundExtension.getPin() != null){
-                    result.add("pin = "+foundExtension.getPin());
+                if (foundExtension.getPin() != null) {
+                    result.add("pin = " + foundExtension.getPin());
                 }
                 if (foundExtension.getImplementation() != null) {
                     result.add("implements=" + foundExtension.getImplementation());
                 }
-                if  (foundExtension.getExtension() != null) {
+                if (foundExtension.getExtension() != null) {
                     result.add("extends=" + foundExtension.getExtension());
                 }
                 result.add("}");
                 found = false;
             }
         }
-
         return result;
     }
-
 }

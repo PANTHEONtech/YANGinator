@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangRefineArgStr extends YangNamedElement {
 
-  @NotNull
-  YangRefineArg getRefineArg();
+    @NotNull
+    YangRefineArg getRefineArg();
 
 }

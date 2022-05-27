@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangRelativePathImpl extends YangNamedElementImpl implements YangRelativePath {
 
-  public YangRelativePathImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRelativePathImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRelativePath(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRelativePath(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangDescendantPath getDescendantPath() {
-    return findNotNullChildByClass(YangDescendantPath.class);
-  }
+    @Override
+    @NotNull
+    public YangDescendantPath getDescendantPath() {
+        return findNotNullChildByClass(YangDescendantPath.class);
+    }
 
 }

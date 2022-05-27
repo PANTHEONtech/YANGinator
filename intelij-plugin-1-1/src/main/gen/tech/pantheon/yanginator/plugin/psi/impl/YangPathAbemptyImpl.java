@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangPathAbemptyImpl extends YangNamedElementImpl implements YangPathAbempty {
 
-  public YangPathAbemptyImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathAbemptyImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathAbempty(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathAbempty(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSegment> getSegmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSegment> getSegmentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
+    }
 
 }

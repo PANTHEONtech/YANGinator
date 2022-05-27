@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangHtab extends YangNamedElement {
 
-  @NotNull
-  PsiElement getTab();
+    @NotNull
+    PsiElement getTab();
 
 }

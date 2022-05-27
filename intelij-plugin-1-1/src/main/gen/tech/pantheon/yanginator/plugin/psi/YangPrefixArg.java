@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangPrefixArg extends YangNamedElement {
 
-  @NotNull
-  YangPrefix getPrefix();
+    @NotNull
+    YangPrefix getPrefix();
 
 }

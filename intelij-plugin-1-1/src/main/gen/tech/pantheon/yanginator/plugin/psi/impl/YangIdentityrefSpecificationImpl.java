@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangIdentityrefSpecificationImpl extends YangNamedElementImpl implements YangIdentityrefSpecification {
 
-  public YangIdentityrefSpecificationImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIdentityrefSpecificationImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIdentityrefSpecification(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIdentityrefSpecification(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangBaseStmt> getBaseStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBaseStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangBaseStmt> getBaseStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBaseStmt.class);
+    }
 
 }

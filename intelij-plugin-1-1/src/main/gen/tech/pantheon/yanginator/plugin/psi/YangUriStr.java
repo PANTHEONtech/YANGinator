@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangUriStr extends YangNamedElement {
 
-  @NotNull
-  YangUri getUri();
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    YangUri getUri();
 
 }

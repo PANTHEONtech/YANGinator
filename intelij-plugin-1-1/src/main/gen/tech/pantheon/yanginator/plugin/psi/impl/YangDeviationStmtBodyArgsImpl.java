@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangDeviationStmtBodyArgsImpl extends YangNamedElementImpl implements YangDeviationStmtBodyArgs {
 
-  public YangDeviationStmtBodyArgsImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDeviationStmtBodyArgsImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDeviationStmtBodyArgs(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDeviationStmtBodyArgs(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangYangStmt> getYangStmtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
-  }
+    @Override
+    @NotNull
+    public List<YangYangStmt> getYangStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
+    }
 
 }

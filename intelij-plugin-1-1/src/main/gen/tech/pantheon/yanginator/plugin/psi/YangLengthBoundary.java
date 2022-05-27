@@ -15,13 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangLengthBoundary extends YangNamedElement {
 
-  @Nullable
-  YangMaxKeyword getMaxKeyword();
+    @Nullable
+    YangMaxKeyword getMaxKeyword();
 
-  @Nullable
-  YangMinKeyword getMinKeyword();
+    @Nullable
+    YangMinKeyword getMinKeyword();
 
-  @Nullable
-  YangNonNegativeIntegerValue getNonNegativeIntegerValue();
+    @Nullable
+    YangNonNegativeIntegerValue getNonNegativeIntegerValue();
 
 }

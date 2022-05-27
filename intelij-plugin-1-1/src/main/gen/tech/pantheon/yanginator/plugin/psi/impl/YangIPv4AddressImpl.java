@@ -23,24 +23,24 @@ import java.util.List;
 
 public class YangIPv4AddressImpl extends YangNamedElementImpl implements YangIPv4Address {
 
-  public YangIPv4AddressImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIPv4AddressImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIPv4Address(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIPv4Address(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangDecOctet> getDecOctetList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDecOctet.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDecOctet> getDecOctetList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDecOctet.class);
+    }
 
 }

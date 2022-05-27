@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangPositiveIntegerValueImpl extends YangNamedElementImpl implements YangPositiveIntegerValue {
 
-  public YangPositiveIntegerValueImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPositiveIntegerValueImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPositiveIntegerValue(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPositiveIntegerValue(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangDigit> getDigitList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDigit> getDigitList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
+    }
 
-  @Override
-  @NotNull
-  public YangNonZeroDigit getNonZeroDigit() {
-    return findNotNullChildByClass(YangNonZeroDigit.class);
-  }
+    @Override
+    @NotNull
+    public YangNonZeroDigit getNonZeroDigit() {
+        return findNotNullChildByClass(YangNonZeroDigit.class);
+    }
 
 }

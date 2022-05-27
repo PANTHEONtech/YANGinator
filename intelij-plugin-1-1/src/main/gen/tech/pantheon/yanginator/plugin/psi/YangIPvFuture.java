@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangIPvFuture extends YangNamedElement {
 
-  @NotNull
-  List<YangSubDelims> getSubDelimsList();
+    @NotNull
+    List<YangSubDelims> getSubDelimsList();
 
-  @NotNull
-  List<YangUnreserved> getUnreservedList();
+    @NotNull
+    List<YangUnreserved> getUnreservedList();
 
-  @NotNull
-  PsiElement getDot();
+    @NotNull
+    PsiElement getDot();
 
-  @NotNull
-  PsiElement getVersion();
+    @NotNull
+    PsiElement getVersion();
 
 }

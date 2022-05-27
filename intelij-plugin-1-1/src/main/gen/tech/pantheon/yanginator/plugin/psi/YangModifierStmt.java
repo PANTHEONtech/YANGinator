@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangModifierStmt extends YangYangStmt {
 
-  @NotNull
-  YangModifierArgStr getModifierArgStr();
+    @NotNull
+    YangModifierArgStr getModifierArgStr();
 
-  @NotNull
-  YangModifierKeyword getModifierKeyword();
+    @NotNull
+    YangModifierKeyword getModifierKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

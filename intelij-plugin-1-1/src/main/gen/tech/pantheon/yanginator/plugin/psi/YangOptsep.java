@@ -17,10 +17,10 @@ import java.util.List;
 
 public interface YangOptsep extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  List<YangLineBreak> getLineBreakList();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
 }

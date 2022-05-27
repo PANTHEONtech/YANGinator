@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangFractionDigitsStmt extends YangYangStmt {
 
-  @NotNull
-  YangFractionDigitsArgStr getFractionDigitsArgStr();
+    @NotNull
+    YangFractionDigitsArgStr getFractionDigitsArgStr();
 
-  @NotNull
-  YangFractionDigitsKeyword getFractionDigitsKeyword();
+    @NotNull
+    YangFractionDigitsKeyword getFractionDigitsKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

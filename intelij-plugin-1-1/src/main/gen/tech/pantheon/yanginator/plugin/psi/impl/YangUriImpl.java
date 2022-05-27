@@ -29,60 +29,60 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
 
 public class YangUriImpl extends YangNamedElementImpl implements YangUri {
 
-  public YangUriImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangUriImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitUri(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitUri(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangFragment getFragment() {
-    return findChildByClass(YangFragment.class);
-  }
+    @Override
+    @Nullable
+    public YangFragment getFragment() {
+        return findChildByClass(YangFragment.class);
+    }
 
-  @Override
-  @NotNull
-  public YangHierPart getHierPart() {
-    return findNotNullChildByClass(YangHierPart.class);
-  }
+    @Override
+    @NotNull
+    public YangHierPart getHierPart() {
+        return findNotNullChildByClass(YangHierPart.class);
+    }
 
-  @Override
-  @Nullable
-  public YangQuery getQuery() {
-    return findChildByClass(YangQuery.class);
-  }
+    @Override
+    @Nullable
+    public YangQuery getQuery() {
+        return findChildByClass(YangQuery.class);
+    }
 
-  @Override
-  @NotNull
-  public YangScheme getScheme() {
-    return findNotNullChildByClass(YangScheme.class);
-  }
+    @Override
+    @NotNull
+    public YangScheme getScheme() {
+        return findNotNullChildByClass(YangScheme.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getColon() {
-    return findNotNullChildByType(YANG_COLON);
-  }
+    @Override
+    @NotNull
+    public PsiElement getColon() {
+        return findNotNullChildByType(YANG_COLON);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getHash() {
-    return findChildByType(YANG_HASH);
-  }
+    @Override
+    @Nullable
+    public PsiElement getHash() {
+        return findChildByType(YANG_HASH);
+    }
 
-  @Override
-  @Nullable
-  public PsiElement getQuestionMark() {
-    return findChildByType(YANG_QUESTION_MARK);
-  }
+    @Override
+    @Nullable
+    public PsiElement getQuestionMark() {
+        return findChildByType(YANG_QUESTION_MARK);
+    }
 
 }

@@ -19,28 +19,28 @@ import java.util.List;
 
 public interface YangIfFeatureFactor extends YangNamedElement {
 
-  @Nullable
-  YangIdentifierRefArg getIdentifierRefArg();
+    @Nullable
+    YangIdentifierRefArg getIdentifierRefArg();
 
-  @Nullable
-  YangIfFeatureExpr getIfFeatureExpr();
+    @Nullable
+    YangIfFeatureExpr getIfFeatureExpr();
 
-  @Nullable
-  YangIfFeatureFactor getIfFeatureFactor();
+    @Nullable
+    YangIfFeatureFactor getIfFeatureFactor();
 
-  @Nullable
-  YangNotKeyword getNotKeyword();
+    @Nullable
+    YangNotKeyword getNotKeyword();
 
-  @NotNull
-  List<YangOptsep> getOptsepList();
+    @NotNull
+    List<YangOptsep> getOptsepList();
 
-  @Nullable
-  YangSep getSep();
+    @Nullable
+    YangSep getSep();
 
-  @Nullable
-  PsiElement getLeftParenthesis();
+    @Nullable
+    PsiElement getLeftParenthesis();
 
-  @Nullable
-  PsiElement getRightParenthesis();
+    @Nullable
+    PsiElement getRightParenthesis();
 
 }

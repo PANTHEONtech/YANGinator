@@ -18,25 +18,25 @@ import java.util.List;
 
 public interface YangUsesAugmentStmt extends YangYangStmt {
 
-  @NotNull
-  YangAugmentKeyword getAugmentKeyword();
+    @NotNull
+    YangAugmentKeyword getAugmentKeyword();
 
-  @NotNull
-  YangOptsep getOptsep();
+    @NotNull
+    YangOptsep getOptsep();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  List<YangStmtsep> getStmtsepList();
+    @NotNull
+    List<YangStmtsep> getStmtsepList();
 
-  @NotNull
-  YangUsesAugmentArgStr getUsesAugmentArgStr();
+    @NotNull
+    YangUsesAugmentArgStr getUsesAugmentArgStr();
 
-  @NotNull
-  PsiElement getLeftBrace();
+    @NotNull
+    PsiElement getLeftBrace();
 
-  @NotNull
-  PsiElement getRightBrace();
+    @NotNull
+    PsiElement getRightBrace();
 
 }

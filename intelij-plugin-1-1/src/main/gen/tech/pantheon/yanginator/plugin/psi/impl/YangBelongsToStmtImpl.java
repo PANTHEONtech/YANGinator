@@ -32,67 +32,67 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
 public class YangBelongsToStmtImpl extends YangYangStmtImpl implements YangBelongsToStmt {
 
-  public YangBelongsToStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangBelongsToStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitBelongsToStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitBelongsToStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangBelongsToKeyword getBelongsToKeyword() {
-    return findNotNullChildByClass(YangBelongsToKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangBelongsToKeyword getBelongsToKeyword() {
+        return findNotNullChildByClass(YangBelongsToKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangIdentifierArgStr getIdentifierArgStr() {
-    return findNotNullChildByClass(YangIdentifierArgStr.class);
-  }
+    @Override
+    @NotNull
+    public YangIdentifierArgStr getIdentifierArgStr() {
+        return findNotNullChildByClass(YangIdentifierArgStr.class);
+    }
 
-  @Override
-  @NotNull
-  public YangOptsep getOptsep() {
-    return findNotNullChildByClass(YangOptsep.class);
-  }
+    @Override
+    @NotNull
+    public YangOptsep getOptsep() {
+        return findNotNullChildByClass(YangOptsep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangPrefixStmt getPrefixStmt() {
-    return findNotNullChildByClass(YangPrefixStmt.class);
-  }
+    @Override
+    @NotNull
+    public YangPrefixStmt getPrefixStmt() {
+        return findNotNullChildByClass(YangPrefixStmt.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangStmtsep> getStmtsepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangStmtsep> getStmtsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getLeftBrace() {
-    return findNotNullChildByType(YANG_LEFT_BRACE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getLeftBrace() {
+        return findNotNullChildByType(YANG_LEFT_BRACE);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getRightBrace() {
-    return findNotNullChildByType(YANG_RIGHT_BRACE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getRightBrace() {
+        return findNotNullChildByType(YANG_RIGHT_BRACE);
+    }
 
 }

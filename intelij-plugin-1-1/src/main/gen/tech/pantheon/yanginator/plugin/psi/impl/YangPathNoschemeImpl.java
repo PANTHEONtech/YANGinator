@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangPathNoschemeImpl extends YangNamedElementImpl implements YangPathNoscheme {
 
-  public YangPathNoschemeImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangPathNoschemeImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitPathNoscheme(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitPathNoscheme(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSegment> getSegmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSegment> getSegmentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSegment.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSegmentNzNc getSegmentNzNc() {
-    return findNotNullChildByClass(YangSegmentNzNc.class);
-  }
+    @Override
+    @NotNull
+    public YangSegmentNzNc getSegmentNzNc() {
+        return findNotNullChildByClass(YangSegmentNzNc.class);
+    }
 
 }

@@ -16,10 +16,10 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangDescendantSchemaNodeid extends YangNamedElement {
 
-  @Nullable
-  YangAbsoluteSchemaNodeid getAbsoluteSchemaNodeid();
+    @Nullable
+    YangAbsoluteSchemaNodeid getAbsoluteSchemaNodeid();
 
-  @NotNull
-  YangNodeIdentifier getNodeIdentifier();
+    @NotNull
+    YangNodeIdentifier getNodeIdentifier();
 
 }

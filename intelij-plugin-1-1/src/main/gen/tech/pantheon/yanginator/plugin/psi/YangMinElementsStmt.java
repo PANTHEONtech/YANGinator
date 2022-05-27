@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangMinElementsStmt extends YangYangStmt {
 
-  @NotNull
-  YangMinElementsKeyword getMinElementsKeyword();
+    @NotNull
+    YangMinElementsKeyword getMinElementsKeyword();
 
-  @NotNull
-  YangMinValueArgStr getMinValueArgStr();
+    @NotNull
+    YangMinValueArgStr getMinValueArgStr();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

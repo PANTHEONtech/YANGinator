@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangAbsoluteSchemaNodeid extends YangNamedElement {
 
-  @NotNull
-  List<YangNodeIdentifier> getNodeIdentifierList();
+    @NotNull
+    List<YangNodeIdentifier> getNodeIdentifierList();
 
 }

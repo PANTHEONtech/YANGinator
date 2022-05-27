@@ -23,43 +23,43 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRevisionDateStmt {
 
-  public YangRevisionDateStmtImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangRevisionDateStmtImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  @Override
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitRevisionDateStmt(this);
-  }
+    @Override
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitRevisionDateStmt(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangRevisionDate getRevisionDate() {
-    return findNotNullChildByClass(YangRevisionDate.class);
-  }
+    @Override
+    @NotNull
+    public YangRevisionDate getRevisionDate() {
+        return findNotNullChildByClass(YangRevisionDate.class);
+    }
 
-  @Override
-  @NotNull
-  public YangRevisionDateKeyword getRevisionDateKeyword() {
-    return findNotNullChildByClass(YangRevisionDateKeyword.class);
-  }
+    @Override
+    @NotNull
+    public YangRevisionDateKeyword getRevisionDateKeyword() {
+        return findNotNullChildByClass(YangRevisionDateKeyword.class);
+    }
 
-  @Override
-  @NotNull
-  public YangSep getSep() {
-    return findNotNullChildByClass(YangSep.class);
-  }
+    @Override
+    @NotNull
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
+    }
 
-  @Override
-  @NotNull
-  public YangStmtend getStmtend() {
-    return findNotNullChildByClass(YangStmtend.class);
-  }
+    @Override
+    @NotNull
+    public YangStmtend getStmtend() {
+        return findNotNullChildByClass(YangStmtend.class);
+    }
 
 }

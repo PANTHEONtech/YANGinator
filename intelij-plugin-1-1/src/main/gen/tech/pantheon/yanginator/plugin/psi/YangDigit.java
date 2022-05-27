@@ -16,10 +16,34 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangDigit extends YangNamedElement {
 
-  @Nullable
-  PsiElement getPositiveNumber();
+    @Nullable
+    PsiElement getEight();
 
-  @Nullable
-  PsiElement getZero();
+    @Nullable
+    PsiElement getFive();
+
+    @Nullable
+    PsiElement getFour();
+
+    @Nullable
+    PsiElement getNine();
+
+    @Nullable
+    PsiElement getOne();
+
+    @Nullable
+    PsiElement getSeven();
+
+    @Nullable
+    PsiElement getSix();
+
+    @Nullable
+    PsiElement getThree();
+
+    @Nullable
+    PsiElement getTwo();
+
+    @Nullable
+    PsiElement getZero();
 
 }

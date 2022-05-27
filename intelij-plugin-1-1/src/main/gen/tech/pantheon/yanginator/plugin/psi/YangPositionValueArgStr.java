@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangPositionValueArgStr extends YangNamedElement {
 
-  @NotNull
-  YangPositionValueArg getPositionValueArg();
+    @NotNull
+    YangPositionValueArg getPositionValueArg();
 
 }

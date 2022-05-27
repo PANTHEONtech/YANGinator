@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangKeyArgStr extends YangNamedElement {
 
-  @NotNull
-  YangKeyArg getKeyArg();
+    @NotNull
+    YangKeyArg getKeyArg();
 
 }

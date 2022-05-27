@@ -19,18 +19,18 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangOrderedByKeywordImpl extends YangNamedElementImpl implements YangOrderedByKeyword {
 
-  public YangOrderedByKeywordImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangOrderedByKeywordImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitOrderedByKeyword(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitOrderedByKeyword(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
 }

@@ -17,25 +17,25 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangUri extends YangNamedElement {
 
-  @Nullable
-  YangFragment getFragment();
+    @Nullable
+    YangFragment getFragment();
 
-  @NotNull
-  YangHierPart getHierPart();
+    @NotNull
+    YangHierPart getHierPart();
 
-  @Nullable
-  YangQuery getQuery();
+    @Nullable
+    YangQuery getQuery();
 
-  @NotNull
-  YangScheme getScheme();
+    @NotNull
+    YangScheme getScheme();
 
-  @NotNull
-  PsiElement getColon();
+    @NotNull
+    PsiElement getColon();
 
-  @Nullable
-  PsiElement getHash();
+    @Nullable
+    PsiElement getHash();
 
-  @Nullable
-  PsiElement getQuestionMark();
+    @Nullable
+    PsiElement getQuestionMark();
 
 }

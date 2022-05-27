@@ -13,31 +13,41 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangNotSupportedKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangNotSupportedKeywordStr;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
+import java.util.List;
+
 public class YangNotSupportedKeywordStrImpl extends YangNamedElementImpl implements YangNotSupportedKeywordStr {
 
-  public YangNotSupportedKeywordStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangNotSupportedKeywordStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitNotSupportedKeywordStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitNotSupportedKeywordStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangNotSupportedKeyword getNotSupportedKeyword() {
-    return findNotNullChildByClass(YangNotSupportedKeyword.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
+
+    @Override
+    @NotNull
+    public YangNotSupportedKeyword getNotSupportedKeyword() {
+        return findNotNullChildByClass(YangNotSupportedKeyword.class);
+    }
 
 }

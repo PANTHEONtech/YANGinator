@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangDateArgStr extends YangNamedElement {
 
-  @NotNull
-  YangDateArg getDateArg();
+    @NotNull
+    YangDateArg getDateArg();
 
 }

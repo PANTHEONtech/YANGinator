@@ -24,30 +24,30 @@ import java.util.List;
 
 public class YangUniqueArgImpl extends YangNamedElementImpl implements YangUniqueArg {
 
-  public YangUniqueArgImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangUniqueArgImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitUniqueArg(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitUniqueArg(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDescendantSchemaNodeid.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDescendantSchemaNodeid.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSep> getSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSep> getSepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+    }
 
 }

@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangOrderedByStmt extends YangYangStmt {
 
-  @NotNull
-  YangOrderedByArgStr getOrderedByArgStr();
+    @NotNull
+    YangOrderedByArgStr getOrderedByArgStr();
 
-  @NotNull
-  YangOrderedByKeyword getOrderedByKeyword();
+    @NotNull
+    YangOrderedByKeyword getOrderedByKeyword();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

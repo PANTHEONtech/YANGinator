@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangIdentityrefSpecification extends YangNamedElement {
 
-  @NotNull
-  List<YangBaseStmt> getBaseStmtList();
+    @NotNull
+    List<YangBaseStmt> getBaseStmtList();
 
 }

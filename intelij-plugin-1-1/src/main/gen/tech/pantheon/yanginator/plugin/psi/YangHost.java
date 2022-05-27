@@ -15,13 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangHost extends YangNamedElement {
 
-  @Nullable
-  YangIPLiteral getIPLiteral();
+    @Nullable
+    YangIPLiteral getIPLiteral();
 
-  @Nullable
-  YangIPv4Address getIPv4Address();
+    @Nullable
+    YangIPv4Address getIPv4Address();
 
-  @Nullable
-  YangRegName getRegName();
+    @Nullable
+    YangRegName getRegName();
 
 }

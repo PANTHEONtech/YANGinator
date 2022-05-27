@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangDeviateNotSupportedStmt extends YangYangStmt {
 
-  @NotNull
-  YangDeviateKeyword getDeviateKeyword();
+    @NotNull
+    YangDeviateKeyword getDeviateKeyword();
 
-  @NotNull
-  YangNotSupportedKeywordStr getNotSupportedKeywordStr();
+    @NotNull
+    YangNotSupportedKeywordStr getNotSupportedKeywordStr();
 
-  @NotNull
-  YangSep getSep();
+    @NotNull
+    YangSep getSep();
 
-  @NotNull
-  YangStmtend getStmtend();
+    @NotNull
+    YangStmtend getStmtend();
 
 }

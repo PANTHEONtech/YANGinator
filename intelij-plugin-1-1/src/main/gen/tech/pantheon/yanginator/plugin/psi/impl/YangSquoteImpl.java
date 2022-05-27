@@ -22,24 +22,24 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
 
 public class YangSquoteImpl extends YangNamedElementImpl implements YangSquote {
 
-  public YangSquoteImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangSquoteImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitSquote(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitSquote(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getSingleQuote() {
-    return findNotNullChildByType(YANG_SINGLE_QUOTE);
-  }
+    @Override
+    @NotNull
+    public PsiElement getSingleQuote() {
+        return findNotNullChildByType(YANG_SINGLE_QUOTE);
+    }
 
 }

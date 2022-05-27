@@ -18,16 +18,16 @@ import java.util.List;
 
 public interface YangCurrentFunctionInvocation extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  YangCurrentKeyword getCurrentKeyword();
+    @NotNull
+    YangCurrentKeyword getCurrentKeyword();
 
-  @NotNull
-  PsiElement getLeftParenthesis();
+    @NotNull
+    PsiElement getLeftParenthesis();
 
-  @NotNull
-  PsiElement getRightParenthesis();
+    @NotNull
+    PsiElement getRightParenthesis();
 
 }

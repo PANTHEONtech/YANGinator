@@ -28,42 +28,42 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VERSION;
 
 public class YangIPvFutureImpl extends YangNamedElementImpl implements YangIPvFuture {
 
-  public YangIPvFutureImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangIPvFutureImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitIPvFuture(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitIPvFuture(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public List<YangSubDelims> getSubDelimsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSubDelims.class);
-  }
+    @Override
+    @NotNull
+    public List<YangSubDelims> getSubDelimsList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSubDelims.class);
+    }
 
-  @Override
-  @NotNull
-  public List<YangUnreserved> getUnreservedList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnreserved.class);
-  }
+    @Override
+    @NotNull
+    public List<YangUnreserved> getUnreservedList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnreserved.class);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getDot() {
-    return findNotNullChildByType(YANG_DOT);
-  }
+    @Override
+    @NotNull
+    public PsiElement getDot() {
+        return findNotNullChildByType(YANG_DOT);
+    }
 
-  @Override
-  @NotNull
-  public PsiElement getVersion() {
-    return findNotNullChildByType(YANG_VERSION);
-  }
+    @Override
+    @NotNull
+    public PsiElement getVersion() {
+        return findNotNullChildByType(YANG_VERSION);
+    }
 
 }

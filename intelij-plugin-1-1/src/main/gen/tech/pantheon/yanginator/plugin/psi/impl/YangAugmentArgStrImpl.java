@@ -13,31 +13,48 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangAugmentArg;
 import tech.pantheon.yanginator.plugin.psi.YangAugmentArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangDquote;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangAugmentArgStrImpl extends YangNamedElementImpl implements YangAugmentArgStr {
 
-  public YangAugmentArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangAugmentArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitAugmentArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitAugmentArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangAugmentArg getAugmentArg() {
-    return findNotNullChildByClass(YangAugmentArg.class);
-  }
+    @Override
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangAugmentArg> getAugmentArgList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangAugmentArg.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
+    }
 
 }

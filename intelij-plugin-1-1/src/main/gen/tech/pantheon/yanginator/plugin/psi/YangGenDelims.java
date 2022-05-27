@@ -16,25 +16,25 @@ import org.jetbrains.annotations.Nullable;
 
 public interface YangGenDelims extends YangNamedElement {
 
-  @Nullable
-  PsiElement getAtSign();
+    @Nullable
+    PsiElement getAtSign();
 
-  @Nullable
-  PsiElement getClosedBracket();
+    @Nullable
+    PsiElement getClosedBracket();
 
-  @Nullable
-  PsiElement getColon();
+    @Nullable
+    PsiElement getColon();
 
-  @Nullable
-  PsiElement getForwardSlash();
+    @Nullable
+    PsiElement getForwardSlash();
 
-  @Nullable
-  PsiElement getHash();
+    @Nullable
+    PsiElement getHash();
 
-  @Nullable
-  PsiElement getOpenBracket();
+    @Nullable
+    PsiElement getOpenBracket();
 
-  @Nullable
-  PsiElement getQuestionMark();
+    @Nullable
+    PsiElement getQuestionMark();
 
 }

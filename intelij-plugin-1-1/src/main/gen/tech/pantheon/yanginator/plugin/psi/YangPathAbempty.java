@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface YangPathAbempty extends YangNamedElement {
 
-  @NotNull
-  List<YangSegment> getSegmentList();
+    @NotNull
+    List<YangSegment> getSegmentList();
 
 }

@@ -17,13 +17,16 @@ import java.util.List;
 
 public interface YangQuotedString extends YangNamedElement {
 
-  @NotNull
-  List<YangDquote> getDquoteList();
+    @NotNull
+    List<YangDquote> getDquoteList();
 
-  @NotNull
-  List<YangSquote> getSquoteList();
+    @NotNull
+    List<YangSquote> getSquoteList();
 
-  @NotNull
-  YangString getString();
+    @NotNull
+    List<YangQuotedVchar> getQuotedVcharList();
+
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
 
 }

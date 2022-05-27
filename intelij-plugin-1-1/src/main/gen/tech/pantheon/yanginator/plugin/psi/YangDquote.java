@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface YangDquote extends YangNamedElement {
 
-  @NotNull
-  PsiElement getDoubleQuote();
+    @NotNull
+    PsiElement getDoubleQuote();
 
 }

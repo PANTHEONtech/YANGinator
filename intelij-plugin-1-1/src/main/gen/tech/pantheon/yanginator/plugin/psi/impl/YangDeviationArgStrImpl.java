@@ -20,24 +20,24 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangDeviationArgStrImpl extends YangNamedElementImpl implements YangDeviationArgStr {
 
-  public YangDeviationArgStrImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangDeviationArgStrImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitDeviationArgStr(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitDeviationArgStr(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @NotNull
-  public YangDeviationArg getDeviationArg() {
-    return findNotNullChildByClass(YangDeviationArg.class);
-  }
+    @Override
+    @NotNull
+    public YangDeviationArg getDeviationArg() {
+        return findNotNullChildByClass(YangDeviationArg.class);
+    }
 
 }

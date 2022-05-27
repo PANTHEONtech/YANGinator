@@ -22,30 +22,30 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 public class YangReservedImpl extends YangNamedElementImpl implements YangReserved {
 
-  public YangReservedImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public YangReservedImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull YangVisitor visitor) {
-    visitor.visitReserved(this);
-  }
+    public void accept(@NotNull YangVisitor visitor) {
+        visitor.visitReserved(this);
+    }
 
-  @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
-    else super.accept(visitor);
-  }
+    @Override
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
+        else super.accept(visitor);
+    }
 
-  @Override
-  @Nullable
-  public YangGenDelims getGenDelims() {
-    return findChildByClass(YangGenDelims.class);
-  }
+    @Override
+    @Nullable
+    public YangGenDelims getGenDelims() {
+        return findChildByClass(YangGenDelims.class);
+    }
 
-  @Override
-  @Nullable
-  public YangSubDelims getSubDelims() {
-    return findChildByClass(YangSubDelims.class);
-  }
+    @Override
+    @Nullable
+    public YangSubDelims getSubDelims() {
+        return findChildByClass(YangSubDelims.class);
+    }
 
 }

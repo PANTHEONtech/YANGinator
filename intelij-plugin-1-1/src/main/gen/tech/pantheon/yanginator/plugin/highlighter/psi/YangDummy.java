@@ -20,13 +20,13 @@ import java.util.List;
 
 public interface YangDummy extends YangNamedElement {
 
-  @NotNull
-  List<YangWsp> getWspList();
+    @NotNull
+    List<YangWsp> getWspList();
 
-  @NotNull
-  PsiElement getHIdentifier();
+    @NotNull
+    PsiElement getHIdentifier();
 
-  @Nullable
-  PsiElement getHString();
+    @Nullable
+    PsiElement getHString();
 
 }

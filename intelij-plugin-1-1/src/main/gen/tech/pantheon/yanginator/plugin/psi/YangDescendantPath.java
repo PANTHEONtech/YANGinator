@@ -18,13 +18,13 @@ import java.util.List;
 
 public interface YangDescendantPath extends YangNamedElement {
 
-  @Nullable
-  YangAbsolutePath getAbsolutePath();
+    @Nullable
+    YangAbsolutePath getAbsolutePath();
 
-  @NotNull
-  YangNodeIdentifier getNodeIdentifier();
+    @NotNull
+    YangNodeIdentifier getNodeIdentifier();
 
-  @NotNull
-  List<YangPathPredicate> getPathPredicateList();
+    @NotNull
+    List<YangPathPredicate> getPathPredicateList();
 
 }
