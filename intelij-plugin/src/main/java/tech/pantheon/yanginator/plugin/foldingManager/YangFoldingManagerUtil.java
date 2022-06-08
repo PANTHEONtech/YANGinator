@@ -14,6 +14,7 @@ import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;

@@ -227,7 +227,12 @@ public class GrammarKitRFCService {
                         }
                     }
                     if (count > 1 && !merging.contains("{")) {
-                        lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]";
+                        if (merging.charAt(merging.length()-1) == '+'){
+                            merging = merging.substring(0,merging.length()- 1);
+                            lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]+";
+                        }else {
+                            lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]";
+                        }
                     } else {
                         lexerValue = merging;
                     }

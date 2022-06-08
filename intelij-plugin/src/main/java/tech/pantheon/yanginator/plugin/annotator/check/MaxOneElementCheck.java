@@ -25,7 +25,7 @@ public class MaxOneElementCheck implements ElementCheck {
         long childrenCount = 0;
         final PsiElement[] children = element.getChildren();
         for (PsiElement child : children) {
-            childrenCount += Arrays.stream(child.getChildren()).filter(elementClass::isInstance).count();
+            childrenCount += Arrays.stream(child.getClass().getInterfaces()).filter(elementClass::equals).count();
             if (childrenCount > 1) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "More than one "
                                 + ElementCheckUtils.translateClassName(elementClass))

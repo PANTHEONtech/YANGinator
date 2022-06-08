@@ -14,6 +14,6 @@ import com.intellij.lexer.FlexAdapter;
 
 public class YangGrammarLexer extends FlexAdapter {
     public YangGrammarLexer() {
-        super(new _YangGrammarLexer());
+        super(new _YangLexer());
     }
 }

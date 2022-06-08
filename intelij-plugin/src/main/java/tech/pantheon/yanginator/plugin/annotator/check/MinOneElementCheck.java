@@ -24,8 +24,8 @@ public class MinOneElementCheck implements ElementCheck {
                       @NotNull final Class<? extends PsiElement> elementClass) {
         long childrenCount = 0;
         final PsiElement[] children = element.getChildren();
-        for (PsiElement ch : children) {
-            childrenCount += Arrays.stream(ch.getChildren()).filter(elementClass::isInstance).count();
+        for (PsiElement child : children) {
+            childrenCount += Arrays.stream(child.getClass().getInterfaces()).filter(elementClass::equals).count();
         }
         if (childrenCount < 1) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Missing " + ElementCheckUtils.translateClassName(elementClass))
@@ -50,8 +50,8 @@ public class MinOneElementCheck implements ElementCheck {
         long childrenCount = 0;
         final PsiElement[] children = element.getChildren();
         for (Class<?> c : elementClasses) {
-            for (PsiElement ch : children) {
-                childrenCount += Arrays.stream(ch.getChildren()).filter(c::isInstance).count();
+            for (PsiElement child : children) {
+                childrenCount += Arrays.stream(child.getClass().getInterfaces()).filter(c::equals).count();
             }
         }
         if (childrenCount < 1) {

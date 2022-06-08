@@ -1,0 +1,1267 @@
+/*
+ *
+ *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ *   and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
+{
+ parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+  parserImports=[
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
+  ]
+
+  implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+  extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="tech.pantheon.yanginator.plugin.psi"
+  psiImplPackage="tech.pantheon.yanginator.plugin.psi.impl"
+
+  elementTypeHolderClass="tech.pantheon.yanginator.plugin.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+  tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  extends(".*stmt|unknown_statement.*")=yang-stmt
+
+  generateTokenAccessors=true
+}
+
+yang ::=  (module-stmt | submodule-stmt)
+
+private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
+ EIGHT | NINE | DATE | FRACTIONS | ZEROS // do not change the order of tokens !
+
+
+module-stmt ::= optsep module-keyword sep identifier-arg-str
+  optsep
+  LEFT_BRACE stmtsep
+  module-header-stmts
+  [linkage-stmts]
+  [meta-stmts]
+  revision-stmt*
+  body-stmts
+  RIGHT_BRACE optsep
+
+submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
+  optsep
+  LEFT_BRACE stmtsep
+  submodule-header-stmts
+  [linkage-stmts]
+  [meta-stmts]
+  revision-stmt*
+  body-stmts
+  RIGHT_BRACE optsep
+
+module-header-stmts ::= // these stmts can appear in any order
+<<anyOrder  yang-version-stmt
+  namespace-stmt
+  prefix-stmt
+>>
+submodule-header-stmts ::=
+  // these stmts can appear in any order
+<<anyOrder  yang-version-stmt
+  belongs-to-stmt
+>>
+meta-stmts ::= // these stmts can appear in any order
+(organization-stmt |
+   contact-stmt |
+  description-stmt |
+  reference-stmt )+
+ 
+linkage-stmts ::= (import-stmt | include-stmt)+ 
+ 
+ 
+ 
+  revision-stmt*
+
+body-stmts ::= (extension-stmt |
+  feature-stmt |
+  identity-stmt |
+  typedef-stmt |
+  grouping-stmt |
+  data-def-stmt |
+  augment-stmt |
+  rpc-stmt |
+  notification-stmt |
+  deviation-stmt)*
+
+data-def-stmt ::= container-stmt |
+  leaf-stmt |
+  leaf-list-stmt |
+  list-stmt |
+  choice-stmt |
+  anydata-stmt |
+  anyxml-stmt |
+  uses-stmt
+
+yang-version-stmt ::= yang-version-keyword sep yang-version-arg-str
+  stmtend
+
+yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
+
+yang-version-arg ::= "1.1"
+
+import-stmt ::= import-keyword sep identifier-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  prefix-stmt
+  [revision-date-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE stmtsep
+
+include-stmt ::= include-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [revision-date-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+namespace-stmt ::= namespace-keyword sep uri-str stmtend
+
+uri-str ::= URI | ( DQUOTE URI DQUOTE ) // a string that matches the rule  < URI in RFC 3986
+
+prefix-stmt ::= prefix-keyword sep prefix-arg-str stmtend
+
+belongs-to-stmt ::= belongs-to-keyword sep identifier-arg-str
+  optsep
+  LEFT_BRACE stmtsep
+  prefix-stmt
+  RIGHT_BRACE stmtsep
+
+organization-stmt ::= organization-keyword sep ( quoted-string | string ) stmtend
+
+contact-stmt ::= contact-keyword sep ( quoted-string | string ) stmtend
+
+description-stmt ::= description-keyword sep ( quoted-string | string ) stmtend
+
+reference-stmt ::= reference-keyword sep ( quoted-string | string ) stmtend
+
+units-stmt ::= units-keyword sep ( quoted-string | string ) stmtend
+
+revision-stmt ::= revision-keyword sep revision-date optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+revision-date ::= date-arg-str
+
+revision-date-stmt ::= revision-date-keyword sep revision-date stmtend
+
+extension-stmt ::= extension-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [argument-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+argument-stmt ::= argument-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  [yin-element-stmt]
+  RIGHT_BRACE) stmtsep
+
+yin-element-stmt ::= yin-element-keyword sep yin-element-arg-str
+  stmtend
+
+yin-element-arg-str ::= yin-element-arg | DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
+
+yin-element-arg ::= true-keyword | false-keyword
+
+identity-stmt ::= identity-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  base-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+base-stmt ::= base-keyword sep identifier-ref-arg-str
+  stmtend
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+feature-stmt ::= feature-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+if-feature-stmt ::= if-feature-keyword sep if-feature-expr-str
+  stmtend
+
+if-feature-expr-str ::= if-feature-expr | ( DQUOTE if-feature-expr DQUOTE ) // a string that matches the rule  < if-feature-expr
+
+if-feature-expr ::= if-feature-term
+  [sep or-keyword sep if-feature-expr]
+
+if-feature-term ::= if-feature-factor
+  [sep and-keyword sep if-feature-term]
+
+if-feature-factor ::= not-keyword sep if-feature-factor |
+  LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |
+  identifier-ref-arg
+
+typedef-stmt ::= typedef-keyword sep identifier-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  type-stmt
+  [units-stmt]
+  [default-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE stmtsep
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+type-stmt ::= type-keyword sep identifier-ref-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  [type-body-stmts]
+  RIGHT_BRACE) stmtsep
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+type-body-stmts ::= numerical-restrictions |
+  decimal64-specification |
+  string-restrictions |
+  enum-specification |
+  leafref-specification |
+  identityref-specification |
+  instance-identifier-specification |
+  bits-specification |
+  union-specification |
+  binary-specification
+
+numerical-restrictions ::= range-stmt
+
+range-stmt ::= range-keyword sep range-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [error-message-stmt]
+  [error-app-tag-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+decimal64-specification ::= // these stmts can appear in any order
+<<anyOrder  fraction-digits-stmt
+  [range-stmt]
+>>
+fraction-digits-stmt ::= fraction-digits-keyword sep
+  fraction-digits-arg-str stmtend
+
+fraction-digits-arg-str ::= fraction-digits-arg | DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
+
+fraction-digits-arg ::= ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | FRACTIONS
+
+string-restrictions ::= // these stmts can appear in any order
+<<anyOrder  [length-stmt]
+  pattern-stmt+
+>>
+length-stmt ::= length-keyword sep length-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [error-message-stmt]
+  [error-app-tag-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+pattern-stmt ::= pattern-keyword sep ( quoted-string | string ) optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [modifier-stmt]
+  [error-message-stmt]
+  [error-app-tag-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+modifier-stmt ::= modifier-keyword sep modifier-arg-str stmtend
+
+modifier-arg-str ::= modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
+
+modifier-arg ::= invert-match-keyword
+
+default-stmt ::= default-keyword sep ( quoted-string | string ) stmtend
+
+enum-specification ::= enum-stmt+
+
+enum-stmt ::= enum-keyword sep ( quoted-string | string ) optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  [value-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+leafref-specification ::=
+  // these stmts can appear in any order
+<<anyOrder  path-stmt
+  [require-instance-stmt]
+>>
+path-stmt ::= path-keyword sep path-arg-str stmtend
+
+require-instance-stmt ::= require-instance-keyword sep
+  require-instance-arg-str stmtend
+
+require-instance-arg-str ::= require-instance-arg | DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
+
+require-instance-arg ::= true-keyword | false-keyword
+
+instance-identifier-specification ::=
+  require-instance-stmt
+
+identityref-specification ::=
+  base-stmt+
+
+union-specification ::= type-stmt+
+
+binary-specification ::= length-stmt
+
+bits-specification ::= bit-stmt+
+
+bit-stmt ::= bit-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  [position-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+position-stmt ::= position-keyword sep
+  position-value-arg-str stmtend
+
+position-value-arg-str ::= position-value-arg | DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
+
+position-value-arg ::= non-negative-integer-value
+
+status-stmt ::= status-keyword sep status-arg-str stmtend
+
+status-arg-str ::= status-arg | DOUBLE_QUOTE status-arg DOUBLE_QUOTE
+
+status-arg ::= current-keyword |
+  obsolete-keyword |
+  deprecated-keyword
+
+config-stmt ::= config-keyword sep
+  config-arg-str stmtend
+
+config-arg-str ::= config-arg | DOUBLE_QUOTE config-arg DOUBLE_QUOTE
+
+config-arg ::= true-keyword | false-keyword
+
+mandatory-stmt ::= mandatory-keyword sep
+  mandatory-arg-str stmtend
+
+mandatory-arg-str ::= mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
+
+mandatory-arg ::= true-keyword | false-keyword
+
+presence-stmt ::= presence-keyword sep ( quoted-string | string ) stmtend
+
+ordered-by-stmt ::= ordered-by-keyword sep
+  ordered-by-arg-str stmtend
+
+ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
+
+ordered-by-arg ::= user-keyword | system-keyword
+
+must-stmt ::= must-keyword sep ( quoted-string | string ) optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [error-message-stmt]
+  [error-app-tag-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+error-message-stmt ::= error-message-keyword sep ( quoted-string | string ) stmtend
+
+error-app-tag-stmt ::= error-app-tag-keyword sep ( quoted-string | string ) stmtend
+
+min-elements-stmt ::= min-elements-keyword sep
+  min-value-arg-str stmtend
+
+min-value-arg-str ::= min-value-arg | DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
+
+min-value-arg ::= non-negative-integer-value
+
+max-elements-stmt ::= max-elements-keyword sep
+  max-value-arg-str stmtend
+
+max-value-arg-str ::= max-value-arg | DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
+
+max-value-arg ::= unbounded-keyword |
+  positive-integer-value
+
+value-stmt ::= value-keyword sep integer-value-str stmtend
+
+integer-value-str ::= integer-value | ( DQUOTE integer-value DQUOTE ) // a string that matches the rule  < integer-value
+
+grouping-stmt ::= grouping-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt*
+  action-stmt*
+  notification-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+container-stmt ::= container-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  must-stmt*
+  [presence-stmt]
+  [config-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt*
+  action-stmt*
+  notification-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+leaf-stmt ::= leaf-keyword sep identifier-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  type-stmt
+  [units-stmt]
+  must-stmt*
+  [default-stmt]
+  [config-stmt]
+  [mandatory-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE stmtsep
+
+leaf-list-stmt ::= leaf-list-keyword sep identifier-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  type-stmt stmtsep
+  [units-stmt]
+  must-stmt*
+  default-stmt*
+  [config-stmt]
+  [min-elements-stmt]
+  [max-elements-stmt]
+  [ordered-by-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE stmtsep
+
+list-stmt ::= list-keyword sep identifier-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  must-stmt*
+  [key-stmt]
+  unique-stmt*
+  [config-stmt]
+  [min-elements-stmt]
+  [max-elements-stmt]
+  [ordered-by-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt+
+  action-stmt*
+  notification-stmt*>>
+  RIGHT_BRACE stmtsep
+
+key-stmt ::= key-keyword sep key-arg-str stmtend
+
+key-arg-str ::= key-arg | DOUBLE_QUOTE key-arg DOUBLE_QUOTE
+
+key-arg ::= node-identifier (sep node-identifier)*
+
+unique-stmt ::= unique-keyword sep unique-arg-str stmtend
+
+unique-arg-str ::= unique-arg | DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
+
+unique-arg ::= descendant-schema-nodeid
+  (sep descendant-schema-nodeid)*
+
+choice-stmt ::= choice-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  [default-stmt]
+  [config-stmt]
+  [mandatory-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (short-case-stmt | case-stmt)*>>
+  RIGHT_BRACE) stmtsep
+
+short-case-stmt ::= choice-stmt |
+  container-stmt |
+  leaf-stmt |
+  leaf-list-stmt |
+  list-stmt |
+  anydata-stmt |
+  anyxml-stmt
+
+case-stmt ::= case-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  data-def-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+anydata-stmt ::= anydata-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  must-stmt*
+  [config-stmt]
+  [mandatory-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+anyxml-stmt ::= anyxml-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  must-stmt*
+  [config-stmt]
+  [mandatory-stmt]
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+uses-stmt ::= uses-keyword sep identifier-ref-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  refine-stmt*
+  uses-augment-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+{
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
+}
+refine-stmt ::= refine-keyword sep refine-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  must-stmt*
+  [presence-stmt]
+  default-stmt*
+  [config-stmt]
+  [mandatory-stmt]
+  [min-elements-stmt]
+  [max-elements-stmt]
+  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE stmtsep
+
+refine-arg-str ::= refine-arg | DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
+
+refine-arg ::= descendant-schema-nodeid
+
+uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (data-def-stmt | case-stmt |
+  action-stmt | notification-stmt)+>>
+  RIGHT_BRACE stmtsep
+
+uses-augment-arg-str ::= uses-augment-arg | DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
+
+uses-augment-arg ::= descendant-schema-nodeid
+
+augment-stmt ::= augment-keyword sep augment-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [when-stmt]
+  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (data-def-stmt | case-stmt |
+  action-stmt | notification-stmt)+>>
+  RIGHT_BRACE stmtsep
+
+augment-arg-str ::= augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE)
+
+augment-arg ::= absolute-schema-nodeid
+
+when-stmt ::= when-keyword sep ( quoted-string | string ) optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [description-stmt]
+  [reference-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+rpc-stmt ::= rpc-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  [input-stmt]
+  [output-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+action-stmt ::= action-keyword sep identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  [input-stmt]
+  [output-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+input-stmt ::= input-keyword optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  must-stmt*
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt+>>
+  RIGHT_BRACE stmtsep
+
+output-stmt ::= output-keyword optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  must-stmt*
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt+>>
+  RIGHT_BRACE stmtsep
+
+notification-stmt ::= notification-keyword sep
+  identifier-arg-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  if-feature-stmt*
+  must-stmt*
+  [status-stmt]
+  [description-stmt]
+  [reference-stmt]
+  (typedef-stmt | grouping-stmt)*
+  data-def-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+deviation-stmt-body-args ::= deviate-not-supported-stmt |
+  (deviate-add-stmt |
+  deviate-replace-stmt |
+  deviate-delete-stmt)+
+
+deviation-stmt ::= deviation-keyword sep
+  deviation-arg-str optsep
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [description-stmt]
+  [reference-stmt]
+  deviation-stmt-body-args>>
+  RIGHT_BRACE stmtsep
+
+deviation-arg-str ::= deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
+
+deviation-arg ::= absolute-schema-nodeid
+
+deviate-not-supported-stmt ::=
+  deviate-keyword sep
+  not-supported-keyword-str stmtend
+
+deviate-add-stmt ::= deviate-keyword sep add-keyword-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [units-stmt]
+  must-stmt*
+  unique-stmt*
+  default-stmt*
+  [config-stmt]
+  [mandatory-stmt]
+  [min-elements-stmt]
+  [max-elements-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+deviate-delete-stmt ::= deviate-keyword sep delete-keyword-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [units-stmt]
+  must-stmt*
+  unique-stmt*
+  default-stmt*>>
+  RIGHT_BRACE) stmtsep
+
+deviate-replace-stmt ::= deviate-keyword sep replace-keyword-str optsep
+  (SEMICOLON |
+  LEFT_BRACE stmtsep
+  // these stmts can appear in any order
+<<anyOrder  [type-stmt]
+  [units-stmt]
+  [default-stmt]
+  [config-stmt]
+  [mandatory-stmt]
+  [min-elements-stmt]
+  [max-elements-stmt]>>
+  RIGHT_BRACE) stmtsep
+
+not-supported-keyword-str ::= not-supported-keyword | ( DQUOTE not-supported-keyword DQUOTE ) // a string that matches the rule  < not-supported-keyword
+
+add-keyword-str ::= add-keyword | ( DQUOTE add-keyword DQUOTE ) // a string that matches the rule  < add-keyword
+
+delete-keyword-str ::= delete-keyword | ( DQUOTE delete-keyword DQUOTE ) // a string that matches the rule  < delete-keyword
+
+replace-keyword-str ::= replace-keyword | ( DQUOTE replace-keyword DQUOTE ) // a string that matches the rule  < replace-keyword
+// represents the usage of an extension
+unknown-statement ::= prefix COLON identifier [sep string] optsep
+  (SEMICOLON |
+  LEFT_BRACE optsep
+  ((yang-stmt | unknown-statement) optsep)*
+  RIGHT_BRACE) stmtsep
+
+yang-stmt ::= action-stmt |
+  anydata-stmt |
+  anyxml-stmt |
+  argument-stmt |
+  augment-stmt |
+  base-stmt |
+  belongs-to-stmt |
+  bit-stmt |
+  case-stmt |
+  choice-stmt |
+  config-stmt |
+  contact-stmt |
+  container-stmt |
+  default-stmt |
+  description-stmt |
+  deviate-add-stmt |
+  deviate-delete-stmt |
+  deviate-not-supported-stmt |
+  deviate-replace-stmt |
+  deviation-stmt |
+  enum-stmt |
+  error-app-tag-stmt |
+  error-message-stmt |
+  extension-stmt |
+  feature-stmt |
+  fraction-digits-stmt |
+  grouping-stmt |
+  identity-stmt |
+  if-feature-stmt |
+  import-stmt |
+  include-stmt |
+  input-stmt |
+  key-stmt |
+  leaf-list-stmt |
+  leaf-stmt |
+  length-stmt |
+  list-stmt |
+  mandatory-stmt |
+  max-elements-stmt |
+  min-elements-stmt |
+  modifier-stmt |
+  module-stmt |
+  must-stmt |
+  namespace-stmt |
+  notification-stmt |
+  ordered-by-stmt |
+  organization-stmt |
+  output-stmt |
+  path-stmt |
+  pattern-stmt |
+  position-stmt |
+  prefix-stmt |
+  presence-stmt |
+  range-stmt |
+  reference-stmt |
+  refine-stmt |
+  require-instance-stmt |
+  revision-date-stmt |
+  revision-stmt |
+  rpc-stmt |
+  status-stmt |
+  submodule-stmt |
+  typedef-stmt |
+  type-stmt |
+  unique-stmt |
+  units-stmt |
+  uses-augment-stmt |
+  uses-stmt |
+  value-stmt |
+  when-stmt |
+  yang-version-stmt |
+  yin-element-stmt
+// Ranges
+
+range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
+
+range-arg ::= range-part (optsep PIPE optsep range-part)*
+
+range-part ::= range-boundary
+  [optsep DOUBLE_DOT optsep range-boundary]
+
+range-boundary ::= min-keyword | max-keyword |
+  integer-value | decimal-value
+// Lengths
+
+length-arg-str ::= length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE
+
+length-arg ::= length-part (optsep PIPE optsep length-part)*
+
+length-part ::= length-boundary
+  [optsep DOUBLE_DOT optsep length-boundary]
+
+length-boundary ::= min-keyword | max-keyword |
+  non-negative-integer-value
+// Date
+
+date-arg-str ::= date-arg | DOUBLE_QUOTE date-arg DOUBLE_QUOTE
+
+date-arg ::= DATE
+// Schema Node Identifiers
+
+schema-nodeid ::= absolute-schema-nodeid |
+  descendant-schema-nodeid
+
+absolute-schema-nodeid ::= (FORWARD_SLASH node-identifier)+
+
+descendant-schema-nodeid ::=
+  node-identifier
+  [absolute-schema-nodeid]
+
+node-identifier ::= [prefix COLON] identifier
+// Instance Identifiers
+
+instance-identifier ::= (FORWARD_SLASH (node-identifier
+  [key-predicate+ |
+  leaf-list-predicate |
+  pos]))+
+
+key-predicate ::= OPEN_BRACKET WSP* key-predicate-expr WSP* CLOSED_BRACKET
+
+key-predicate-expr ::= node-identifier WSP* EQUALS WSP* quoted-string
+
+leaf-list-predicate ::= OPEN_BRACKET WSP* leaf-list-predicate-expr WSP* CLOSED_BRACKET
+
+leaf-list-predicate-expr ::= DOT WSP* EQUALS WSP* quoted-string
+
+pos ::= OPEN_BRACKET WSP* positive-integer-value WSP* CLOSED_BRACKET
+
+quoted-string ::= (DQUOTE quoted-vchar (string-splitter quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)
+// leafref path
+
+path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
+
+path-arg ::= absolute-path | relative-path
+
+absolute-path ::= (FORWARD_SLASH (node-identifier path-predicate*))+
+
+relative-path ::= (PARENT_FOLDER)+ descendant-path
+
+descendant-path ::= node-identifier
+  [path-predicate* absolute-path]
+
+path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET
+
+path-equality-expr ::= node-identifier WSP* EQUALS WSP* path-key-expr
+
+path-key-expr ::= current-function-invocation WSP* FORWARD_SLASH WSP*
+  rel-path-keyexpr
+
+rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP*)+
+  (node-identifier WSP* FORWARD_SLASH WSP*)*
+  node-identifier
+//; Keywords, using the syntax for case-sensitive strings (RFC 7405)
+// statement keywords
+action-keyword ::= "action"
+anydata-keyword ::= "anydata"
+anyxml-keyword ::= "anyxml"
+argument-keyword ::= "argument"
+augment-keyword ::= "augment"
+base-keyword ::= "base"
+belongs-to-keyword ::= "belongs-to"
+bit-keyword ::= "bit"
+case-keyword ::= "case"
+choice-keyword ::= "choice"
+config-keyword ::= "config"
+contact-keyword ::= "contact"
+container-keyword ::= "container"
+default-keyword ::= "default"
+description-keyword ::= "description"
+deviate-keyword ::= "deviate"
+deviation-keyword ::= "deviation"
+enum-keyword ::= "enum"
+error-app-tag-keyword ::= "error-app-tag"
+error-message-keyword ::= "error-message"
+extension-keyword ::= "extension"
+feature-keyword ::= "feature"
+fraction-digits-keyword ::= "fraction-digits"
+grouping-keyword ::= "grouping"
+identity-keyword ::= "identity"
+if-feature-keyword ::= "if-feature"
+import-keyword ::= "import"
+include-keyword ::= "include"
+input-keyword ::= "input"
+key-keyword ::= "key"
+leaf-keyword ::= "leaf"
+leaf-list-keyword ::= "leaf-list"
+length-keyword ::= "length"
+list-keyword ::= "list"
+mandatory-keyword ::= "mandatory"
+max-elements-keyword ::= "max-elements"
+min-elements-keyword ::= "min-elements"
+modifier-keyword ::= "modifier"
+module-keyword ::= "module"
+must-keyword ::= "must"
+namespace-keyword ::= "namespace"
+
+notification-keyword ::= "notification"
+ordered-by-keyword ::= "ordered-by"
+organization-keyword ::= "organization"
+output-keyword ::= "output"
+path-keyword ::= "path"
+pattern-keyword ::= "pattern"
+position-keyword ::= "position"
+prefix-keyword ::= "prefix"
+presence-keyword ::= "presence"
+range-keyword ::= "range"
+reference-keyword ::= "reference"
+refine-keyword ::= "refine"
+require-instance-keyword ::= "require-instance"
+revision-keyword ::= "revision"
+revision-date-keyword ::= "revision-date"
+rpc-keyword ::= "rpc"
+status-keyword ::= "status"
+submodule-keyword ::= "submodule"
+type-keyword ::= "type"
+typedef-keyword ::= "typedef"
+unique-keyword ::= "unique"
+units-keyword ::= "units"
+uses-keyword ::= "uses"
+value-keyword ::= "value"
+when-keyword ::= "when"
+yang-version-keyword ::= "yang-version"
+yin-element-keyword ::= "yin-element"
+// other keywords
+
+add-keyword ::= "add"
+current-keyword ::= "current"
+delete-keyword ::= "delete"
+deprecated-keyword ::= "deprecated"
+false-keyword ::= "false"
+invert-match-keyword ::= "invert-match"
+max-keyword ::= "max"
+min-keyword ::= "min"
+not-supported-keyword ::= "not-supported"
+obsolete-keyword ::= "obsolete"
+replace-keyword ::= "replace"
+system-keyword ::= "system"
+true-keyword ::= "true"
+unbounded-keyword ::= "unbounded"
+user-keyword ::= "user"
+
+and-keyword ::= "and"
+or-keyword ::= "or"
+not-keyword ::= "not"
+
+current-function-invocation ::= current-keyword WSP* LEFT_PARENTHESIS WSP* RIGHT_PARENTHESIS
+//; Basic Rules
+
+prefix-arg-str ::= prefix-arg | DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
+
+prefix-arg ::= prefix
+
+prefix ::= identifier
+
+identifier-arg-str ::= identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+
+identifier-arg ::= identifier
+
+identifier ::= (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
+(ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)*
+
+identifier-ref-arg-str ::= identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+
+identifier-ref-arg ::= identifier-ref
+
+identifier-ref ::= [prefix COLON] identifier
+
+string ::= yang-string  // an unquoted string as returned by the scanner, that matches the rule < yang-string
+
+yang-string ::=<<checkString yang-char* "%xD800-DFFF"
+ "%xFDD0-FDEF" "%xFFFE-FFFF" "%x1FFFE-1FFFF"
+ "%x2FFFE-2FFFF" "%x3FFFE-3FFFF" "%x4FFFE-4FFFF"
+ "%x5FFFE-5FFFF" "%x6FFFE-6FFFF" "%x7FFFE-7FFFF"
+ "%x8FFFE-8FFFF" "%x9FFFE-9FFFF" "%xAFFFE-AFFFF"
+ "%xBFFFE-BFFFF" "%xCFFFE-CFFFF" "%xDFFFE-DFFFF"
+ "%xEFFFE-EFFFF" "%xFFFFE-FFFFF" "%x10FFFE-10FFFF"
+>>
+// any Unicode or ISO|IEC 10646 character, including tab, carriage
+// return, and line feed but excluding the other C0 control
+// characters, the surrogate blocks, and the noncharacters
+yang-char ::=VCHAR // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
+//  // exclude surrogate blocks %xD800-DFFF
+//  %xE000-FDCF | // exclude noncharacters %xFDD0-FDEF
+//  %xFDF0-FFFD | // exclude noncharacters %xFFFE-FFFF
+//  %x10000-1FFFD | // exclude noncharacters ""FFE-1FFFF
+//  %x20000-2FFFD | // exclude noncharacters FORWARD_SLASHFFE-2FFFF
+//  %x30000-3FFFD | // exclude noncharacters QUESTION_MARKFFE-3FFFF
+//  %x40000-4FFFD | // exclude noncharacters ALPHAFFE-4FFFF
+//  %x50000-5FFFD | // exclude noncharacters UNDERSCOREFFE-5FFFF
+//  %x60000-6FFFD | // exclude noncharacters ALPHAFFE-6FFFF
+//  %x70000-7FFFD | // exclude noncharacters ""FFE-7FFFF
+//  %x80000-8FFFD | // exclude noncharacters "�"FFE-8FFFF
+//  %x90000-9FFFD | // exclude noncharacters "�"FFE-9FFFF
+//  %xA0000-AFFFD | // exclude noncharacters %xAFFFE-AFFFF
+//  %xB0000-BFFFD | // exclude noncharacters %xBFFFE-BFFFF
+//  %xC0000-CFFFD | // exclude noncharacters %xCFFFE-CFFFF
+//  %xD0000-DFFFD | // exclude noncharacters %xDFFFE-DFFFF
+//  %xE0000-EFFFD | // exclude noncharacters %xEFFFE-EFFFF
+//  %xF0000-FFFFD | // exclude noncharacters %xFFFFE-FFFFF
+//  %x100000-10FFFD // exclude noncharacters %x10FFFE-10FFFF
+
+integer-value ::= (DASH non-negative-integer-value) |
+  non-negative-integer-value
+
+non-negative-integer-value ::= ZERO | positive-integer-value
+
+positive-integer-value ::= (non-zero-digit DIGIT*) | FRACTIONS | DIGITS
+
+zero-integer-value ::= DIGIT+ | DIGITS | FRACTIONS | ZEROS
+
+stmtend ::= optsep (SEMICOLON | LEFT_BRACE stmtsep RIGHT_BRACE) stmtsep
+
+sep ::= (WSP | line-break)+
+  // unconditional separator
+
+optsep ::= (WSP | line-break)*
+
+stmtsep ::= (WSP | line-break | unknown-statement | comment)*
+
+line-break ::= CRLF | LF
+
+non-zero-digit ::= ( ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE )
+
+decimal-value ::= integer-value (DOT zero-integer-value)
+
+SQUOTE ::= SINGLE_QUOTE
+  // single quote
+//; core rules from RFC 5234
+
+// ALPHA ::=   ALPHA   |   ALPHA 
+//  // A-Z | a-z
+
+CR ::= CARRIAGE_RETURN
+  // carriage return
+
+CRLF ::= CR LF
+  // Internet standard newline
+
+DIGIT ::= ( ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE )
+  // 0-9
+
+DQUOTE ::= DOUBLE_QUOTE
+  // double quote
+
+HTAB ::= TAB
+  // horizontal tab
+
+LF ::= LINEFEED
+  // line feed
+
+SP ::= SPACE
+  // space
+
+WSP ::= SP | HTAB
+  // whitespace
+//////////////////////////////
+//
+// RFC 3986
+//
+//////////////////////////////
+
+URI ::= scheme COLON hier-part [ QUESTION_MARK query ] [ HASH fragment ]
+
+hier-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
+  | path-absolute
+  | path-rootless
+  | path-empty
+
+URI-reference ::= URI | relative-ref
+
+absolute-URI ::= scheme COLON hier-part [ QUESTION_MARK query ]
+
+relative-ref ::= relative-part [ QUESTION_MARK query ] [ HASH fragment ]
+
+relative-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
+  | path-absolute
+  | path-noscheme
+  | path-empty
+
+scheme ::= ALPHA ( ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | PLUS_SIGN | DASH | DOT )*
+
+authority ::= [ userinfo AT_SIGN ] host [ COLON port ]
+userinfo ::= ( unreserved | pct-encoded | sub-delims | COLON )*
+host ::= IP-literal | IPv4address | reg-name
+port ::= DIGIT* | DIGITS | FRACTIONS | ZEROS
+
+IP-literal ::= OPEN_BRACKET ( IPv6address | IPvFuture ) CLOSED_BRACKET
+
+IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | sub-delims | COLON )+
+
+IPv6address ::= ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  |  DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [  h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ] h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON ( h16 COLON ) ( h16 COLON ) ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  h16 COLON  ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  ls32
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON  h16
+  | [ [ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ][ h16 COLON ] h16 ] DOUBLE_COLON
+
+h16 ::= (HEXDIG) | (HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG HEXDIG)
+ls32 ::= ( h16 COLON h16 ) | IPv4address
+IPv4address ::= IPV4
+
+dec-octet ::= DIGIT // 0-9
+  | ( ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE ) DIGIT  // 10-99
+  | ONE DIGIT DIGIT  // 100-199
+  | TWO ( ZERO | ONE | TWO | THREE | FOUR ) DIGIT  // 200-249
+  | TWO FIVE ( ZERO | ONE | TWO | THREE | FOUR | FIVE )  // 250-255 deviation against original rfc 3986
+
+reg-name ::= ( unreserved | pct-encoded | sub-delims )*
+
+path ::= path-abempty // begins with FORWARD_SLASH or is empty
+  | path-absolute  // begins with FORWARD_SLASH but not DOUBLE_FORWARD_SLASH
+  | path-noscheme  // begins with a non-colon segment
+  | path-rootless  // begins with a segment
+  | path-empty  // zero characters
+
+path-abempty ::= ( FORWARD_SLASH segment )*
+path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
+path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
+path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
+path-empty ::= ZERO_LENGHT_STRING// pchar deviation against original rfc 3986
+segment ::= pchar*
+segment-nz ::= pchar+
+segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
+  // non-zero-length segment without any colon COLON
+
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+
+query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
+
+fragment ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
+
+pct-encoded ::= PERCENT_SIGN HEXDIG HEXDIG
+
+unreserved ::= ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | DASH | DOT | UNDERSCORE | TILDE
+reserved ::= gen-delims | sub-delims
+gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
+sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
+  | ASTERISK | PLUS_SIGN | COMMA | EQUALS
+
+string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)
+
+quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)
+
+quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
+
+VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
+
+comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )

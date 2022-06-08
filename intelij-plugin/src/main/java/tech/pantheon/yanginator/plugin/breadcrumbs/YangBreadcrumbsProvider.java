@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangLanguage;
 import tech.pantheon.yanginator.plugin.psi.YangContainerStmt;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
+import tech.pantheon.yanginator.plugin.psi.YangLeafStmt;
 import tech.pantheon.yanginator.plugin.psi.YangListStmt;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIdentifierArgImpl;
 
@@ -33,6 +34,7 @@ public class YangBreadcrumbsProvider implements BreadcrumbsProvider {
     @Override
     public boolean acceptElement(@NotNull PsiElement psiElement) {
         return psiElement instanceof YangListStmt
+                || psiElement instanceof YangLeafStmt
                 || psiElement instanceof YangContainerStmt
                 || psiElement instanceof YangGroupingStmt;
     }

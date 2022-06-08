@@ -11,7 +11,8 @@
 package tech.pantheon.yanginator.plugin.icons;
 
 import com.intellij.openapi.util.IconLoader;
-import javax.swing.Icon;
+
+import javax.swing.*;
 
 public class YangIcons {
     public static final Icon FILE = IconLoader.getIcon("/icons/yang-16x16.png", YangIcons.class);

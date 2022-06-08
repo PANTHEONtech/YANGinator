@@ -11,10 +11,11 @@
 package tech.pantheon.yanginator.plugin;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.icons.YangIcons;
+
+import javax.swing.*;
 
 public class YangFileType extends LanguageFileType {
     public static final YangFileType INSTANCE = new YangFileType();

@@ -24,7 +24,10 @@
 }
 
 yang ::=  (module-stmt | submodule-stmt)
-tokens ::= BLOCK_COMMENT  // needed for parser generation
+
+private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
+ EIGHT | NINE | DATE | FRACTIONS | ZEROS // do not change the order of tokens !
+
 
 SPECIAL ::= (   ALPHA   [ALPHA |
  SOMETHING ALPHA] (ALPHA | DOG) ALPHA )
@@ -37,9 +40,7 @@ dec-octet ::= DIGIT // 0-9
   |  "2"   "0" | "1" | "2" | "3" | "4"  DIGIT  // 200-249
   |  "2" "5"   "0" | "1" | "2" | "3" | "4" | "5"   // 250-255
 
-fraction-digits-arg ::= ("1" ["0" | "1" | "2" | "3" | "4" |
-  "5" | "6" | "7" | "8"])
-  | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+fraction-digits-arg ::= ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | FRACTIONS
 
 DIGIT ::= "0" |
  "1" | "2"
@@ -81,12 +82,12 @@ relative-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
   | path-noscheme
   | path-empty
 
-scheme ::= ALPHA ( ALPHA | DIGIT | PLUS_SIGN | DASH | DOT )*
+scheme ::= ALPHA ( ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | PLUS_SIGN | DASH | DOT )*
 
 authority ::= [ userinfo AT_SIGN ] host [ COLON port ]
 userinfo ::= ( unreserved | pct-encoded | sub-delims | COLON )*
 host ::= IP-literal | IPv4address | reg-name
-port ::= DIGIT*
+port ::= DIGIT* | DIGITS | FRACTIONS | ZEROS
 
 IP-literal ::= OPEN_BRACKET ( IPv6address | IPvFuture ) CLOSED_BRACKET
 
@@ -104,7 +105,7 @@ IPv6address ::= ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 CO
 
 h16 ::= (HEXDIG) | (HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG HEXDIG)
 ls32 ::= ( h16 COLON h16 ) | IPv4address
-IPv4address ::= dec-octet DOT dec-octet DOT dec-octet DOT dec-octet
+IPv4address ::= IPV4
 
 dec-octet ::= DIGIT // 0-9
   | ( ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE ) DIGIT  // 10-99
@@ -138,7 +139,7 @@ fragment ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
 pct-encoded ::= PERCENT_SIGN HEXDIG HEXDIG
 
-unreserved ::= ALPHA | DIGIT | DASH | DOT | UNDERSCORE | TILDE
+unreserved ::= ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | DASH | DOT | UNDERSCORE | TILDE
 reserved ::= gen-delims | sub-delims
 gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
@@ -150,6 +151,6 @@ quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUO
 
 quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
 
-VCHAR ::= (APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | PARENT_FOLDER )
+VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
 
 comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )

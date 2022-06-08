@@ -10,18 +10,6 @@
 
 package tech.pantheon.yanginator.plugin.completion;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.COLON_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.DOT_YANG_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.EMPTY_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.LEFT_BRACE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.QUOTES_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SEMICOLON_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TO_WORDS_RGX;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
-
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilder;
 import com.intellij.lang.folding.FoldingDescriptor;
@@ -35,17 +23,30 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.YangFileType;
+import tech.pantheon.yanginator.plugin.psi.YangFile;
+import tech.pantheon.yanginator.plugin.psi.YangTypes;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.YangFileType;
-import tech.pantheon.yanginator.plugin.psi.YangFile;
-import tech.pantheon.yanginator.plugin.psi.YangTypes;
+
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.COLON_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.DOT_YANG_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.EMPTY_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.LEFT_BRACE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.QUOTES_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SEMICOLON_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TO_WORDS_RGX;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.TYPE_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.USES_STR;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.WSP_STR;
 
 public class YangCompletionContributorBuilder implements FoldingBuilder {
 
@@ -55,21 +56,16 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
         psiNode = node.getPsi();
-
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
-
         setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
-
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentGroupingNames(), YangTypes.YANG_GROUPING_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentTypedefNames(), YangTypes.YANG_TYPEDEF_KEYWORD);
         setCompletionValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getCurrentIdentityNames(), YangTypes.YANG_IDENTITY_KEYWORD);
-
         var importedIdentifiers = findAllImportedIdentifiers();
         setImportedIdentifiers(importedIdentifiers, YangCompletionContributorPopUp.POP_UP.getImportedIdentifiers());
         updateImportedIdentifiers(importedIdentifiers);
 
-        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher("");
-
+        YangCompletionContributorPopUp.POP_UP.setPrefixMatcher(new StringBuilder());
         return new FoldingDescriptor[0];
     }
 
@@ -82,7 +78,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
             values.removeIf(e -> e.length() < 1);
         }
     }
-
 
     @NotNull
     private IElementType getYangKeyword(List<String> currentIdentifiers) {
@@ -168,7 +163,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         if (isNotForbiddenCharacter(prevSibling)) {
             prefixIdentifier.append(new StringBuilder(prevSibling.getText()).reverse());
         } else {
-            prefixIdentifier.append(prevSibling.getText());
+            prefixIdentifier.append(prevSibling.getPrevSibling().getText());
         }
     }
 
@@ -189,7 +184,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private String getIdentifier(PsiElement e) {
         StringBuilder prefixIdentifier = new StringBuilder();
         var nextSibling = e.getNextSibling() == null ? null : e.getNextSibling();
-
         while (nextSibling != null) {
             if (!isElementYangType(nextSibling, YangTypes.YANG_SPACE)) {
                 if (isElementYangType(nextSibling, YangTypes.YANG_LEFT_BRACE)) {
@@ -259,7 +253,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     private void setCompletionValues(@NotNull List<PsiElement> psiElements, List<String> values, IElementType yangType) {
         updateValues(values);
         psiElements.stream()
-                .filter(e -> isElementYangType(e, yangType))
+                .filter(e -> isElementYangType(e, yangType) && isElementYangType(e.getPrevSibling(), yangType))
                 .forEach(e -> values.add(getIdentifier(e)));
         values.removeIf(e -> e.length() < 1);
     }

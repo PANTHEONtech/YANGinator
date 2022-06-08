@@ -30,13 +30,16 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
     private static final String SPACES_BEFORE_LEFT_BRACE_TITLE = "Space before left brace";
     private static final String SPACES_BEFORE_LEFT_BRACE_GROUP_NAME = "Custom spacing";
 
+    private static @NotNull String readCodeSample() {
+        return CodeStyleAbstractPanel.readFromFile(YangLanguageCodeStyleSettingsProvider.class, "preview.yang");
+    }
     @Override
     public void customizeSettings(@NotNull final CodeStyleSettingsCustomizable consumer,
                                   @NotNull final SettingsType settingsType) {
         if (settingsType == SettingsType.SPACING_SETTINGS) {
             consumer.showStandardOptions(SPACE_AROUND_ADDITIVE_OPERATORS_OPTION_NAME);
             consumer.showCustomOption(YangCodeStyleSettings.class, SPACES_BEFORE_LEFT_BRACE_OPTION_NAME, SPACES_BEFORE_LEFT_BRACE_TITLE, SPACES_BEFORE_LEFT_BRACE_GROUP_NAME);
-        } else if (settingsType == SettingsType.INDENT_SETTINGS) {
+        } else if (settingsType == SettingsType.BLANK_LINES_SETTINGS) {
             consumer.showStandardOptions(INDENT_SIZE_OPTION_NAME);
             consumer.showStandardOptions(TAB_SIZE_OPTION_NAME);
         }
@@ -60,12 +63,8 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
     @Override
     protected void customizeDefaults(@NotNull final CommonCodeStyleSettings commonSettings,
                                      @NotNull final CommonCodeStyleSettings.IndentOptions indentOptions) {
-        indentOptions.INDENT_SIZE = 2;
-        indentOptions.CONTINUATION_INDENT_SIZE = 2;
-        indentOptions.TAB_SIZE = 2;
-    }
-
-    private static @NotNull String readCodeSample() {
-        return CodeStyleAbstractPanel.readFromFile(YangLanguageCodeStyleSettingsProvider.class, "preview.yang");
+        indentOptions.INDENT_SIZE = commonSettings.initIndentOptions().INDENT_SIZE;
+        indentOptions.CONTINUATION_INDENT_SIZE = commonSettings.initIndentOptions().CONTINUATION_INDENT_SIZE;
+        indentOptions.TAB_SIZE = commonSettings.initIndentOptions().TAB_SIZE;
     }
 }

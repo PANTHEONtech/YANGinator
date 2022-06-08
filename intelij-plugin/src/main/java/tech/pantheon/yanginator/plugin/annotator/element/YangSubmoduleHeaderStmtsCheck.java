@@ -26,6 +26,7 @@ public class YangSubmoduleHeaderStmtsCheck extends AbstractYangStmtCheck {
     @Override
     public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         maxOne.check(element, holder, YangYangVersionStmt.class);
+        minOne.check(element, holder, YangYangVersionStmt.class);
         maxOne.check(element, holder, YangBelongsToStmt.class);
         minOne.check(element, holder, YangBelongsToStmt.class);
     }

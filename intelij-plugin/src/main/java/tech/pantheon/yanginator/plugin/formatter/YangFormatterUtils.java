@@ -107,14 +107,18 @@ final class YangFormatterUtils {
     );
 
     private static final TokenSet WHITESPACE_SET = TokenSet.create(
+            YangTypes.YANG_STMTSEP,
+            YangTypes.YANG_SEP,
+            YangTypes.YANG_WSP,
+            YangTypes.YANG_SP,
+            YangTypes.YANG_OPTSEP,
             YangTypes.YANG_SPACE,
             YangTypes.YANG_TAB,
-            YangTypes.YANG_NEW_LINE_CHARACTERS,
             YangTypes.YANG_LINEFEED,
             YangTypes.YANG_CARRIAGE_RETURN
     );
 
-    private static final TokenSet STATEMENT_SET = TokenSet.create(
+    static final TokenSet STATEMENT_SET = TokenSet.create(
             YangTypes.YANG_YANG_VERSION_STMT,
             YangTypes.YANG_NAMESPACE_STMT,
             YangTypes.YANG_IMPORT_STMT,
@@ -183,9 +187,7 @@ final class YangFormatterUtils {
             YangTypes.YANG_STATUS_STMT,
             YangTypes.YANG_DESCRIPTION_STMT,
             YangTypes.YANG_UNKNOWN_STATEMENT,
-            YangTypes.YANG_UNKNOWN_STATEMENT_2,
             YangTypes.YANG_STRING,
-            YangTypes.YANG_LINE_COMMENT,
             YangTypes.YANG_BLOCK_COMMENT
     );
 
@@ -221,7 +223,6 @@ final class YangFormatterUtils {
             YangTypes.YANG_USES_AUGMENT_STMT,
             YangTypes.YANG_AUGMENT_STMT,
             YangTypes.YANG_UNKNOWN_STATEMENT,
-            YangTypes.YANG_UNKNOWN_STATEMENT_2,
             YangTypes.YANG_WHEN_STMT,
             YangTypes.YANG_RPC_STMT,
             YangTypes.YANG_INPUT_STMT,
@@ -235,11 +236,9 @@ final class YangFormatterUtils {
     );
 
     private static final TokenSet DO_NOT_ALIGN_SET = TokenSet.create(
-            YangTypes.YANG_STRING_SPLITTER,
-            YangTypes.YANG_SINGLE_QUOTE_STRING_SPLITTER,
             YangTypes.YANG_NODE_IDENTIFIER,
             YangTypes.YANG_IDENTIFIER,
-            YangTypes.YANG_IDENTIFIER_QUOTED,
+            YangTypes.YANG_IDENTIFIER_ARG_STR,
             YangTypes.YANG_PREFIX
     );
 

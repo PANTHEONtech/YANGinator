@@ -14,8 +14,10 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.annotator.check.ElementCheckUtils;
+import tech.pantheon.yanginator.plugin.psi.YangActionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangCaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangNotificationStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangStatusStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesAugmentStmt;
@@ -38,6 +40,8 @@ public class YangUsesAugmentStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangReferenceStmt.class);
         final List<Class<?>> dataDefStatements = new ArrayList<>(ElementCheckUtils.getDataDefStatements());
         dataDefStatements.add(YangCaseStmt.class);
+        dataDefStatements.add(YangActionStmt.class);
+        dataDefStatements.add(YangNotificationStmt.class);
         minOne.checkMany(element, holder, dataDefStatements);
     }
 }

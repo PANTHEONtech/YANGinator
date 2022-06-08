@@ -19,7 +19,8 @@ public class YangBreadcrumbsPresentationProvider extends BreadcrumbsPresentation
     private static final CrumbPresentation[] COLORS = {
             new YangCrumbPresentation(JBColor.BLUE),
             new YangCrumbPresentation(JBColor.GREEN),
-            new YangCrumbPresentation(JBColor.RED)};
+            new YangCrumbPresentation(JBColor.RED),
+            new YangCrumbPresentation(JBColor.YELLOW),};
 
     @Override
     public CrumbPresentation[] getCrumbPresentations(PsiElement[] psiElements) {

@@ -10,8 +10,6 @@
 
 package tech.pantheon.yanginator.plugin.completion;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
-
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiTreeChangeEvent;
@@ -20,18 +18,38 @@ import com.intellij.psi.util.PsiEditorUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
+
 public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
+    private String tmp = "";
+    private static final Set<String> SEPARATORS = new HashSet<>(Set.of(" ","\n" ,"\r" ,"\t"));
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
         if (event.getFile() == null
                 || event.getFile().getNode() == null
-                || event.getFile().getNode().getPsi() == null){
+                || event.getFile().getNode().getPsi() == null) {
             return;
         }
+        setDefaultTmpString();
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-            POP_UP.setPrefixMatcher(prevPsiElement == null ? "" : prevPsiElement.getText());
+            getPrevSiblingsValues(prevPsiElement);
+            POP_UP.setPrefixMatcher(new StringBuilder(tmp));
+        }
+    }
+
+    private void setDefaultTmpString() {
+        this.tmp = "";
+    }
+    private void getPrevSiblingsValues(PsiElement prevPsiElement) {
+        if (prevPsiElement != null && !SEPARATORS.contains(prevPsiElement.getText())) {
+            tmp += prevPsiElement.getText();
+            prevPsiElement = prevPsiElement.getPrevSibling();
+            getPrevSiblingsValues(prevPsiElement);
         }
     }
 

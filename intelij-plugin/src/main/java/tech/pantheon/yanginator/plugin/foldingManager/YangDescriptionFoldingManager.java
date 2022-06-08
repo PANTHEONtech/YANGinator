@@ -16,11 +16,12 @@ import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 /**/
 
 public class YangDescriptionFoldingManager extends FoldingBuilderEx implements DumbAware {

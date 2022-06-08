@@ -14,8 +14,8 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgQuoted;
-import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgQuoted;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl;
 
 public abstract class YangGeneratedReferenceTypeImpl extends YangNamedElementImpl implements YangReferencedStatement {
@@ -32,13 +32,13 @@ public abstract class YangGeneratedReferenceTypeImpl extends YangNamedElementImp
 
     @Override
     @NotNull
-    public YangIdentifierArgQuoted getIdentifierArgQuoted() {
+    public YangIdentifierArgStr getIdentifierArgStr() {
         return null;
     }
 
     @Override
     @NotNull
-    public YangIdentifierRefArgQuoted getIdentifierRefArgQuoted() {
+    public YangIdentifierRefArgStr getIdentifierRefArgStr() {
         return null;
     }
 

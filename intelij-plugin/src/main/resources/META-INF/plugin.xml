@@ -1,12 +1,12 @@
 <!--
- ~
- ~   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- ~
- ~   This program and the accompanying materials are made available under the
- ~   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- ~   and is available at http://www.eclipse.org/legal/epl-v10.html
- ~
- -->
+  ~
+  ~   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+  ~
+  ~   This program and the accompanying materials are made available under the
+  ~   terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  ~   and is available at http://www.eclipse.org/legal/epl-v10.html
+  ~
+  -->
 
 <idea-plugin url="https://github.com/PANTHEONtech/YANGinator">
     <id>tech.pantheon.yanginator</id>
@@ -25,44 +25,19 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Language -->
-        <lang.commenter language="yang-pantheon"
-                        implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
         <fileType name="Yang file" implementationClass="tech.pantheon.yanginator.plugin.YangFileType"
                   fieldName="INSTANCE" language="yang-pantheon" extensions="yang"/>
         <lang.parserDefinition
                 language="yang-pantheon"
                 implementationClass="tech.pantheon.yanginator.plugin.YangParserDefinition"/>
 
-        <!-- Folding -->
-        <lang.foldingBuilder language="yang-pantheon"
-                             implementationClass=
-                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCurlyBraceFoldingManager"/>
-        <lang.foldingBuilder language="yang-pantheon"
-                             implementationClass=
-                                     "tech.pantheon.yanginator.plugin.foldingManager.YangDescriptionFoldingManager"/>
-        <lang.foldingBuilder language="yang-pantheon"
-                             implementationClass=
-                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
-
         <!-- Highlighter -->
         <lang.syntaxHighlighterFactory language="yang-pantheon"
-                                       implementationClass="tech.pantheon.yanginator.plugin.editor.YangSyntaxHighlighterFactory"/>
+                                       implementationClass="tech.pantheon.yanginator.plugin.highlighter.YangSyntaxHighlighterFactory"/>
 
-        <!-- Commenter -->
-        <lang.commenter language="yang-pantheon"
-                        implementationClass="tech.pantheon.yanginator.plugin.YangCommenter"/>
-
-        <!-- Editor -->
+        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.highlighter.YangColorSettingsPage"/>
         <lang.braceMatcher language="yang-pantheon"
-                           implementationClass="tech.pantheon.yanginator.plugin.editor.YangPairedCurlyBraceMatcher"/>
-        <colorSettingsPage implementation="tech.pantheon.yanginator.plugin.editor.YangColorSettingsPage"/>
-
-        <!-- Formatter -->
-        <lang.formatter language="yang-pantheon"
-                        implementationClass="tech.pantheon.yanginator.plugin.formatter.YangFormattingModelBuilder"/>
-        <codeStyleSettingsProvider implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettingsProvider"/>
-        <langCodeStyleSettingsProvider
-                implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangLanguageCodeStyleSettingsProvider"/>
+                           implementationClass="tech.pantheon.yanginator.plugin.highlighter.YangPairedCurlyBraceMatcher"/>
 
         <!-- Completion -->
         <completion.contributor language="yang-pantheon"
@@ -79,11 +54,28 @@
         <breadcrumbsInfoProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsProvider"/>
         <breadcrumbsPresentationProvider implementation="tech.pantheon.yanginator.plugin.breadcrumbs.YangBreadcrumbsPresentationProvider"/>
 
+        <!-- Formatter -->
+        <lang.formatter language="yang-pantheon"
+                        implementationClass="tech.pantheon.yanginator.plugin.formatter.YangFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider
+                implementation="tech.pantheon.yanginator.plugin.formatter.settings.YangLanguageCodeStyleSettingsProvider"/>
+
+        <!-- Folding -->
+        <lang.foldingBuilder language="yang-pantheon"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCurlyBraceFoldingManager"/>
+        <lang.foldingBuilder language="yang-pantheon"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangDescriptionFoldingManager"/>
+        <lang.foldingBuilder language="yang-pantheon"
+                             implementationClass=
+                                     "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
+
         <!-- Annotator -->
         //TODO uncomment me when new .bnf is used
         <!-- annotator is commented because it shows error on yang "openconfig-interfaces-ext.yang"
         and "openconfig-ospfv2.yang" this is because of anyorder external rule is still in development -->
-
-        <!-- <annotator language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.annotator.YangAnnotator"/> -->
+        <annotator language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.annotator.YangAnnotator"/>
     </extensions>
 </idea-plugin>

@@ -40,7 +40,7 @@ test {
 sourceSets {
     main {
         java {
-            srcDirs 'src/main/gen', 'src/main/highlighter'
+            srcDirs 'src/main/gen'
         }
     }
 }
