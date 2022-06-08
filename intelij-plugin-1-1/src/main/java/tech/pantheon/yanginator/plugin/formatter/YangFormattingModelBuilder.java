@@ -21,13 +21,24 @@ import com.intellij.formatting.WrapType;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangLanguage;
-import tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettings;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 import static tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils.KEYWORD_SET;
 import static tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils.SEMICOLON_SET;
 
 public class YangFormattingModelBuilder implements FormattingModelBuilder {
+    private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
+        return new SpacingBuilder(settings, YangLanguage.INSTANCE)
+                .after(KEYWORD_SET)
+                .spaces(1)
+                .before(SEMICOLON_SET)
+                .none()
+                .after(YangTypes.YANG_IDENTIFIER_ARG_STR)
+                .spaces(1)
+                .beforeInside(YangTypes.YANG_VCHAR, YangTypes.YANG_QUOTED_STRING)
+                .none();
+    }
+
     @Override
     public @NotNull FormattingModel createModel(@NotNull final FormattingContext formattingContext) {
         final CodeStyleSettings codeStyleSettings = formattingContext.getCodeStyleSettings();
@@ -39,18 +50,4 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
                                 createSpaceBuilder(codeStyleSettings)),
                         codeStyleSettings);
     }
-
-    private static SpacingBuilder createSpaceBuilder(final CodeStyleSettings settings) {
-        final YangCodeStyleSettings yangSetting = settings.getCustomSettings(YangCodeStyleSettings.class);
-        return new SpacingBuilder(settings, YangLanguage.INSTANCE)
-                .after(KEYWORD_SET)
-                .spaces(1)
-                .before(YangTypes.YANG_LEFT_BRACE)
-                .spaceIf(yangSetting.spacesBeforeLeftBrace)
-                .before(SEMICOLON_SET)
-                .none()
-                .beforeInside(YangTypes.YANG_STRING, YangTypes.YANG_UNKNOWN_STATEMENT)
-                .spaceIf(settings.getCommonSettings(YangLanguage.INSTANCE.getID()).SPACE_AROUND_ADDITIVE_OPERATORS);
-    }
-
 }

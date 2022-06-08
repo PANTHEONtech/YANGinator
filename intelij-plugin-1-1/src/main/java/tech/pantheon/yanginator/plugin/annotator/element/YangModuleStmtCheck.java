@@ -18,7 +18,6 @@ import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
 import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
-import tech.pantheon.yanginator.plugin.psi.YangRevisionStmts;
 
 public class YangModuleStmtCheck extends AbstractYangStmtCheck {
     @Override
@@ -34,8 +33,6 @@ public class YangModuleStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangLinkageStmts.class);
         minOne.check(element, holder, YangMetaStmts.class);
         maxOne.check(element, holder, YangMetaStmts.class);
-        minOne.check(element, holder, YangRevisionStmts.class);
-        maxOne.check(element, holder, YangRevisionStmts.class);
         minOne.check(element, holder, YangBodyStmts.class);
         maxOne.check(element, holder, YangBodyStmts.class);
     }

@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
 import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
-import tech.pantheon.yanginator.plugin.psi.YangRevisionStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 
@@ -34,8 +33,6 @@ public class YangSubmoduleStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangLinkageStmts.class);
         minOne.check(element, holder, YangMetaStmts.class);
         maxOne.check(element, holder, YangMetaStmts.class);
-        minOne.check(element, holder, YangRevisionStmts.class);
-        maxOne.check(element, holder, YangRevisionStmts.class);
         minOne.check(element, holder, YangBodyStmts.class);
         maxOne.check(element, holder, YangBodyStmts.class);
     }
