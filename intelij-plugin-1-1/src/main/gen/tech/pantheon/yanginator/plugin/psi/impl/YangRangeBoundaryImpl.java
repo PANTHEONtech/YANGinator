@@ -11,55 +11,53 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangDecimalValue;
-import tech.pantheon.yanginator.plugin.psi.YangIntegerValue;
-import tech.pantheon.yanginator.plugin.psi.YangMaxKeyword;
-import tech.pantheon.yanginator.plugin.psi.YangMinKeyword;
-import tech.pantheon.yanginator.plugin.psi.YangRangeBoundary;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangRangeBoundaryImpl extends YangNamedElementImpl implements YangRangeBoundary {
 
-    public YangRangeBoundaryImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangRangeBoundaryImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitRangeBoundary(this);
-    }
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitRangeBoundary(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @Nullable
-    public YangDecimalValue getDecimalValue() {
-        return findChildByClass(YangDecimalValue.class);
-    }
+  @Override
+  @Nullable
+  public YangDecimalValue getDecimalValue() {
+    return findChildByClass(YangDecimalValue.class);
+  }
 
-    @Override
-    @Nullable
-    public YangIntegerValue getIntegerValue() {
-        return findChildByClass(YangIntegerValue.class);
-    }
+  @Override
+  @Nullable
+  public YangIntegerValue getIntegerValue() {
+    return findChildByClass(YangIntegerValue.class);
+  }
 
-    @Override
-    @Nullable
-    public YangMaxKeyword getMaxKeyword() {
-        return findChildByClass(YangMaxKeyword.class);
-    }
+  @Override
+  @Nullable
+  public YangMaxKeyword getMaxKeyword() {
+    return findChildByClass(YangMaxKeyword.class);
+  }
 
-    @Override
-    @Nullable
-    public YangMinKeyword getMinKeyword() {
-        return findChildByClass(YangMinKeyword.class);
-    }
+  @Override
+  @Nullable
+  public YangMinKeyword getMinKeyword() {
+    return findChildByClass(YangMinKeyword.class);
+  }
 
 }

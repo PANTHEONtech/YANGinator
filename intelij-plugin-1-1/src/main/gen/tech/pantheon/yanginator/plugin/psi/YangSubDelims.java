@@ -11,39 +11,40 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 
 public interface YangSubDelims extends YangNamedElement {
 
-    @Nullable
-    PsiElement getAmpersand();
+  @Nullable
+  PsiElement getAmpersand();
 
-    @Nullable
-    PsiElement getAsterisk();
+  @Nullable
+  PsiElement getAsterisk();
 
-    @Nullable
-    PsiElement getComma();
+  @Nullable
+  PsiElement getComma();
 
-    @Nullable
-    PsiElement getDollarSign();
+  @Nullable
+  PsiElement getDollarSign();
 
-    @Nullable
-    PsiElement getEquals();
+  @Nullable
+  PsiElement getEquals();
 
-    @Nullable
-    PsiElement getExclamationMark();
+  @Nullable
+  PsiElement getExclamationMark();
 
-    @Nullable
-    PsiElement getLeftParenthesis();
+  @Nullable
+  PsiElement getLeftParenthesis();
 
-    @Nullable
-    PsiElement getPlusSign();
+  @Nullable
+  PsiElement getPlusSign();
 
-    @Nullable
-    PsiElement getRightParenthesis();
+  @Nullable
+  PsiElement getRightParenthesis();
 
-    @Nullable
-    PsiElement getSingleQuote();
+  @Nullable
+  PsiElement getSingleQuote();
 
 }

@@ -11,57 +11,53 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExpr;
-import tech.pantheon.yanginator.plugin.psi.YangIfFeatureTerm;
-import tech.pantheon.yanginator.plugin.psi.YangOrKeyword;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import java.util.List;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangIfFeatureExprImpl extends YangNamedElementImpl implements YangIfFeatureExpr {
 
-    public YangIfFeatureExprImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangIfFeatureExprImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitIfFeatureExpr(this);
-    }
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitIfFeatureExpr(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @Nullable
-    public YangIfFeatureExpr getIfFeatureExpr() {
-        return findChildByClass(YangIfFeatureExpr.class);
-    }
+  @Override
+  @Nullable
+  public YangIfFeatureExpr getIfFeatureExpr() {
+    return findChildByClass(YangIfFeatureExpr.class);
+  }
 
-    @Override
-    @NotNull
-    public YangIfFeatureTerm getIfFeatureTerm() {
-        return findNotNullChildByClass(YangIfFeatureTerm.class);
-    }
+  @Override
+  @NotNull
+  public YangIfFeatureTerm getIfFeatureTerm() {
+    return findNotNullChildByClass(YangIfFeatureTerm.class);
+  }
 
-    @Override
-    @Nullable
-    public YangOrKeyword getOrKeyword() {
-        return findChildByClass(YangOrKeyword.class);
-    }
+  @Override
+  @Nullable
+  public YangOrKeyword getOrKeyword() {
+    return findChildByClass(YangOrKeyword.class);
+  }
 
-    @Override
-    @NotNull
-    public List<YangSep> getSepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
-    }
+  @Override
+  @NotNull
+  public List<YangSep> getSepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+  }
 
 }

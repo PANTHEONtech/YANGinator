@@ -11,23 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangKeyPredicate extends YangNamedElement {
 
-    @NotNull
-    List<YangWsp> getWspList();
+  @NotNull
+  List<YangWsp> getWspList();
 
-    @NotNull
-    YangKeyPredicateExpr getKeyPredicateExpr();
+  @NotNull
+  YangKeyPredicateExpr getKeyPredicateExpr();
 
-    @NotNull
-    PsiElement getClosedBracket();
+  @NotNull
+  PsiElement getClosedBracket();
 
-    @NotNull
-    PsiElement getOpenBracket();
+  @NotNull
+  PsiElement getOpenBracket();
 
 }

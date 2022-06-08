@@ -11,27 +11,28 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 
 public interface YangUnreserved extends YangNamedElement {
 
-    @Nullable
-    YangDigit getDigit();
+  @Nullable
+  YangDigit getDigit();
 
-    @Nullable
-    PsiElement getAlpha();
+  @Nullable
+  PsiElement getAlpha();
 
-    @Nullable
-    PsiElement getDash();
+  @Nullable
+  PsiElement getDash();
 
-    @Nullable
-    PsiElement getDot();
+  @Nullable
+  PsiElement getDot();
 
-    @Nullable
-    PsiElement getTilde();
+  @Nullable
+  PsiElement getTilde();
 
-    @Nullable
-    PsiElement getUnderscore();
+  @Nullable
+  PsiElement getUnderscore();
 
 }

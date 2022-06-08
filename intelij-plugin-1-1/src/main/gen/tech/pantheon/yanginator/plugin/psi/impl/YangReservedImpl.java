@@ -11,41 +11,41 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangGenDelims;
-import tech.pantheon.yanginator.plugin.psi.YangReserved;
-import tech.pantheon.yanginator.plugin.psi.YangSubDelims;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangReservedImpl extends YangNamedElementImpl implements YangReserved {
 
-    public YangReservedImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangReservedImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitReserved(this);
-    }
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitReserved(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @Nullable
-    public YangGenDelims getGenDelims() {
-        return findChildByClass(YangGenDelims.class);
-    }
+  @Override
+  @Nullable
+  public YangGenDelims getGenDelims() {
+    return findChildByClass(YangGenDelims.class);
+  }
 
-    @Override
-    @Nullable
-    public YangSubDelims getSubDelims() {
-        return findChildByClass(YangSubDelims.class);
-    }
+  @Override
+  @Nullable
+  public YangSubDelims getSubDelims() {
+    return findChildByClass(YangSubDelims.class);
+  }
 
 }

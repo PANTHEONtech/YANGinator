@@ -11,23 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangPathEqualityExpr extends YangNamedElement {
 
-    @NotNull
-    List<YangWsp> getWspList();
+  @NotNull
+  List<YangWsp> getWspList();
 
-    @NotNull
-    YangNodeIdentifier getNodeIdentifier();
+  @NotNull
+  YangNodeIdentifier getNodeIdentifier();
 
-    @NotNull
-    YangPathKeyExpr getPathKeyExpr();
+  @NotNull
+  YangPathKeyExpr getPathKeyExpr();
 
-    @NotNull
-    PsiElement getEquals();
+  @NotNull
+  PsiElement getEquals();
 
 }

@@ -11,47 +11,46 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangModuleStmt extends YangYangStmt {
 
-    @NotNull
-    YangBodyStmts getBodyStmts();
+  @NotNull
+  YangBodyStmts getBodyStmts();
 
-    @NotNull
-    YangIdentifierArgStr getIdentifierArgStr();
+  @NotNull
+  YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
-    YangLinkageStmts getLinkageStmts();
+  @NotNull
+  YangLinkageStmts getLinkageStmts();
 
-    @NotNull
-    YangMetaStmts getMetaStmts();
+  @NotNull
+  YangMetaStmts getMetaStmts();
 
-    @NotNull
-    YangModuleHeaderStmts getModuleHeaderStmts();
+  @NotNull
+  YangModuleHeaderStmts getModuleHeaderStmts();
 
-    @NotNull
-    YangModuleKeyword getModuleKeyword();
+  @NotNull
+  YangModuleKeyword getModuleKeyword();
 
-    @NotNull
-    List<YangOptsep> getOptsepList();
+  @NotNull
+  List<YangOptsep> getOptsepList();
 
-    @NotNull
-    YangRevisionStmts getRevisionStmts();
+  @NotNull
+  List<YangRevisionStmt> getRevisionStmtList();
 
-    @NotNull
-    YangSep getSep();
+  @NotNull
+  YangSep getSep();
 
-    @NotNull
-    YangStmtsep getStmtsep();
+  @NotNull
+  YangStmtsep getStmtsep();
 
-    @NotNull
-    PsiElement getLeftBrace();
+  @NotNull
+  PsiElement getLeftBrace();
 
-    @NotNull
-    PsiElement getRightBrace();
+  @NotNull
+  PsiElement getRightBrace();
 
 }

@@ -11,35 +11,34 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangBelongsToStmt extends YangYangStmt {
 
-    @NotNull
-    YangBelongsToKeyword getBelongsToKeyword();
+  @NotNull
+  YangBelongsToKeyword getBelongsToKeyword();
 
-    @NotNull
-    YangIdentifierArgStr getIdentifierArgStr();
+  @NotNull
+  YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
-    YangOptsep getOptsep();
+  @NotNull
+  YangOptsep getOptsep();
 
-    @NotNull
-    YangPrefixStmt getPrefixStmt();
+  @NotNull
+  YangPrefixStmt getPrefixStmt();
 
-    @NotNull
-    YangSep getSep();
+  @NotNull
+  YangSep getSep();
 
-    @NotNull
-    List<YangStmtsep> getStmtsepList();
+  @NotNull
+  List<YangStmtsep> getStmtsepList();
 
-    @NotNull
-    PsiElement getLeftBrace();
+  @NotNull
+  PsiElement getLeftBrace();
 
-    @NotNull
-    PsiElement getRightBrace();
+  @NotNull
+  PsiElement getRightBrace();
 
 }

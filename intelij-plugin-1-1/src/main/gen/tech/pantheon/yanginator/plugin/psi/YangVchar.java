@@ -11,141 +11,142 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 
 public interface YangVchar extends YangNamedElement {
 
-    @Nullable
-    PsiElement getAlpha();
+  @Nullable
+  PsiElement getAlpha();
 
-    @Nullable
-    PsiElement getAmpersand();
+  @Nullable
+  PsiElement getAmpersand();
 
-    @Nullable
-    PsiElement getApostrophe();
+  @Nullable
+  PsiElement getApostrophe();
 
-    @Nullable
-    PsiElement getAsterisk();
+  @Nullable
+  PsiElement getAsterisk();
 
-    @Nullable
-    PsiElement getAtSign();
+  @Nullable
+  PsiElement getAtSign();
 
-    @Nullable
-    PsiElement getBackSlash();
+  @Nullable
+  PsiElement getBackSlash();
 
-    @Nullable
-    PsiElement getCircumflexAccent();
+  @Nullable
+  PsiElement getCircumflexAccent();
 
-    @Nullable
-    PsiElement getClosedBracket();
+  @Nullable
+  PsiElement getClosedBracket();
 
-    @Nullable
-    PsiElement getColon();
+  @Nullable
+  PsiElement getColon();
 
-    @Nullable
-    PsiElement getComma();
+  @Nullable
+  PsiElement getComma();
 
-    @Nullable
-    PsiElement getDash();
+  @Nullable
+  PsiElement getDash();
 
-    @Nullable
-    PsiElement getDollarSign();
+  @Nullable
+  PsiElement getDollarSign();
 
-    @Nullable
-    PsiElement getDot();
+  @Nullable
+  PsiElement getDot();
 
-    @Nullable
-    PsiElement getDoubleDot();
+  @Nullable
+  PsiElement getDoubleDot();
 
-    @Nullable
-    PsiElement getDoubleForwardSlash();
+  @Nullable
+  PsiElement getDoubleForwardSlash();
 
-    @Nullable
-    PsiElement getEight();
+  @Nullable
+  PsiElement getEight();
 
-    @Nullable
-    PsiElement getEquals();
+  @Nullable
+  PsiElement getEquals();
 
-    @Nullable
-    PsiElement getExclamationMark();
+  @Nullable
+  PsiElement getExclamationMark();
 
-    @Nullable
-    PsiElement getFive();
+  @Nullable
+  PsiElement getFive();
 
-    @Nullable
-    PsiElement getForwardSlash();
+  @Nullable
+  PsiElement getForwardSlash();
 
-    @Nullable
-    PsiElement getFour();
+  @Nullable
+  PsiElement getFour();
 
-    @Nullable
-    PsiElement getGraveAccent();
+  @Nullable
+  PsiElement getGraveAccent();
 
-    @Nullable
-    PsiElement getGreaterThanSign();
+  @Nullable
+  PsiElement getGreaterThanSign();
 
-    @Nullable
-    PsiElement getHash();
+  @Nullable
+  PsiElement getHash();
 
-    @Nullable
-    PsiElement getLeftParenthesis();
+  @Nullable
+  PsiElement getLeftParenthesis();
 
-    @Nullable
-    PsiElement getLessThanSign();
+  @Nullable
+  PsiElement getLessThanSign();
 
-    @Nullable
-    PsiElement getNine();
+  @Nullable
+  PsiElement getNine();
 
-    @Nullable
-    PsiElement getOne();
+  @Nullable
+  PsiElement getOne();
 
-    @Nullable
-    PsiElement getOpenBracket();
+  @Nullable
+  PsiElement getOpenBracket();
 
-    @Nullable
-    PsiElement getParentFolder();
+  @Nullable
+  PsiElement getParentFolder();
 
-    @Nullable
-    PsiElement getPercentSign();
+  @Nullable
+  PsiElement getPercentSign();
 
-    @Nullable
-    PsiElement getPipe();
+  @Nullable
+  PsiElement getPipe();
 
-    @Nullable
-    PsiElement getPlusSign();
+  @Nullable
+  PsiElement getPlusSign();
 
-    @Nullable
-    PsiElement getQuestionMark();
+  @Nullable
+  PsiElement getQuestionMark();
 
-    @Nullable
-    PsiElement getRightParenthesis();
+  @Nullable
+  PsiElement getRightParenthesis();
 
-    @Nullable
-    PsiElement getSeven();
+  @Nullable
+  PsiElement getSeven();
 
-    @Nullable
-    PsiElement getSingleQuote();
+  @Nullable
+  PsiElement getSingleQuote();
 
-    @Nullable
-    PsiElement getSix();
+  @Nullable
+  PsiElement getSix();
 
-    @Nullable
-    PsiElement getSpace();
+  @Nullable
+  PsiElement getSpace();
 
-    @Nullable
-    PsiElement getThree();
+  @Nullable
+  PsiElement getThree();
 
-    @Nullable
-    PsiElement getTilde();
+  @Nullable
+  PsiElement getTilde();
 
-    @Nullable
-    PsiElement getTwo();
+  @Nullable
+  PsiElement getTwo();
 
-    @Nullable
-    PsiElement getUnderscore();
+  @Nullable
+  PsiElement getUnderscore();
 
-    @Nullable
-    PsiElement getZero();
+  @Nullable
+  PsiElement getZero();
 
 }

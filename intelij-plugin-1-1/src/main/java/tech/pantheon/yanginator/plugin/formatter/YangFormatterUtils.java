@@ -106,14 +106,19 @@ final class YangFormatterUtils {
             YangTypes.YANG_STMTEND
     );
 
-    private static final TokenSet WHITESPACE_SET = TokenSet.create(
+    static final TokenSet WHITESPACE_SET = TokenSet.create(
+            YangTypes.YANG_STMTSEP,
+            YangTypes.YANG_SEP,
+            YangTypes.YANG_WSP,
+            YangTypes.YANG_SP,
+            YangTypes.YANG_OPTSEP,
             YangTypes.YANG_SPACE,
             YangTypes.YANG_TAB,
             YangTypes.YANG_LINEFEED,
             YangTypes.YANG_CARRIAGE_RETURN
     );
 
-    private static final TokenSet STATEMENT_SET = TokenSet.create(
+    static final TokenSet STATEMENT_SET = TokenSet.create(
             YangTypes.YANG_YANG_VERSION_STMT,
             YangTypes.YANG_NAMESPACE_STMT,
             YangTypes.YANG_IMPORT_STMT,
@@ -185,7 +190,7 @@ final class YangFormatterUtils {
             YangTypes.YANG_STRING,
             YangTypes.YANG_BLOCK_COMMENT
     );
-
+    
     private static final TokenSet TO_INDENT_STATEMENTS_SET = TokenSet.create(
             YangTypes.YANG_MODULE_STMT,
             YangTypes.YANG_SUBMODULE_STMT,

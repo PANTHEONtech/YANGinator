@@ -11,71 +11,65 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangAuthority;
-import tech.pantheon.yanginator.plugin.psi.YangPathAbempty;
-import tech.pantheon.yanginator.plugin.psi.YangPathAbsolute;
-import tech.pantheon.yanginator.plugin.psi.YangPathEmpty;
-import tech.pantheon.yanginator.plugin.psi.YangPathNoscheme;
-import tech.pantheon.yanginator.plugin.psi.YangRelativePart;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_SLASH;
+import com.intellij.psi.util.PsiTreeUtil;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangRelativePartImpl extends YangNamedElementImpl implements YangRelativePart {
 
-    public YangRelativePartImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangRelativePartImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitRelativePart(this);
-    }
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitRelativePart(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @Nullable
-    public YangAuthority getAuthority() {
-        return findChildByClass(YangAuthority.class);
-    }
+  @Override
+  @Nullable
+  public YangAuthority getAuthority() {
+    return findChildByClass(YangAuthority.class);
+  }
 
-    @Override
-    @Nullable
-    public YangPathAbempty getPathAbempty() {
-        return findChildByClass(YangPathAbempty.class);
-    }
+  @Override
+  @Nullable
+  public YangPathAbempty getPathAbempty() {
+    return findChildByClass(YangPathAbempty.class);
+  }
 
-    @Override
-    @Nullable
-    public YangPathAbsolute getPathAbsolute() {
-        return findChildByClass(YangPathAbsolute.class);
-    }
+  @Override
+  @Nullable
+  public YangPathAbsolute getPathAbsolute() {
+    return findChildByClass(YangPathAbsolute.class);
+  }
 
-    @Override
-    @Nullable
-    public YangPathEmpty getPathEmpty() {
-        return findChildByClass(YangPathEmpty.class);
-    }
+  @Override
+  @Nullable
+  public YangPathEmpty getPathEmpty() {
+    return findChildByClass(YangPathEmpty.class);
+  }
 
-    @Override
-    @Nullable
-    public YangPathNoscheme getPathNoscheme() {
-        return findChildByClass(YangPathNoscheme.class);
-    }
+  @Override
+  @Nullable
+  public YangPathNoscheme getPathNoscheme() {
+    return findChildByClass(YangPathNoscheme.class);
+  }
 
-    @Override
-    @Nullable
-    public PsiElement getDoubleForwardSlash() {
-        return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
-    }
+  @Override
+  @Nullable
+  public PsiElement getDoubleForwardSlash() {
+    return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
+  }
 
 }

@@ -11,14 +11,16 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangOrderedByArg extends YangNamedElement {
 
-    @Nullable
-    YangSystemKeyword getSystemKeyword();
+  @Nullable
+  YangSystemKeyword getSystemKeyword();
 
-    @Nullable
-    YangUserKeyword getUserKeyword();
+  @Nullable
+  YangUserKeyword getUserKeyword();
 
 }

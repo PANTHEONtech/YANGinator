@@ -11,20 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangModifierStmt extends YangYangStmt {
 
-    @NotNull
-    YangModifierArgStr getModifierArgStr();
+  @NotNull
+  YangModifierArgStr getModifierArgStr();
 
-    @NotNull
-    YangModifierKeyword getModifierKeyword();
+  @NotNull
+  YangModifierKeyword getModifierKeyword();
 
-    @NotNull
-    YangSep getSep();
+  @NotNull
+  YangSep getSep();
 
-    @NotNull
-    YangStmtend getStmtend();
+  @NotNull
+  YangStmtend getStmtend();
 
 }
