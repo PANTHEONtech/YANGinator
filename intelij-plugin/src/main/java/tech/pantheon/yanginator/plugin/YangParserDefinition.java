@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -19,26 +19,25 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.lexer.YangGrammarLexer;
+import tech.pantheon.yanginator.plugin.lexer.YangLexer;
 import tech.pantheon.yanginator.plugin.parser.YangParser;
 import tech.pantheon.yanginator.plugin.psi.YangFile;
-import tech.pantheon.yanginator.plugin.psi.YangTokenType;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 
 public class YangParserDefinition implements ParserDefinition {
-    public static final TokenSet WHITE_SPACES = TokenSet.create(new YangTokenType("SPACE"));
-    public static final TokenSet COMMENTS = TokenSet.create(YangTypes.YANG_BLOCK_COMMENT, YangTypes.YANG_LINE_COMMENT,
-            YangTypes.YANG_H_BLOCK_COMMENT, YangTypes.YANG_H_SINGLE_LINE_COMMENT);
+    public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
+    public static final TokenSet COMMENTS = TokenSet.create(YangTypes.YANG_BLOCK_COMMENT, YangTypes.YANG_COMMENT);
     public static final IFileElementType FILE = new IFileElementType(Language.findInstance(YangLanguage.class));
 
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new YangGrammarLexer();
+        return new YangLexer();
     }
 
     @NotNull

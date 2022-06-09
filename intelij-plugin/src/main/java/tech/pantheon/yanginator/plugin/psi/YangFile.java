@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,10 +13,11 @@ package tech.pantheon.yanginator.plugin.psi;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
-import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.YangLanguage;
+
+import javax.swing.*;
 
 public class YangFile extends PsiFileBase {
     public YangFile(@NotNull FileViewProvider viewProvider) {

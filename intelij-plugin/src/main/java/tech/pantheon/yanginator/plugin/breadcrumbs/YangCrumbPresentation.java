@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,7 +13,7 @@ package tech.pantheon.yanginator.plugin.breadcrumbs;
 import com.intellij.ui.JBColor;
 import com.intellij.xml.breadcrumbs.CrumbPresentation;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class YangCrumbPresentation extends CrumbPresentation {
     private final JBColor color;

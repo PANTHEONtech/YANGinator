@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -19,20 +19,20 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.SmartList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.YangFileType;
+import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
+import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.YangFileType;
-import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
-import tech.pantheon.yanginator.plugin.psi.YangFile;
-import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
-import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
-import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
-import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
 public class YangUtil {
 
@@ -78,7 +78,7 @@ public class YangUtil {
                     for (T literal : literals) {
                         String valueOfLiteral;
                         YangReferencedStatement referencedStatement = (YangReferencedStatement) literal;
-                        valueOfLiteral = Objects.requireNonNull(referencedStatement.getIdentifierArgQuoted()).getText();
+                        valueOfLiteral = Objects.requireNonNull(referencedStatement.getIdentifierArgStr()).getText();
                         if (identifierKeyword.equals(valueOfLiteral)) {
                             if (result == null) {
                                 result = new ArrayList<>();

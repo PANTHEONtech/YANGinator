@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,6 +10,8 @@
 
 package tech.pantheon.yanginator.plugin.annotator.check;
 
+import tech.pantheon.yanginator.plugin.psi.YangActionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangAnydataStmt;
 import tech.pantheon.yanginator.plugin.psi.YangAnyxmlStmt;
 import tech.pantheon.yanginator.plugin.psi.YangArgumentStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
@@ -20,11 +22,17 @@ import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
 import tech.pantheon.yanginator.plugin.psi.YangContactStmt;
 import tech.pantheon.yanginator.plugin.psi.YangContainerStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDataDefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDecimal64Specification;
 import tech.pantheon.yanginator.plugin.psi.YangDefaultStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDeviateAddStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDeviateDeleteStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDeviateReplaceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDeviationStmtBodyArgs;
 import tech.pantheon.yanginator.plugin.psi.YangErrorAppTagStmt;
 import tech.pantheon.yanginator.plugin.psi.YangErrorMessageStmt;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangInputStmt;
 import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
 import tech.pantheon.yanginator.plugin.psi.YangLeafListStmt;
@@ -45,6 +53,7 @@ import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
 import tech.pantheon.yanginator.plugin.psi.YangPresenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
+import tech.pantheon.yanginator.plugin.psi.YangRevisionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangStatusStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
@@ -94,7 +103,16 @@ public class ElementCheckUtils {
             Map.entry(YangRequireInstanceStmt.class, "require instance"),
             Map.entry(YangCaseStmt.class, "case"),
             Map.entry(YangModuleHeaderStmts.class, "header statement"),
-            Map.entry(YangSubmoduleHeaderStmts.class, "submodule header statement")
+            Map.entry(YangSubmoduleHeaderStmts.class, "submodule header statement"),
+            Map.entry(YangImportStmt.class, "import statement"),
+            Map.entry(YangIncludeStmt.class, "include statement"),
+            Map.entry(YangRevisionStmt.class, "revision statement"),
+            Map.entry(YangDecimal64Specification.class, "decimal64 specification"),
+            Map.entry(YangAnydataStmt.class, "anydata statement"),
+            Map.entry(YangActionStmt.class, "action statement"),
+            Map.entry(YangDeviateAddStmt.class, "deviate add statement"),
+            Map.entry(YangDeviateDeleteStmt.class, "deviate delete statement"),
+            Map.entry(YangDeviateReplaceStmt.class, "deviate replace statement")
     );
 
     private static final List<Class<?>> DATA_DEF_STATEMENTS = List.of(YangContainerStmt.class,

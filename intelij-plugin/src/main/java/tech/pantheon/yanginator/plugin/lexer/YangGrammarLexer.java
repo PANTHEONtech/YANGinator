@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,6 +14,6 @@ import com.intellij.lexer.FlexAdapter;
 
 public class YangGrammarLexer extends FlexAdapter {
     public YangGrammarLexer() {
-        super(new _YangGrammarLexer());
+        super(new _YangLexer());
     }
 }

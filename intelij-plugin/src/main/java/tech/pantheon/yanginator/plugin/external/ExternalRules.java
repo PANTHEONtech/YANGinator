@@ -112,25 +112,25 @@ public class ExternalRules {
      */
     public static boolean checkString(PsiBuilder psiBuilder, int level, Parser parser, String... strings) {
         if (!recursion_guard_(psiBuilder, level, "rule")) return false;
-
         final List<String> stringList = new ArrayList<>(List.of(strings));
         final List<Character> charList = stringsToChars(stringList);
-        final Set<Character> separators = new HashSet<>(Set.of('\n', '\r', ' ', '\t'));
-
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
         String text = "";
         for (int i = psiBuilder.getCurrentOffset(); i < psiBuilder.getOriginalText().length(); i++) {
-            if (separators.contains(psiBuilder.getOriginalText().charAt(i))) {
+            if (psiBuilder.getOriginalText().charAt(i) == ';' || psiBuilder.getOriginalText().charAt(i) == '"') {
                 text = psiBuilder.getOriginalText().subSequence(psiBuilder.getCurrentOffset(), i).toString();
                 break;
             }
         }
         for (char c : text.toCharArray()) {
-            boolean result = charList.parallelStream().anyMatch(character -> character == c);
+            boolean result = charList.parallelStream().anyMatch(character -> character.equals(c));
             if (result) {
+                psiBuilder.advanceLexer();
+                parser.parse(psiBuilder, level);
                 exit_section_(psiBuilder, marker, null, false);
                 return false;
             }
+
         }
         parser.parse(psiBuilder, level);
         exit_section_(psiBuilder, marker, null, true);
@@ -149,7 +149,6 @@ public class ExternalRules {
 
     public static boolean checkChar(PsiBuilder psiBuilder, int level, Parser parser, String... strings) {
         if (!recursion_guard_(psiBuilder, level, "rule")) return false;
-
         final List<String> stringList = new ArrayList<>(List.of(strings));
         final List<Character> charList = stringsToChars(stringList);
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
@@ -169,9 +168,9 @@ public class ExternalRules {
      * idea can't recognize some characters from forbidden ranges and replace them with this value.
      *
      * @param stringList list of strings with hex ranges for forbidden characters
-     * @return  List<Character> charList with forbidden characters
+     * @return List<Character> charList with forbidden characters
      */
-    private static List<Character> stringsToChars(List<String> stringList){
+    private static List<Character> stringsToChars(List<String> stringList) {
         List<Character> charList = new ArrayList<>();
         // 0xFFFD is for characters that can't be recognized by idea and are replaced by this value
         charList.add((char) 0xFFFD);
