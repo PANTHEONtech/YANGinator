@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -35,9 +35,11 @@ import java.util.logging.Logger;
 public class GrammarKitRFCService {
     private final Logger logger;
     public final String FILE_NOT_FOUND_MESSAGE = "File not found";
+
     public GrammarKitRFCService() {
         this.logger = Logger.getLogger(GrammarKitRFCService.class.getName());
     }
+
     /**
      * Transforms abnf input file to bnf output file. Provided input file
      * (Augmented Backus–Naur form) is stored in <code>oldGrammar</code> - list
@@ -58,6 +60,7 @@ public class GrammarKitRFCService {
         this.writeIntoOutputFile(outputFilev3, newGrammar);
 
     }
+
     /**
      * Transforms the generated lexer file into valid form
      * with added tokens used in bnf for parsing
@@ -73,6 +76,7 @@ public class GrammarKitRFCService {
         oldLexer = GrammarKitRFCUtils.addTokensIntoLexer(oldLexer, tokens);
         this.writeIntoOutputFile(outputFile, oldLexer);
     }
+
     /**
      * Returns a list of strings with content of <code>inputFile</code>
      *
@@ -90,6 +94,7 @@ public class GrammarKitRFCService {
         }
         return lines;
     }
+
     /**
      * Transforms a list of strings <code>oldGrammar</code> from Augmented
      * Backus–Naur form to Backus–Naur form. New list of strings formatted
@@ -115,6 +120,7 @@ public class GrammarKitRFCService {
         result = GrammarKitRFCUtils.replaceHexadecimal(result);
         return GrammarKitRFCUtils.rewriteStringRules(result);
     }
+
     /**
      * Writes the content of given list o strings
      * (transformed bnf grammar) into <code>outputFile</code>
@@ -129,6 +135,7 @@ public class GrammarKitRFCService {
             this.logger.log(Level.WARNING, this.FILE_NOT_FOUND_MESSAGE, e);
         }
     }
+
     public File getFile(final String fileName) {
         try {
             return new File(this.getClass().getClassLoader().getResource(fileName).toURI());
@@ -137,6 +144,7 @@ public class GrammarKitRFCService {
         }
         return null;
     }
+
     /**
      * Replace tokens in the bnf to increase the parsing speed
      *
@@ -149,6 +157,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.replaceWords(newGrammar, "\"v\"", "\"v\" |", "VERSION");
         return GrammarKitRFCUtils.replaceTokens(newGrammar, this.loadTokensFromXML(this.getFile("yang-rfc-grammar/tokens/tokens.xml")));
     }
+
     /**
      * Method adds custom rules and enhancements to bnf grammar
      *
@@ -171,6 +180,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUncomplaintUtils.additionalAdjustments(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
     }
+
     /**
      * Method loads tokens from .xml file into list of FlexerTokens. Values in xml must follow next pattern:
      * <class>
@@ -227,17 +237,15 @@ public class GrammarKitRFCService {
                         }
                     }
                     if (count > 1 && !merging.contains("{")) {
-                        if (merging.charAt(merging.length()-1) == '+'){
-                            merging = merging.substring(0,merging.length()- 1);
-                            lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]+";
-                        }else {
-                            lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]";
-                        }
+                        lexerValue = "[" + merging.replace("[", "").replace("]", "") + "]";
                     } else {
                         lexerValue = merging;
                     }
                     if (eElement.getElementsByTagName("lexerOnly").item(0).getTextContent().contains("true")) {
                         lexerOnly = true;
+                    }
+                    if (eElement.getElementsByTagName("lexerValue").item(0) != null) {
+                        lexerValue = eElement.getElementsByTagName("lexerValue").item(0).getTextContent();
                     }
                     name = eElement.getElementsByTagName("value").item(0).getTextContent();
                     FlexerToken fToken = new FlexerToken(name, lexerValue, lexerOnly);
@@ -250,6 +258,7 @@ public class GrammarKitRFCService {
         }
         return lines;
     }
+
     public List<Extension> loadExtensionsFromXML(final File filename) {
         List<Extension> result = new ArrayList<>();
         try {
@@ -263,17 +272,17 @@ public class GrammarKitRFCService {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     String name = element.getElementsByTagName("name").item(0).getTextContent();
-                    String pin = null,implementation = null,extend = null;
-                    if (element.getElementsByTagName("pin").item(0) != null ){
+                    String pin = null, implementation = null, extend = null;
+                    if (element.getElementsByTagName("pin").item(0) != null) {
                         pin = element.getElementsByTagName("pin").item(0).getTextContent();
                     }
-                    if (element.getElementsByTagName("implements").item(0) != null ){
+                    if (element.getElementsByTagName("implements").item(0) != null) {
                         implementation = element.getElementsByTagName("implements").item(0).getTextContent();
                     }
-                    if (element.getElementsByTagName("extends").item(0) != null ){
+                    if (element.getElementsByTagName("extends").item(0) != null) {
                         extend = element.getElementsByTagName("extends").item(0).getTextContent();
                     }
-                    result.add(new Extension(name,pin,extend,implementation));
+                    result.add(new Extension(name, pin, extend, implementation));
                 }
             }
         } catch (final IOException | SAXException | ParserConfigurationException e) {

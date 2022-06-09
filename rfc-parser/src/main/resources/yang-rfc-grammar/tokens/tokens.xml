@@ -165,8 +165,9 @@
     </token>
     <token>
         <key>[a-z]</key>
-        <key>[A-Z]+</key>
-        <value>LETTER</value>
+        <key>[A-Z]</key>
+        <lexerValue>[a-zA-Z]+</lexerValue>
+        <value>LETTERS</value>
         <lexerOnly>false</lexerOnly>
     </token>
     <token>
@@ -293,7 +294,7 @@
         <lexerOnly>false</lexerOnly>
     </token>
     <token>
-        <key>{LETTER}</key>
+        <key>{LETTERS}</key>
         <value>ALPHA</value>
         <lexerOnly>true</lexerOnly>
     </token>

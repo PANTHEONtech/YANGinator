@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -3120,7 +3120,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )
+    // BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+ )
     public static boolean comment(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "comment")) return false;
         if (!nextTokenIs(b, "<comment>", YANG_BLOCK_COMMENT, YANG_DOUBLE_FORWARD_SLASH)) return false;
@@ -3132,14 +3132,41 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // DOUBLE_FORWARD_SLASH string
+    // DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+
     private static boolean comment_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "comment_1")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = consumeToken(b, YANG_DOUBLE_FORWARD_SLASH);
-        r = r && string(b, l + 1);
+        r = r && comment_1_1(b, l + 1);
         exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+
+    private static boolean comment_1_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "comment_1_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = comment_1_1_0(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!comment_1_1_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "comment_1_1", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR
+    private static boolean comment_1_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "comment_1_1_0")) return false;
+        boolean r;
+        r = DQUOTE(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_LEFT_BRACE);
+        if (!r) r = consumeToken(b, YANG_RIGHT_BRACE);
+        if (!r) r = consumeToken(b, YANG_SEMICOLON);
+        if (!r) r = VCHAR(b, l + 1);
         return r;
     }
 
@@ -6747,53 +6774,27 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (import-stmt | include-stmt)+
-    //
-    //
-    //
-    //   revision-stmt*
     public static boolean linkage_stmts(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "linkage_stmts")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_LINKAGE_STMTS, "<linkage stmts>");
         r = linkage_stmts_0(b, l + 1);
-        r = r && linkage_stmts_1(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!linkage_stmts_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "linkage_stmts", c)) break;
+        }
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // (import-stmt | include-stmt)+
+    // import-stmt | include-stmt
     private static boolean linkage_stmts_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "linkage_stmts_0")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = linkage_stmts_0_0(b, l + 1);
-        while (r) {
-            int c = current_position_(b);
-            if (!linkage_stmts_0_0(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "linkage_stmts_0", c)) break;
-        }
-        exit_section_(b, m, null, r);
-        return r;
-    }
-
-    // import-stmt | include-stmt
-    private static boolean linkage_stmts_0_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "linkage_stmts_0_0")) return false;
         boolean r;
         r = import_stmt(b, l + 1);
         if (!r) r = include_stmt(b, l + 1);
         return r;
-    }
-
-    // revision-stmt*
-    private static boolean linkage_stmts_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "linkage_stmts_1")) return false;
-        while (true) {
-            int c = current_position_(b);
-            if (!revision_stmt(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "linkage_stmts_1", c)) break;
-        }
-        return true;
     }
 
     /* ********************************************************** */

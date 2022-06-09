@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -37,8 +37,6 @@ public class GrammarKitRFCUncomplaintUtils {
         result = orderTokensForLexer(result);
         result = rewriteFractionDigitsArg(result);
         result = rewritePositiveIntegerValue(result);
-        result = revisionComment(result);
-        result = revisionReplace(result);
         result = adjustModuleAndSubmoduleStmt(result);
         return allowComments(result);
     }
@@ -239,7 +237,7 @@ public class GrammarKitRFCUncomplaintUtils {
             result.add(line);
         }
         result.add("");
-        result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )");
+        result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+ )");
         return result;
     }
 
@@ -298,17 +296,17 @@ public class GrammarKitRFCUncomplaintUtils {
                 tmp = true;
                 line = "linkage-stmts ::= (import-stmt | include-stmt)+ ";
             }
+            result.add(line);
             if (tmp && (line.contains("<<anyOrder  import-stmt*"))) {
-                line = " ";
+                result.remove(result.size() -1);
             }
             if (tmp && (line.contains("include-stmt*"))) {
-                line = " ";
+                result.remove(result.size() -1);
             }
             if (tmp && (line.contains(">>"))) {
-                line = " ";
+                result.remove(result.size() -1);
                 tmp = false;
             }
-            result.add(line);
         }
         return result;
     }
@@ -340,7 +338,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "  reference-stmt )+";
             }
             if (tmp && (line.contains(">>"))) {
-                line = " ";
+                line = "";
                 tmp = false;
             }
             result.add(line);

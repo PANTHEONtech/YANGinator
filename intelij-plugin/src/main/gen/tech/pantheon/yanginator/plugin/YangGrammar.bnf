@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -74,12 +74,9 @@ meta-stmts ::= // these stmts can appear in any order
    contact-stmt |
   description-stmt |
   reference-stmt )+
- 
+
 linkage-stmts ::= (import-stmt | include-stmt)+ 
- 
- 
- 
-  revision-stmt*
+//revision-stmts ::= revision-stmt*
 
 body-stmts ::= (extension-stmt |
   feature-stmt |
@@ -1101,9 +1098,9 @@ yang-char ::=VCHAR // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
 //  %x10000-1FFFD | // exclude noncharacters ""FFE-1FFFF
 //  %x20000-2FFFD | // exclude noncharacters FORWARD_SLASHFFE-2FFFF
 //  %x30000-3FFFD | // exclude noncharacters QUESTION_MARKFFE-3FFFF
-//  %x40000-4FFFD | // exclude noncharacters ALPHAFFE-4FFFF
+//  %x40000-4FFFD | // exclude noncharacters ALPHASFFE-4FFFF
 //  %x50000-5FFFD | // exclude noncharacters UNDERSCOREFFE-5FFFF
-//  %x60000-6FFFD | // exclude noncharacters ALPHAFFE-6FFFF
+//  %x60000-6FFFD | // exclude noncharacters ALPHASFFE-6FFFF
 //  %x70000-7FFFD | // exclude noncharacters ""FFE-7FFFF
 //  %x80000-8FFFD | // exclude noncharacters "�"FFE-8FFFF
 //  %x90000-9FFFD | // exclude noncharacters "�"FFE-9FFFF
@@ -1143,7 +1140,7 @@ SQUOTE ::= SINGLE_QUOTE
   // single quote
 //; core rules from RFC 5234
 
-// ALPHA ::=   ALPHA   |   ALPHA 
+// ALPHA ::= ( ALPHAS S S S S S S S S S S S S S S S S S S S S S S S S S ) | ( ALPHAS S S S S S S S S S S S S S S S S S S S S S S S S S  )
 //  // A-Z | a-z
 
 CR ::= CARRIAGE_RETURN
@@ -1264,4 +1261,4 @@ quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED 
 
 VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
 
-comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH string )
+comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+ )
