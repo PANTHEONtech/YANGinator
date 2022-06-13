@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.icons.YangIcons;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import java.util.Map;
 
 public class YangColorSettingsPage implements ColorSettingsPage {
@@ -30,7 +30,7 @@ public class YangColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Braces", YangSyntaxHighlighter.BRACES),
             new AttributesDescriptor("Operator", YangSyntaxHighlighter.OP_SIGN),
             new AttributesDescriptor("Semicolon", YangSyntaxHighlighter.SEMICOLON),
-            //new AttributesDescriptor("Unknown Statement", YangSyntaxHighlighter.UNKNOWN)
+            new AttributesDescriptor("Identifier", YangSyntaxHighlighter.IDENTIFIER)
     };
 
     @Nullable
@@ -49,31 +49,31 @@ public class YangColorSettingsPage implements ColorSettingsPage {
     @Override
     public String getDemoText() {
         return "module \"acme-foo\" {\n" +
-               "  namespace \"http://acme.example.com/foo\";\n" +
-               "  prefix \"acfoo\";\n" +
-               "\n" +
-               "import my-extensions {\n" +
-               "  prefix \"myext\";\n" +
-               "}" +
-               "\n" +
-               "  list interface {\n" +
-               "    key \"name\";\n" +
-               "    leaf name {\n" +
-               "      type string;\n" +
-               "  }\n" +
-               "\n" +
-               "// This is a line comment \n" +
-               "/*** This is a block comment ***/\n" +
-               "\n" +
-               "  leaf mtu {\n" +
-               "    type uint32;\n" +
-               "    description \"The MTU \" + \" of the interface.\";\n" +
-               "    myext:c-define \"MY-MTU\";" +
-               "  }\n" +
-               "\n" +
-               "// This isn't supposed to be here \n" +
-               "%%%%%\n" +
-               "}\n";
+                "  namespace \"http://acme.example.com/foo\";\n" +
+                "  prefix \"acfoo\";\n" +
+                "\n" +
+                "import my-extensions {\n" +
+                "  prefix \"myext\";\n" +
+                "}" +
+                "\n" +
+                "  list interface {\n" +
+                "    key \"name\";\n" +
+                "    leaf name {\n" +
+                "      type string;\n" +
+                "  }\n" +
+                "\n" +
+                "// This is a line comment \n" +
+                "/*** This is a block comment ***/\n" +
+                "\n" +
+                "  leaf mtu {\n" +
+                "    type uint32;\n" +
+                "    description \"The MTU \" + \" of the interface.\";\n" +
+                "    myext:c-define \"MY-MTU\";" +
+                "  }\n" +
+                "\n" +
+                "// This isn't supposed to be here \n" +
+                "%%%%%\n" +
+                "}\n";
     }
 
     @Nullable

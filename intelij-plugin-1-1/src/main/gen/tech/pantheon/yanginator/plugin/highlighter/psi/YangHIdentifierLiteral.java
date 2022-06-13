@@ -1,281 +1,275 @@
-/*
- *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available under the
- *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- *   and is available at http://www.eclipse.org/legal/epl-v10.html
- *
- */
-
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.highlighter.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 
 public interface YangHIdentifierLiteral extends YangNamedElement {
 
-    @Nullable
-    PsiElement getHAddKeyword();
+  @Nullable
+  PsiElement getHAddKeyword();
 
-    @Nullable
-    PsiElement getHAnyxmlKeyword();
+  @Nullable
+  PsiElement getHAnyxmlKeyword();
 
-    @Nullable
-    PsiElement getHArgumentKeyword();
+  @Nullable
+  PsiElement getHArgumentKeyword();
 
-    @Nullable
-    PsiElement getHAugmentKeyword();
+  @Nullable
+  PsiElement getHAugmentKeyword();
 
-    @Nullable
-    PsiElement getHBaseKeyword();
+  @Nullable
+  PsiElement getHBaseKeyword();
 
-    @Nullable
-    PsiElement getHBelongsToKeyword();
+  @Nullable
+  PsiElement getHBelongsToKeyword();
 
-    @Nullable
-    PsiElement getHBitKeyword();
+  @Nullable
+  PsiElement getHBitKeyword();
 
-    @Nullable
-    PsiElement getHCaseKeyword();
+  @Nullable
+  PsiElement getHCaseKeyword();
 
-    @Nullable
-    PsiElement getHChoiceKeyword();
+  @Nullable
+  PsiElement getHChoiceKeyword();
 
-    @Nullable
-    PsiElement getHConfigKeyword();
+  @Nullable
+  PsiElement getHConfigKeyword();
 
-    @Nullable
-    PsiElement getHContactKeyword();
+  @Nullable
+  PsiElement getHContactKeyword();
 
-    @Nullable
-    PsiElement getHContainerKeyword();
+  @Nullable
+  PsiElement getHContainerKeyword();
 
-    @Nullable
-    PsiElement getHCurrentKeyword();
+  @Nullable
+  PsiElement getHCurrentKeyword();
 
-    @Nullable
-    PsiElement getHDefaultKeyword();
+  @Nullable
+  PsiElement getHDefaultKeyword();
 
-    @Nullable
-    PsiElement getHDeleteKeyword();
+  @Nullable
+  PsiElement getHDeleteKeyword();
 
-    @Nullable
-    PsiElement getHDeprecatedKeyword();
+  @Nullable
+  PsiElement getHDeprecatedKeyword();
 
-    @Nullable
-    PsiElement getHDescriptionKeyword();
+  @Nullable
+  PsiElement getHDescriptionKeyword();
 
-    @Nullable
-    PsiElement getHDeviateKeyword();
+  @Nullable
+  PsiElement getHDeviateKeyword();
 
-    @Nullable
-    PsiElement getHDeviationKeyword();
+  @Nullable
+  PsiElement getHDeviationKeyword();
 
-    @Nullable
-    PsiElement getHDigit();
+  @Nullable
+  PsiElement getHDigit();
 
-    @Nullable
-    PsiElement getHEnumKeyword();
+  @Nullable
+  PsiElement getHEnumKeyword();
 
-    @Nullable
-    PsiElement getHErrorAppTagKeyword();
+  @Nullable
+  PsiElement getHErrorAppTagKeyword();
 
-    @Nullable
-    PsiElement getHErrorMessageKeyword();
+  @Nullable
+  PsiElement getHErrorMessageKeyword();
 
-    @Nullable
-    PsiElement getHExtensionKeyword();
+  @Nullable
+  PsiElement getHExtensionKeyword();
 
-    @Nullable
-    PsiElement getHFalseKeyword();
+  @Nullable
+  PsiElement getHFalseKeyword();
 
-    @Nullable
-    PsiElement getHFeatureKeyword();
+  @Nullable
+  PsiElement getHFeatureKeyword();
 
-    @Nullable
-    PsiElement getHFractionDigitsKeyword();
+  @Nullable
+  PsiElement getHFractionDigitsKeyword();
 
-    @Nullable
-    PsiElement getHGroupingKeyword();
+  @Nullable
+  PsiElement getHGroupingKeyword();
 
-    @Nullable
-    PsiElement getHIdentityKeyword();
+  @Nullable
+  PsiElement getHIdentityKeyword();
 
-    @Nullable
-    PsiElement getHIfFeatureKeyword();
+  @Nullable
+  PsiElement getHIfFeatureKeyword();
 
-    @Nullable
-    PsiElement getHImportKeyword();
+  @Nullable
+  PsiElement getHImportKeyword();
 
-    @Nullable
-    PsiElement getHIncludeKeyword();
+  @Nullable
+  PsiElement getHIncludeKeyword();
 
-    @Nullable
-    PsiElement getHInputKeyword();
+  @Nullable
+  PsiElement getHInputKeyword();
 
-    @Nullable
-    PsiElement getHInvalidEscape();
+  @Nullable
+  PsiElement getHInvalidEscape();
 
-    @Nullable
-    PsiElement getHKeyKeyword();
+  @Nullable
+  PsiElement getHKeywordMatcher();
 
-    @Nullable
-    PsiElement getHLeafKeyword();
+  @Nullable
+  PsiElement getHKeyKeyword();
 
-    @Nullable
-    PsiElement getHLeafListKeyword();
+  @Nullable
+  PsiElement getHLeafKeyword();
 
-    @Nullable
-    PsiElement getHLeftBrace();
+  @Nullable
+  PsiElement getHLeafListKeyword();
 
-    @Nullable
-    PsiElement getHLengthKeyword();
+  @Nullable
+  PsiElement getHLeftBrace();
 
-    @Nullable
-    PsiElement getHListKeyword();
+  @Nullable
+  PsiElement getHLengthKeyword();
 
-    @Nullable
-    PsiElement getHMandatoryKeyword();
+  @Nullable
+  PsiElement getHListKeyword();
 
-    @Nullable
-    PsiElement getHMaxElementsKeyword();
+  @Nullable
+  PsiElement getHMandatoryKeyword();
 
-    @Nullable
-    PsiElement getHMaxKeyword();
+  @Nullable
+  PsiElement getHMaxElementsKeyword();
 
-    @Nullable
-    PsiElement getHMinElementsKeyword();
+  @Nullable
+  PsiElement getHMaxKeyword();
 
-    @Nullable
-    PsiElement getHMinKeyword();
+  @Nullable
+  PsiElement getHMinElementsKeyword();
 
-    @Nullable
-    PsiElement getHModuleKeyword();
+  @Nullable
+  PsiElement getHMinKeyword();
 
-    @Nullable
-    PsiElement getHMustKeyword();
+  @Nullable
+  PsiElement getHModuleKeyword();
 
-    @Nullable
-    PsiElement getHNamespaceKeyword();
+  @Nullable
+  PsiElement getHMustKeyword();
 
-    @Nullable
-    PsiElement getHNonWord();
+  @Nullable
+  PsiElement getHNamespaceKeyword();
 
-    @Nullable
-    PsiElement getHNotificationKeyword();
+  @Nullable
+  PsiElement getHNonWord();
 
-    @Nullable
-    PsiElement getHNotSupportedKeyword();
+  @Nullable
+  PsiElement getHNotificationKeyword();
 
-    @Nullable
-    PsiElement getHObsoleteKeyword();
+  @Nullable
+  PsiElement getHNotSupportedKeyword();
 
-    @Nullable
-    PsiElement getHOperators();
+  @Nullable
+  PsiElement getHObsoleteKeyword();
 
-    @Nullable
-    PsiElement getHOrderedByKeyword();
+  @Nullable
+  PsiElement getHOperators();
 
-    @Nullable
-    PsiElement getHOrganizationKeyword();
+  @Nullable
+  PsiElement getHOrderedByKeyword();
 
-    @Nullable
-    PsiElement getHOutputKeyword();
+  @Nullable
+  PsiElement getHOrganizationKeyword();
 
-    @Nullable
-    PsiElement getHPathKeyword();
+  @Nullable
+  PsiElement getHOutputKeyword();
 
-    @Nullable
-    PsiElement getHPatternKeyword();
+  @Nullable
+  PsiElement getHPathKeyword();
 
-    @Nullable
-    PsiElement getHPositionKeyword();
+  @Nullable
+  PsiElement getHPatternKeyword();
 
-    @Nullable
-    PsiElement getHPrefixKeyword();
+  @Nullable
+  PsiElement getHPositionKeyword();
 
-    @Nullable
-    PsiElement getHPresenceKeyword();
+  @Nullable
+  PsiElement getHPrefixKeyword();
 
-    @Nullable
-    PsiElement getHRangeKeyword();
+  @Nullable
+  PsiElement getHPresenceKeyword();
 
-    @Nullable
-    PsiElement getHReferenceKeyword();
+  @Nullable
+  PsiElement getHRangeKeyword();
 
-    @Nullable
-    PsiElement getHRefineKeyword();
+  @Nullable
+  PsiElement getHReferenceKeyword();
 
-    @Nullable
-    PsiElement getHReplaceKeyword();
+  @Nullable
+  PsiElement getHRefineKeyword();
 
-    @Nullable
-    PsiElement getHRequireInstanceKeyword();
+  @Nullable
+  PsiElement getHReplaceKeyword();
 
-    @Nullable
-    PsiElement getHRevisionDateKeyword();
+  @Nullable
+  PsiElement getHRequireInstanceKeyword();
 
-    @Nullable
-    PsiElement getHRevisionKeyword();
+  @Nullable
+  PsiElement getHRevisionDateKeyword();
 
-    @Nullable
-    PsiElement getHRightBrace();
+  @Nullable
+  PsiElement getHRevisionKeyword();
 
-    @Nullable
-    PsiElement getHRpcKeyword();
+  @Nullable
+  PsiElement getHRightBrace();
 
-    @Nullable
-    PsiElement getHSemicolon();
+  @Nullable
+  PsiElement getHRpcKeyword();
 
-    @Nullable
-    PsiElement getHStatusKeyword();
+  @Nullable
+  PsiElement getHSemicolon();
 
-    @Nullable
-    PsiElement getHSubmoduleKeyword();
+  @Nullable
+  PsiElement getHStatusKeyword();
 
-    @Nullable
-    PsiElement getHSystemKeyword();
+  @Nullable
+  PsiElement getHSubmoduleKeyword();
 
-    @Nullable
-    PsiElement getHTrueKeyword();
+  @Nullable
+  PsiElement getHSystemKeyword();
 
-    @Nullable
-    PsiElement getHTypedefKeyword();
+  @Nullable
+  PsiElement getHTrueKeyword();
 
-    @Nullable
-    PsiElement getHTypeKeyword();
+  @Nullable
+  PsiElement getHTypedefKeyword();
 
-    @Nullable
-    PsiElement getHUnboundedKeyword();
+  @Nullable
+  PsiElement getHTypeKeyword();
 
-    @Nullable
-    PsiElement getHUniqueKeyword();
+  @Nullable
+  PsiElement getHUnboundedKeyword();
 
-    @Nullable
-    PsiElement getHUnitsKeyword();
+  @Nullable
+  PsiElement getHUniqueKeyword();
 
-    @Nullable
-    PsiElement getHUserKeyword();
+  @Nullable
+  PsiElement getHUnitsKeyword();
 
-    @Nullable
-    PsiElement getHUsesKeyword();
+  @Nullable
+  PsiElement getHUserKeyword();
 
-    @Nullable
-    PsiElement getHValidEscape();
+  @Nullable
+  PsiElement getHUsesKeyword();
 
-    @Nullable
-    PsiElement getHValueKeyword();
+  @Nullable
+  PsiElement getHValidEscape();
 
-    @Nullable
-    PsiElement getHWhenKeyword();
+  @Nullable
+  PsiElement getHValueKeyword();
 
-    @Nullable
-    PsiElement getHYangVersionKeyword();
+  @Nullable
+  PsiElement getHWhenKeyword();
 
-    @Nullable
-    PsiElement getHYinElementKeyword();
+  @Nullable
+  PsiElement getHYangVersionKeyword();
+
+  @Nullable
+  PsiElement getHYinElementKeyword();
 
 }
