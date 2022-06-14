@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,8 +10,6 @@
 
 package tech.pantheon.yanginator.plugin.reference;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.IDENTITYREF_STR;
-
 import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
@@ -20,12 +18,15 @@ import com.intellij.psi.PsiReferenceContributor;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.PsiReferenceRegistrar;
 import com.intellij.util.ProcessingContext;
-import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
+
+import java.util.Objects;
+
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.IDENTITYREF_STR;
 
 public class YangReferenceContributor extends PsiReferenceContributor {
 
@@ -59,7 +60,7 @@ public class YangReferenceContributor extends PsiReferenceContributor {
 
     @NotNull
     private String getIdentifierOf(final YangReferencedStatement stmt) {
-        return Objects.requireNonNull(stmt.getIdentifierRefArgQuoted().getIdentifierRefArg().getIdentifier().getText());
+        return Objects.requireNonNull(stmt.getIdentifierRefArgStr().getIdentifierRefArg().getIdentifierRef().getText());
     }
 
     @NotNull

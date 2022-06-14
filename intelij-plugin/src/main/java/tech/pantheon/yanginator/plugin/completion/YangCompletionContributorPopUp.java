@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 public class YangCompletionContributorPopUp {
+    public static final YangCompletionContributorPopUp POP_UP = new YangCompletionContributorPopUp();
     private final Map<String, String> prefixToYangModule;
     private final List<String> currentGroupingNames;
     private final List<String> currentTypedefNames;
     private final List<String> currentIdentityNames;
     private final List<String> importedIdentifiers;
-    public String prefixMatcher = "";
-
-    public static final YangCompletionContributorPopUp POP_UP = new YangCompletionContributorPopUp();
+    public StringBuilder prefixMatcher = new StringBuilder();
 
     private YangCompletionContributorPopUp() {
         this.prefixToYangModule = new HashMap<>();
@@ -53,7 +52,7 @@ public class YangCompletionContributorPopUp {
         return importedIdentifiers;
     }
 
-    public void setPrefixMatcher(String prefixMatcher) {
-        this.prefixMatcher = prefixMatcher;
+    public void setPrefixMatcher(StringBuilder prefixMatcher) {
+        this.prefixMatcher = prefixMatcher.reverse();
     }
 }

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,16 +10,17 @@
 
 package tech.pantheon.yanginator.plugin.completion;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
-import static com.intellij.patterns.StandardPatterns.or;
-
 import com.google.common.collect.ImmutableList;
 import com.intellij.patterns.ElementPattern;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
-import java.util.List;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
+
+import java.util.List;
+
+import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static com.intellij.patterns.StandardPatterns.or;
 
 public final class YangCompletionContributorDataUtil {
     public static final String IDENTITYREF_STR = "identityref";

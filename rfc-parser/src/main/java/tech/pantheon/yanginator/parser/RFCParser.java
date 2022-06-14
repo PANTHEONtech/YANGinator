@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -24,7 +24,7 @@ public class RFCParser {
     final static GrammarKitRFCService GRAMMARKIT_RFC_SERVICE = new GrammarKitRFCService();
     private final static String YANG_PATH_PREFIX = "rfc-parser/src/main/gen/yang-";
     private final static String GEN_PATH_PREFIX = "rfc-parser/src/main/gen/";
-    private final static String PLUGIN_PATH = "intelij-plugin-1-1/src/main/gen/tech/pantheon/yanginator/plugin";
+    private final static String PLUGIN_PATH = "intelij-plugin/src/main/gen/tech/pantheon/yanginator/plugin";
 
 
     public static void main(String[] args) throws URISyntaxException {

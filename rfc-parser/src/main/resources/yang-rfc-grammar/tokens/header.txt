@@ -24,4 +24,3 @@
 }
 
 yang ::=  (module-stmt | submodule-stmt)
-tokens ::= BLOCK_COMMENT  // needed for parser generation

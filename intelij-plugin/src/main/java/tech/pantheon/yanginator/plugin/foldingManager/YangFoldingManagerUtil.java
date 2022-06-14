@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,6 +14,7 @@ import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;

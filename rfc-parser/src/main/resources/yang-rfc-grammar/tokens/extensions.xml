@@ -12,52 +12,34 @@
 <configuration>
     <statements>
         <statement>
-          <name>type-stmt ::=</name>
-<!--            <pin>1</pin>-->
+            <name>type-stmt ::=</name>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>typedef-stmt ::=</name>
-<!--            <pin>1</pin>-->
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>identity-stmt ::=</name>
-<!--            <pin>1</pin>-->
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>base-stmt ::=</name>
-<!--            <pin>1</pin>-->
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>grouping-stmt ::=</name>
-<!--            <pin>1</pin>-->
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>uses-stmt ::=</name>
-<!--            <pin>1</pin>-->
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
-<!--        <statement>-->
-<!--            <name>module-stmt ::=</name>-->
-<!--            <pin>2</pin>-->
-<!--        </statement>-->
-<!--        <statement>-->
-<!--            <name>submodule-stmt ::=</name>-->
-<!--            <pin>2</pin>-->
-<!--        </statement>-->
-<!--        <statement>-->
-<!--            <name>stmt ::=</name>-->
-<!--            <pin>1</pin>-->
-<!--        </statement>-->
     </statements>
 </configuration>
