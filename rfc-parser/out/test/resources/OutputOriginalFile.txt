@@ -1,0 +1,36 @@
+container-stmt-body ::= ( when-stmt stmtsep ) | // ? 
+ ( if-feature-stmt stmtsep ) | // * 
+ ( must-stmt stmtsep ) | // * 
+ ( presence-stmt stmtsep ) | // ? 
+ ( config-stmt stmtsep ) | // ? 
+ ( status-stmt stmtsep ) | // ? 
+ ( description-stmt stmtsep ) | // ? 
+ ( reference-stmt stmtsep ) | // ? 
+ ( ( typedef-stmt | 
+ grouping-stmt ) stmtsep ) | // * 
+ ( data-def-stmt stmtsep ) // * 
+ 
+ container-stmt ::= CONTAINER_KEYWORD sep identifier-arg-str optsep 
+ ( SEMICOLON | 
+ ( LEFT_BRACE stmtsep 
+ container-stmt-body + 
+ RIGHT_BRACE ) ) 
+
+leaf-stmt-body ::= ( when-stmt stmtsep ) | // ? 
+ ( if-feature-stmt stmtsep ) | // * 
+ type-stmt stmtsep | 
+ ( units-stmt stmtsep ) | // ? 
+ ( must-stmt stmtsep ) | // * 
+ ( default-stmt stmtsep ) | // ? 
+ ( config-stmt stmtsep ) | // ? 
+ ( mandatory-stmt stmtsep ) | // ? 
+ ( status-stmt stmtsep ) | // ? 
+ ( description-stmt stmtsep ) | // ? 
+ ( reference-stmt stmtsep ) // ? 
+ 
+ leaf-stmt ::= LEAF_KEYWORD sep identifier-arg-str optsep 
+ ( LEFT_BRACE stmtsep 
+ leaf-stmt-body + 
+ RIGHT_BRACE ) 
+ // ;; comment 
+

@@ -1,0 +1,45 @@
+// Instance Identifiers
+
+instance-identifier ::= ("/" (node-identifier predicate*))+
+
+predicate ::= "[" WSP* (predicate-expr | pos) WSP* "]"
+
+action-keyword ::= "action"
+
+zero-integer-value ::= DIGIT+
+
+CR ::= "\r"
+  // carriage return
+
+DIGIT ::= ( "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" )
+  // 0-9
+
+HEXDIG ::= DIGIT |
+  "a" | "b" | "c" | "d" | "e" | "f"
+  // only lower-case a..f
+
+path-arg-str ::= path-arg | "\"" path-arg "\""
+
+identifier-arg-str ::= identifier-arg | "\"" identifier-arg "\""
+
+input-stmt ::= input-keyword optsep
+  "{" stmtsep
+  // these stmts can appear in any order
+  ((typedef-stmt |
+  grouping-stmt) stmtsep)*
+  (data-def-stmt stmtsep)+
+  "}"
+
+date-arg ::= DIGIT DIGIT DIGIT DIGIT "-" DIGIT DIGIT "-" DIGIT DIGIT
+
+IPv6address ::= ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  |  "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [  h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ] h16 ] "::" ( h16 ":" ) ( h16 ":" ) ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16 ":"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  ls32
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"  h16
+  | [ [ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ][ h16 ":" ] h16 ] "::"
+
+h16 ::= (HEXDIG) | (HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG) | (HEXDIG HEXDIG HEXDIG HEXDIG)

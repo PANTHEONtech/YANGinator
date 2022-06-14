@@ -1,0 +1,27 @@
+{
+ parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
+  parserImports=[
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
+  ]
+
+  implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
+  extends="tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl"
+
+  psiClassPrefix="Yang"
+  psiImplClassSuffix="Impl"
+  psiPackage="tech.pantheon.yanginator.plugin.psi"
+  psiImplPackage="tech.pantheon.yanginator.plugin.psi.impl"
+
+  elementTypeHolderClass="tech.pantheon.yanginator.plugin.psi.YangTypes"
+  elementTypePrefix="YANG_"
+  elementTypeClass="tech.pantheon.yanginator.plugin.psi.YangElementType"
+  tokenTypeClass="tech.pantheon.yanginator.plugin.psi.YangTokenType"
+
+  extends(".*stmt|unknown_statement.*")=yang-stmt
+
+  generateTokenAccessors=true
+}
+
+yang ::=  (module-stmt | submodule-stmt)
+tokens ::= BLOCK_COMMENT  // needed for parser generation

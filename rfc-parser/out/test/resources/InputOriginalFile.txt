@@ -1,0 +1,43 @@
+   container-stmt      = container-keyword sep identifier-arg-str optsep
+                         (";" /
+                          "{" stmtsep
+                              ;; these stmts can appear in any order
+                              [when-stmt stmtsep]
+                              *(if-feature-stmt stmtsep)
+                              *(must-stmt stmtsep)
+                              [presence-stmt stmtsep]
+                              [config-stmt stmtsep]
+                              [status-stmt stmtsep]
+                              [description-stmt stmtsep]
+                              [reference-stmt stmtsep]
+                              *((typedef-stmt /
+                                 grouping-stmt) stmtsep)
+                              *(data-def-stmt stmtsep)
+                          "}")
+
+
+   Bjorklund                    Standards Track                  [Page 151]
+
+
+   RFC 6020                          YANG                      October 2010
+
+
+      leaf-stmt           = leaf-keyword sep identifier-arg-str optsep
+                            "{" stmtsep
+                                ;; these stmts can appear in any order
+                                [when-stmt stmtsep]
+                                *(if-feature-stmt stmtsep)
+                                type-stmt stmtsep
+                                [units-stmt stmtsep]
+                                *(must-stmt stmtsep)
+                                [default-stmt stmtsep]
+                                [config-stmt stmtsep]
+                                [mandatory-stmt stmtsep]
+                                [status-stmt stmtsep]
+                                [description-stmt stmtsep]
+                                [reference-stmt stmtsep]
+                             "}"
+
+
+;; comment
+=
