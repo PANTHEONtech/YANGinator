@@ -25,6 +25,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+H_KEYWORD_MATCHER=[^\w*\s;{}]*?[ \t\n\x0B\f\r]+(import|typedef|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|status|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)[ \t\n\x0B\f\r]+
 H_WHITE_SPACE=[ \t\n\x0B\f\r]+
 H_STRING=\"([^\"])*\"
 H_DATE_ARG=[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}
@@ -125,6 +126,7 @@ H_NON_WORD=[^a-zA-Z_0-9]
   "{"                           { return YANG_H_LEFT_BRACE; }
   "}"                           { return YANG_H_RIGHT_BRACE; }
 
+  {H_KEYWORD_MATCHER}           { return YANG_H_KEYWORD_MATCHER; }
   {H_WHITE_SPACE}               { return YANG_H_WHITE_SPACE; }
   {H_STRING}                    { return YANG_H_STRING; }
   {H_DATE_ARG}                  { return YANG_H_DATE_ARG; }

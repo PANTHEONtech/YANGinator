@@ -68,6 +68,7 @@ public interface YangTypes {
     IElementType YANG_H_INCLUDE_KEYWORD = new YangTokenType("include");
     IElementType YANG_H_INPUT_KEYWORD = new YangTokenType("input");
     IElementType YANG_H_INVALID_ESCAPE = new YangTokenType("H_INVALID_ESCAPE");
+    IElementType YANG_H_KEYWORD_MATCHER = new YangTokenType("H_KEYWORD_MATCHER");
     IElementType YANG_H_KEY_KEYWORD = new YangTokenType("key");
     IElementType YANG_H_LEAF_KEYWORD = new YangTokenType("leaf");
     IElementType YANG_H_LEAF_LIST_KEYWORD = new YangTokenType("leaf-list");
