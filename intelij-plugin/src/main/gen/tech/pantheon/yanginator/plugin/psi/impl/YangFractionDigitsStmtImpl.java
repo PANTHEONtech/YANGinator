@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangFractionDigitsStmt;
@@ -39,9 +40,9 @@ public class YangFractionDigitsStmtImpl extends YangYangStmtImpl implements Yang
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangFractionDigitsArgStr getFractionDigitsArgStr() {
-        return findNotNullChildByClass(YangFractionDigitsArgStr.class);
+        return findChildByClass(YangFractionDigitsArgStr.class);
     }
 
     @Override
@@ -51,15 +52,15 @@ public class YangFractionDigitsStmtImpl extends YangYangStmtImpl implements Yang
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

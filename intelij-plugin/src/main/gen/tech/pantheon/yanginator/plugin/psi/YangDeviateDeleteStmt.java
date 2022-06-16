@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangDeviateDeleteStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangDeleteKeywordStr getDeleteKeywordStr();
 
     @NotNull
     YangDeviateKeyword getDeviateKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

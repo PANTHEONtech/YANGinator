@@ -13,30 +13,31 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public interface YangImportStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
     @NotNull
     YangImportKeyword getImportKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull
     List<YangStmtsep> getStmtsepList();
 
-    @NotNull
+    @Nullable
     PsiElement getLeftBrace();
 
-    @NotNull
+    @Nullable
     PsiElement getRightBrace();
 
 }

@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangDeviateNotSupportedStmt extends YangYangStmt {
 
     @NotNull
     YangDeviateKeyword getDeviateKeyword();
 
-    @NotNull
+    @Nullable
     YangNotSupportedKeywordStr getNotSupportedKeywordStr();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

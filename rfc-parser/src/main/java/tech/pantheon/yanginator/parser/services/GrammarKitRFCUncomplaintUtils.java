@@ -38,6 +38,12 @@ public class GrammarKitRFCUncomplaintUtils {
         result = rewriteFractionDigitsArg(result);
         result = rewritePositiveIntegerValue(result);
         result = adjustModuleAndSubmoduleStmt(result);
+        result = rewriteModuleHeaderStmts(result);
+        result = rewriteSubModuleHeaderStmts(result);
+        result = rewriteDataDefStmt(result);
+        result = rewriteBodyStmts(result);
+        result = adjustUnknownStatement(result);
+        result = allowVersionOne(result);
         return allowComments(result);
     }
 
@@ -52,7 +58,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         List<String> stmts = new ArrayList<>(List.of("description-stmt ::=", "organization-stmt ::=", "contact-stmt ::=", "reference-stmt ::=",
                 "units-stmt ::=", "default-stmt ::=", "presence-stmt ::=", "error-message-stmt ::=", "error-app-tag-stmt ::=", "enum-stmt ::=", "when-stmt ::=",
-                "pattern-stmt ::=", "must-stmt ::="));
+                "must-stmt ::="));
         for (String line : lines) {
             for (String stmt : stmts) {
                 if (line.contains(stmt)) {
@@ -60,6 +66,9 @@ public class GrammarKitRFCUncomplaintUtils {
                 }
                 if (line.contains("quoted-string ::=")) {
                     line = line.replace(" string", " quoted-vchar");
+                }
+                if (line.contains("pattern-stmt ::=")) {
+                    line = "pattern-stmt ::= pattern-keyword sep quoted-string optsep";
                 }
             }
             result.add(line);
@@ -172,9 +181,11 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("");
         lines.add("quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)");
         lines.add("");
+        lines.add("double-quoted-vchar ::= (SINGLE_QUOTE | VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
+        lines.add("");
         lines.add("quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
-        lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
+        lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
     }
 
     /**
@@ -215,7 +226,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("quoted-string ::=")) {
-                line = "quoted-string ::= (DQUOTE quoted-vchar (string-splitter quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)";
+                line = "quoted-string ::= (DQUOTE double-quoted-vchar (string-splitter double-quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)";
             }
             result.add(line);
         }
@@ -233,6 +244,9 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("stmtsep ::=")) {
                 line = "stmtsep ::= (WSP | line-break | unknown-statement | comment)*";
+            }
+            if (line.contains("sep ::= (WSP | line-break)+")) {
+                line = "sep ::= (WSP | line-break | comment)+";
             }
             result.add(line);
         }
@@ -298,13 +312,13 @@ public class GrammarKitRFCUncomplaintUtils {
             }
             result.add(line);
             if (tmp && (line.contains("<<anyOrder  import-stmt*"))) {
-                result.remove(result.size() -1);
+                result.remove(result.size() - 1);
             }
             if (tmp && (line.contains("include-stmt*"))) {
-                result.remove(result.size() -1);
+                result.remove(result.size() - 1);
             }
             if (tmp && (line.contains(">>"))) {
-                result.remove(result.size() -1);
+                result.remove(result.size() - 1);
                 tmp = false;
             }
         }
@@ -313,7 +327,9 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Changing meta statement body in BNF file to define that meta must contain
-     * at least one statement to Format correctly in Yang 1.1
+     * at least one statement to Format correctly and error recovery to be functional.
+     * Logic stays the same, statements can appear in any order and duplicities are
+     * checked in annotator.
      *
      * @param lines list of strings
      * @return list of strings
@@ -326,20 +342,23 @@ public class GrammarKitRFCUncomplaintUtils {
                 tmp = true;
             }
             if (tmp && (line.contains("<<anyOrder  [organization-stmt]"))) {
-                line = "(organization-stmt |";
+                line = "(meta-body stmtsep)+";
             }
             if (tmp && (line.contains("[contact-stmt]"))) {
-                line = "   contact-stmt |";
+                line = "";
             }
             if (tmp && (line.contains("[description-stmt]"))) {
-                line = "  description-stmt |";
+                line = "private meta-body ::=(organization-stmt |";
             }
             if (tmp && (line.contains("[reference-stmt]"))) {
-                line = "  reference-stmt )+";
+                line = "        contact-stmt |";
             }
             if (tmp && (line.contains(">>"))) {
-                line = "";
+                line = "        description-stmt |";
                 tmp = false;
+                result.add(line);
+                result.add("        reference-stmt )");
+                line = "";
             }
             result.add(line);
         }
@@ -551,6 +570,171 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("positive-integer-value ::=")) {
                 line = "positive-integer-value ::= (non-zero-digit DIGIT*) | FRACTIONS | DIGITS";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adjust module-header-stmts for error recovery. Logic stays the same,
+     * statements can appear in any order and duplicities are checked in annotator.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteModuleHeaderStmts(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (found && line.contains("yang-version-stmt")) {
+                result.add("(module-header-body stmtsep)+");
+                result.add("");
+                line = "private module-header-body ::=  (yang-version-stmt |";
+            }
+            if (found && line.contains("namespace-stmt")) {
+                line = "  namespace-stmt  |";
+            }
+            if (found && line.contains("prefix-stmt")) {
+                line = "  prefix-stmt)";
+            }
+            if (found && line.contains(">>")) {
+                line = "";
+                found = false;
+            }
+            if (line.contains("module-header-stmts ::=") && !line.contains("submodule")) {
+                found = true;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adjust submodule-header-stmts for error recovery. Logic stays the same,
+     * statements can appear in any order and duplicities are checked in annotator.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteSubModuleHeaderStmts(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (found && line.contains("yang-version-stmt")) {
+                result.add("(submodule-header-body stmtsep)+");
+                result.add("");
+                line = "private submodule-header-body ::=  (yang-version-stmt |";
+            }
+            if (found && line.contains("belongs-to-stmt")) {
+                line = "  belongs-to-stmt)";
+            }
+            if (found && line.equals(">>")) {
+                line = "";
+                found = false;
+            }
+            if (line.contains("submodule-header-stmts ::=")) {
+                found = true;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Switching positions of leaf-list-stmt and leaf-stmt due to error recovery always
+     * matching leaf-stmt if it was before leaf-list-stmt.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteDataDefStmt(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("data-def-stmt ::=")) {
+                found = true;
+            }
+            if (found && line.contains("  leaf-stmt |")) {
+                line = "  leaf-list-stmt |";
+            } else if (found && line.contains("  leaf-list-stmt |")) {
+                line = "  leaf-stmt |";
+            }
+            if (found && line.equals("")) {
+                found = false;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Decomposing body-stmts into sub statements due error recovery.
+     * Logic should remain the same only change against RFC 7950 is
+     * changing * (0 - infinity) to + (1 - infinity) not allowing empty body.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteBodyStmts(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("body-stmts ::= (extension-stmt |")) {
+                result.add("body-stmts ::= body-sub-stmt+");
+                result.add("");
+                result.add("private body-sub-stmt ::=body-body-stmts stmtsep");
+                result.add("");
+                result.add("private body-body-stmts ::=(extension-stmt |");
+                result.add("    feature-stmt |");
+                result.add("    identity-stmt |");
+                result.add("    typedef-stmt |");
+                result.add("    grouping-stmt |");
+                result.add("    data-def-stmt |");
+                result.add("    augment-stmt |");
+                result.add("    rpc-stmt |");
+                result.add("    notification-stmt |");
+                result.add("    deviation-stmt)");
+                found = true;
+            }
+            if (found && line.equals("")) {
+                found = false;
+            }
+            if (!found) {
+                result.add(line);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Allows quoted-string in unknow statement.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> adjustUnknownStatement(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("unknown-statement ::=")) {
+                line = "unknown-statement ::= prefix COLON identifier ([sep] [quoted-string | string]) optsep";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Allowing version to be 1 or 1.1 instead of only 1.1
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> allowVersionOne(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("yang-version-arg ::=")) {
+                line = "yang-version-arg ::= ONE [DOT ONE]";
             }
             result.add(line);
         }

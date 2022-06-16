@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangOrderedByStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangOrderedByArgStr getOrderedByArgStr();
 
     @NotNull
     YangOrderedByKeyword getOrderedByKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

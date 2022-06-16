@@ -22,13 +22,13 @@ public interface YangExtensionStmt extends YangYangStmt {
     @NotNull
     YangExtensionKeyword getExtensionKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

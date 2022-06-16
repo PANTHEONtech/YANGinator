@@ -22,13 +22,13 @@ public interface YangActionStmt extends YangYangStmt {
     @NotNull
     YangActionKeyword getActionKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

@@ -22,13 +22,13 @@ public interface YangChoiceStmt extends YangYangStmt {
     @NotNull
     YangChoiceKeyword getChoiceKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

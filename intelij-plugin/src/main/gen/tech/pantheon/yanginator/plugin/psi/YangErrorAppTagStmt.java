@@ -22,10 +22,10 @@ public interface YangErrorAppTagStmt extends YangYangStmt {
     @Nullable
     YangQuotedString getQuotedString();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
     @Nullable

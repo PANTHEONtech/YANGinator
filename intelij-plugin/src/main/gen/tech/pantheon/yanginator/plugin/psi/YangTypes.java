@@ -85,6 +85,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtBodyArgsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDigitImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangDoubleQuotedVcharImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDquoteImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangEnumKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangEnumSpecificationImpl;
@@ -417,6 +418,7 @@ public interface YangTypes {
     IElementType YANG_DEVIATION_STMT = new YangElementType("YANG_DEVIATION_STMT");
     IElementType YANG_DEVIATION_STMT_BODY_ARGS = new YangElementType("YANG_DEVIATION_STMT_BODY_ARGS");
     IElementType YANG_DIGIT = new YangElementType("YANG_DIGIT");
+    IElementType YANG_DOUBLE_QUOTED_VCHAR = new YangElementType("YANG_DOUBLE_QUOTED_VCHAR");
     IElementType YANG_DQUOTE = new YangElementType("YANG_DQUOTE");
     IElementType YANG_ENUM_KEYWORD = new YangElementType("YANG_ENUM_KEYWORD");
     IElementType YANG_ENUM_SPECIFICATION = new YangElementType("YANG_ENUM_SPECIFICATION");
@@ -887,6 +889,8 @@ public interface YangTypes {
                 return new YangDeviationStmtBodyArgsImpl(node);
             } else if (type == YANG_DIGIT) {
                 return new YangDigitImpl(node);
+            } else if (type == YANG_DOUBLE_QUOTED_VCHAR) {
+                return new YangDoubleQuotedVcharImpl(node);
             } else if (type == YANG_DQUOTE) {
                 return new YangDquoteImpl(node);
             } else if (type == YANG_ENUM_KEYWORD) {

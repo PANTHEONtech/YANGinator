@@ -49,9 +49,9 @@ public class YangIncludeStmtImpl extends YangYangStmtImpl implements YangInclude
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIdentifierArgStr getIdentifierArgStr() {
-        return findNotNullChildByClass(YangIdentifierArgStr.class);
+        return findChildByClass(YangIdentifierArgStr.class);
     }
 
     @Override
@@ -61,15 +61,15 @@ public class YangIncludeStmtImpl extends YangYangStmtImpl implements YangInclude
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override

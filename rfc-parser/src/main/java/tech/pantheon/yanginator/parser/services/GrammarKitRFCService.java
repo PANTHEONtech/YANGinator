@@ -178,6 +178,7 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
         newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
         newGrammar = GrammarKitRFCUncomplaintUtils.additionalAdjustments(newGrammar);
+        GrammarKitRFCUtils.addRecoveryRules(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
     }
 

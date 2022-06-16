@@ -23,7 +23,6 @@ import tech.pantheon.yanginator.plugin.psi.YangPatternStmt;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
-import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -50,9 +49,9 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
@@ -68,21 +67,15 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
     @NotNull
     public List<YangStmtsep> getStmtsepList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
-    }
-
-    @Override
-    @Nullable
-    public YangString getString() {
-        return findChildByClass(YangString.class);
     }
 
     @Override

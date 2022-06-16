@@ -22,10 +22,10 @@ public interface YangReferenceStmt extends YangYangStmt {
     @NotNull
     YangReferenceKeyword getReferenceKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
     @Nullable

@@ -12,6 +12,7 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public interface YangBaseStmt extends YangGeneratedReferenceType {
@@ -19,13 +20,13 @@ public interface YangBaseStmt extends YangGeneratedReferenceType {
     @NotNull
     YangBaseKeyword getBaseKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierRefArgStr getIdentifierRefArgStr();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

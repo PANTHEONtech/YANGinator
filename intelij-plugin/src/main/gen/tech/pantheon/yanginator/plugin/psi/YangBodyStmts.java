@@ -24,6 +24,9 @@ public interface YangBodyStmts extends YangNamedElement {
     List<YangIdentityStmt> getIdentityStmtList();
 
     @NotNull
+    List<YangStmtsep> getStmtsepList();
+
+    @NotNull
     List<YangTypedefStmt> getTypedefStmtList();
 
     @NotNull

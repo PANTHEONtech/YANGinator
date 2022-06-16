@@ -32,7 +32,6 @@ public class RFCParser {
         generateGrammar(GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/shared/rfc-3986.abnf"), GEN_PATH_PREFIX);
         generateGrammar("1_0", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_0/yang-rfc-6020.abnf"), YANG_PATH_PREFIX);
         generateGrammar("1_1", GRAMMARKIT_RFC_SERVICE.getFile("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"), YANG_PATH_PREFIX);
-
     }
 
     /**
@@ -65,17 +64,13 @@ public class RFCParser {
         if (!Files.exists(lexer)) {
             boolean isCreated = new File(dstPath).mkdirs();
             if (isCreated) {
-
                 File lexerFile = new File(dstPath + "/" + lexerFileName);
                 try {
                     lexerFile.createNewFile();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
                 GRAMMARKIT_RFC_SERVICE.generateLexer(lexerFile, lexerFile);
-
-
             } else {
                 File directoryToBeDeleted = new File(dstPath);
                 deleteDirectory(directoryToBeDeleted);

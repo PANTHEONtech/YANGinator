@@ -22,13 +22,13 @@ public interface YangAnydataStmt extends YangYangStmt {
     @NotNull
     YangAnydataKeyword getAnydataKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

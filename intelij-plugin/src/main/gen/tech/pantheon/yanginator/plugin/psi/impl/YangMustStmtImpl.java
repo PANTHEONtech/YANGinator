@@ -56,9 +56,9 @@ public class YangMustStmtImpl extends YangYangStmtImpl implements YangMustStmt {
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
@@ -68,9 +68,9 @@ public class YangMustStmtImpl extends YangYangStmtImpl implements YangMustStmt {
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override

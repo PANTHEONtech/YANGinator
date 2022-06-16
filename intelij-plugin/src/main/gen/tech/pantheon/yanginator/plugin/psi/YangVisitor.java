@@ -353,6 +353,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
+    public void visitDoubleQuotedVchar(@NotNull YangDoubleQuotedVchar o) {
+        visitNamedElement(o);
+    }
+
     public void visitEnumKeyword(@NotNull YangEnumKeyword o) {
         visitNamedElement(o);
     }

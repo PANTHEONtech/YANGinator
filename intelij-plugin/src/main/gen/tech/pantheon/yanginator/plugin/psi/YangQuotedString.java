@@ -24,6 +24,9 @@ public interface YangQuotedString extends YangNamedElement {
     List<YangSquote> getSquoteList();
 
     @NotNull
+    List<YangDoubleQuotedVchar> getDoubleQuotedVcharList();
+
+    @NotNull
     List<YangQuotedVchar> getQuotedVcharList();
 
     @NotNull

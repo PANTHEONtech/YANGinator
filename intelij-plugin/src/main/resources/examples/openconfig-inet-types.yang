@@ -16,12 +16,12 @@ module openconfig-inet-types {
   description
     "This module contains a set of Internet address related";
 
-  oc-ext:openconfig-version asdasd;
+  oc-ext:openconfig-version "0.5.0";
 
-  revision "0000-00-00" {
+  revision "2021-08-17" {
     description
       "Add ip-address-zoned typedef as a union between ipv-address-zonedand ipv-address-zoned types.";
-    reference afsdf;
+    reference "0.5.0";
   }
 
   revision "2021-07-14" {

@@ -19,10 +19,10 @@ import java.util.List;
 
 public interface YangModuleStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangBodyStmts getBodyStmts();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
     @Nullable
@@ -31,7 +31,7 @@ public interface YangModuleStmt extends YangYangStmt {
     @Nullable
     YangMetaStmts getMetaStmts();
 
-    @NotNull
+    @Nullable
     YangModuleHeaderStmts getModuleHeaderStmts();
 
     @NotNull
@@ -43,16 +43,16 @@ public interface YangModuleStmt extends YangYangStmt {
     @NotNull
     List<YangRevisionStmt> getRevisionStmtList();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtsep getStmtsep();
 
-    @NotNull
+    @Nullable
     PsiElement getLeftBrace();
 
-    @NotNull
+    @Nullable
     PsiElement getRightBrace();
 
 }

@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangMaxElementsKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangMaxElementsStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMaxValueArgStr;
@@ -45,21 +46,21 @@ public class YangMaxElementsStmtImpl extends YangYangStmtImpl implements YangMax
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangMaxValueArgStr getMaxValueArgStr() {
-        return findNotNullChildByClass(YangMaxValueArgStr.class);
+        return findChildByClass(YangMaxValueArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

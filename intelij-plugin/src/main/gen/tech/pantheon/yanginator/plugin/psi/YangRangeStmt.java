@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangRangeStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangRangeArgStr getRangeArgStr();
 
     @NotNull
     YangRangeKeyword getRangeKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

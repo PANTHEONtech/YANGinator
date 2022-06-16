@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
@@ -50,6 +51,12 @@ public class YangBodyStmtsImpl extends YangNamedElementImpl implements YangBodyS
     @NotNull
     public List<YangIdentityStmt> getIdentityStmtList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangIdentityStmt.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStmtsep> getStmtsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
     }
 
     @Override

@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangRpcStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
     @NotNull
     YangRpcKeyword getRpcKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

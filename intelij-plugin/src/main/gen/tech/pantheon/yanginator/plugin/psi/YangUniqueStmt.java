@@ -12,16 +12,17 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangUniqueStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
-    @NotNull
+    @Nullable
     YangUniqueArgStr getUniqueArgStr();
 
     @NotNull

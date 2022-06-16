@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBaseKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
@@ -45,21 +46,21 @@ public class YangBaseStmtImpl extends YangGeneratedReferenceTypeImpl implements 
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIdentifierRefArgStr getIdentifierRefArgStr() {
-        return findNotNullChildByClass(YangIdentifierRefArgStr.class);
+        return findChildByClass(YangIdentifierRefArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

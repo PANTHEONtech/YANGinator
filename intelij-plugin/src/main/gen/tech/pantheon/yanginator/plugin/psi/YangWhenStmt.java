@@ -19,13 +19,13 @@ import java.util.List;
 
 public interface YangWhenStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
     @Nullable
     YangQuotedString getQuotedString();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

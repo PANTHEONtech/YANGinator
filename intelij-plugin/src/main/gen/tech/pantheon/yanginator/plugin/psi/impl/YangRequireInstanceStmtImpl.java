@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
@@ -39,9 +40,9 @@ public class YangRequireInstanceStmtImpl extends YangYangStmtImpl implements Yan
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangRequireInstanceArgStr getRequireInstanceArgStr() {
-        return findNotNullChildByClass(YangRequireInstanceArgStr.class);
+        return findChildByClass(YangRequireInstanceArgStr.class);
     }
 
     @Override
@@ -51,15 +52,15 @@ public class YangRequireInstanceStmtImpl extends YangYangStmtImpl implements Yan
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

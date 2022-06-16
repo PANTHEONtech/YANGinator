@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangRevisionStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangRevisionDate getRevisionDate();
 
     @NotNull
     YangRevisionKeyword getRevisionKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

@@ -22,13 +22,13 @@ public interface YangDeviateReplaceStmt extends YangYangStmt {
     @NotNull
     YangDeviateKeyword getDeviateKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangReplaceKeywordStr getReplaceKeywordStr();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

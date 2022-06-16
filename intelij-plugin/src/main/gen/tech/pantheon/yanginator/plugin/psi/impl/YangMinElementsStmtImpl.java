@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangMinElementsKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangMinElementsStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMinValueArgStr;
@@ -45,21 +46,21 @@ public class YangMinElementsStmtImpl extends YangYangStmtImpl implements YangMin
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangMinValueArgStr getMinValueArgStr() {
-        return findNotNullChildByClass(YangMinValueArgStr.class);
+        return findChildByClass(YangMinValueArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

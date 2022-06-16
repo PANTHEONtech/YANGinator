@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangNotificationStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
     @NotNull
     YangNotificationKeyword getNotificationKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

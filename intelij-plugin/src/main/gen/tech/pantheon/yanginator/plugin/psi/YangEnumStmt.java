@@ -22,13 +22,13 @@ public interface YangEnumStmt extends YangYangStmt {
     @NotNull
     YangEnumKeyword getEnumKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
     @Nullable
     YangQuotedString getQuotedString();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

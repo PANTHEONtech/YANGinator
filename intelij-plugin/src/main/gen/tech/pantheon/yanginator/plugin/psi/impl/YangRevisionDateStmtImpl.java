@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDate;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateStmt;
@@ -39,9 +40,9 @@ public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRe
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangRevisionDate getRevisionDate() {
-        return findNotNullChildByClass(YangRevisionDate.class);
+        return findChildByClass(YangRevisionDate.class);
     }
 
     @Override
@@ -51,15 +52,15 @@ public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRe
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

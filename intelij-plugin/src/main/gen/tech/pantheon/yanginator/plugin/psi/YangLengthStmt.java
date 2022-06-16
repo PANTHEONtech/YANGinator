@@ -19,16 +19,16 @@ import java.util.List;
 
 public interface YangLengthStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangLengthArgStr getLengthArgStr();
 
     @NotNull
     YangLengthKeyword getLengthKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull
