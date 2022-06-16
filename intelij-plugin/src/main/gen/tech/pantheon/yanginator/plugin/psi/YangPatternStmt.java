@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface YangPatternStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
     @NotNull
@@ -28,14 +28,11 @@ public interface YangPatternStmt extends YangYangStmt {
     @Nullable
     YangQuotedString getQuotedString();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull
     List<YangStmtsep> getStmtsepList();
-
-    @Nullable
-    YangString getString();
 
     @Nullable
     PsiElement getLeftBrace();

@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangPrefix;
+import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangString;
@@ -66,6 +67,12 @@ public class YangUnknownStatementImpl extends YangNamedElementImpl implements Ya
     @NotNull
     public YangPrefix getPrefix() {
         return findNotNullChildByClass(YangPrefix.class);
+    }
+
+    @Override
+    @Nullable
+    public YangQuotedString getQuotedString() {
+        return findChildByClass(YangQuotedString.class);
     }
 
     @Override

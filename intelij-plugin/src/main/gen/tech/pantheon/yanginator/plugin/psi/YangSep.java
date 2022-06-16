@@ -21,6 +21,9 @@ public interface YangSep extends YangNamedElement {
     List<YangWsp> getWspList();
 
     @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     List<YangLineBreak> getLineBreakList();
 
 }

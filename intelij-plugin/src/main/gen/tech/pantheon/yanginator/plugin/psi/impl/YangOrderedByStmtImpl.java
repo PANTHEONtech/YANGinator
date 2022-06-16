@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangOrderedByArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangOrderedByKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangOrderedByStmt;
@@ -39,9 +40,9 @@ public class YangOrderedByStmtImpl extends YangYangStmtImpl implements YangOrder
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOrderedByArgStr getOrderedByArgStr() {
-        return findNotNullChildByClass(YangOrderedByArgStr.class);
+        return findChildByClass(YangOrderedByArgStr.class);
     }
 
     @Override
@@ -51,15 +52,15 @@ public class YangOrderedByStmtImpl extends YangYangStmtImpl implements YangOrder
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

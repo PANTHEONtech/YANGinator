@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangMinElementsStmt extends YangYangStmt {
 
     @NotNull
     YangMinElementsKeyword getMinElementsKeyword();
 
-    @NotNull
+    @Nullable
     YangMinValueArgStr getMinValueArgStr();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

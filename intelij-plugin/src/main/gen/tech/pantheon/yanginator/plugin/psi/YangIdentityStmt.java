@@ -20,16 +20,16 @@ import java.util.List;
 
 public interface YangIdentityStmt extends YangGeneratedReferenceType {
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
     @NotNull
     YangIdentityKeyword getIdentityKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

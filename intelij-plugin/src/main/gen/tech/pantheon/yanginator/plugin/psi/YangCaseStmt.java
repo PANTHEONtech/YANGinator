@@ -22,13 +22,13 @@ public interface YangCaseStmt extends YangYangStmt {
     @NotNull
     YangCaseKeyword getCaseKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

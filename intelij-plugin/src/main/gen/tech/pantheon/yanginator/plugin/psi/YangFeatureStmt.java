@@ -22,13 +22,13 @@ public interface YangFeatureStmt extends YangYangStmt {
     @NotNull
     YangFeatureKeyword getFeatureKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

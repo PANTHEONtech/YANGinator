@@ -16,6 +16,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangAugmentKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
@@ -53,15 +54,15 @@ public class YangUsesAugmentStmtImpl extends YangYangStmtImpl implements YangUse
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
@@ -71,21 +72,21 @@ public class YangUsesAugmentStmtImpl extends YangYangStmtImpl implements YangUse
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangUsesAugmentArgStr getUsesAugmentArgStr() {
-        return findNotNullChildByClass(YangUsesAugmentArgStr.class);
+        return findChildByClass(YangUsesAugmentArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public PsiElement getLeftBrace() {
-        return findNotNullChildByType(YANG_LEFT_BRACE);
+        return findChildByType(YANG_LEFT_BRACE);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public PsiElement getRightBrace() {
-        return findNotNullChildByType(YANG_RIGHT_BRACE);
+        return findChildByType(YANG_RIGHT_BRACE);
     }
 
 }

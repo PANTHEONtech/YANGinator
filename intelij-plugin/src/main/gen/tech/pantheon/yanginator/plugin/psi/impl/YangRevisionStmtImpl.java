@@ -49,15 +49,15 @@ public class YangRevisionStmtImpl extends YangYangStmtImpl implements YangRevisi
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangRevisionDate getRevisionDate() {
-        return findNotNullChildByClass(YangRevisionDate.class);
+        return findChildByClass(YangRevisionDate.class);
     }
 
     @Override
@@ -67,9 +67,9 @@ public class YangRevisionStmtImpl extends YangYangStmtImpl implements YangRevisi
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override

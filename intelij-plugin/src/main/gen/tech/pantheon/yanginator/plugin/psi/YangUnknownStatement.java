@@ -29,6 +29,9 @@ public interface YangUnknownStatement extends YangNamedElement {
     YangPrefix getPrefix();
 
     @Nullable
+    YangQuotedString getQuotedString();
+
+    @Nullable
     YangSep getSep();
 
     @NotNull

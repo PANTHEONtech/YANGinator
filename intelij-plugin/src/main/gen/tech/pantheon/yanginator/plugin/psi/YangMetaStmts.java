@@ -18,6 +18,9 @@ import java.util.List;
 public interface YangMetaStmts extends YangNamedElement {
 
     @NotNull
+    List<YangStmtsep> getStmtsepList();
+
+    @NotNull
     List<YangYangStmt> getYangStmtList();
 
 }

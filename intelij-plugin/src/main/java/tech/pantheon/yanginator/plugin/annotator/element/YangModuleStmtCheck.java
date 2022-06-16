@@ -29,9 +29,7 @@ public class YangModuleStmtCheck extends AbstractYangStmtCheck {
     public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
         minOne.check(element, holder, YangModuleHeaderStmts.class);
         maxOne.check(element, holder, YangModuleHeaderStmts.class);
-        minOne.check(element, holder, YangLinkageStmts.class);
         maxOne.check(element, holder, YangLinkageStmts.class);
-        minOne.check(element, holder, YangMetaStmts.class);
         maxOne.check(element, holder, YangMetaStmts.class);
         minOne.check(element, holder, YangBodyStmts.class);
         maxOne.check(element, holder, YangBodyStmts.class);

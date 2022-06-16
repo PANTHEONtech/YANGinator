@@ -53,15 +53,15 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangBodyStmts getBodyStmts() {
-        return findNotNullChildByClass(YangBodyStmts.class);
+        return findChildByClass(YangBodyStmts.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIdentifierArgStr getIdentifierArgStr() {
-        return findNotNullChildByClass(YangIdentifierArgStr.class);
+        return findChildByClass(YangIdentifierArgStr.class);
     }
 
     @Override
@@ -89,21 +89,21 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtsep getStmtsep() {
-        return findNotNullChildByClass(YangStmtsep.class);
+        return findChildByClass(YangStmtsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSubmoduleHeaderStmts getSubmoduleHeaderStmts() {
-        return findNotNullChildByClass(YangSubmoduleHeaderStmts.class);
+        return findChildByClass(YangSubmoduleHeaderStmts.class);
     }
 
     @Override
@@ -113,15 +113,15 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
     }
 
     @Override
-    @NotNull
+    @Nullable
     public PsiElement getLeftBrace() {
-        return findNotNullChildByType(YANG_LEFT_BRACE);
+        return findChildByType(YANG_LEFT_BRACE);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public PsiElement getRightBrace() {
-        return findNotNullChildByType(YANG_RIGHT_BRACE);
+        return findChildByType(YANG_RIGHT_BRACE);
     }
 
 }

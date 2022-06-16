@@ -16,6 +16,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
+import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
 
@@ -35,6 +36,12 @@ public class YangMetaStmtsImpl extends YangNamedElementImpl implements YangMetaS
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStmtsep> getStmtsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
     }
 
     @Override

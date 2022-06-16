@@ -13,19 +13,20 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 import java.util.List;
 
 public interface YangTypedefStmt extends YangGeneratedReferenceType {
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull
@@ -34,10 +35,10 @@ public interface YangTypedefStmt extends YangGeneratedReferenceType {
     @NotNull
     YangTypedefKeyword getTypedefKeyword();
 
-    @NotNull
+    @Nullable
     PsiElement getLeftBrace();
 
-    @NotNull
+    @Nullable
     PsiElement getRightBrace();
 
 }

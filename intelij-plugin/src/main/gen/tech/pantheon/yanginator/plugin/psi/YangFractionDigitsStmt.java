@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangFractionDigitsStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangFractionDigitsArgStr getFractionDigitsArgStr();
 
     @NotNull
     YangFractionDigitsKeyword getFractionDigitsKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

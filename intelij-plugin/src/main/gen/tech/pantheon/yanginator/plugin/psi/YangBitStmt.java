@@ -22,13 +22,13 @@ public interface YangBitStmt extends YangYangStmt {
     @NotNull
     YangBitKeyword getBitKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

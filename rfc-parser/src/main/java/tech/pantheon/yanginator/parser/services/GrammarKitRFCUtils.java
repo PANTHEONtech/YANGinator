@@ -972,10 +972,10 @@ public class GrammarKitRFCUtils {
                 }
             }
             result.add(line);
-            if (found && i + 1 < lines.size() && lines.get(i + 1).contains(" ::=")) {
+            if (found && i + 1 < lines.size() && lines.get(i + 1).equals("")) {
                 result.add("{");
                 if (foundExtension.getPin() != null) {
-                    result.add("pin = " + foundExtension.getPin());
+                    result.add("pin" + foundExtension.getPin());
                 }
                 if (foundExtension.getImplementation() != null) {
                     result.add("implements=" + foundExtension.getImplementation());
@@ -988,5 +988,38 @@ public class GrammarKitRFCUtils {
             }
         }
         return result;
+    }
+
+    /**
+     * Error recovery rules for yang 1.1 grammar.
+     * Changing these might display errors even if there are none.
+     *
+     * @param lines list of strings
+     */
+    public static void addRecoveryRules(List<String> lines){
+        lines.add("private revision-recover ::= !(revision-stmt |\n" +
+                " body-stmts |\n" +
+                " (RIGHT_BRACE stmtsep <<eof>>))");
+        lines.add("");
+        lines.add("private header-recover ::= !( module-header-stmts |\n" +
+                "  submodule-header-stmts |\n" +
+                "  linkage-stmts |\n" +
+                "  meta-stmts |\n" +
+                "  revision-stmt |\n" +
+                "  body-stmts |\n" +
+                "  (RIGHT_BRACE stmtsep <<eof>>))");
+        lines.add("");
+        lines.add("private meta-recover ::= !(meta-stmts |\n" +
+                "  revision-stmt |\n" +
+                "  body-stmts |\n" +
+                "  (RIGHT_BRACE stmtsep <<eof>>))");
+        lines.add("");
+        lines.add("private linkage-recover ::= !(linkage-stmts |\n" +
+                " meta-stmts |\n" +
+                " revision-stmt |\n" +
+                " body-stmts |\n" +
+                " (RIGHT_BRACE stmtsep <<eof>>))");
+        lines.add("");
+        lines.add("private body-recovery ::=!(body-body-stmts | (RIGHT_BRACE stmtsep <<eof>>))");
     }
 }

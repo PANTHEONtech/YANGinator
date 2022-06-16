@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
   ~
-  ~   Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
+  ~   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
   ~
   ~   This program and the accompanying materials are made available under the
   ~   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,33 +13,75 @@
     <statements>
         <statement>
             <name>type-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>typedef-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>identity-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>base-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>grouping-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>uses-stmt ::=</name>
+            <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
+        </statement>
+        <statement>
+            <name>module-stmt ::=</name>
+            <pin> = 2</pin>
+        </statement>
+        <statement>
+            <name>submodule-stmt ::=</name>
+            <pin> = 2</pin>
+        </statement>
+        <statement>
+            <name>module-header-stmts ::=</name>
+            <pin>(".*") = 1 recoverWhile=header-recover</pin>
+        </statement>
+        <statement>
+            <name>submodule-header-stmts ::=</name>
+            <pin>(".*") = 1 recoverWhile=header-recover</pin>
+        </statement>
+        <statement>
+            <name>meta-stmts ::=</name>
+            <pin>(".*") = 1 recoverWhile=meta-recover</pin>
+        </statement>
+        <statement>
+            <name>linkage-stmts ::=</name>
+            <pin>(".*") = 1 recoverWhile=linkage-recover</pin>
+        </statement>
+        <statement>
+            <name>body-sub-stmt ::=</name>
+            <pin>(".*") = 1 recoverWhile=body-recovery</pin>
+        </statement>
+        <statement>
+            <name>revision-stmt ::=</name>
+            <pin>(".*") = 1 recoverWhile=revision-recover</pin>
+        </statement>
+        <statement>
+            <name>stmt ::=</name>
+            <pin>(".*") = 1</pin>
         </statement>
     </statements>
 </configuration>

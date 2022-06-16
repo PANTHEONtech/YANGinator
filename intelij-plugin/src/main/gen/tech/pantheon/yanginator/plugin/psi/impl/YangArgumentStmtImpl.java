@@ -56,21 +56,21 @@ public class YangArgumentStmtImpl extends YangYangStmtImpl implements YangArgume
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIdentifierArgStr getIdentifierArgStr() {
-        return findNotNullChildByClass(YangIdentifierArgStr.class);
+        return findChildByClass(YangIdentifierArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override

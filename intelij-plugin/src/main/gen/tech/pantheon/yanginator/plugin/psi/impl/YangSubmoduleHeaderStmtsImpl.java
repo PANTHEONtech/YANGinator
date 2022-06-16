@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
+
+import java.util.List;
 
 public class YangSubmoduleHeaderStmtsImpl extends YangNamedElementImpl implements YangSubmoduleHeaderStmts {
 
@@ -31,6 +36,18 @@ public class YangSubmoduleHeaderStmtsImpl extends YangNamedElementImpl implement
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStmtsep> getStmtsepList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangYangStmt> getYangStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
     }
 
 }

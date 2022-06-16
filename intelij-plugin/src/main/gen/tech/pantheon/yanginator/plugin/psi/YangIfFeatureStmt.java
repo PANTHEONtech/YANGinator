@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangIfFeatureStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangIfFeatureExprStr getIfFeatureExprStr();
 
     @NotNull
     YangIfFeatureKeyword getIfFeatureKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

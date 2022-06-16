@@ -15,6 +15,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleQuotedVchar;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedVchar;
@@ -50,6 +51,12 @@ public class YangQuotedStringImpl extends YangNamedElementImpl implements YangQu
     @NotNull
     public List<YangSquote> getSquoteList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangDoubleQuotedVchar> getDoubleQuotedVcharList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDoubleQuotedVchar.class);
     }
 
     @Override

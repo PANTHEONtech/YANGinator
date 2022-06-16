@@ -14,6 +14,7 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExprStr;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureStmt;
@@ -39,9 +40,9 @@ public class YangIfFeatureStmtImpl extends YangYangStmtImpl implements YangIfFea
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIfFeatureExprStr getIfFeatureExprStr() {
-        return findNotNullChildByClass(YangIfFeatureExprStr.class);
+        return findChildByClass(YangIfFeatureExprStr.class);
     }
 
     @Override
@@ -51,15 +52,15 @@ public class YangIfFeatureStmtImpl extends YangYangStmtImpl implements YangIfFea
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangStmtend getStmtend() {
-        return findNotNullChildByClass(YangStmtend.class);
+        return findChildByClass(YangStmtend.class);
     }
 
 }

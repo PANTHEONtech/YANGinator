@@ -63,7 +63,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PLUS_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
@@ -351,12 +350,6 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getSeven() {
         return findChildByType(YANG_SEVEN);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getSingleQuote() {
-        return findChildByType(YANG_SINGLE_QUOTE);
     }
 
     @Override

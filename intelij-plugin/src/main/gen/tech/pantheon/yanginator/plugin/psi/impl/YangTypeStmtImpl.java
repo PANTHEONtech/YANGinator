@@ -50,21 +50,21 @@ public class YangTypeStmtImpl extends YangGeneratedReferenceTypeImpl implements 
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangIdentifierRefArgStr getIdentifierRefArgStr() {
-        return findNotNullChildByClass(YangIdentifierRefArgStr.class);
+        return findChildByClass(YangIdentifierRefArgStr.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override

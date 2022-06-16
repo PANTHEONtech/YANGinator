@@ -22,13 +22,13 @@ public interface YangMustStmt extends YangYangStmt {
     @NotNull
     YangMustKeyword getMustKeyword();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
     @Nullable
     YangQuotedString getQuotedString();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

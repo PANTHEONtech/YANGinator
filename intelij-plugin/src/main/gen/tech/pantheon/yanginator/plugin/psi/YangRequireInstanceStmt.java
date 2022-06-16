@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangRequireInstanceStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangRequireInstanceArgStr getRequireInstanceArgStr();
 
     @NotNull
     YangRequireInstanceKeyword getRequireInstanceKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

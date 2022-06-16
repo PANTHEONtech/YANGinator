@@ -149,9 +149,6 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getSeven();
 
     @Nullable
-    PsiElement getSingleQuote();
-
-    @Nullable
     PsiElement getSix();
 
     @Nullable

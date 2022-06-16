@@ -12,19 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface YangPathStmt extends YangYangStmt {
 
-    @NotNull
+    @Nullable
     YangPathArgStr getPathArgStr();
 
     @NotNull
     YangPathKeyword getPathKeyword();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
-    @NotNull
+    @Nullable
     YangStmtend getStmtend();
 
 }

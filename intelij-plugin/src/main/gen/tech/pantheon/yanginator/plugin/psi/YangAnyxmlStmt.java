@@ -22,13 +22,13 @@ public interface YangAnyxmlStmt extends YangYangStmt {
     @NotNull
     YangAnyxmlKeyword getAnyxmlKeyword();
 
-    @NotNull
+    @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @NotNull
+    @Nullable
     YangOptsep getOptsep();
 
-    @NotNull
+    @Nullable
     YangSep getSep();
 
     @NotNull

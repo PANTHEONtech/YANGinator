@@ -49,9 +49,9 @@ public class YangDeviateDeleteStmtImpl extends YangYangStmtImpl implements YangD
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangDeleteKeywordStr getDeleteKeywordStr() {
-        return findNotNullChildByClass(YangDeleteKeywordStr.class);
+        return findChildByClass(YangDeleteKeywordStr.class);
     }
 
     @Override
@@ -61,15 +61,15 @@ public class YangDeviateDeleteStmtImpl extends YangYangStmtImpl implements YangD
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangOptsep getOptsep() {
-        return findNotNullChildByClass(YangOptsep.class);
+        return findChildByClass(YangOptsep.class);
     }
 
     @Override
-    @NotNull
+    @Nullable
     public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
+        return findChildByClass(YangSep.class);
     }
 
     @Override
