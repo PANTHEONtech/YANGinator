@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.BASE_STR;
@@ -54,7 +55,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
 
     @NotNull
     @Override
-    public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
+    public FoldingDescriptor @NotNull [] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
         psiNode = node.getPsi();
         var childrenOfCurrentFile = new ArrayList<>(PsiTreeUtil.findChildrenOfType(this.psiNode, PsiElement.class));
         setPrefixValues(childrenOfCurrentFile, YangCompletionContributorPopUp.POP_UP.getPrefixToYangModule());
@@ -331,7 +332,11 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     }
 
     private boolean isElementYangType(final PsiElement element, IElementType yangType) {
-        return element.getNode().getElementType().equals(yangType);
+        return Optional.ofNullable(element)
+                .map(PsiElement::getNode)
+                .map(ASTNode::getElementType)
+                .map(iElementType -> iElementType.equals(yangType))
+                .orElse(false);
     }
 
     @Override
