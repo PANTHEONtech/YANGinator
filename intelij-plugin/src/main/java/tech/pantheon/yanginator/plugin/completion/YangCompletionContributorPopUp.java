@@ -53,6 +53,6 @@ public class YangCompletionContributorPopUp {
     }
 
     public void setPrefixMatcher(StringBuilder prefixMatcher) {
-        this.prefixMatcher = prefixMatcher.reverse();
+        this.prefixMatcher = prefixMatcher;
     }
 }
