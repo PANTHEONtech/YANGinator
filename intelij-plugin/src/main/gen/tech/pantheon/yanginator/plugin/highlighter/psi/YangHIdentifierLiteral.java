@@ -120,6 +120,9 @@ public interface YangHIdentifierLiteral extends YangNamedElement {
     PsiElement getHInvalidEscape();
 
     @Nullable
+    PsiElement getHKeywordMatcher();
+
+    @Nullable
     PsiElement getHKeyKeyword();
 
     @Nullable

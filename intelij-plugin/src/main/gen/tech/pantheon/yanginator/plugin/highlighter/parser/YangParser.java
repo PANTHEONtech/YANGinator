@@ -70,6 +70,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_I
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_LIST_KEYWORD;
@@ -329,7 +330,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     //     H_INVALID_ESCAPE          |
     //     H_VALID_ESCAPE            |
     //     H_DIGIT                   |
-    //     H_NON_WORD
+    //     H_NON_WORD                |
+    //     H_KEYWORD_MATCHER
     public static boolean h_identifier_literal(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "h_identifier_literal")) return false;
         boolean r;
@@ -421,6 +423,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = consumeToken(b, YANG_H_VALID_ESCAPE);
         if (!r) r = consumeToken(b, YANG_H_DIGIT);
         if (!r) r = consumeToken(b, YANG_H_NON_WORD);
+        if (!r) r = consumeToken(b, YANG_H_KEYWORD_MATCHER);
         exit_section_(b, l, m, r, false, null);
         return r;
     }

@@ -54,6 +54,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_I
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_LIST_KEYWORD;
@@ -326,6 +327,12 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
     @Nullable
     public PsiElement getHInvalidEscape() {
         return findChildByType(YANG_H_INVALID_ESCAPE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getHKeywordMatcher() {
+        return findChildByType(YANG_H_KEYWORD_MATCHER);
     }
 
     @Override
