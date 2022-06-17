@@ -705,6 +705,7 @@ public interface YangTypes {
     IElementType YANG_DOUBLE_QUOTE = new YangTokenType("DOUBLE_QUOTE");
     IElementType YANG_EIGHT = new YangTokenType("EIGHT");
     IElementType YANG_EQUALS = new YangTokenType("EQUALS");
+    IElementType YANG_ESCAPES = new YangTokenType("ESCAPES");
     IElementType YANG_EXCLAMATION_MARK = new YangTokenType("EXCLAMATION_MARK");
     IElementType YANG_FIVE = new YangTokenType("FIVE");
     IElementType YANG_FORWARD_SLASH = new YangTokenType("FORWARD_SLASH");

@@ -74,7 +74,8 @@ ALPHANUMERICAL_ALPHA_FIRST = ([a-zA-Z]+[0-9]+[a-zA-Z]+)|([a-zA-Z]+[0-9]+)+
 ALPHANUMERICAL_DIGIT_FIRST = ([0-9]+[a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)+
 FRACTIONS = 1[0-8]
 ZEROS = 0{2,999}
-CHARS = [^\w;{} \"\-.]|[^\W_]+
+CHARS = [^\w;{}\\ \"\-.]|[^\W_]+
+ESCAPES = \\[nt\"\\]
 
 EOL=\R
 

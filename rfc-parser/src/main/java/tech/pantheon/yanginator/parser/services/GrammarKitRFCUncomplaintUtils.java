@@ -181,11 +181,11 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("");
         lines.add("quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)");
         lines.add("");
-        lines.add("double-quoted-vchar ::= (SINGLE_QUOTE | VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
+        lines.add("double-quoted-vchar ::= (SINGLE_QUOTE | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
-        lines.add("quoted-vchar ::= (VCHAR | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
+        lines.add("quoted-vchar ::= (VCHAR | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
-        lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | SPACE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | BACK_SLASH | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
+        lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
     }
 
     /**
@@ -251,7 +251,7 @@ public class GrammarKitRFCUncomplaintUtils {
             result.add(line);
         }
         result.add("");
-        result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR)+ )");
+        result.add("comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB)+ )");
         return result;
     }
 
@@ -526,7 +526,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 result.add(line);
                 result.add("");
                 result.add("private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |");
-                result.add(" EIGHT | NINE | DATE | FRACTIONS | ZEROS // do not change the order of tokens !");
+                result.add(" EIGHT | NINE | DATE | FRACTIONS | ZEROS | ESCAPES // do not change the order of tokens !");
                 line = "";
             }
             result.add(line);
