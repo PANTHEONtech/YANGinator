@@ -95,7 +95,8 @@ ALPHANUMERICAL_ALPHA_FIRST = ([a-zA-Z]+[0-9]+[a-zA-Z]+)|([a-zA-Z]+[0-9]+)+
 ALPHANUMERICAL_DIGIT_FIRST = ([0-9]+[a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)+
 FRACTIONS = 1[0-8]
 ZEROS = 0{2,999}
-CHARS = [^\w;{} \"\-.]|[^\W_]+
+CHARS = [^\w;{}\\ \"\-.]|[^\W_]+
+ESCAPES = \\[nt\"\\]
 
 EOL=\R
 
@@ -116,9 +117,11 @@ EOL=\R
   {DATE}                          { return YANG_DATE; }
   {FRACTIONS}                     { return YANG_FRACTIONS; }
   {ZEROS}                         { return YANG_ZEROS; }
+  {ESCAPES}                       { return YANG_ESCAPES; }
   {LEFT_BRACE}                    { return YANG_LEFT_BRACE; }
   {RIGHT_BRACE}                   { return YANG_RIGHT_BRACE; }
   {DOUBLE_QUOTE}                  { return YANG_DOUBLE_QUOTE; }
+  {DOT}                           { return YANG_DOT; }
   {SEMICOLON}                     { return YANG_SEMICOLON; }
   {LEFT_PARENTHESIS}              { return YANG_LEFT_PARENTHESIS; }
   {RIGHT_PARENTHESIS}             { return YANG_RIGHT_PARENTHESIS; }
@@ -129,7 +132,6 @@ EOL=\R
   {OPEN_BRACKET}                  { return YANG_OPEN_BRACKET; }
   {CLOSED_BRACKET}                { return YANG_CLOSED_BRACKET; }
   {EQUALS}                        { return YANG_EQUALS; }
-  {DOT}                           { return YANG_DOT; }
   {PARENT_FOLDER}                 { return YANG_PARENT_FOLDER; }
   {ALPHA}                         { return YANG_ALPHA; }
   {UNDERSCORE}                    { return YANG_UNDERSCORE; }
@@ -160,11 +162,11 @@ EOL=\R
   {AMPERSAND}                     { return YANG_AMPERSAND; }
   {ASTERISK}                      { return YANG_ASTERISK; }
   {COMMA}                         { return YANG_COMMA; }
+  {BACK_SLASH}                    { return YANG_BACK_SLASH; }
   {CHARS}                         { return YANG_CHARS; }
   {APOSTROPHE}                    { return YANG_APOSTROPHE; }
   {LESS_THAN_SIGN}                { return YANG_LESS_THAN_SIGN; }
   {GREATER_THAN_SIGN}             { return YANG_GREATER_THAN_SIGN; }
-  {BACK_SLASH}                    { return YANG_BACK_SLASH; }
   {CIRCUMFLEX_ACCENT}             { return YANG_CIRCUMFLEX_ACCENT; }
   {GRAVE_ACCENT}                  { return YANG_GRAVE_ACCENT; }
 

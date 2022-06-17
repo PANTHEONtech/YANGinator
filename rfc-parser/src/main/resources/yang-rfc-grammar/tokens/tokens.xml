@@ -393,8 +393,13 @@
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
-        <key>[[^\w;{} \"\-.]|[^\W_]+]</key>
+        <key>[[^\w;{}\\ \"\-.]|[^\W_]+]</key>
         <value>CHARS</value>
+        <lexerOnly>true</lexerOnly>
+    </token>
+    <token>
+        <key>"\\[nt\"\\]"</key>
+        <value>ESCAPES</value>
         <lexerOnly>true</lexerOnly>
     </token>
 </class>

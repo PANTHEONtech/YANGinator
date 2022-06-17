@@ -38,9 +38,6 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getAtSign();
 
     @Nullable
-    PsiElement getBackSlash();
-
-    @Nullable
     PsiElement getChars();
 
     @Nullable
@@ -150,9 +147,6 @@ public interface YangVchar extends YangNamedElement {
 
     @Nullable
     PsiElement getSix();
-
-    @Nullable
-    PsiElement getSpace();
 
     @Nullable
     PsiElement getThree();

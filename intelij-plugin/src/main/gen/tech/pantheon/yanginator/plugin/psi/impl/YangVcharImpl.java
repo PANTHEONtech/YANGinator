@@ -26,7 +26,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AMPERSAND;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_APOSTROPHE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ASTERISK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BACK_SLASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHARS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CIRCUMFLEX_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CLOSED_BRACKET;
@@ -64,7 +63,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TILDE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
@@ -128,12 +126,6 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getAtSign() {
         return findChildByType(YANG_AT_SIGN);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getBackSlash() {
-        return findChildByType(YANG_BACK_SLASH);
     }
 
     @Override
@@ -356,12 +348,6 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getSix() {
         return findChildByType(YANG_SIX);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getSpace() {
-        return findChildByType(YANG_SPACE);
     }
 
     @Override
