@@ -32,10 +32,10 @@ jobs:
         run: gradle createReleaseVersion
 
       # Publish the plugin to the Marketplace
-      - name: Publish Plugin
-        env:
-          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
-        run: gradle publishPlugin
+ #     - name: Publish Plugin
+ #       env:
+ #        PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
+ #       run: gradle publishPlugin
 
       # Create next snapshot version
       - name: Create next snapshot version
@@ -46,4 +46,3 @@ jobs:
         with:
           commit_message: Increment version after release
           branch: master
-          file_pattern: README.md
