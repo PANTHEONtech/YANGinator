@@ -20,7 +20,10 @@ import tech.pantheon.yanginator.plugin.highlighter.psi.YangHIdentifierLiteral;
 import tech.pantheon.yanginator.plugin.highlighter.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl;
 
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ACTION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ADD_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_AND_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ANYDATA_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ANYXML_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ARGUMENT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_AUGMENT_KEYWORD;
@@ -54,6 +57,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_I
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVERT_MATCH_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_KEYWORD;
@@ -66,16 +70,19 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_M
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MAX_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MIN_ELEMENTS_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MIN_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MODIFIER_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MODULE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MUST_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NAMESPACE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NON_WORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOTIFICATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOT_SUPPORTED_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OBSOLETE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OPERATORS;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ORDERED_BY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ORGANIZATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OR_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OUTPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_PATH_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_PATTERN_KEYWORD;
@@ -127,8 +134,26 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
 
     @Override
     @Nullable
+    public PsiElement getHActionKeyword() {
+        return findChildByType(YANG_H_ACTION_KEYWORD);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getHAddKeyword() {
         return findChildByType(YANG_H_ADD_KEYWORD);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getHAndKeyword() {
+        return findChildByType(YANG_H_AND_KEYWORD);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getHAnydataKeyword() {
+        return findChildByType(YANG_H_ANYDATA_KEYWORD);
     }
 
     @Override
@@ -331,6 +356,12 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
 
     @Override
     @Nullable
+    public PsiElement getHInvertMatchKeyword() {
+        return findChildByType(YANG_H_INVERT_MATCH_KEYWORD);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getHKeywordMatcher() {
         return findChildByType(YANG_H_KEYWORD_MATCHER);
     }
@@ -403,6 +434,12 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
 
     @Override
     @Nullable
+    public PsiElement getHModifierKeyword() {
+        return findChildByType(YANG_H_MODIFIER_KEYWORD);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getHModuleKeyword() {
         return findChildByType(YANG_H_MODULE_KEYWORD);
     }
@@ -433,6 +470,12 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
 
     @Override
     @Nullable
+    public PsiElement getHNotKeyword() {
+        return findChildByType(YANG_H_NOT_KEYWORD);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getHNotSupportedKeyword() {
         return findChildByType(YANG_H_NOT_SUPPORTED_KEYWORD);
     }
@@ -459,6 +502,12 @@ public class YangHIdentifierLiteralImpl extends YangNamedElementImpl implements 
     @Nullable
     public PsiElement getHOrganizationKeyword() {
         return findChildByType(YANG_H_ORGANIZATION_KEYWORD);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getHOrKeyword() {
+        return findChildByType(YANG_H_OR_KEYWORD);
     }
 
     @Override

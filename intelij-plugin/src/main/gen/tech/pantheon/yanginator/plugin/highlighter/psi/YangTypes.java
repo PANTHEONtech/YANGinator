@@ -30,7 +30,10 @@ public interface YangTypes {
     IElementType YANG_STMT = new YangElementType("YANG_STMT");
     IElementType YANG_WSP = new YangElementType("YANG_WSP");
 
+    IElementType YANG_H_ACTION_KEYWORD = new YangTokenType("action");
     IElementType YANG_H_ADD_KEYWORD = new YangTokenType("add");
+    IElementType YANG_H_AND_KEYWORD = new YangTokenType("and");
+    IElementType YANG_H_ANYDATA_KEYWORD = new YangTokenType("anydata");
     IElementType YANG_H_ANYXML_KEYWORD = new YangTokenType("anyxml");
     IElementType YANG_H_ARGUMENT_KEYWORD = new YangTokenType("argument");
     IElementType YANG_H_AUGMENT_KEYWORD = new YangTokenType("augment");
@@ -68,6 +71,7 @@ public interface YangTypes {
     IElementType YANG_H_INCLUDE_KEYWORD = new YangTokenType("include");
     IElementType YANG_H_INPUT_KEYWORD = new YangTokenType("input");
     IElementType YANG_H_INVALID_ESCAPE = new YangTokenType("H_INVALID_ESCAPE");
+    IElementType YANG_H_INVERT_MATCH_KEYWORD = new YangTokenType("invert-match");
     IElementType YANG_H_KEYWORD_MATCHER = new YangTokenType("H_KEYWORD_MATCHER");
     IElementType YANG_H_KEY_KEYWORD = new YangTokenType("key");
     IElementType YANG_H_LEAF_KEYWORD = new YangTokenType("leaf");
@@ -80,16 +84,19 @@ public interface YangTypes {
     IElementType YANG_H_MAX_KEYWORD = new YangTokenType("max");
     IElementType YANG_H_MIN_ELEMENTS_KEYWORD = new YangTokenType("min-elements");
     IElementType YANG_H_MIN_KEYWORD = new YangTokenType("min");
+    IElementType YANG_H_MODIFIER_KEYWORD = new YangTokenType("modifier");
     IElementType YANG_H_MODULE_KEYWORD = new YangTokenType("module");
     IElementType YANG_H_MUST_KEYWORD = new YangTokenType("must");
     IElementType YANG_H_NAMESPACE_KEYWORD = new YangTokenType("namespace");
     IElementType YANG_H_NON_WORD = new YangTokenType("H_NON_WORD");
     IElementType YANG_H_NOTIFICATION_KEYWORD = new YangTokenType("notification");
+    IElementType YANG_H_NOT_KEYWORD = new YangTokenType("not");
     IElementType YANG_H_NOT_SUPPORTED_KEYWORD = new YangTokenType("not-supported");
     IElementType YANG_H_OBSOLETE_KEYWORD = new YangTokenType("obsolete");
     IElementType YANG_H_OPERATORS = new YangTokenType("+");
     IElementType YANG_H_ORDERED_BY_KEYWORD = new YangTokenType("ordered-by");
     IElementType YANG_H_ORGANIZATION_KEYWORD = new YangTokenType("organization");
+    IElementType YANG_H_OR_KEYWORD = new YangTokenType("or");
     IElementType YANG_H_OUTPUT_KEYWORD = new YangTokenType("output");
     IElementType YANG_H_PATH_KEYWORD = new YangTokenType("path");
     IElementType YANG_H_PATTERN_KEYWORD = new YangTokenType("pattern");

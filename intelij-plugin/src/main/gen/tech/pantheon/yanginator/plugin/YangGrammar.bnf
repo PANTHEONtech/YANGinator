@@ -1198,7 +1198,7 @@ path-equality-expr ::= node-identifier WSP* EQUALS WSP* path-key-expr
 path-key-expr ::= current-function-invocation WSP* FORWARD_SLASH WSP*
   rel-path-keyexpr
 
-rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP*)+
+rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
   (node-identifier WSP* FORWARD_SLASH WSP*)*
   node-identifier
 //; Keywords, using the syntax for case-sensitive strings (RFC 7405)
@@ -1318,14 +1318,7 @@ identifier-ref ::= [prefix COLON] identifier
 
 string ::= yang-string  // an unquoted string as returned by the scanner, that matches the rule < yang-string
 
-yang-string ::=<<checkString yang-char* "%xD800-DFFF"
- "%xFDD0-FDEF" "%xFFFE-FFFF" "%x1FFFE-1FFFF"
- "%x2FFFE-2FFFF" "%x3FFFE-3FFFF" "%x4FFFE-4FFFF"
- "%x5FFFE-5FFFF" "%x6FFFE-6FFFF" "%x7FFFE-7FFFF"
- "%x8FFFE-8FFFF" "%x9FFFE-9FFFF" "%xAFFFE-AFFFF"
- "%xBFFFE-BFFFF" "%xCFFFE-CFFFF" "%xDFFFE-DFFFF"
- "%xEFFFE-EFFFF" "%xFFFFE-FFFFF" "%x10FFFE-10FFFF"
->>
+yang-string ::= yang-char*
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
 // return, and line feed but excluding the other C0 control
 // characters, the surrogate blocks, and the noncharacters
@@ -1495,9 +1488,9 @@ string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLU
 
 quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)
 
-double-quoted-vchar ::= (SINGLE_QUOTE | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
+double-quoted-vchar ::= (SINGLE_QUOTE | BACK_SLASH | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
 
-quoted-vchar ::= (VCHAR | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
+quoted-vchar ::= (VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
 
 VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
 
