@@ -8,25 +8,25 @@
  *
  */
 
-package tech.pantheon.yanginator.plugin.annotator.element;
+package tech.pantheon.yanginator.plugin.annotator.element.version_1_0;
 
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangBelongsToStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
-import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
+import tech.pantheon.yanginator.plugin.annotator.element.AbstractYangStmtCheck;
+import tech.pantheon.yanginator.plugin.psi.YangActionStmt;
 
-public class YangSubmoduleHeaderStmtsCheck extends AbstractYangStmtCheck {
+public class YangActionStmtCheck_v1_0 extends AbstractYangStmtCheck {
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {
-        return element instanceof YangSubmoduleHeaderStmts;
+        return element instanceof YangActionStmt;
     }
 
     @Override
     public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
-        maxOne.check(element, holder, YangYangVersionStmt.class);
-        maxOne.check(element, holder, YangBelongsToStmt.class);
-        minOne.check(element, holder, YangBelongsToStmt.class);
+        holder.newAnnotation(HighlightSeverity.ERROR, "Action statement is not allowed in yang 1.0")
+                .range(element.getFirstChild())
+                .create();
     }
 }

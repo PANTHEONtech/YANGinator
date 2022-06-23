@@ -98,7 +98,14 @@ final class YangFormatterUtils {
             YangTypes.YANG_SYSTEM_KEYWORD,
             YangTypes.YANG_TRUE_KEYWORD,
             YangTypes.YANG_UNBOUNDED_KEYWORD,
-            YangTypes.YANG_USER_KEYWORD
+            YangTypes.YANG_USER_KEYWORD,
+            YangTypes.YANG_ACTION_KEYWORD,
+            YangTypes.YANG_ANYDATA_KEYWORD,
+            YangTypes.YANG_MODIFIER_KEYWORD,
+            YangTypes.YANG_INVERT_MATCH_KEYWORD,
+            YangTypes.YANG_ADD_KEYWORD,
+            YangTypes.YANG_OR_KEYWORD,
+            YangTypes.YANG_NOT_KEYWORD
     );
 
     public static final TokenSet SEMICOLON_SET = TokenSet.create(
@@ -188,7 +195,10 @@ final class YangFormatterUtils {
             YangTypes.YANG_DESCRIPTION_STMT,
             YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_STRING,
-            YangTypes.YANG_BLOCK_COMMENT
+            YangTypes.YANG_BLOCK_COMMENT,
+            YangTypes.YANG_ACTION_STMT,
+            YangTypes.YANG_ANYDATA_STMT,
+            YangTypes.YANG_MODIFIER_STMT
     );
 
     private static final TokenSet TO_INDENT_STATEMENTS_SET = TokenSet.create(

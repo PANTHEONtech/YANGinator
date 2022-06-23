@@ -20,7 +20,6 @@ import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateStmt;
 
 
-
 public class YangImportStmtCheck extends AbstractYangStmtCheck {
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {

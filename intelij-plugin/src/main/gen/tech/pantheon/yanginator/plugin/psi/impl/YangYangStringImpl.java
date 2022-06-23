@@ -13,9 +13,13 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangYangChar;
 import tech.pantheon.yanginator.plugin.psi.YangYangString;
+
+import java.util.List;
 
 public class YangYangStringImpl extends YangNamedElementImpl implements YangYangString {
 
@@ -31,6 +35,12 @@ public class YangYangStringImpl extends YangNamedElementImpl implements YangYang
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangYangChar> getYangCharList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangChar.class);
     }
 
 }

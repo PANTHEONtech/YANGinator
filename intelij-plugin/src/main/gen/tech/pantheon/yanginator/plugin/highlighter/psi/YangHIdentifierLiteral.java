@@ -18,7 +18,16 @@ import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 public interface YangHIdentifierLiteral extends YangNamedElement {
 
     @Nullable
+    PsiElement getHActionKeyword();
+
+    @Nullable
     PsiElement getHAddKeyword();
+
+    @Nullable
+    PsiElement getHAndKeyword();
+
+    @Nullable
+    PsiElement getHAnydataKeyword();
 
     @Nullable
     PsiElement getHAnyxmlKeyword();
@@ -120,6 +129,9 @@ public interface YangHIdentifierLiteral extends YangNamedElement {
     PsiElement getHInvalidEscape();
 
     @Nullable
+    PsiElement getHInvertMatchKeyword();
+
+    @Nullable
     PsiElement getHKeywordMatcher();
 
     @Nullable
@@ -156,6 +168,9 @@ public interface YangHIdentifierLiteral extends YangNamedElement {
     PsiElement getHMinKeyword();
 
     @Nullable
+    PsiElement getHModifierKeyword();
+
+    @Nullable
     PsiElement getHModuleKeyword();
 
     @Nullable
@@ -171,6 +186,9 @@ public interface YangHIdentifierLiteral extends YangNamedElement {
     PsiElement getHNotificationKeyword();
 
     @Nullable
+    PsiElement getHNotKeyword();
+
+    @Nullable
     PsiElement getHNotSupportedKeyword();
 
     @Nullable
@@ -184,6 +202,9 @@ public interface YangHIdentifierLiteral extends YangNamedElement {
 
     @Nullable
     PsiElement getHOrganizationKeyword();
+
+    @Nullable
+    PsiElement getHOrKeyword();
 
     @Nullable
     PsiElement getHOutputKeyword();

@@ -37,7 +37,6 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.parseTokens;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
-import static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
@@ -4511,7 +4510,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (SINGLE_QUOTE | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
+    // (SINGLE_QUOTE | BACK_SLASH | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
     public static boolean double_quoted_vchar(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "double_quoted_vchar")) return false;
         Marker m = enter_section_(b, l, _NONE_, YANG_DOUBLE_QUOTED_VCHAR, "<double quoted vchar>");
@@ -4524,12 +4523,13 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // SINGLE_QUOTE | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN
+    // SINGLE_QUOTE | BACK_SLASH | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN
     private static boolean double_quoted_vchar_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "double_quoted_vchar_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = consumeToken(b, YANG_SINGLE_QUOTE);
+        if (!r) r = consumeToken(b, YANG_BACK_SLASH);
         if (!r) r = consumeToken(b, YANG_ESCAPES);
         if (!r) r = VCHAR(b, l + 1);
         if (!r) r = consumeToken(b, YANG_SPACE);
@@ -4537,7 +4537,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = consumeToken(b, YANG_LEFT_BRACE);
         if (!r) r = consumeToken(b, YANG_RIGHT_BRACE);
         if (!r) r = consumeToken(b, YANG_TAB);
-        if (!r) r = double_quoted_vchar_0_8(b, l + 1);
+        if (!r) r = double_quoted_vchar_0_9(b, l + 1);
         if (!r) r = consumeToken(b, YANG_LINEFEED);
         if (!r) r = consumeToken(b, YANG_CARRIAGE_RETURN);
         exit_section_(b, m, null, r);
@@ -4545,8 +4545,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // LINEFEED sep
-    private static boolean double_quoted_vchar_0_8(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "double_quoted_vchar_0_8")) return false;
+    private static boolean double_quoted_vchar_0_9(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "double_quoted_vchar_0_9")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = consumeToken(b, YANG_LINEFEED);
@@ -9321,7 +9321,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (VCHAR | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
+    // (VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
     public static boolean quoted_vchar(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "quoted_vchar")) return false;
         Marker m = enter_section_(b, l, _NONE_, YANG_QUOTED_VCHAR, "<quoted vchar>");
@@ -9334,20 +9334,21 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // VCHAR | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN
+    // VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN
     private static boolean quoted_vchar_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "quoted_vchar_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = VCHAR(b, l + 1);
         if (!r) r = consumeToken(b, YANG_BACK_SLASH);
+        if (!r) r = consumeToken(b, YANG_DOUBLE_QUOTE);
         if (!r) r = consumeToken(b, YANG_ESCAPES);
         if (!r) r = consumeToken(b, YANG_SPACE);
         if (!r) r = consumeToken(b, YANG_SEMICOLON);
         if (!r) r = consumeToken(b, YANG_LEFT_BRACE);
         if (!r) r = consumeToken(b, YANG_RIGHT_BRACE);
         if (!r) r = consumeToken(b, YANG_TAB);
-        if (!r) r = quoted_vchar_0_8(b, l + 1);
+        if (!r) r = quoted_vchar_0_9(b, l + 1);
         if (!r) r = consumeToken(b, YANG_LINEFEED);
         if (!r) r = consumeToken(b, YANG_CARRIAGE_RETURN);
         exit_section_(b, m, null, r);
@@ -9355,8 +9356,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // LINEFEED sep
-    private static boolean quoted_vchar_0_8(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "quoted_vchar_0_8")) return false;
+    private static boolean quoted_vchar_0_9(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "quoted_vchar_0_9")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = consumeToken(b, YANG_LINEFEED);
@@ -9796,22 +9797,22 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP*)+
+    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
     //   (node-identifier WSP* FORWARD_SLASH WSP*)*
     //   node-identifier
     public static boolean rel_path_keyexpr(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr")) return false;
-        if (!nextTokenIs(b, YANG_DOUBLE_DOT)) return false;
+        if (!nextTokenIs(b, "<rel path keyexpr>", YANG_DOUBLE_DOT, YANG_PARENT_FOLDER)) return false;
         boolean r;
-        Marker m = enter_section_(b);
+        Marker m = enter_section_(b, l, _NONE_, YANG_REL_PATH_KEYEXPR, "<rel path keyexpr>");
         r = rel_path_keyexpr_0(b, l + 1);
         r = r && rel_path_keyexpr_1(b, l + 1);
         r = r && node_identifier(b, l + 1);
-        exit_section_(b, m, YANG_REL_PATH_KEYEXPR, r);
+        exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP*)+
+    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
     private static boolean rel_path_keyexpr_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_0")) return false;
         boolean r;
@@ -9826,37 +9827,48 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // DOUBLE_DOT WSP* FORWARD_SLASH WSP*
+    // DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER
     private static boolean rel_path_keyexpr_0_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
+        r = rel_path_keyexpr_0_0_0(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_PARENT_FOLDER);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // DOUBLE_DOT WSP* FORWARD_SLASH WSP*
+    private static boolean rel_path_keyexpr_0_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
         r = consumeToken(b, YANG_DOUBLE_DOT);
-        r = r && rel_path_keyexpr_0_0_1(b, l + 1);
+        r = r && rel_path_keyexpr_0_0_0_1(b, l + 1);
         r = r && consumeToken(b, YANG_FORWARD_SLASH);
-        r = r && rel_path_keyexpr_0_0_3(b, l + 1);
+        r = r && rel_path_keyexpr_0_0_0_3(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
     // WSP*
-    private static boolean rel_path_keyexpr_0_0_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_1")) return false;
+    private static boolean rel_path_keyexpr_0_0_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_1")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_1", c)) break;
+            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_0_1", c)) break;
         }
         return true;
     }
 
     // WSP*
-    private static boolean rel_path_keyexpr_0_0_3(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_3")) return false;
+    private static boolean rel_path_keyexpr_0_0_0_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_3")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_3", c)) break;
+            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_0_3", c)) break;
         }
         return true;
     }
@@ -12063,31 +12075,16 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // <<checkString yang-char* "%xD800-DFFF"
-    //  "%xFDD0-FDEF" "%xFFFE-FFFF" "%x1FFFE-1FFFF"
-    //  "%x2FFFE-2FFFF" "%x3FFFE-3FFFF" "%x4FFFE-4FFFF"
-    //  "%x5FFFE-5FFFF" "%x6FFFE-6FFFF" "%x7FFFE-7FFFF"
-    //  "%x8FFFE-8FFFF" "%x9FFFE-9FFFF" "%xAFFFE-AFFFF"
-    //  "%xBFFFE-BFFFF" "%xCFFFE-CFFFF" "%xDFFFE-DFFFF"
-    //  "%xEFFFE-EFFFF" "%xFFFFE-FFFFF" "%x10FFFE-10FFFF"
-    // >>
+    // yang-char*
     public static boolean yang_string(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "yang_string")) return false;
-        boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_YANG_STRING, "<yang string>");
-        r = checkString(b, l + 1, YangParser::yang_string_0_0, "%xD800-DFFF", "%xFDD0-FDEF", "%xFFFE-FFFF", "%x1FFFE-1FFFF", "%x2FFFE-2FFFF", "%x3FFFE-3FFFF", "%x4FFFE-4FFFF", "%x5FFFE-5FFFF", "%x6FFFE-6FFFF", "%x7FFFE-7FFFF", "%x8FFFE-8FFFF", "%x9FFFE-9FFFF", "%xAFFFE-AFFFF", "%xBFFFE-BFFFF", "%xCFFFE-CFFFF", "%xDFFFE-DFFFF", "%xEFFFE-EFFFF", "%xFFFFE-FFFFF", "%x10FFFE-10FFFF");
-        exit_section_(b, l, m, r, false, null);
-        return r;
-    }
-
-    // yang-char*
-    private static boolean yang_string_0_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "yang_string_0_0")) return false;
         while (true) {
             int c = current_position_(b);
             if (!yang_char(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "yang_string_0_0", c)) break;
+            if (!empty_element_parsed_guard_(b, "yang_string", c)) break;
         }
+        exit_section_(b, l, m, true, false, null);
         return true;
     }
 

@@ -16,6 +16,7 @@ import tech.pantheon.yanginator.plugin.psi.YangAnyxmlStmt;
 import tech.pantheon.yanginator.plugin.psi.YangArgumentStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBelongsToStmt;
+import tech.pantheon.yanginator.plugin.psi.YangBitStmt;
 import tech.pantheon.yanginator.plugin.psi.YangCaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangChoiceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
@@ -29,8 +30,11 @@ import tech.pantheon.yanginator.plugin.psi.YangDeviateAddStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDeviateDeleteStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDeviateReplaceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangDeviationStmtBodyArgs;
+import tech.pantheon.yanginator.plugin.psi.YangEnumStmt;
 import tech.pantheon.yanginator.plugin.psi.YangErrorAppTagStmt;
 import tech.pantheon.yanginator.plugin.psi.YangErrorMessageStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIfFeatureStmt;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangInputStmt;
@@ -42,8 +46,11 @@ import tech.pantheon.yanginator.plugin.psi.YangListStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMandatoryStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMaxElementsStmt;
 import tech.pantheon.yanginator.plugin.psi.YangMinElementsStmt;
+import tech.pantheon.yanginator.plugin.psi.YangModifierStmt;
 import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangMustStmt;
 import tech.pantheon.yanginator.plugin.psi.YangNamespaceStmt;
+import tech.pantheon.yanginator.plugin.psi.YangNotificationStmt;
 import tech.pantheon.yanginator.plugin.psi.YangOrderedByStmt;
 import tech.pantheon.yanginator.plugin.psi.YangOrganizationStmt;
 import tech.pantheon.yanginator.plugin.psi.YangOutputStmt;
@@ -52,6 +59,7 @@ import tech.pantheon.yanginator.plugin.psi.YangPositionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
 import tech.pantheon.yanginator.plugin.psi.YangPresenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
+import tech.pantheon.yanginator.plugin.psi.YangRefineStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangStatusStmt;
@@ -112,7 +120,15 @@ public class ElementCheckUtils {
             Map.entry(YangActionStmt.class, "action statement"),
             Map.entry(YangDeviateAddStmt.class, "deviate add statement"),
             Map.entry(YangDeviateDeleteStmt.class, "deviate delete statement"),
-            Map.entry(YangDeviateReplaceStmt.class, "deviate replace statement")
+            Map.entry(YangDeviateReplaceStmt.class, "deviate replace statement"),
+            Map.entry(YangIfFeatureStmt.class, "if-feature statement"),
+            Map.entry(YangEnumStmt.class, "enum statement"),
+            Map.entry(YangIdentityStmt.class, "identity statement"),
+            Map.entry(YangRefineStmt.class, "refine statement"),
+            Map.entry(YangBitStmt.class, "bit statement"),
+            Map.entry(YangModifierStmt.class, "modifier statement"),
+            Map.entry(YangMustStmt.class, "must statement"),
+            Map.entry(YangNotificationStmt.class, "notification statement")
     );
 
     private static final List<Class<?>> DATA_DEF_STATEMENTS = List.of(YangContainerStmt.class,
@@ -124,7 +140,7 @@ public class ElementCheckUtils {
             YangUsesStmt.class,
             YangDataDefStmt.class);
 
-    static String translateClassName(final Class<?> clazz) {
+    public static String translateClassName(final Class<?> clazz) {
         return CLASS_TRANSLATIONS.get(clazz);
     }
 

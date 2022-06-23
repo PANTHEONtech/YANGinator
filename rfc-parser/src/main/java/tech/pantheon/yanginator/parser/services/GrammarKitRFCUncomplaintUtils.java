@@ -44,6 +44,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = rewriteBodyStmts(result);
         result = adjustUnknownStatement(result);
         result = allowVersionOne(result);
+        result = adjustRelPathKeyexpr(result);
         return allowComments(result);
     }
 
@@ -181,9 +182,9 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("");
         lines.add("quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)");
         lines.add("");
-        lines.add("double-quoted-vchar ::= (SINGLE_QUOTE | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
+        lines.add("double-quoted-vchar ::= (SINGLE_QUOTE | BACK_SLASH | ESCAPES | VCHAR | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
-        lines.add("quoted-vchar ::= (VCHAR | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
+        lines.add("quoted-vchar ::= (VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*");
         lines.add("");
         lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
     }
@@ -708,7 +709,7 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
-     * Allows quoted-string in unknow statement.
+     * Allows quoted-string in unknown statement.
      *
      * @param lines list of strings
      * @return list of strings
@@ -735,6 +736,24 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("yang-version-arg ::=")) {
                 line = "yang-version-arg ::= ONE [DOT ONE]";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Added token to the definition because it's prioritized to be matched in lexer
+     * as it's matching more characters at once.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> adjustRelPathKeyexpr(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("rel-path-keyexpr ::=")) {
+                line = "rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+";
             }
             result.add(line);
         }

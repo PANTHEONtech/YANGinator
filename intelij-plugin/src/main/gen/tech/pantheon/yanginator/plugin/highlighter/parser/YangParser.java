@@ -30,7 +30,10 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIs;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_DUMMY;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ACTION_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ADD_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_AND_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ANYDATA_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ANYXML_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ANY_TOKEN;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ARGUMENT_KEYWORD;
@@ -70,6 +73,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_I
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVERT_MATCH_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEAF_KEYWORD;
@@ -82,16 +86,19 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_M
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MAX_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MIN_ELEMENTS_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MIN_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MODIFIER_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MODULE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MUST_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NAMESPACE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NON_WORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOTIFICATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_NOT_SUPPORTED_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OBSOLETE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OPERATORS;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ORDERED_BY_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_ORGANIZATION_KEYWORD;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OR_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OUTPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_PATH_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_PATTERN_KEYWORD;
@@ -331,7 +338,14 @@ public class YangParser implements PsiParser, LightPsiParser {
     //     H_VALID_ESCAPE            |
     //     H_DIGIT                   |
     //     H_NON_WORD                |
-    //     H_KEYWORD_MATCHER
+    //     H_KEYWORD_MATCHER         |
+    //     H_ACTION_KEYWORD          |
+    //     H_ANYDATA_KEYWORD         |
+    //     H_MODIFIER_KEYWORD        |
+    //     H_INVERT_MATCH_KEYWORD    |
+    //     H_AND_KEYWORD             |
+    //     H_OR_KEYWORD              |
+    //     H_NOT_KEYWORD
     public static boolean h_identifier_literal(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "h_identifier_literal")) return false;
         boolean r;
@@ -424,6 +438,13 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = consumeToken(b, YANG_H_DIGIT);
         if (!r) r = consumeToken(b, YANG_H_NON_WORD);
         if (!r) r = consumeToken(b, YANG_H_KEYWORD_MATCHER);
+        if (!r) r = consumeToken(b, YANG_H_ACTION_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_ANYDATA_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_MODIFIER_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_INVERT_MATCH_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_AND_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_OR_KEYWORD);
+        if (!r) r = consumeToken(b, YANG_H_NOT_KEYWORD);
         exit_section_(b, l, m, r, false, null);
         return r;
     }

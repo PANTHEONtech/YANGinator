@@ -59,12 +59,34 @@ import tech.pantheon.yanginator.plugin.annotator.element.YangTypedefStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangUsesAugmentStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangUsesStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangWhenStmtCheck;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangActionStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangAnydataStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangAugmentStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangBitStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangEnumStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangIdentifierCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangIdentityStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangImportStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangIncludeStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangInputStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangKeyStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangLeafListStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangLeafRefSpecificationCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangNotificationStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangOutputStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangPatternStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangRefineStmtCheck_v1_0;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangDoubleQuotedStringCheck_v1_1;
+import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangYangCharCheck_v1_1;
+import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
 import java.util.List;
 
 public class YangAnnotator implements Annotator {
 
-    private static final List<AbstractYangStmtCheck> STMT_CHECKS = List.of(
+    private static final List<AbstractYangStmtCheck> STMT_CHECKS_GENERAL = List.of(
             new YangModuleHeaderStmtsCheck(),
             new YangMetaStmtsCheck(),
             new YangExtensionStmtCheck(),
@@ -110,12 +132,56 @@ public class YangAnnotator implements Annotator {
             new YangDeviateDeleteStmtCheck(),
             new YangDeviateReplaceStmtCheck()
     );
+    private String version = "";
+    private static final List<AbstractYangStmtCheck> STMT_CHECKS_1_1 = List.of(new YangDoubleQuotedStringCheck_v1_1(),
+            new YangYangCharCheck_v1_1());
+    private static final List<AbstractYangStmtCheck> STMT_CHECKS_1_0 = List.of(new YangKeyStmtCheck_v1_0(),
+            new YangBitStmtCheck_v1_0(),
+            new YangRefineStmtCheck_v1_0(),
+            new YangEnumStmtCheck_v1_0(),
+            new YangIdentityStmtCheck_v1_0(),
+            new YangPatternStmtCheck_v1_0(),
+            new YangInputStmtCheck_v1_0(),
+            new YangOutputStmtCheck_v1_0(),
+            new YangNotificationStmtCheck_v1_0(),
+            new YangLeafRefSpecificationCheck_v1_0(),
+            new YangImportStmtCheck_v1_0(),
+            new YangIncludeStmtCheck_v1_0(),
+            new YangAugmentStmtCheck_v1_0(),
+            new YangLeafListStmtCheck_v1_0(),
+            new YangActionStmtCheck_v1_0(),
+            new YangAnydataStmtCheck_v1_0(),
+            new YangIdentifierCheck_v1_0());
 
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
-        for (AbstractYangStmtCheck stmtCheck : STMT_CHECKS) {
+        for (PsiElement child : holder.getCurrentAnnotationSession().getFile().getFirstChild().getChildren()
+        ) {
+            if (child instanceof YangModuleHeaderStmts || child instanceof YangSubmoduleHeaderStmts) {
+                for (PsiElement ch : child.getChildren()
+                ) {
+                    if (ch instanceof YangYangVersionStmt) {
+                        version = ((YangYangVersionStmt) ch).getYangVersionArgStr().getYangVersionArg().getText();
+                    }
+                }
+            }
+        }
+        for (AbstractYangStmtCheck stmtCheck : STMT_CHECKS_GENERAL) {
             if (stmtCheck.isApplicable(element)) {
                 stmtCheck.performCheck(element, holder);
+            }
+        }
+        if (version.equals("1.1")) {
+            for (AbstractYangStmtCheck stmtCheck : STMT_CHECKS_1_1) {
+                if (stmtCheck.isApplicable(element)) {
+                    stmtCheck.performCheck(element, holder);
+                }
+            }
+        } else {
+            for (AbstractYangStmtCheck stmtCheck : STMT_CHECKS_1_0) {
+                if (stmtCheck.isApplicable(element)) {
+                    stmtCheck.performCheck(element, holder);
+                }
             }
         }
     }
