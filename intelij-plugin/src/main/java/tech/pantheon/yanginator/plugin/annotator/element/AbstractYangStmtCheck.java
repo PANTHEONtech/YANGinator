@@ -16,10 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.annotator.check.ElementCheck;
 import tech.pantheon.yanginator.plugin.annotator.check.MaxOneElementCheck;
 import tech.pantheon.yanginator.plugin.annotator.check.MinOneElementCheck;
+import tech.pantheon.yanginator.plugin.annotator.check.version_1_0.MaxZeroElementCheck;
 
 public abstract class AbstractYangStmtCheck {
     protected final ElementCheck maxOne = new MaxOneElementCheck();
     protected final ElementCheck minOne = new MinOneElementCheck();
+    protected final ElementCheck maxZero = new MaxZeroElementCheck();
 
     abstract public boolean isApplicable(@NotNull final PsiElement element);
 

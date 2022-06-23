@@ -997,6 +997,7 @@ public class GrammarKitRFCUtils {
      * @param lines list of strings
      */
     public static void addRecoveryRules(List<String> lines){
+        lines.add("");
         lines.add("private revision-recover ::= !(revision-stmt |\n" +
                 " body-stmts |\n" +
                 " (RIGHT_BRACE stmtsep <<eof>>))");

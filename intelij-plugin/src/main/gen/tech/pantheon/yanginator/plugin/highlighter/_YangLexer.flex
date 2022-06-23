@@ -25,7 +25,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-H_KEYWORD_MATCHER=[^\w*\s;{}]*?[ \t\n\x0B\f\r]+(import|typedef|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|status|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)[ \t\n\x0B\f\r]+
+H_KEYWORD_MATCHER=[^\w*\s;{}]*?[ \t\n\x0B\f\r]+(import|action|anydata|modifier|invert-match|and|or|not|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|status|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)[ \t\n\x0B\f\r]+
 H_WHITE_SPACE=[ \t\n\x0B\f\r]+
 H_STRING=(\"([^\"])*\")|('([^'])*')
 H_DATE_ARG=[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}
@@ -121,6 +121,13 @@ H_NON_WORD=[^a-zA-Z_0-9]
   "true"                        { return YANG_H_TRUE_KEYWORD; }
   "unbounded"                   { return YANG_H_UNBOUNDED_KEYWORD; }
   "user"                        { return YANG_H_USER_KEYWORD; }
+  "action"                      { return YANG_H_ACTION_KEYWORD; }
+  "anydata"                     { return YANG_H_ANYDATA_KEYWORD; }
+  "modifier"                    { return YANG_H_MODIFIER_KEYWORD; }
+  "invert-match"                { return YANG_H_INVERT_MATCH_KEYWORD; }
+  "and"                         { return YANG_H_AND_KEYWORD; }
+  "or"                          { return YANG_H_OR_KEYWORD; }
+  "not"                         { return YANG_H_NOT_KEYWORD; }
   ";"                           { return YANG_H_SEMICOLON; }
   "+"                           { return YANG_H_OPERATORS; }
   "{"                           { return YANG_H_LEFT_BRACE; }

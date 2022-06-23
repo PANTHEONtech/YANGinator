@@ -176,7 +176,6 @@ public class GrammarKitRFCService {
         newGrammar = GrammarKitRFCUtils.combineLists(newGrammar, rfc3986, "RFC 3986");
         newGrammar = GrammarKitRFCUtils.addHeader(newGrammar, this.readInputFile(this.getFile("yang-rfc-grammar/tokens/header.txt")));
         newGrammar = GrammarKitRFCUtils.addAnyOrder(newGrammar);
-        newGrammar = GrammarKitRFCUtils.addCheckString(newGrammar, GrammarKitRFCUtils.extractRangesFromABNF(abnf));
         newGrammar = GrammarKitRFCUncomplaintUtils.additionalAdjustments(newGrammar);
         GrammarKitRFCUtils.addRecoveryRules(newGrammar);
         return GrammarKitRFCUtils.linkReferenceStmts(newGrammar, this.loadExtensionsFromXML(this.getFile("yang-rfc-grammar/tokens/extensions.xml")));
