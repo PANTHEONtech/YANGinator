@@ -21,6 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class YangYangCharCheck_v1_1 extends AbstractYangStmtCheck {
+    private static final List<String> stringList = List.of("%xD800-DFFF",
+            "%xFDD0-FDEF", "%xFFFE-FFFF", "%x1FFFE-1FFFF",
+            "%x2FFFE-2FFFF", "%x3FFFE-3FFFF", "%x4FFFE-4FFFF",
+            "%x5FFFE-5FFFF", "%x6FFFE-6FFFF", "%x7FFFE-7FFFF",
+            "%x8FFFE-8FFFF", "%x9FFFE-9FFFF", "%xAFFFE-AFFFF",
+            "%xBFFFE-BFFFF", "%xCFFFE-CFFFF", "%xDFFFE-DFFFF",
+            "%xEFFFE-EFFFF", "%xFFFFE-FFFFF", "%x10FFFE-10FFFF");
+    private static final List<Character> charList = stringsToChars(stringList);
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangVchar;
@@ -28,14 +36,6 @@ public class YangYangCharCheck_v1_1 extends AbstractYangStmtCheck {
 
     @Override
     public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
-        final List<String> stringList = new ArrayList<>(List.of("%xD800-DFFF",
-                "%xFDD0-FDEF", "%xFFFE-FFFF", "%x1FFFE-1FFFF",
-                "%x2FFFE-2FFFF", "%x3FFFE-3FFFF", "%x4FFFE-4FFFF",
-                "%x5FFFE-5FFFF", "%x6FFFE-6FFFF", "%x7FFFE-7FFFF",
-                "%x8FFFE-8FFFF", "%x9FFFE-9FFFF", "%xAFFFE-AFFFF",
-                "%xBFFFE-BFFFF", "%xCFFFE-CFFFF", "%xDFFFE-DFFFF",
-                "%xEFFFE-EFFFF", "%xFFFFE-FFFFF", "%x10FFFE-10FFFF"));
-        final List<Character> charList = stringsToChars(stringList);
         String text = element.getText();
         for (char c : text.toCharArray()) {
             boolean result = charList.parallelStream().anyMatch(character -> character.equals(c));
