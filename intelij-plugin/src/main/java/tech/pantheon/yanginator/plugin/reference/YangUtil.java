@@ -78,7 +78,7 @@ public class YangUtil {
                     for (T literal : literals) {
                         String valueOfLiteral;
                         YangReferencedStatement referencedStatement = (YangReferencedStatement) literal;
-                        valueOfLiteral = Objects.requireNonNull(referencedStatement.getIdentifierArgStr()).getText();
+                        valueOfLiteral = Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
                         if (identifierKeyword.equals(valueOfLiteral)) {
                             if (result == null) {
                                 result = new ArrayList<>();
