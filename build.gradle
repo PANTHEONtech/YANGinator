@@ -16,8 +16,9 @@ checkstyleTest {
     source = List.of('intelij-plugin/src/test/java', 'rfc-parser/src/test/java')
 }
 
+
 group 'tech.pantheon.YANGinator'
-version '1.7-SNAPSHOT'
+version '2.0'
 
 allprojects {
     apply plugin: 'java'
@@ -45,9 +46,13 @@ tasks {
 task createReleaseVersion {
     doLast {
         def snapshotVersion = buildFile.getText().find(version)
-        def releaseVersion = snapshotVersion.replace("-SNAPSHOT", "")
-        println "Release version : " + releaseVersion
-        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + releaseVersion + "'")
+        String tmp = snapshotVersion.toString()
+        if (tmp.contains("-beta-") || tmp.contains("-SNAPSHOT")) {
+            String currentMinor = version.substring(snapshotVersion.lastIndexOf('.') + 2)
+            tmp = snapshotVersion.replace(currentMinor, "")
+        }
+        println "Release version : " + tmp
+        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + tmp + "'")
         buildFile.setText(newBuildFile)
     }
 }
@@ -62,5 +67,31 @@ task createNextSnapshotVersion {
         String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + snapshotVersion + "'")
         buildFile.setText(newBuildFile)
     }
+}
+task createBetaVersion {
+    doLast {
+        def currentVersion = buildFile.getText().find(version)
+        currentVersion = currentVersion.replace("-SNAPSHOT", "")
+        if (currentVersion.contains("-beta-")) {
+            String currentMinor = currentVersion.substring(currentVersion.lastIndexOf('-') + 1)
+            int nextMinor = currentMinor.toInteger() + 1
+            currentVersion = currentVersion.replace("-" + currentMinor, "-" + nextMinor)
+        }
+        if (!currentVersion.contains("-beta-")) {
+            currentVersion += "-beta-" + 1
+        }
+        println "Beta version : " + currentVersion
+        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + currentVersion + "'")
+        buildFile.setText(newBuildFile)
+    }
+}
 
+task createBetaSnapshotVersion {
+    doLast {
+        def currentVersion = buildFile.getText().find(version)
+        currentVersion = currentVersion + "-SNAPSHOT"
+        println "Beta Snapshot version : " + currentVersion
+        String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + currentVersion + "'")
+        buildFile.setText(newBuildFile)
+    }
 }

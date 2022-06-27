@@ -27,20 +27,20 @@ jobs:
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
           ref: ${{ github.head_ref }}
 
-      # Create release version
-      - name: Create release version
-        run: gradle createReleaseVersion
+      # Create beta version
+      - name: Create beta version
+        run: gradle createBetaVersion
 
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
         env:
           PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
-          CHANNELS: default
+          CHANNELS: beta
         run: gradle publishPlugin
 
-      # Create next snapshot version
-      - name: Create next snapshot version
-        run: gradle createNextSnapshotVersion
+      # Create next beta snapshot version
+      - name: Create next beta snapshot version
+        run: gradle createBetaSnapshotVersion
 
       # Push new version into repository
       - uses: stefanzweifel/git-auto-commit-action@v4.12.0
