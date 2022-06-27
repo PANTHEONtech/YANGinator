@@ -44,6 +44,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = rewriteBodyStmts(result);
         result = adjustUnknownStatement(result);
         result = allowVersionOne(result);
+        result = patternBodyChange(result);
         result = adjustRelPathKeyexpr(result);
         return allowComments(result);
     }
@@ -738,6 +739,26 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "yang-version-arg ::= ONE [DOT ONE]";
             }
             result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adding new pattern-body Statement to pattern-stmt expression in BNF file for separate
+     * Regex value expression
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> patternBodyChange(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("pattern-stmt ::= pattern-keyword sep quoted-string optsep")) {
+                result.add("pattern-stmt ::= pattern-keyword sep pattern-body");
+                result.add("pattern-body ::= quoted-string optsep");
+            } else {
+                result.add(line);
+            }
         }
         return result;
     }
