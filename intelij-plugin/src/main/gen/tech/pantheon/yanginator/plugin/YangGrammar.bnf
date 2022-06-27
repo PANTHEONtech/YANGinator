@@ -401,7 +401,8 @@ length-stmt ::= length-keyword sep length-arg-str optsep
 pin(".*") = 1
 }
 
-pattern-stmt ::= pattern-keyword sep quoted-string optsep
+pattern-stmt ::= pattern-keyword sep pattern-body
+pattern-body ::= quoted-string optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order

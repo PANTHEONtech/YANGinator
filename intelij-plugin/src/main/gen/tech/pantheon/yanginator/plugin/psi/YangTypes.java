@@ -225,6 +225,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangPathNoschemeImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPathPredicateImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPathRootlessImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPathStmtImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangPatternBodyImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPatternKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPatternStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangPcharImpl;
@@ -558,6 +559,7 @@ public interface YangTypes {
     IElementType YANG_PATH_PREDICATE = new YangElementType("YANG_PATH_PREDICATE");
     IElementType YANG_PATH_ROOTLESS = new YangElementType("YANG_PATH_ROOTLESS");
     IElementType YANG_PATH_STMT = new YangElementType("YANG_PATH_STMT");
+    IElementType YANG_PATTERN_BODY = new YangElementType("YANG_PATTERN_BODY");
     IElementType YANG_PATTERN_KEYWORD = new YangElementType("YANG_PATTERN_KEYWORD");
     IElementType YANG_PATTERN_STMT = new YangElementType("YANG_PATTERN_STMT");
     IElementType YANG_PCHAR = new YangElementType("YANG_PCHAR");
@@ -1170,6 +1172,8 @@ public interface YangTypes {
                 return new YangPathRootlessImpl(node);
             } else if (type == YANG_PATH_STMT) {
                 return new YangPathStmtImpl(node);
+            } else if (type == YANG_PATTERN_BODY) {
+                return new YangPatternBodyImpl(node);
             } else if (type == YANG_PATTERN_KEYWORD) {
                 return new YangPatternKeywordImpl(node);
             } else if (type == YANG_PATTERN_STMT) {

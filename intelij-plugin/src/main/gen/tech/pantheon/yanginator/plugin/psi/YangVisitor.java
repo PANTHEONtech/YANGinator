@@ -885,6 +885,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitYangStmt(o);
     }
 
+    public void visitPatternBody(@NotNull YangPatternBody o) {
+        visitNamedElement(o);
+    }
+
     public void visitPatternKeyword(@NotNull YangPatternKeyword o) {
         visitNamedElement(o);
     }

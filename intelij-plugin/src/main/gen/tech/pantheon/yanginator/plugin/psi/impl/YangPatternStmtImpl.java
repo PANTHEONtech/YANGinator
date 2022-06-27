@@ -12,24 +12,13 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
 import tech.pantheon.yanginator.plugin.psi.YangPatternKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangPatternStmt;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import java.util.List;
-
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
 
 public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPatternStmt {
 
@@ -49,9 +38,9 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
     }
 
     @Override
-    @Nullable
-    public YangOptsep getOptsep() {
-        return findChildByClass(YangOptsep.class);
+    @NotNull
+    public YangPatternBody getPatternBody() {
+        return findNotNullChildByClass(YangPatternBody.class);
     }
 
     @Override
@@ -61,39 +50,9 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
     }
 
     @Override
-    @Nullable
-    public YangQuotedString getQuotedString() {
-        return findChildByClass(YangQuotedString.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
-
-    @Override
     @NotNull
-    public List<YangStmtsep> getStmtsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getLeftBrace() {
-        return findChildByType(YANG_LEFT_BRACE);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getRightBrace() {
-        return findChildByType(YANG_RIGHT_BRACE);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getSemicolon() {
-        return findChildByType(YANG_SEMICOLON);
+    public YangSep getSep() {
+        return findNotNullChildByClass(YangSep.class);
     }
 
 }

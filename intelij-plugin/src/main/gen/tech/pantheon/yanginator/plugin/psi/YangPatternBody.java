@@ -11,17 +11,30 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public interface YangPatternStmt extends YangYangStmt {
+import java.util.List;
+
+public interface YangPatternBody extends YangNamedElement {
+
+    @Nullable
+    YangOptsep getOptsep();
 
     @NotNull
-    YangPatternBody getPatternBody();
+    YangQuotedString getQuotedString();
 
     @NotNull
-    YangPatternKeyword getPatternKeyword();
+    List<YangStmtsep> getStmtsepList();
 
-    @NotNull
-    YangSep getSep();
+    @Nullable
+    PsiElement getLeftBrace();
+
+    @Nullable
+    PsiElement getRightBrace();
+
+    @Nullable
+    PsiElement getSemicolon();
 
 }
