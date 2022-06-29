@@ -33,8 +33,8 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
                 .spaces(1)
                 .before(SEMICOLON_SET)
                 .none()
-                .after(YangTypes.YANG_IDENTIFIER_ARG_STR)
-                .spaces(1)
+                .before(YangTypes.YANG_LEFT_BRACE)
+                .spaceIf(true)
                 .beforeInside(YangTypes.YANG_VCHAR, YangTypes.YANG_QUOTED_STRING)
                 .none();
     }
