@@ -38,7 +38,7 @@ You can also find YANGinator in the [official IntelliJ Marketplace here.](https:
 
 In the newly opened *Plugins* window, search for *YANGinator*.
 
-![Install Plugin IntelliJ](/intelij-plugin/src/main/resources/images/installation/install_plugin.gif)
+![Install Plugin IntelliJ](docs/images/installation/install_plugin.gif)
 
 ### 3. Restart IDE
 
@@ -59,7 +59,7 @@ Search for *Associate with file type..*
 
 4.4 Press OK button.
 
-![install plugin from disk.png](intelij-plugin/src/main/resources/images/installation/tutorial_new_file_type_association.png)
+![install plugin from disk.png](docs/images/installation/tutorial_new_file_type_association.png)
 
 ### 5. Enjoy YANGinator
 
