@@ -4,13 +4,14 @@
 name: Beta-Release
 on:
   release:
-    types: [ prereleased, released ]
+    types: [ published ]
 
 jobs:
 
   # Prepare and publish the plugin to the beta Marketplace repository
   release:
     name: Publish Plugin
+    if: "github.event.release.prerelease"
     runs-on: ubuntu-latest
     steps:
 
