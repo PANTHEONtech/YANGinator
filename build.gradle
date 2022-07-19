@@ -17,7 +17,7 @@ checkstyleTest {
 }
 
 group 'tech.pantheon.YANGinator'
-version '2.0-beta-1-SNAPSHOT'
+version '2.0-beta-2-SNAPSHOT'
 
 allprojects {
     apply plugin: 'java'
@@ -71,11 +71,6 @@ task createBetaVersion {
     doLast {
         def currentVersion = buildFile.getText().find(version)
         currentVersion = currentVersion.replace("-SNAPSHOT", "")
-        if (currentVersion.contains("-beta-")) {
-            String currentMinor = currentVersion.substring(currentVersion.lastIndexOf('-') + 1)
-            int nextMinor = currentMinor.toInteger() + 1
-            currentVersion = currentVersion.replace("-" + currentMinor, "-" + nextMinor)
-        }
         if (!currentVersion.contains("-beta-")) {
             currentVersion += "-beta-" + 1
         }
@@ -88,7 +83,10 @@ task createBetaVersion {
 task createBetaSnapshotVersion {
     doLast {
         def currentVersion = buildFile.getText().find(version)
-        currentVersion = currentVersion + "-SNAPSHOT"
+        currentVersion = currentVersion.replace("-SNAPSHOT", "")
+        String currentMinor = currentVersion.substring(currentVersion.lastIndexOf('-') + 1)
+        int nextMinor = currentMinor.toInteger() + 1
+        currentVersion = currentVersion.replace("-" + currentMinor, "-" + nextMinor + "-SNAPSHOT")
         println "Beta Snapshot version : " + currentVersion
         String newBuildFile = buildFile.getText().replaceFirst("version '$version'", "version '" + currentVersion + "'")
         buildFile.setText(newBuildFile)
