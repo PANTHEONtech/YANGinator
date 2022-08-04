@@ -11,23 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangStringSplitter extends YangNamedElement {
 
-    @NotNull
-    List<YangDquote> getDquoteList();
+  @NotNull
+  List<YangDquote> getDquoteList();
 
-    @NotNull
-    List<YangSquote> getSquoteList();
+  @NotNull
+  List<YangSquote> getSquoteList();
 
-    @NotNull
-    List<YangOptsep> getOptsepList();
+  @NotNull
+  List<YangOptsep> getOptsepList();
 
-    @NotNull
-    PsiElement getPlusSign();
+  @NotNull
+  PsiElement getPlusSign();
 
 }

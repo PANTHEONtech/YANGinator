@@ -11,17 +11,19 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangLengthBoundary extends YangNamedElement {
 
-    @Nullable
-    YangMaxKeyword getMaxKeyword();
+  @Nullable
+  YangMaxKeyword getMaxKeyword();
 
-    @Nullable
-    YangMinKeyword getMinKeyword();
+  @Nullable
+  YangMinKeyword getMinKeyword();
 
-    @Nullable
-    YangNonNegativeIntegerValue getNonNegativeIntegerValue();
+  @Nullable
+  YangNonNegativeIntegerValue getNonNegativeIntegerValue();
 
 }

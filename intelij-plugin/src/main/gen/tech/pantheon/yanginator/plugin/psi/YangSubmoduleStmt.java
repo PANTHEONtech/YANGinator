@@ -11,48 +11,46 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangSubmoduleStmt extends YangYangStmt {
 
-    @Nullable
-    YangBodyStmts getBodyStmts();
+  @Nullable
+  YangBodyStmts getBodyStmts();
 
-    @Nullable
-    YangIdentifierArgStr getIdentifierArgStr();
+  @Nullable
+  YangIdentifierArgStr getIdentifierArgStr();
 
-    @Nullable
-    YangLinkageStmts getLinkageStmts();
+  @Nullable
+  YangLinkageStmts getLinkageStmts();
 
-    @Nullable
-    YangMetaStmts getMetaStmts();
+  @Nullable
+  YangMetaStmts getMetaStmts();
 
-    @NotNull
-    List<YangOptsep> getOptsepList();
+  @NotNull
+  List<YangOptsep> getOptsepList();
 
-    @NotNull
-    List<YangRevisionStmt> getRevisionStmtList();
+  @NotNull
+  List<YangRevisionStmt> getRevisionStmtList();
 
-    @Nullable
-    YangSep getSep();
+  @Nullable
+  YangSep getSep();
 
-    @Nullable
-    YangStmtsep getStmtsep();
+  @Nullable
+  YangStmtsep getStmtsep();
 
-    @Nullable
-    YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();
+  @Nullable
+  YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();
 
-    @NotNull
-    YangSubmoduleKeyword getSubmoduleKeyword();
+  @NotNull
+  YangSubmoduleKeyword getSubmoduleKeyword();
 
-    @Nullable
-    PsiElement getLeftBrace();
+  @Nullable
+  PsiElement getLeftBrace();
 
-    @Nullable
-    PsiElement getRightBrace();
+  @Nullable
+  PsiElement getRightBrace();
 
 }

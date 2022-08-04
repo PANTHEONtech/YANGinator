@@ -11,25 +11,25 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangBodyStmts extends YangNamedElement {
 
-    @NotNull
-    List<YangGroupingStmt> getGroupingStmtList();
+  @NotNull
+  List<YangGroupingStmt> getGroupingStmtList();
 
-    @NotNull
-    List<YangIdentityStmt> getIdentityStmtList();
+  @NotNull
+  List<YangIdentityStmt> getIdentityStmtList();
 
-    @NotNull
-    List<YangStmtsep> getStmtsepList();
+  @NotNull
+  List<YangStmtsep> getStmtsepList();
 
-    @NotNull
-    List<YangTypedefStmt> getTypedefStmtList();
+  @NotNull
+  List<YangTypedefStmt> getTypedefStmtList();
 
-    @NotNull
-    List<YangYangStmt> getYangStmtList();
+  @NotNull
+  List<YangYangStmt> getYangStmtList();
 
 }

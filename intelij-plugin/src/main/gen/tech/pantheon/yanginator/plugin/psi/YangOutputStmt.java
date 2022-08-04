@@ -11,27 +11,25 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangOutputStmt extends YangYangStmt {
 
-    @Nullable
-    YangOptsep getOptsep();
+  @Nullable
+  YangOptsep getOptsep();
 
-    @NotNull
-    YangOutputKeyword getOutputKeyword();
+  @NotNull
+  YangOutputKeyword getOutputKeyword();
 
-    @NotNull
-    List<YangStmtsep> getStmtsepList();
+  @NotNull
+  List<YangStmtsep> getStmtsepList();
 
-    @Nullable
-    PsiElement getLeftBrace();
+  @Nullable
+  PsiElement getLeftBrace();
 
-    @Nullable
-    PsiElement getRightBrace();
+  @Nullable
+  PsiElement getRightBrace();
 
 }

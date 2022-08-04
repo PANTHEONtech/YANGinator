@@ -11,17 +11,19 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangHost extends YangNamedElement {
 
-    @Nullable
-    YangIPLiteral getIPLiteral();
+  @Nullable
+  YangIPLiteral getIPLiteral();
 
-    @Nullable
-    YangIPv4Address getIPv4Address();
+  @Nullable
+  YangIPv4Address getIPv4Address();
 
-    @Nullable
-    YangRegName getRegName();
+  @Nullable
+  YangRegName getRegName();
 
 }

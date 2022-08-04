@@ -11,21 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangOrderedByStmt extends YangYangStmt {
 
-    @Nullable
-    YangOrderedByArgStr getOrderedByArgStr();
+  @Nullable
+  YangOrderedByArgStr getOrderedByArgStr();
 
-    @NotNull
-    YangOrderedByKeyword getOrderedByKeyword();
+  @NotNull
+  YangOrderedByKeyword getOrderedByKeyword();
 
-    @Nullable
-    YangSep getSep();
+  @Nullable
+  YangSep getSep();
 
-    @Nullable
-    YangStmtend getStmtend();
+  @Nullable
+  YangStmtend getStmtend();
 
 }

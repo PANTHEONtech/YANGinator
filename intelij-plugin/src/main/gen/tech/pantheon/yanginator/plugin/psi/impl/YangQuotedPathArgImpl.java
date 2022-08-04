@@ -11,57 +11,53 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangDquote;
-import tech.pantheon.yanginator.plugin.psi.YangPathArg;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedPathArg;
-import tech.pantheon.yanginator.plugin.psi.YangSquote;
-import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import java.util.List;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangQuotedPathArgImpl extends YangNamedElementImpl implements YangQuotedPathArg {
 
-    public YangQuotedPathArgImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangQuotedPathArgImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitQuotedPathArg(this);
-    }
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitQuotedPathArg(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @NotNull
-    public List<YangDquote> getDquoteList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
-    }
+  @Override
+  @NotNull
+  public List<YangDquote> getDquoteList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+  }
 
-    @Override
-    @NotNull
-    public List<YangSquote> getSquoteList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
-    }
+  @Override
+  @NotNull
+  public List<YangSquote> getSquoteList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
+  }
 
-    @Override
-    @NotNull
-    public List<YangPathArg> getPathArgList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathArg.class);
-    }
+  @Override
+  @NotNull
+  public List<YangPathArg> getPathArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathArg.class);
+  }
 
-    @Override
-    @NotNull
-    public List<YangStringSplitter> getStringSplitterList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
-    }
+  @Override
+  @NotNull
+  public List<YangStringSplitter> getStringSplitterList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
+  }
 
 }

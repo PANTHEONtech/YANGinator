@@ -11,22 +11,23 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public interface YangBaseStmt extends YangGeneratedReferenceType {
 
-    @NotNull
-    YangBaseKeyword getBaseKeyword();
+  @NotNull
+  YangBaseKeyword getBaseKeyword();
 
-    @Nullable
-    YangIdentifierRefArgStr getIdentifierRefArgStr();
+  @Nullable
+  YangIdentifierRefArgStr getIdentifierRefArgStr();
 
-    @Nullable
-    YangSep getSep();
+  @Nullable
+  YangSep getSep();
 
-    @Nullable
-    YangStmtend getStmtend();
+  @Nullable
+  YangStmtend getStmtend();
 
 }

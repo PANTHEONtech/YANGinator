@@ -11,21 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangMinElementsStmt extends YangYangStmt {
 
-    @NotNull
-    YangMinElementsKeyword getMinElementsKeyword();
+  @NotNull
+  YangMinElementsKeyword getMinElementsKeyword();
 
-    @Nullable
-    YangMinValueArgStr getMinValueArgStr();
+  @Nullable
+  YangMinValueArgStr getMinValueArgStr();
 
-    @Nullable
-    YangSep getSep();
+  @Nullable
+  YangSep getSep();
 
-    @Nullable
-    YangStmtend getStmtend();
+  @Nullable
+  YangStmtend getStmtend();
 
 }

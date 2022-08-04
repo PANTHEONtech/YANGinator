@@ -11,24 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangPositiveIntegerValue extends YangNamedElement {
 
-    @NotNull
-    List<YangDigit> getDigitList();
+  @NotNull
+  List<YangDigit> getDigitList();
 
-    @Nullable
-    YangNonZeroDigit getNonZeroDigit();
+  @Nullable
+  YangNonZeroDigit getNonZeroDigit();
 
-    @Nullable
-    PsiElement getDigits();
+  @Nullable
+  PsiElement getDigits();
 
-    @Nullable
-    PsiElement getFractions();
+  @Nullable
+  PsiElement getFractions();
 
 }

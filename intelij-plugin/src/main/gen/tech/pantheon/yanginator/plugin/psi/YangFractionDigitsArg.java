@@ -11,39 +11,40 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 
 public interface YangFractionDigitsArg extends YangNamedElement {
 
-    @Nullable
-    PsiElement getEight();
+  @Nullable
+  PsiElement getEight();
 
-    @Nullable
-    PsiElement getFive();
+  @Nullable
+  PsiElement getFive();
 
-    @Nullable
-    PsiElement getFour();
+  @Nullable
+  PsiElement getFour();
 
-    @Nullable
-    PsiElement getFractions();
+  @Nullable
+  PsiElement getFractions();
 
-    @Nullable
-    PsiElement getNine();
+  @Nullable
+  PsiElement getNine();
 
-    @Nullable
-    PsiElement getOne();
+  @Nullable
+  PsiElement getOne();
 
-    @Nullable
-    PsiElement getSeven();
+  @Nullable
+  PsiElement getSeven();
 
-    @Nullable
-    PsiElement getSix();
+  @Nullable
+  PsiElement getSix();
 
-    @Nullable
-    PsiElement getThree();
+  @Nullable
+  PsiElement getThree();
 
-    @Nullable
-    PsiElement getTwo();
+  @Nullable
+  PsiElement getTwo();
 
 }

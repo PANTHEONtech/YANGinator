@@ -274,7 +274,7 @@
         <lexerOnly>false</lexerOnly>
     </token>
     <token>
-        <key>""/*" ( [^*] | (\*+[^*/]) )*\*+\/"</key>
+        <key>"\/\*([^*]|\*+[^*/])*(\*+\/)?"</key>
         <value>BLOCK_COMMENT</value>
         <lexerOnly>true</lexerOnly>
     </token>

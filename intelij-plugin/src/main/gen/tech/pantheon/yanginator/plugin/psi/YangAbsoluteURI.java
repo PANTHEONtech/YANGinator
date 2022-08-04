@@ -11,25 +11,25 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface YangAbsoluteURI extends YangNamedElement {
 
-    @NotNull
-    YangHierPart getHierPart();
+  @NotNull
+  YangHierPart getHierPart();
 
-    @Nullable
-    YangQuery getQuery();
+  @Nullable
+  YangQuery getQuery();
 
-    @NotNull
-    YangScheme getScheme();
+  @NotNull
+  YangScheme getScheme();
 
-    @NotNull
-    PsiElement getColon();
+  @NotNull
+  PsiElement getColon();
 
-    @Nullable
-    PsiElement getQuestionMark();
+  @Nullable
+  PsiElement getQuestionMark();
 
 }

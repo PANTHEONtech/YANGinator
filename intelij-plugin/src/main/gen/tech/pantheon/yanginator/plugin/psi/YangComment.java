@@ -11,24 +11,22 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangComment extends YangNamedElement {
 
-    @NotNull
-    List<YangDquote> getDquoteList();
+  @NotNull
+  List<YangDquote> getDquoteList();
 
-    @NotNull
-    List<YangVchar> getVcharList();
+  @NotNull
+  List<YangVchar> getVcharList();
 
-    @Nullable
-    PsiElement getBlockComment();
+  @Nullable
+  PsiElement getBlockComment();
 
-    @Nullable
-    PsiElement getDoubleForwardSlash();
+  @Nullable
+  PsiElement getDoubleForwardSlash();
 
 }

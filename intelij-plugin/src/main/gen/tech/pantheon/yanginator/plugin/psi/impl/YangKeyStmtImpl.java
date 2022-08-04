@@ -11,56 +11,54 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangKeyArgStr;
-import tech.pantheon.yanginator.plugin.psi.YangKeyKeyword;
-import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtend;
-import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import tech.pantheon.yanginator.plugin.psi.*;
 
 public class YangKeyStmtImpl extends YangYangStmtImpl implements YangKeyStmt {
 
-    public YangKeyStmtImpl(@NotNull ASTNode node) {
-        super(node);
-    }
+  public YangKeyStmtImpl(@NotNull ASTNode node) {
+    super(node);
+  }
 
-    @Override
-    public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitKeyStmt(this);
-    }
+  @Override
+  public void accept(@NotNull YangVisitor visitor) {
+    visitor.visitKeyStmt(this);
+  }
 
-    @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
-    }
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof YangVisitor) accept((YangVisitor)visitor);
+    else super.accept(visitor);
+  }
 
-    @Override
-    @Nullable
-    public YangKeyArgStr getKeyArgStr() {
-        return findChildByClass(YangKeyArgStr.class);
-    }
+  @Override
+  @Nullable
+  public YangKeyArgStr getKeyArgStr() {
+    return findChildByClass(YangKeyArgStr.class);
+  }
 
-    @Override
-    @NotNull
-    public YangKeyKeyword getKeyKeyword() {
-        return findNotNullChildByClass(YangKeyKeyword.class);
-    }
+  @Override
+  @NotNull
+  public YangKeyKeyword getKeyKeyword() {
+    return findNotNullChildByClass(YangKeyKeyword.class);
+  }
 
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
+  @Override
+  @Nullable
+  public YangSep getSep() {
+    return findChildByClass(YangSep.class);
+  }
 
-    @Override
-    @Nullable
-    public YangStmtend getStmtend() {
-        return findChildByClass(YangStmtend.class);
-    }
+  @Override
+  @Nullable
+  public YangStmtend getStmtend() {
+    return findChildByClass(YangStmtend.class);
+  }
 
 }

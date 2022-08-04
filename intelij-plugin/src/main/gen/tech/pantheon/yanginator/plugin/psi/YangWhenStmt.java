@@ -11,39 +11,37 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangWhenStmt extends YangYangStmt {
 
-    @Nullable
-    YangOptsep getOptsep();
+  @Nullable
+  YangOptsep getOptsep();
 
-    @Nullable
-    YangQuotedString getQuotedString();
+  @Nullable
+  YangQuotedString getQuotedString();
 
-    @Nullable
-    YangSep getSep();
+  @Nullable
+  YangSep getSep();
 
-    @NotNull
-    List<YangStmtsep> getStmtsepList();
+  @NotNull
+  List<YangStmtsep> getStmtsepList();
 
-    @Nullable
-    YangString getString();
+  @Nullable
+  YangString getString();
 
-    @NotNull
-    YangWhenKeyword getWhenKeyword();
+  @NotNull
+  YangWhenKeyword getWhenKeyword();
 
-    @Nullable
-    PsiElement getLeftBrace();
+  @Nullable
+  PsiElement getLeftBrace();
 
-    @Nullable
-    PsiElement getRightBrace();
+  @Nullable
+  PsiElement getRightBrace();
 
-    @Nullable
-    PsiElement getSemicolon();
+  @Nullable
+  PsiElement getSemicolon();
 
 }

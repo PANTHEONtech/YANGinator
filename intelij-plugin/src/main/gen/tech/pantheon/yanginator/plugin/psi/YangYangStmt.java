@@ -11,26 +11,28 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
 
 public interface YangYangStmt extends YangNamedElement {
 
-    @Nullable
-    YangBaseStmt getBaseStmt();
+  @Nullable
+  YangBaseStmt getBaseStmt();
 
-    @Nullable
-    YangGroupingStmt getGroupingStmt();
+  @Nullable
+  YangGroupingStmt getGroupingStmt();
 
-    @Nullable
-    YangIdentityStmt getIdentityStmt();
+  @Nullable
+  YangIdentityStmt getIdentityStmt();
 
-    @Nullable
-    YangTypeStmt getTypeStmt();
+  @Nullable
+  YangTypeStmt getTypeStmt();
 
-    @Nullable
-    YangTypedefStmt getTypedefStmt();
+  @Nullable
+  YangTypedefStmt getTypedefStmt();
 
-    @Nullable
-    YangUsesStmt getUsesStmt();
+  @Nullable
+  YangUsesStmt getUsesStmt();
 
 }
