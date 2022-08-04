@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.lexer.YangHighlighterLexer;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_BLOCK_COMMENT;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_EXTENSION_IDENTIFIER;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
@@ -28,6 +29,7 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_M
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OPERATORS;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_RIGHT_BRACE;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_SEMICOLON;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_SINGLE_LINE_COMMENT;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_STRING;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_SUBMODULE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_VALID_ESCAPE;
@@ -42,6 +44,8 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey SEMICOLON = createTextAttributesKey("YANG_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
     public static final TextAttributesKey UNKNOWN = createTextAttributesKey("YANG_UNKNOWN", DefaultLanguageHighlighterColors.CONSTANT);
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("YANG_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey FULL_BLOCK_COMMENT = createTextAttributesKey("YANG_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
+    public static final TextAttributesKey SINGLE_LINE_COMMENT = createTextAttributesKey("YANG_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
 
     @NotNull
     @Override
@@ -73,6 +77,12 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
         }
         if (type == YANG_H_LEFT_BRACE || type == YANG_H_RIGHT_BRACE) {
             return pack(BRACES);
+        }
+        if (type == YANG_H_BLOCK_COMMENT) {
+            return pack(FULL_BLOCK_COMMENT);
+        }
+        if (type == YANG_H_SINGLE_LINE_COMMENT) {
+            return pack(SINGLE_LINE_COMMENT);
         }
         if (type == YANG_H_OPERATORS) {
             return pack(OP_SIGN);
