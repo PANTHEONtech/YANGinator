@@ -66,6 +66,12 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
         if (type == YANG_H_LEFT_BRACE || type == YANG_H_RIGHT_BRACE) {
             return pack(BRACES);
         }
+        if (type == YANG_H_BLOCK_COMMENT) {
+            return pack(FULL_BLOCK_COMMENT);
+        }
+        if (type == YANG_H_SINGLE_LINE_COMMENT) {
+            return pack(SINGLE_LINE_COMMENT);
+        }
         if (type == YANG_H_OPERATORS) {
             return pack(OP_SIGN);
         }
