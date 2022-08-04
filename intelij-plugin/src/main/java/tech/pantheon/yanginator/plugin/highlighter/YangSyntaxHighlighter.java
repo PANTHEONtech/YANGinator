@@ -41,7 +41,7 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey OP_SIGN = createTextAttributesKey("YANG_OP_SIGN", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey SEMICOLON = createTextAttributesKey("YANG_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
     public static final TextAttributesKey UNKNOWN = createTextAttributesKey("YANG_UNKNOWN", DefaultLanguageHighlighterColors.CONSTANT);
-    public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("YANG_UNKNOWN", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("YANG_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
 
     @NotNull
     @Override
