@@ -20,17 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.lexer.YangHighlighterLexer;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_EXTENSION_IDENTIFIER;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_INVALID_ESCAPE;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_KEYWORD_MATCHER;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_LEFT_BRACE;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_MODULE_KEYWORD;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_OPERATORS;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_RIGHT_BRACE;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_SEMICOLON;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_STRING;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_SUBMODULE_KEYWORD;
-import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.YANG_H_VALID_ESCAPE;
+import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.*;
 
 public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey ILLEGAL = createTextAttributesKey("YANG_ILLEGAL", DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE);
@@ -42,6 +32,8 @@ public class YangSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey SEMICOLON = createTextAttributesKey("YANG_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
     public static final TextAttributesKey UNKNOWN = createTextAttributesKey("YANG_UNKNOWN", DefaultLanguageHighlighterColors.CONSTANT);
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("YANG_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey FULL_BLOCK_COMMENT = createTextAttributesKey("YANG_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
+    public static final TextAttributesKey SINGLE_LINE_COMMENT = createTextAttributesKey("YANG_SINGLE_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
 
     @NotNull
     @Override

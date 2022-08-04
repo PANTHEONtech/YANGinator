@@ -30,7 +30,9 @@ public class YangColorSettingsPage implements ColorSettingsPage {
         new AttributesDescriptor("Braces", YangSyntaxHighlighter.BRACES),
         new AttributesDescriptor("Operator", YangSyntaxHighlighter.OP_SIGN),
         new AttributesDescriptor("Semicolon", YangSyntaxHighlighter.SEMICOLON),
-        new AttributesDescriptor("Identifier", YangSyntaxHighlighter.IDENTIFIER)
+        new AttributesDescriptor("Identifier", YangSyntaxHighlighter.IDENTIFIER),
+        new AttributesDescriptor("Block comment", YangSyntaxHighlighter.FULL_BLOCK_COMMENT),
+        new AttributesDescriptor("Line comment", YangSyntaxHighlighter.SINGLE_LINE_COMMENT)
     };
 
     @Nullable
