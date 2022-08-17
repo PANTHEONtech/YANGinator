@@ -1132,7 +1132,7 @@ range-part ::= range-boundary
   [optsep DOUBLE_DOT optsep range-boundary]
 
 range-boundary ::= min-keyword | max-keyword |
-  integer-value | decimal-value
+  decimal-value | integer-value
 // Lengths
 
 length-arg-str ::= length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE
