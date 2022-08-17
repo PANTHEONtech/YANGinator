@@ -37,6 +37,7 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.parseTokens;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
+import static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
@@ -9441,15 +9442,15 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // min-keyword | max-keyword |
-    //   integer-value | decimal-value
+    //   decimal-value | integer-value
     public static boolean range_boundary(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "range_boundary")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_RANGE_BOUNDARY, "<range boundary>");
         r = min_keyword(b, l + 1);
         if (!r) r = max_keyword(b, l + 1);
-        if (!r) r = integer_value(b, l + 1);
         if (!r) r = decimal_value(b, l + 1);
+        if (!r) r = integer_value(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
