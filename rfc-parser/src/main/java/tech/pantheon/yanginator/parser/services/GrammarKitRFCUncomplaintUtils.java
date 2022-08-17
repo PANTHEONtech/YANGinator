@@ -46,6 +46,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = allowVersionOne(result);
         result = patternBodyChange(result);
         result = adjustRelPathKeyexpr(result);
+        result = swapDecimalWithIntegerInRangeBoundaryDef(result);
         return allowComments(result);
     }
 
@@ -775,6 +776,26 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("rel-path-keyexpr ::=")) {
                 line = "rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * When a decimal value was used, the integer-value statement was recognized first,
+     * and it resulted in an error.
+     * By swapping these statements, the decimal-value statement will be recognized first resulting
+     * in correctly identifying both decimal-value and integer-value
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> swapDecimalWithIntegerInRangeBoundaryDef(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("  integer-value | decimal-value")) {
+                line = "  decimal-value | integer-value";
             }
             result.add(line);
         }
