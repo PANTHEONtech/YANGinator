@@ -794,8 +794,8 @@ public class GrammarKitRFCUncomplaintUtils {
     private static List<String> swapDecimalWithIntegerInRangeBoundaryDef(List<String> lines) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if (line.contains("  integer-value | decimal-value")) {
-                line = "  decimal-value | integer-value";
+            if (line.contains("integer-value | decimal-value")) {
+                line = line.replace("integer-value | decimal-value", "decimal-value | integer-value");
             }
             result.add(line);
         }
