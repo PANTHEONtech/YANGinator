@@ -8,7 +8,10 @@
 YANGinator | An IntelliJ YANG Validation Plugin
 =============
 
-This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validating YANG files. Developers and enthusiasts will have the option to validate their YANG files before deployment.
+This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validating YANG files. Developers and enthusiasts will have the option to validate their YANG files before deployment.  
+
+***Note:***
+Please note that the YANGinator plugin does not completely follow the rfc, because of performance, error recovery, comment support and other reasons. All these deviations are documented [here](rfc-parser/docs/ModelDeviations.md)
 
 # Features
 
