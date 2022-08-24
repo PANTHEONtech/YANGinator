@@ -22,8 +22,6 @@ import tech.pantheon.yanginator.plugin.psi.YangLeafStmt;
 import tech.pantheon.yanginator.plugin.psi.YangListStmt;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIdentifierArgImpl;
 
-import java.util.Objects;
-
 public class YangBreadcrumbsProvider implements BreadcrumbsProvider {
 
     @Override
@@ -42,10 +40,7 @@ public class YangBreadcrumbsProvider implements BreadcrumbsProvider {
     @NotNull
     @Override
     public String getElementInfo(@NotNull PsiElement psiElement) {
-        try {
-            return Objects.requireNonNull(PsiTreeUtil.findChildOfType(psiElement, YangIdentifierArgImpl.class)).getText();
-        }catch(NullPointerException e) {
-            return "";
-        }
+        YangIdentifierArgImpl breadcrumbsContent = PsiTreeUtil.findChildOfType(psiElement, YangIdentifierArgImpl.class);
+        return breadcrumbsContent != null ? breadcrumbsContent.getText() : "";
     }
 }
