@@ -43,35 +43,99 @@ correctly.
 
 * `rewriteZeroIntegerValue(result);`
 
+  Rewrites zero-integer-value with proper tokens
+  ![rewriteZeroIntegerValue](doc-images/rewriteZeroIntegerValue.png)
+
 * `rewriteIPV4Address(result);`
+
+  Rewrites IPv4address with proper token
+  ![rewriteIPV4Address](doc-images/rewriteIPV4Address.png)
 
 * `orderTokensForLexer(result);`
 
+  Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
+  The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
+  different characters or strings
+  ![orderTokensForLexer](doc-images/orderTokensForLexer.png)
+
 * `rewriteFractionDigitsArg(result);`
+
+  Rewrites fraction-digits-arg with proper tokens
+  ![rewriteFractionDigitsArg](doc-images/rewriteFractionDigitsArg.png)
 
 * `rewritePositiveIntegerValue(result);`
 
+  Rewrites positive-integer-value with proper tokens
+  ![rewritePositiveIntegerValue](doc-images/rewritePositiveIntegerValue.png)
+
+
 * `adjustModuleAndSubmoduleStmt(result);`
+
+  Making meta and linkage stmts optional in module and submodule stmts
+  due to changes in their definitions to prevent grammar logic changes.
+  ![adjustModuleAndSubmoduleStmt](doc-images/adjustModuleAndSubmoduleStmt.png)
 
 * `rewriteModuleHeaderStmts(result);`
 
+  Adjust module-header-stmts for error recovery. Logic stays the same,
+  statements can appear in any order and duplicities are checked in annotator.
+  ![rewriteModuleHeaderStmts](doc-images/rewriteModuleHeaderStmts.png)
+
 * `rewriteSubModuleHeaderStmts(result);`
+
+  Adjust submodule-header-stmts for error recovery. Logic stays the same,
+  statements can appear in any order and duplicities are checked in annotator.
+  ![rewriteSubModuleHeaderStmts](doc-images/rewriteSubModuleHeaderStmts.png)
 
 * `rewriteDataDefStmt(result);`
 
+  Switching positions of leaf-list-stmt and leaf-stmt due to error recovery always
+  matching leaf-stmt if it was before leaf-list-stmt.
+  ![rewriteDataDefStmt](doc-images/rewriteDataDefStmt.png)
+
 * `rewriteBodyStmts(result);`
+
+  Decomposing body-stmts into sub statements due error recovery.
+  Logic should remain the same only change against RFC 7950 is
+  changing * (0 - infinity) to + (1 - infinity) not allowing empty body.
+  ![rewriteBodyStmts](doc-images/rewriteBodyStmts.png)
 
 * `adjustUnknownStatement(result);`
 
+  Allowing quoted-string in unknown statement.
+  ![adjustUnknownStatement](doc-images/adjustUnknownStatement.png)
+
 * `allowVersionOne(result);`
+
+  Allowing version to be 1 or 1.1 instead of only 1.1
+  ![allowVersionOne](doc-images/allowVersionOne.png)
 
 * `patternBodyChange(result);`
 
+  Adding new pattern-body Statement to pattern-stmt expression in BNF file for separate
+  Regex value expression
+  ![patternBodyChange](doc-images/patternBodyChange.png)
+
 * `adjustRelPathKeyexpr(result);`
 
-* `swapDecimalWithIntegerInRangeBoundaryDef(result);` [link](#swap-decimal-value-with-integer-value)
+  Adding token to the definition because it's prioritized to be matched in lexer
+  as it's matching more characters at once.
+  ![adjustRelPathKeyexpr](doc-images/adjustRelPathKeyexpr.png)
+
+* `swapDecimalWithIntegerInRangeBoundaryDef(result);`
+
+  When a decimal value was used, the integer-value statement was recognized first,
+  and it resulted in an error. See [link](#swap-decimal-value-with-integer-value).
+  
+  By swapping these statements, the decimal-value statement will be recognized first resulting
+  in correctly identifying both decimal-value and integer-value
+  ![swapDecimalWithIntegerInRangeBoundaryDef](doc-images/swapDecimalWithIntegerInRangeBoundaryDef.png)
 
 * `allowComments(result);`
+
+  Allowing single and multi-line comments in yang 1.1 according to validator.
+  ![allowComments](doc-images/allowComments.png)
+  
 
 ---
 
