@@ -70,6 +70,7 @@ correctly.
   Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
   different characters or strings
+
   This method makes sure order looks like this:
 
   ![orderTokensForLexer](doc-images/orderTokensForLexer_output.png)
