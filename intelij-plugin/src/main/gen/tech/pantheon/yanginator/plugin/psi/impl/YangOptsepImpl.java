@@ -15,6 +15,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
@@ -42,6 +43,12 @@ public class YangOptsepImpl extends YangNamedElementImpl implements YangOptsep {
     @NotNull
     public List<YangWsp> getWspList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
     }
 
     @Override
