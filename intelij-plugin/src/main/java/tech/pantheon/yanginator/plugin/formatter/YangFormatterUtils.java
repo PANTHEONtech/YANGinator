@@ -114,13 +114,14 @@ final class YangFormatterUtils {
     );
 
     private static final TokenSet WHITESPACE_SET = TokenSet.create(
-            YangTypes.YANG_STMTSEP,
-            YangTypes.YANG_SEP,
             YangTypes.YANG_WSP,
             YangTypes.YANG_SP,
-            YangTypes.YANG_OPTSEP,
             YangTypes.YANG_SPACE,
             YangTypes.YANG_TAB,
+            YangTypes.YANG_LINE_BREAK,
+            YangTypes.YANG_CRLF,
+            YangTypes.YANG_CR,
+            YangTypes.YANG_LF,
             YangTypes.YANG_LINEFEED,
             YangTypes.YANG_CARRIAGE_RETURN
     );

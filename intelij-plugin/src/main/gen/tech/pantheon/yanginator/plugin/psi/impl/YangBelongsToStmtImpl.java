@@ -19,12 +19,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBelongsToKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangBelongsToStmt;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -50,8 +51,20 @@ public class YangBelongsToStmtImpl extends YangYangStmtImpl implements YangBelon
 
     @Override
     @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
     public YangBelongsToKeyword getBelongsToKeyword() {
         return findNotNullChildByClass(YangBelongsToKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
     }
 
     @Override
@@ -61,9 +74,9 @@ public class YangBelongsToStmtImpl extends YangYangStmtImpl implements YangBelon
     }
 
     @Override
-    @Nullable
-    public YangOptsep getOptsep() {
-        return findChildByClass(YangOptsep.class);
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
@@ -73,15 +86,9 @@ public class YangBelongsToStmtImpl extends YangYangStmtImpl implements YangBelon
     }
 
     @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
-
-    @Override
     @NotNull
-    public List<YangStmtsep> getStmtsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+    public List<YangUnknownStatement> getUnknownStatementList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
     }
 
     @Override

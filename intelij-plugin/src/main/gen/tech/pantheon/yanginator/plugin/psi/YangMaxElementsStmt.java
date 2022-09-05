@@ -14,16 +14,24 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangMaxElementsStmt extends YangYangStmt {
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
     YangMaxElementsKeyword getMaxElementsKeyword();
 
     @Nullable
     YangMaxValueArgStr getMaxValueArgStr();
-
-    @Nullable
-    YangSep getSep();
 
     @Nullable
     YangStmtend getStmtend();

@@ -13,14 +13,19 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
 
 public class YangRequireInstanceStmtImpl extends YangYangStmtImpl implements YangRequireInstanceStmt {
 
@@ -40,6 +45,24 @@ public class YangRequireInstanceStmtImpl extends YangYangStmtImpl implements Yan
     }
 
     @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
+
+    @Override
     @Nullable
     public YangRequireInstanceArgStr getRequireInstanceArgStr() {
         return findChildByClass(YangRequireInstanceArgStr.class);
@@ -49,12 +72,6 @@ public class YangRequireInstanceStmtImpl extends YangYangStmtImpl implements Yan
     @NotNull
     public YangRequireInstanceKeyword getRequireInstanceKeyword() {
         return findNotNullChildByClass(YangRequireInstanceKeyword.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
     }
 
     @Override

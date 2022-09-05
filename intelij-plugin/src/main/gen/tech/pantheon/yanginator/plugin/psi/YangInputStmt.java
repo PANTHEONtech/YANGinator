@@ -20,13 +20,19 @@ import java.util.List;
 public interface YangInputStmt extends YangYangStmt {
 
     @NotNull
-    YangInputKeyword getInputKeyword();
-
-    @Nullable
-    YangOptsep getOptsep();
+    List<YangWsp> getWspList();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangComment> getCommentList();
+
+    @NotNull
+    YangInputKeyword getInputKeyword();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
+
+    @NotNull
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

@@ -20,22 +20,22 @@ import java.util.List;
 public interface YangUnknownStatement extends YangNamedElement {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     YangIdentifier getIdentifier();
 
     @NotNull
-    List<YangOptsep> getOptsepList();
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
     YangPrefix getPrefix();
 
     @Nullable
     YangQuotedString getQuotedString();
-
-    @Nullable
-    YangSep getSep();
-
-    @NotNull
-    YangStmtsep getStmtsep();
 
     @Nullable
     YangString getString();

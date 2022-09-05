@@ -20,10 +20,16 @@ import java.util.List;
 public interface YangLengthPart extends YangNamedElement {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     List<YangLengthBoundary> getLengthBoundaryList();
 
     @NotNull
-    List<YangOptsep> getOptsepList();
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     PsiElement getDoubleDot();

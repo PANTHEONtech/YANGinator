@@ -21,6 +21,12 @@ public interface YangDoubleQuotedVchar extends YangNamedElement {
     List<YangVchar> getVcharList();
 
     @NotNull
-    List<YangSep> getSepList();
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
 }

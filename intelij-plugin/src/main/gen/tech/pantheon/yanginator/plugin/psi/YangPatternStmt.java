@@ -13,15 +13,23 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangPatternStmt extends YangYangStmt {
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
     YangPatternBody getPatternBody();
 
     @NotNull
     YangPatternKeyword getPatternKeyword();
-
-    @NotNull
-    YangSep getSep();
 
 }

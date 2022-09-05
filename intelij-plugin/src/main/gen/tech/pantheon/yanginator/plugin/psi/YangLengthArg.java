@@ -18,9 +18,15 @@ import java.util.List;
 public interface YangLengthArg extends YangNamedElement {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     List<YangLengthPart> getLengthPartList();
 
     @NotNull
-    List<YangOptsep> getOptsepList();
+    List<YangLineBreak> getLineBreakList();
 
 }

@@ -19,20 +19,23 @@ import java.util.List;
 
 public interface YangDeviationStmt extends YangYangStmt {
 
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
     @Nullable
     YangDeviationArgStr getDeviationArgStr();
 
     @NotNull
     YangDeviationKeyword getDeviationKeyword();
 
-    @Nullable
-    YangOptsep getOptsep();
-
-    @Nullable
-    YangSep getSep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

@@ -18,17 +18,18 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -53,15 +54,33 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
     }
 
     @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
     @Nullable
     public YangBodyStmts getBodyStmts() {
         return findChildByClass(YangBodyStmts.class);
     }
 
     @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
     @Nullable
     public YangIdentifierArgStr getIdentifierArgStr() {
         return findChildByClass(YangIdentifierArgStr.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
@@ -78,26 +97,8 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
 
     @Override
     @NotNull
-    public List<YangOptsep> getOptsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-    }
-
-    @Override
-    @NotNull
     public List<YangRevisionStmt> getRevisionStmtList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRevisionStmt.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
-
-    @Override
-    @Nullable
-    public YangStmtsep getStmtsep() {
-        return findChildByClass(YangStmtsep.class);
     }
 
     @Override
@@ -110,6 +111,12 @@ public class YangSubmoduleStmtImpl extends YangYangStmtImpl implements YangSubmo
     @NotNull
     public YangSubmoduleKeyword getSubmoduleKeyword() {
         return findNotNullChildByClass(YangSubmoduleKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangUnknownStatement> getUnknownStatementList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
     }
 
     @Override

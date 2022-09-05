@@ -19,20 +19,23 @@ import java.util.List;
 
 public interface YangWhenStmt extends YangYangStmt {
 
-    @Nullable
-    YangOptsep getOptsep();
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangQuotedString getQuotedString();
 
     @Nullable
-    YangSep getSep();
+    YangString getString();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
-
-    @Nullable
-    YangString getString();
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @NotNull
     YangWhenKeyword getWhenKeyword();

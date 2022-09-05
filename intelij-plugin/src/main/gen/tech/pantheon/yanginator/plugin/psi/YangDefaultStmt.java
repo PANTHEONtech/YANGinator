@@ -14,16 +14,24 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangDefaultStmt extends YangYangStmt {
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
 
     @NotNull
     YangDefaultKeyword getDefaultKeyword();
 
-    @Nullable
-    YangQuotedString getQuotedString();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
-    YangSep getSep();
+    YangQuotedString getQuotedString();
 
     @Nullable
     YangStmtend getStmtend();
