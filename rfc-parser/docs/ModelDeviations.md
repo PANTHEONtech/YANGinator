@@ -249,11 +249,13 @@ correctly.
   Comment initialization:  
 
   ![allowComments](doc-images/allowComments_commentInit.png)
+
+* `makeSeparatorRulesPrivate(result);` [link](#make-separator-rules-private)
 ---
 
 ### Allow stmts to be Quoted
 quoteStmts(lines)
-### Swap decimal value With integer value
+### Swap decimal with integer in range boundary def
 
 Decimal values, e.g. 7.58, were incorrectly identified as integers which caused the dot "." (decimal point),
 that separates the decimal place from the whole, to trigger an error. The reason for the integer
@@ -273,5 +275,28 @@ After swapping the two statements, integer-value and decimal-value, the error hi
 From this behavior we can assume that when the first digit of a decimal number was inserted, it was
 identified as an integer-value. The decimal point (i.e. the dot: ".") then caused an error. This is
 no longer an issue after the swap in the grammar rule.  
+### Make separator rules private
+The method [allowComments()](#allow-comments) adds support for comments into the definitions of 
+separators (sep, optsep, stmtsep). These separators contain white space characters and should be also
+treated as white spaces, but they can't be treated this way because they might contain comments. 
+This created problems in formatting, which is the reason why they needed to be flagged as private.  
+This ensures, that PsiElement is not created for these in the PsiTree, which results in comments 
+not being a child of a node (as can be seen in the next figure), that should be treated as a white space.
+
+![parent of comment that should be treated as a white space](doc-images/psiTreeComment_before.png)
+  
+After this change, no separator (i.e. sep, optsep, stmtsep) psi node is created. This results in 
+comments having non-whitespace parents (shown in next figure). Finally, no problems with formatting.
+
+![non-whitespace node being parent of a comment](doc-images/psiTreeComment_after.png)
+  
+This change solves problem with formatting. The problem was, that comments were not being covered by block
+(whitespaces are skipped during block creation). This resulted in an exception being thrown when
+manipulating with comments.
+
+
+
+  
+
 ---
 ## ***More methods are used that are not yet documented***
