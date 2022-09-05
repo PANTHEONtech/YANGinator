@@ -248,6 +248,9 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("stmtsep ::=")) {
                 line = "stmtsep ::= (WSP | line-break | unknown-statement | comment)*";
             }
+            if(line.contains("optsep ::=")){
+                line = "optsep ::= (WSP | line-break | comment)*";
+            }
             if (line.contains("sep ::= (WSP | line-break)+")) {
                 line = "sep ::= (WSP | line-break | comment)+";
             }

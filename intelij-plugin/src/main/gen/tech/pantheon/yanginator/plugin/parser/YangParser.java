@@ -460,7 +460,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return yang(b, l + 1);
     }
 
-    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
+    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
                     YANG_CHOICE_STMT, YANG_CONFIG_STMT, YANG_CONTACT_STMT, YANG_CONTAINER_STMT,
@@ -8160,7 +8160,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (WSP | line-break)*
+    // (WSP | line-break | comment)*
     public static boolean optsep(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "optsep")) return false;
         Marker m = enter_section_(b, l, _NONE_, YANG_OPTSEP, "<optsep>");
@@ -8173,12 +8173,13 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // WSP | line-break
+    // WSP | line-break | comment
     private static boolean optsep_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "optsep_0")) return false;
         boolean r;
         r = WSP(b, l + 1);
         if (!r) r = line_break(b, l + 1);
+        if (!r) r = comment(b, l + 1);
         return r;
     }
 
