@@ -18,9 +18,15 @@ import java.util.List;
 public interface YangUniqueArg extends YangNamedElement {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     List<YangDescendantSchemaNodeid> getDescendantSchemaNodeidList();
 
     @NotNull
-    List<YangSep> getSepList();
+    List<YangLineBreak> getLineBreakList();
 
 }

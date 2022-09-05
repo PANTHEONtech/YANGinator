@@ -20,22 +20,25 @@ import java.util.List;
 public interface YangEnumStmt extends YangYangStmt {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
     YangEnumKeyword getEnumKeyword();
 
-    @Nullable
-    YangOptsep getOptsep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangQuotedString getQuotedString();
 
     @Nullable
-    YangSep getSep();
+    YangString getString();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
-
-    @Nullable
-    YangString getString();
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

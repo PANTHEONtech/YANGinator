@@ -20,20 +20,23 @@ import java.util.List;
 
 public interface YangIdentityStmt extends YangGeneratedReferenceType {
 
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
     @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
     @NotNull
     YangIdentityKeyword getIdentityKeyword();
 
-    @Nullable
-    YangOptsep getOptsep();
-
-    @Nullable
-    YangSep getSep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

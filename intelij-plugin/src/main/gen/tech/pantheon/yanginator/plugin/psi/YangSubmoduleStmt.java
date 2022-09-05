@@ -19,11 +19,20 @@ import java.util.List;
 
 public interface YangSubmoduleStmt extends YangYangStmt {
 
+    @NotNull
+    List<YangWsp> getWspList();
+
     @Nullable
     YangBodyStmts getBodyStmts();
 
+    @NotNull
+    List<YangComment> getCommentList();
+
     @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangLinkageStmts getLinkageStmts();
@@ -32,22 +41,16 @@ public interface YangSubmoduleStmt extends YangYangStmt {
     YangMetaStmts getMetaStmts();
 
     @NotNull
-    List<YangOptsep> getOptsepList();
-
-    @NotNull
     List<YangRevisionStmt> getRevisionStmtList();
-
-    @Nullable
-    YangSep getSep();
-
-    @Nullable
-    YangStmtsep getStmtsep();
 
     @Nullable
     YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();
 
     @NotNull
     YangSubmoduleKeyword getSubmoduleKeyword();
+
+    @NotNull
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

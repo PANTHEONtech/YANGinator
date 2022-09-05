@@ -1,3 +1,13 @@
+/*
+ *
+ *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *
+ *   This program and the accompanying materials are made available under the
+ *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ *   and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ */
+
 {
  parserClass="tech.pantheon.yanginator.plugin.parser.YangParser"
   parserImports=[
@@ -1345,12 +1355,12 @@ zero-integer-value ::= DIGIT+ | DIGITS | FRACTIONS | ZEROS
 
 stmtend ::= optsep (SEMICOLON | LEFT_BRACE stmtsep RIGHT_BRACE) stmtsep
 
-sep ::= (WSP | line-break | comment)+
+private sep ::= (WSP | line-break | comment)+
   // unconditional separator
 
-optsep ::= (WSP | line-break | comment)*
+private optsep ::= (WSP | line-break | comment)*
 
-stmtsep ::= (WSP | line-break | unknown-statement | comment)*
+private stmtsep ::= (WSP | line-break | unknown-statement | comment)*
 
 line-break ::= CRLF | LF
 

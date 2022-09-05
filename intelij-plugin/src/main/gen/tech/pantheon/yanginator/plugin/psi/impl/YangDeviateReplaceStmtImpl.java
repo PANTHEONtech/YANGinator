@@ -17,13 +17,14 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangDeviateKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDeviateReplaceStmt;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangReplaceKeywordStr;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
+import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -50,14 +51,26 @@ public class YangDeviateReplaceStmtImpl extends YangYangStmtImpl implements Yang
 
     @Override
     @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
     public YangDeviateKeyword getDeviateKeyword() {
         return findNotNullChildByClass(YangDeviateKeyword.class);
     }
 
     @Override
-    @Nullable
-    public YangOptsep getOptsep() {
-        return findChildByClass(YangOptsep.class);
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
@@ -67,15 +80,9 @@ public class YangDeviateReplaceStmtImpl extends YangYangStmtImpl implements Yang
     }
 
     @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
-
-    @Override
     @NotNull
-    public List<YangStmtsep> getStmtsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStmtsep.class);
+    public List<YangUnknownStatement> getUnknownStatementList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangUnknownStatement.class);
     }
 
     @Override

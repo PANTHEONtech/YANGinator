@@ -25,7 +25,13 @@ public interface YangStringSplitter extends YangNamedElement {
     List<YangSquote> getSquoteList();
 
     @NotNull
-    List<YangOptsep> getOptsepList();
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
     PsiElement getPlusSign();

@@ -18,8 +18,14 @@ import java.util.List;
 
 public interface YangIfFeatureTerm extends YangNamedElement {
 
+    @NotNull
+    List<YangWsp> getWspList();
+
     @Nullable
     YangAndKeyword getAndKeyword();
+
+    @NotNull
+    List<YangComment> getCommentList();
 
     @NotNull
     YangIfFeatureFactor getIfFeatureFactor();
@@ -28,6 +34,6 @@ public interface YangIfFeatureTerm extends YangNamedElement {
     YangIfFeatureTerm getIfFeatureTerm();
 
     @NotNull
-    List<YangSep> getSepList();
+    List<YangLineBreak> getLineBreakList();
 
 }

@@ -17,10 +17,12 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangAndKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureFactor;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureTerm;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -41,9 +43,21 @@ public class YangIfFeatureTermImpl extends YangNamedElementImpl implements YangI
     }
 
     @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
     @Nullable
     public YangAndKeyword getAndKeyword() {
         return findChildByClass(YangAndKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
     }
 
     @Override
@@ -60,8 +74,8 @@ public class YangIfFeatureTermImpl extends YangNamedElementImpl implements YangI
 
     @Override
     @NotNull
-    public List<YangSep> getSepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
 }

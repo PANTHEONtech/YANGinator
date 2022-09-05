@@ -14,7 +14,15 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangFractionDigitsStmt extends YangYangStmt {
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
 
     @Nullable
     YangFractionDigitsArgStr getFractionDigitsArgStr();
@@ -22,8 +30,8 @@ public interface YangFractionDigitsStmt extends YangYangStmt {
     @NotNull
     YangFractionDigitsKeyword getFractionDigitsKeyword();
 
-    @Nullable
-    YangSep getSep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangStmtend getStmtend();

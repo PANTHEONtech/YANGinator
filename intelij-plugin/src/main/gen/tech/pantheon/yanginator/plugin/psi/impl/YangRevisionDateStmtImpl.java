@@ -13,14 +13,19 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDate;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
 
 public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRevisionDateStmt {
 
@@ -40,6 +45,24 @@ public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRe
     }
 
     @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
+
+    @Override
     @Nullable
     public YangRevisionDate getRevisionDate() {
         return findChildByClass(YangRevisionDate.class);
@@ -49,12 +72,6 @@ public class YangRevisionDateStmtImpl extends YangYangStmtImpl implements YangRe
     @NotNull
     public YangRevisionDateKeyword getRevisionDateKeyword() {
         return findNotNullChildByClass(YangRevisionDateKeyword.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
     }
 
     @Override
