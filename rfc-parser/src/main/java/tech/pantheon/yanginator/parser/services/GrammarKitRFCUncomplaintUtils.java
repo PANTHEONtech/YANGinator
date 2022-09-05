@@ -47,7 +47,8 @@ public class GrammarKitRFCUncomplaintUtils {
         result = patternBodyChange(result);
         result = adjustRelPathKeyexpr(result);
         result = swapDecimalWithIntegerInRangeBoundaryDef(result);
-        return allowComments(result);
+        result = allowComments(result);
+        return makeSeparatorRulesPrivate(result);
     }
 
     /**
@@ -799,6 +800,26 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("integer-value | decimal-value")) {
                 line = line.replace("integer-value | decimal-value", "decimal-value | integer-value");
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Making separator rules private. This ensures that a PsiElement is not created in the PsiTree for these.
+     * This method is important, because comments would be otherwise a child of node, that is treated
+     * as a whitespace. This way the relationship between whitespace elements and comment elements
+     * is not parent -> child, but rather sibling <-> sibling
+     *
+     * @param lines lines of the generated bnf grammar file
+     * @return resulting lines of the bnf grammar file
+     */
+    private static List<String> makeSeparatorRulesPrivate(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if(line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
+                line = "private " + line;
             }
             result.add(line);
         }

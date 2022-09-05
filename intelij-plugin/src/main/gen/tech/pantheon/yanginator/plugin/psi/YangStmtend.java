@@ -20,10 +20,16 @@ import java.util.List;
 public interface YangStmtend extends YangNamedElement {
 
     @NotNull
-    YangOptsep getOptsep();
+    List<YangWsp> getWspList();
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
+
+    @NotNull
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

@@ -18,7 +18,16 @@ import java.util.List;
 public interface YangSubmoduleHeaderStmts extends YangNamedElement {
 
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
+
+    @NotNull
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @NotNull
     List<YangYangStmt> getYangStmtList();

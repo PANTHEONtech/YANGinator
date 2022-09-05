@@ -15,16 +15,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
+import java.util.List;
+
 public interface YangBaseStmt extends YangGeneratedReferenceType {
+
+    @NotNull
+    List<YangWsp> getWspList();
 
     @NotNull
     YangBaseKeyword getBaseKeyword();
 
+    @NotNull
+    List<YangComment> getCommentList();
+
     @Nullable
     YangIdentifierRefArgStr getIdentifierRefArgStr();
 
-    @Nullable
-    YangSep getSep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangStmtend getStmtend();

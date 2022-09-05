@@ -15,10 +15,12 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangKeyArg;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -40,14 +42,26 @@ public class YangKeyArgImpl extends YangNamedElementImpl implements YangKeyArg {
 
     @Override
     @NotNull
-    public List<YangNodeIdentifier> getNodeIdentifierList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
     }
 
     @Override
     @NotNull
-    public List<YangSep> getSepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSep.class);
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangNodeIdentifier> getNodeIdentifierList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
     }
 
 }

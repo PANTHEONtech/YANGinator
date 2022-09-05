@@ -14,16 +14,24 @@ package tech.pantheon.yanginator.plugin.psi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface YangDeviateNotSupportedStmt extends YangYangStmt {
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
 
     @NotNull
     YangDeviateKeyword getDeviateKeyword();
 
-    @Nullable
-    YangNotSupportedKeywordStr getNotSupportedKeywordStr();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
-    YangSep getSep();
+    YangNotSupportedKeywordStr getNotSupportedKeywordStr();
 
     @Nullable
     YangStmtend getStmtend();
