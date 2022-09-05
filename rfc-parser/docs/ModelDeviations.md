@@ -23,7 +23,7 @@ correctly.
 
 * `quotedStringSplitter(result);` [link](#Quoted-string-splitter)
 
-* `revisionComment(result);` [link](#Allowing-comments)
+* `revisionComment(result);` [link](#Comment-revision)
 
 * `revisionReplace(result);` [link](#Changing-revision-statement)
 
