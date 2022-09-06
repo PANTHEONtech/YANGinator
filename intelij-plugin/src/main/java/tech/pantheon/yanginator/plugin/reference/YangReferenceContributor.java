@@ -20,11 +20,13 @@ import com.intellij.psi.PsiReferenceRegistrar;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRef;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArg;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
-import java.util.Objects;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.IDENTITYREF_STR;
 
@@ -60,7 +62,16 @@ public class YangReferenceContributor extends PsiReferenceContributor {
 
     @NotNull
     private String getIdentifierOf(final YangReferencedStatement stmt) {
-        return Objects.requireNonNull(stmt.getIdentifierRefArgStr().getIdentifierRefArg().getIdentifierRef().getText());
+        YangIdentifierRefArgStr yangIdentifierRefArgStr = stmt.getIdentifierRefArgStr();
+        YangIdentifierRefArg yangIdentifierRefArg = yangIdentifierRefArgStr == null ?
+                null
+                : yangIdentifierRefArgStr.getIdentifierRefArg();
+        YangIdentifierRef yangIdentifierRef = yangIdentifierRefArg == null ?
+                null
+                : yangIdentifierRefArg.getIdentifierRef();
+
+        String result = yangIdentifierRef == null ? "" : yangIdentifierRef.getText();
+        return result == null ? "" : result;
     }
 
     @NotNull
