@@ -71,6 +71,7 @@ correctly.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
   different characters or strings
   This method makes sure order looks like this:
+
   ![orderTokensForLexer](doc-images/orderTokensForLexer_output.png)
 
 * `rewriteFractionDigitsArg(result);`
