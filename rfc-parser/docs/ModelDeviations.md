@@ -243,7 +243,7 @@ After
 ![meta body replace after](doc-images/meta_body_replace_after.png)
 
 ### Rewrite scheme
-New tokens added due to double-click word selection bug.
+New tokens added due to double-click word selection.
 
 **Example**
 
@@ -256,7 +256,7 @@ After
 ![rewrite scheme after](doc-images/rewrite_scheme_after.png)
 
 ### Rewrite port
-New tokens added due to double-click word selection bug.
+New tokens added due to double-click word selection.
 
 **Example**
 
@@ -282,7 +282,7 @@ After
 ![rewrite date after](doc-images/rewrite_date_after.png)
 
 ### Rewrite identifier
-New tokens added due to double-click word selection bug.
+New tokens added due to double-click word selection.
 
 **Example**
 
@@ -295,7 +295,7 @@ After
 ![rewrite identifier after](doc-images/rewrite_identifier_after.png)
 
 ### Rewrite unreserved
-New tokens added due to double-click word selection bug.
+New tokens added due to double-click word selection.
 
 **Example**
 
