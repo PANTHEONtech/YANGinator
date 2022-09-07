@@ -80,6 +80,8 @@ import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangDoubleQ
 import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangYangCharCheck_v1_1;
 import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionArg;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
 import java.util.List;
@@ -161,7 +163,10 @@ public class YangAnnotator implements Annotator {
                 for (PsiElement ch : child.getChildren()
                 ) {
                     if (ch instanceof YangYangVersionStmt) {
-                        version = ((YangYangVersionStmt) ch).getYangVersionArgStr().getYangVersionArg().getText();
+                        YangYangVersionArgStr argStr = ((YangYangVersionStmt) ch).getYangVersionArgStr();
+                        YangYangVersionArg arg = argStr == null ? null : argStr.getYangVersionArg();
+                        version = arg == null ? "" :
+                                arg.getText() == null ? "" : arg.getText();
                     }
                 }
             }
