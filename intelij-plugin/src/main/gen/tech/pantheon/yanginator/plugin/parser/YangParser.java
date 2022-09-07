@@ -270,7 +270,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NUMERICAL_RESTR
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OBSOLETE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ONE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPEN_BRACKET;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPTSEP;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_ARG;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_ARG_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ORDERED_BY_KEYWORD;
@@ -360,7 +359,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT_NZ;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEGMENT_NZ_NC;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEP;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SHORT_CASE_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
@@ -373,7 +371,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_ARG_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STMTEND;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STMTSEP;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRING_RESTRICTIONS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STRING_SPLITTER;
@@ -460,7 +457,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return yang(b, l + 1);
     }
 
-    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
+    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
                     YANG_CHOICE_STMT, YANG_CONFIG_STMT, YANG_CONTACT_STMT, YANG_CONTAINER_STMT,
@@ -8160,25 +8157,24 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (WSP | line-break)*
-    public static boolean optsep(PsiBuilder b, int l) {
+    // (WSP | line-break | comment)*
+    static boolean optsep(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "optsep")) return false;
-        Marker m = enter_section_(b, l, _NONE_, YANG_OPTSEP, "<optsep>");
         while (true) {
             int c = current_position_(b);
             if (!optsep_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "optsep", c)) break;
         }
-        exit_section_(b, l, m, true, false, null);
         return true;
     }
 
-    // WSP | line-break
+    // WSP | line-break | comment
     private static boolean optsep_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "optsep_0")) return false;
         boolean r;
         r = WSP(b, l + 1);
         if (!r) r = line_break(b, l + 1);
+        if (!r) r = comment(b, l + 1);
         return r;
     }
 
@@ -10570,17 +10566,17 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (WSP | line-break | comment)+
-    public static boolean sep(PsiBuilder b, int l) {
+    static boolean sep(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "sep")) return false;
         boolean r;
-        Marker m = enter_section_(b, l, _NONE_, YANG_SEP, "<sep>");
+        Marker m = enter_section_(b);
         r = sep_0(b, l + 1);
         while (r) {
             int c = current_position_(b);
             if (!sep_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "sep", c)) break;
         }
-        exit_section_(b, l, m, r, false, null);
+        exit_section_(b, m, null, r);
         return r;
     }
 
@@ -10720,15 +10716,13 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (WSP | line-break | unknown-statement | comment)*
-    public static boolean stmtsep(PsiBuilder b, int l) {
+    static boolean stmtsep(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "stmtsep")) return false;
-        Marker m = enter_section_(b, l, _NONE_, YANG_STMTSEP, "<stmtsep>");
         while (true) {
             int c = current_position_(b);
             if (!stmtsep_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "stmtsep", c)) break;
         }
-        exit_section_(b, l, m, true, false, null);
         return true;
     }
 

@@ -537,7 +537,8 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
-    public void visitInstanceIdentifierSpecification(@NotNull YangInstanceIdentifierSpecification o) {
+    public void visitInstanceIdentifierSpecification(
+            @NotNull YangInstanceIdentifierSpecification o) {
         visitNamedElement(o);
     }
 
@@ -790,10 +791,6 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitObsoleteKeyword(@NotNull YangObsoleteKeyword o) {
-        visitNamedElement(o);
-    }
-
-    public void visitOptsep(@NotNull YangOptsep o) {
         visitNamedElement(o);
     }
 
@@ -1121,10 +1118,6 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
-    public void visitSep(@NotNull YangSep o) {
-        visitNamedElement(o);
-    }
-
     public void visitShortCaseStmt(@NotNull YangShortCaseStmt o) {
         visitYangStmt(o);
     }
@@ -1146,10 +1139,6 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitStmtend(@NotNull YangStmtend o) {
-        visitNamedElement(o);
-    }
-
-    public void visitStmtsep(@NotNull YangStmtsep o) {
         visitNamedElement(o);
     }
 

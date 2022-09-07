@@ -17,13 +17,14 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArg;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExpr;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureFactor;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangNotKeyword;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -47,6 +48,18 @@ public class YangIfFeatureFactorImpl extends YangNamedElementImpl implements Yan
     }
 
     @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
     @Nullable
     public YangIdentifierRefArg getIdentifierRefArg() {
         return findChildByClass(YangIdentifierRefArg.class);
@@ -65,21 +78,15 @@ public class YangIfFeatureFactorImpl extends YangNamedElementImpl implements Yan
     }
 
     @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
+
+    @Override
     @Nullable
     public YangNotKeyword getNotKeyword() {
         return findChildByClass(YangNotKeyword.class);
-    }
-
-    @Override
-    @NotNull
-    public List<YangOptsep> getOptsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
     }
 
     @Override

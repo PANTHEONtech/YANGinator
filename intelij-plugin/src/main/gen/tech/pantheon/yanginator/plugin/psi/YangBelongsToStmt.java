@@ -20,22 +20,25 @@ import java.util.List;
 public interface YangBelongsToStmt extends YangYangStmt {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
     YangBelongsToKeyword getBelongsToKeyword();
+
+    @NotNull
+    List<YangComment> getCommentList();
 
     @Nullable
     YangIdentifierArgStr getIdentifierArgStr();
 
-    @Nullable
-    YangOptsep getOptsep();
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     YangPrefixStmt getPrefixStmt();
 
-    @Nullable
-    YangSep getSep();
-
     @NotNull
-    List<YangStmtsep> getStmtsepList();
+    List<YangUnknownStatement> getUnknownStatementList();
 
     @Nullable
     PsiElement getLeftBrace();

@@ -13,12 +13,17 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
 import tech.pantheon.yanginator.plugin.psi.YangPatternKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangPatternStmt;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
 
 public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPatternStmt {
 
@@ -39,6 +44,24 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
 
     @Override
     @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    }
+
+    @Override
+    @NotNull
     public YangPatternBody getPatternBody() {
         return findNotNullChildByClass(YangPatternBody.class);
     }
@@ -47,12 +70,6 @@ public class YangPatternStmtImpl extends YangYangStmtImpl implements YangPattern
     @NotNull
     public YangPatternKeyword getPatternKeyword() {
         return findNotNullChildByClass(YangPatternKeyword.class);
-    }
-
-    @Override
-    @NotNull
-    public YangSep getSep() {
-        return findNotNullChildByClass(YangSep.class);
     }
 
 }

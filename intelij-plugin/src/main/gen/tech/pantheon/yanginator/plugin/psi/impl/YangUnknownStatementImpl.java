@@ -17,15 +17,15 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangPrefix;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
-import tech.pantheon.yanginator.plugin.psi.YangSep;
-import tech.pantheon.yanginator.plugin.psi.YangStmtsep;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
 
 import java.util.List;
@@ -53,14 +53,26 @@ public class YangUnknownStatementImpl extends YangNamedElementImpl implements Ya
 
     @Override
     @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
     public YangIdentifier getIdentifier() {
         return findNotNullChildByClass(YangIdentifier.class);
     }
 
     @Override
     @NotNull
-    public List<YangOptsep> getOptsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
@@ -73,18 +85,6 @@ public class YangUnknownStatementImpl extends YangNamedElementImpl implements Ya
     @Nullable
     public YangQuotedString getQuotedString() {
         return findChildByClass(YangQuotedString.class);
-    }
-
-    @Override
-    @Nullable
-    public YangSep getSep() {
-        return findChildByClass(YangSep.class);
-    }
-
-    @Override
-    @NotNull
-    public YangStmtsep getStmtsep() {
-        return findNotNullChildByClass(YangStmtsep.class);
     }
 
     @Override

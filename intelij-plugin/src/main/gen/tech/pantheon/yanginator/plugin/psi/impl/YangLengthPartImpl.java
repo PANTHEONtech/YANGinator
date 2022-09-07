@@ -17,10 +17,12 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangLengthBoundary;
 import tech.pantheon.yanginator.plugin.psi.YangLengthPart;
-import tech.pantheon.yanginator.plugin.psi.YangOptsep;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -44,14 +46,26 @@ public class YangLengthPartImpl extends YangNamedElementImpl implements YangLeng
 
     @Override
     @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
     public List<YangLengthBoundary> getLengthBoundaryList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLengthBoundary.class);
     }
 
     @Override
     @NotNull
-    public List<YangOptsep> getOptsepList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOptsep.class);
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
