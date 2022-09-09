@@ -43,12 +43,13 @@ public class YangCompletionContributor extends CompletionContributor {
     /**
      * This method searches for a relevant parent of the current context.
      * It essentially searches for the first '{' (i.e. LEFT_BRACE) and returns the node, that is a parent to that L_BRACE
-     * <p>
      * It skips the enclosed statements ('{ ... }') and only looks for the relevant parent, so that the caret position
      * is in the scope of that found parent
+     * <p>
+     * In case of built-in-types (or identifier/argument being a keyword) it searches for the relevant sibling
      *
      * @param current the node, at which the caret is situated
-     * @return the relevant parent node, of the current context
+     * @return the relevant parent (or sibling - in case of built-in keyword suggestion) node, of the current context
      */
     private ASTNode findContextParentOfCurrentNode(ASTNode current) {
         isAfterKeyword = false;
@@ -71,7 +72,7 @@ public class YangCompletionContributor extends CompletionContributor {
             }
             return findContextParentOfCurrentNode(prevSibling.getTreeParent());
         }
-        // if the caret is situated after a keyword, the user wants us to suggest an identifier
+        // if the caret is situated after a keyword, the user wants us to suggest an identifier (built-in-types or other keywords)
         if (prevSibling.getElementType().toString().contains("_KEYWORD")){
             isAfterKeyword = true;
             return prevSibling;
@@ -94,7 +95,7 @@ public class YangCompletionContributor extends CompletionContributor {
         super.fillCompletionVariants(parameters, result);
         PsiElement position = parameters.getPosition();
 
-        // edge case -> when the file is empty (or only having whitespaces and comments)
+        // base case -> when the file is empty (or only having whitespaces and comments)
         if(getFirstParentAfterSkip(position).getNode().getElementType().toString().equals("FILE")){
             MAP_OF_SUBSTATEMENTS.get("FILE")
                                 .forEach(s -> result.addElement(LookupElementBuilder.create(s).withTypeText("yang-keyword")));
@@ -109,7 +110,12 @@ public class YangCompletionContributor extends CompletionContributor {
         }
         else {
             possibleResults = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
-            typeText = "yang-keyword";
+            String type = contextParent.getNode().getElementType().toString();
+            type = type.replaceFirst("YANG_","");
+            type = type.replaceAll("STMT(S?)", "sub-statement");
+            type = type.replace("_", "-");
+            type = type.toLowerCase();
+            typeText = type;
         }
 
         if (possibleResults == null) return;
