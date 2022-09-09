@@ -43,10 +43,14 @@
 
         <!-- Completion -->
         <completion.contributor language="yang-pantheon"
+          implementationClass="tech.pantheon.yanginator.plugin.completionBeta.YangCompletionContributor"/>
+<!--
+        <completion.contributor language="yang-pantheon"
                                 implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributor"/>
         <lang.foldingBuilder language="yang-pantheon"
                              implementationClass="tech.pantheon.yanginator.plugin.completion.YangCompletionContributorBuilder"/>
         <psi.treeChangeListener implementation="tech.pantheon.yanginator.plugin.completion.YangPsiTreeChangeListener"/>
+-->
 
         <!-- Reference -->
         <psi.referenceContributor language="yang-pantheon"

@@ -18,7 +18,7 @@ import tech.pantheon.yanginator.plugin.psi.YangTypes;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.DUMMY_BLOCK;
 import static tech.pantheon.yanginator.plugin.YangParserDefinition.FILE;
 
-final class YangFormatterUtils {
+public final class YangFormatterUtils {
     public static final TokenSet KEYWORD_SET = TokenSet.create(
             YangTypes.YANG_ANYXML_KEYWORD,
             YangTypes.YANG_ARGUMENT_KEYWORD,
@@ -113,7 +113,7 @@ final class YangFormatterUtils {
             YangTypes.YANG_STMTEND
     );
 
-    private static final TokenSet WHITESPACE_SET = TokenSet.create(
+    public static final TokenSet WHITESPACE_SET = TokenSet.create(
             YangTypes.YANG_WSP,
             YangTypes.YANG_SP,
             YangTypes.YANG_SPACE,
