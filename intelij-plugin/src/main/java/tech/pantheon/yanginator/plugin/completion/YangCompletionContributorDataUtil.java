@@ -21,6 +21,7 @@ import java.util.Map;
 import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
 
 public final class YangCompletionContributorDataUtil {
+    public static final String IDENTITYREF_STR = "identityref";
 
     // orSet() method returns a token set containing the union of the specified token sets.
     public static final TokenSet SKIP_TOKENS = TokenSet.orSet(
