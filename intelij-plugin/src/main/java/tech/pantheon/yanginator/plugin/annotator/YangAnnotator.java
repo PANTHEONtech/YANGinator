@@ -79,6 +79,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.version_1_0.YangRefineS
 import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangDoubleQuotedStringCheck_v1_1;
 import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangYangCharCheck_v1_1;
 import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionArg;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
@@ -157,16 +158,23 @@ public class YangAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
-        for (PsiElement child : holder.getCurrentAnnotationSession().getFile().getFirstChild().getChildren()
-        ) {
-            if (child instanceof YangModuleHeaderStmts || child instanceof YangSubmoduleHeaderStmts) {
-                for (PsiElement ch : child.getChildren()
-                ) {
-                    if (ch instanceof YangYangVersionStmt) {
-                        YangYangVersionArgStr argStr = ((YangYangVersionStmt) ch).getYangVersionArgStr();
-                        YangYangVersionArg arg = argStr == null ? null : argStr.getYangVersionArg();
-                        version = arg == null ? "" :
-                                arg.getText() == null ? "" : arg.getText();
+        if(version.equals("")) {
+            PsiElement root = holder.getCurrentAnnotationSession().getFile().getFirstChild();
+            while ((root != null) && !(root instanceof YangModuleStmt)) {
+                root = root.getNextSibling();
+            }
+            if(root != null) {
+                for (PsiElement child : root.getChildren()) {
+                    if (child instanceof YangModuleHeaderStmts || child instanceof YangSubmoduleHeaderStmts) {
+                        for (PsiElement ch : child.getChildren()) {
+                            if (ch instanceof YangYangVersionStmt) {
+                                YangYangVersionArgStr argStr = ((YangYangVersionStmt) ch).getYangVersionArgStr();
+                                YangYangVersionArg arg = argStr == null ? null : argStr.getYangVersionArg();
+                                version = arg == null ? "" :
+                                        arg.getText() == null ? "" : arg.getText();
+                                break;
+                            }
+                        }
                     }
                 }
             }
