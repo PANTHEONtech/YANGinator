@@ -23,7 +23,7 @@
   generateTokenAccessors=true
 }
 
-yang ::=  (module-stmt | submodule-stmt)
+yang ::=  (module-stmt | submodule-stmt | (ZERO_LENGHT_STRING | SPACE | LINEFEED | CARRIAGE_RETURN)*)
 
 private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
  EIGHT | NINE | DATE | FRACTIONS | ZEROS | ESCAPES // do not change the order of tokens !
