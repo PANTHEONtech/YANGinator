@@ -11,14 +11,15 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.*;
+
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
 
 public class YangAuthorityImpl extends YangNamedElementImpl implements YangAuthority {
 
