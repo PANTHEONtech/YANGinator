@@ -25,14 +25,14 @@ import static tech.pantheon.yanginator.plugin.highlighter.psi.YangTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-H_KEYWORD_MATCHER=[^\w*\s;{}\/'\"]*?[\s\t\n\x0B\f\r]+(import|action|anydata|modifier|invert-match|and|or|not|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|status|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)[ \t\n\x0B\f\r]+
+H_KEYWORD_MATCHER=[^\w*\s;{}/'\"]*?[\s\t\n\x0B\f\r]+(import|action|anydata|modifier|invert-match|and|or|not|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)[ \t\n\x0B\f\r]+
 H_WHITE_SPACE=[ \t\n\x0B\f\r]+
 H_STRING=(\"([^\"])*(\")?)|('([^'])*(')?)
 H_DATE_ARG=[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}
 H_IDENTIFIER=[a-zA-Z_][0-9a-zA-Z_\-.]*
 H_EXTENSION_IDENTIFIER=[a-zA-Z_][0-9a-zA-Z_\-.:]*
 H_BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
-H_SINGLE_LINE_COMMENT=(\/){2}([^\r\n])*([\r\n])?
+H_SINGLE_LINE_COMMENT=("/"){2}([^\r\n])*([\r\n])?
 H_INVALID_ESCAPE=\\([^rRtnsb])
 H_VALID_ESCAPE=\\[rRtnsb]
 H_DIGIT=[0-9]
