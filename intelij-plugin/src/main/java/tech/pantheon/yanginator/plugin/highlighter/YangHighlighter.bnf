@@ -128,14 +128,14 @@ parserClass="tech.pantheon.yanginator.plugin.highlighter.parser.YangParser"
       H_OR_KEYWORD          = 'or'
       H_NOT_KEYWORD         = 'not'
 
-      H_KEYWORD_MATCHER = 'regexp:[^\w*\s;{}]*?\s+(import|action|anydata|modifier|invert-match|and|or|not|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|status|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)\s+'
+      H_KEYWORD_MATCHER = "regexp:[^\w*\s;{}/'\"]*?[\s\t\n\x0B\f\r]+(import|action|anydata|modifier|invert-match|and|or|not|leaf|anyxml|argument|augment|base|belongs-to|bit|case|choice|config|contact|container|default|description|enum|error-app-tag|error-message|extension|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|include|input|key|leaf-list|length|list|mandatory|max-elements|min-elements|module|must|namespace|notification|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|rpc|status|submodule|typedef|type|unique|units|uses|value|when|yang-version|yin-element|current|delete|deprecated|false|add|max|min|not-supported|obsolete|replace|system|true|unbounded|user)\s+"
       H_WHITE_SPACE = 'regexp:\s+'
       H_STRING = "regexp:(\"([^\"])*(\")?)|('([^'])*(')?)"
       H_DATE_ARG='regexp:[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'
       H_IDENTIFIER = 'regexp:[a-zA-Z_][0-9a-zA-Z_\-.]*'
       H_EXTENSION_IDENTIFIER = 'regexp:[a-zA-Z_][0-9a-zA-Z_\-.:]*'
       H_BLOCK_COMMENT = 'regexp:/\*([^*]|\*+[^*/])*(\*+/)?'
-      H_SINGLE_LINE_COMMENT = 'regexp://([^\n])*'
+      H_SINGLE_LINE_COMMENT = "regexp:(/){2}([^\r\n])*([\r\n])?"
       H_SEMICOLON = ";"
       H_OPERATORS = "+"
       H_LEFT_BRACE = "{"
