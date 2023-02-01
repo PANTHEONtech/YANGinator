@@ -98,89 +98,16 @@ ZEROS = 0{2,999}
 CHARS = [^\w;{}\\ \"\-.]|[^\W_]+
 ESCAPES = \\[nt\"\\]
 
-UNDERSCORE = "_"
-ASTERISK = "*"
-BACK_SLASH = \\
-DOUBLE_QUOTE = \"
-SINGLE_QUOTE = [\'"'"]
-SEMICOLON = ";"
-COLON = ":"
-LEFT_BRACE = "{"
-RIGHT_BRACE = "}"
-DOT = "."
-DOUBLE_DOT = ".."
-DASH = "-"
-LEFT_PARENTHESIS = "("
-RIGHT_PARENTHESIS = ")"
-EQUALS = "="
-OPEN_BRACKET = "["
-CLOSED_BRACKET = "]"
-FORWARD_SLASH = "/"
-PIPE = "|"
-ZERO = "0"
-ONE = "1"
-TWO = "2"
-THREE = "3"
-FOUR = "4"
-FIVE = "5"
-SIX = "6"
-SEVEN = "7"
-EIGHT = "8"
-NINE = "9"
-HEXDIGIT = [a-f]
-LETTERS = [a-zA-Z]+
-EXCLAMATION_MARK = "!"
-HASH = "#"
-DOLLAR_SIGN = "$"
-PERCENT_SIGN = "%"
-AMPERSAND = "&"
-PLUS_SIGN = "+"
-COMMA = ","
-LESS_THAN_SIGN = "<"
-GREATER_THAN_SIGN = ">"
-QUESTION_MARK = "?"
-AT_SIGN = "@"
-CIRCUMFLEX_ACCENT = "^"
-GRAVE_ACCENT = "`"
-TILDE = "~"
-EOL = \R
-TAB = \t
-LINEFEED = \n
-CARRIAGE_RETURN = \r
-SPACE = [\s \x0B\f]
-OTHER_CHARACTER = "."
-BLOCK_COMMENT = \/\*([^*]|\*+[^*/])*(\*+\/)?
-DOUBLE_PIPE = "||"
-DOUBLE_COLON = "::"
-PARENT_FOLDER = "../"
-ALPHA = {LETTERS}
-POSITIVE_NUMBER = {ONE} | {TWO} | {THREE} | {FOUR} | {FIVE} | {SIX} | {SEVEN} | {EIGHT} | {NINE}
-STRINGS_SINGLE_QUOTE = {BACK_SLASH}{SINGLE_QUOTE}
-STRINGS_DOUBLE_QUOTE = {BACK_SLASH}{DOUBLE_QUOTE}
-SINGLE_LINE_COMMENT_START = {FORWARD_SLASH}{2}
-NEW_LINE = {LINEFEED} | {CARRIAGE_RETURN}
-VERSION = "v"
-DOUBLE_FORWARD_SLASH = "//"
-HEXDIG = {HEXDIGIT}
-BLOCK_COMMENT_END = "*/"
-ZERO_LENGHT_STRING = ""
-APOSTROPHE = "’"
-DATE = \d{4}-(1[0-2]|0[1-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])
-DIGITS = [0-9]{2,999}
-IPV4 = ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
-ALPHANUMERICAL_ALPHA_FIRST = ([a-zA-Z]+[0-9]+[a-zA-Z]+)|([a-zA-Z]+[0-9]+)+
-ALPHANUMERICAL_DIGIT_FIRST = ([0-9]+[a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)+
-FRACTIONS = 1[0-8]
-ZEROS = 0{2,999}
-CHARS = [^\w;{}\\ \"\-.]|[^\W_]+
-ESCAPES = \\[nt\"\\]
-
 EOL=\R
 
 
 %%
 <YYINITIAL> {
 
+  {ZERO_LENGHT_STRING}            { return YANG_ZERO_LENGHT_STRING; }
+  {SPACE}                         { return YANG_SPACE; }
+  {LINEFEED}                      { return YANG_LINEFEED; }
+  {CARRIAGE_RETURN}               { return YANG_CARRIAGE_RETURN; }
   {BLOCK_COMMENT}                 { return YANG_BLOCK_COMMENT; }
   {ONE}                           { return YANG_ONE; }
   {TWO}                           { return YANG_TWO; }
@@ -218,10 +145,7 @@ EOL=\R
   {DASH}                          { return YANG_DASH; }
   {ZERO}                          { return YANG_ZERO; }
   {SINGLE_QUOTE}                  { return YANG_SINGLE_QUOTE; }
-  {CARRIAGE_RETURN}               { return YANG_CARRIAGE_RETURN; }
   {TAB}                           { return YANG_TAB; }
-  {LINEFEED}                      { return YANG_LINEFEED; }
-  {SPACE}                         { return YANG_SPACE; }
   {QUESTION_MARK}                 { return YANG_QUESTION_MARK; }
   {HASH}                          { return YANG_HASH; }
   {DOUBLE_FORWARD_SLASH}          { return YANG_DOUBLE_FORWARD_SLASH; }
@@ -231,7 +155,6 @@ EOL=\R
   {HEXDIG}                        { return YANG_HEXDIG; }
   {DOUBLE_COLON}                  { return YANG_DOUBLE_COLON; }
   {IPV4}                          { return YANG_IPV4; }
-  {ZERO_LENGHT_STRING}            { return YANG_ZERO_LENGHT_STRING; }
   {PERCENT_SIGN}                  { return YANG_PERCENT_SIGN; }
   {TILDE}                         { return YANG_TILDE; }
   {EXCLAMATION_MARK}              { return YANG_EXCLAMATION_MARK; }
