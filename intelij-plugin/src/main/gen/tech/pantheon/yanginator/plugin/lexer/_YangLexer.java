@@ -2763,7 +2763,7 @@ public class _YangLexer implements FlexLexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return YANG_ZERO_LENGHT_STRING;
+            { return YANG_ZERO_LENGTH_STRING;
             } 
             // fall through
           case 56: break;

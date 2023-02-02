@@ -23,7 +23,7 @@
   generateTokenAccessors=true
 }
 
-yang ::=  (module-stmt | submodule-stmt |(ZERO_LENGHT_STRING | SPACE | LINEFEED| CARRIAGE_RETURN)*)
+yang ::=  (module-stmt | submodule-stmt |(ZERO_LENGTH_STRING | SPACE | LINEFEED| CARRIAGE_RETURN)*)
 
 private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
  EIGHT | NINE | DATE | FRACTIONS | ZEROS | ESCAPES // do not change the order of tokens !
@@ -1455,7 +1455,7 @@ path-abempty ::= ( FORWARD_SLASH segment )*
 path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
 path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
 path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
-path-empty ::= ZERO_LENGHT_STRING// pchar deviation against original rfc 3986
+path-empty ::= ZERO_LENGTH_STRING// pchar deviation against original rfc 3986
 segment ::= pchar*
 segment-nz ::= pchar+
 segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
