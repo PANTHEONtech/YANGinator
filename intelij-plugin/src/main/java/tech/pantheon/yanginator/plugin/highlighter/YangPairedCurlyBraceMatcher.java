@@ -32,7 +32,7 @@ public class YangPairedCurlyBraceMatcher implements PairedBraceMatcher {
 
     @Override
     public boolean isPairedBracesAllowedBeforeType(@NotNull IElementType lbraceType, @Nullable IElementType contextType) {
-        return contextType == null || !YangTokenTypeSets.STRINGS.contains(contextType);
+        return !YangTokenTypeSets.STRINGS.contains(contextType);
     }
 
     @Override

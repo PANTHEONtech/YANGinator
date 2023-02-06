@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.icons.YangIcons;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import java.util.Map;
 
 public class YangColorSettingsPage implements ColorSettingsPage {

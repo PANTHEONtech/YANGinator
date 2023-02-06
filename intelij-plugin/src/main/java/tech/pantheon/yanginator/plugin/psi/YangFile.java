@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.YangLanguage;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 public class YangFile extends PsiFileBase {
     public YangFile(@NotNull FileViewProvider viewProvider) {
