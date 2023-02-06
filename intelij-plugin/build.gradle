@@ -31,7 +31,7 @@ tasks {
 
 publishPlugin {
     token.set(System.getenv("PUBLISH_TOKEN"));
-    channels = [ System.getenv("CHANNELS") ]
+    channels = [System.getenv("CHANNELS")]
 }
 
 test {

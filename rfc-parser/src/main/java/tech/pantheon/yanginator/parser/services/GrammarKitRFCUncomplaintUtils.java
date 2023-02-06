@@ -249,7 +249,7 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("stmtsep ::=")) {
                 line = "stmtsep ::= (WSP | line-break | unknown-statement | comment)*";
             }
-            if(line.contains("optsep ::=")){
+            if (line.contains("optsep ::=")) {
                 line = "optsep ::= (WSP | line-break | comment)*";
             }
             if (line.contains("sep ::= (WSP | line-break)+")) {
@@ -819,7 +819,7 @@ public class GrammarKitRFCUncomplaintUtils {
     private static List<String> makeSeparatorRulesPrivate(List<String> lines) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if(line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
+            if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
             }
             result.add(line);

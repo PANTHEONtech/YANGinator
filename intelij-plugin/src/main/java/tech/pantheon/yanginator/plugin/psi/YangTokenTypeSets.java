@@ -17,4 +17,4 @@ public interface YangTokenTypeSets {
     IElementType LINE_COMMENT = new YangElementType("YANG_LINE_COMMENT");
     IElementType BLOCK_COMMENT = new YangElementType("YANG_BLOCK_COMMENT");
     TokenSet STRINGS = TokenSet.create(YangTypes.YANG_ALPHA);
- }
+}

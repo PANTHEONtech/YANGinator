@@ -14,10 +14,10 @@ public class Extension {
     private final String statement, extension, implementation;
     private final String pin;
 
-    public Extension(final String statement, final String pin, final String extension, final String implementation){
+    public Extension(final String statement, final String pin, final String extension, final String implementation) {
         this.statement = statement;
         this.extension = extension;
-        this. implementation = implementation;
+        this.implementation = implementation;
         this.pin = pin;
     }
 
