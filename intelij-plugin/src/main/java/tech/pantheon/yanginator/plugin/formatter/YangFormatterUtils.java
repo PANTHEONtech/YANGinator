@@ -196,7 +196,6 @@ public final class YangFormatterUtils {
             YangTypes.YANG_DESCRIPTION_STMT,
             YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_STRING,
-            YangTypes.YANG_BLOCK_COMMENT,
             YangTypes.YANG_ACTION_STMT,
             YangTypes.YANG_ANYDATA_STMT,
             YangTypes.YANG_MODIFIER_STMT
@@ -250,7 +249,8 @@ public final class YangFormatterUtils {
             YangTypes.YANG_NODE_IDENTIFIER,
             YangTypes.YANG_IDENTIFIER,
             YangTypes.YANG_IDENTIFIER_ARG_STR,
-            YangTypes.YANG_PREFIX
+            YangTypes.YANG_PREFIX,
+            YangTypes.YANG_STMTEND
     );
 
     private static final TokenSet INVALID_YANG_SET = TokenSet.create(
