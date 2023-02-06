@@ -27,7 +27,6 @@ import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
-
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.IDENTITYREF_STR;
 
 public class YangReferenceContributor extends PsiReferenceContributor {
@@ -57,7 +56,7 @@ public class YangReferenceContributor extends PsiReferenceContributor {
                         }
                         return PsiReference.EMPTY_ARRAY;
                     }
-        });
+                });
     }
 
     @NotNull

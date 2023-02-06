@@ -175,7 +175,7 @@ public class RFCService {
         if (declarationTextList.get(idx).equals(NEWLINE) && bracketCount == 0) {
             if (this.isMultiplier(declarationTextList.get(idx - 1))) {
                 if (this.rightBraceOnIndex(declarationTextList, idx)) {
-                    anyOrderList.add(anyOrderList.size() - 1,    RFCStringUtil.PIPE.getCharacterValue());
+                    anyOrderList.add(anyOrderList.size() - 1, RFCStringUtil.PIPE.getCharacterValue());
                 }
                 anyOrderList.add(anyOrderList.size() - 1, SINGLE_COMMENT_START);
             } else {
@@ -318,7 +318,7 @@ public class RFCService {
     private boolean hasUnrepairedMultiplier(final int startIndex, final List<String> declarationString) {
         return declarationString.get(startIndex).equals(ASTERISK)
                 && !declarationString.get(startIndex - 1)
-                        .equals(RFCStringUtil.RIGHT_PARENTHESIS.getCharacterValue());
+                .equals(RFCStringUtil.RIGHT_PARENTHESIS.getCharacterValue());
     }
 
     private boolean hasNumericMultiplier(final List<String> declarationString, final int indexOfAsterisk) {

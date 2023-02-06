@@ -8,15 +8,17 @@
 YANGinator | An IntelliJ YANG Validation Plugin
 =============
 
-This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validating YANG files. Developers and enthusiasts will have the option to validate their YANG files before deployment.  
+This [IntelliJ](https://www.jetbrains.com/idea/) plugin adds support for validating YANG files. Developers and
+enthusiasts will have the option to validate their YANG files before deployment.
 
 ***Note:***
-Please note that the YANGinator plugin does not completely follow the rfc, because of performance, error recovery, comment support and other reasons. All these deviations are documented [here](rfc-parser/docs/ModelDeviations.md)
+Please note that the YANGinator plugin does not completely follow the rfc, because of performance, error recovery,
+comment support and other reasons. All these deviations are documented [here](rfc-parser/docs/ModelDeviations.md)
 
 # Features
 
 - Base validation for [YANG 1.0](https://datatracker.ietf.org/doc/html/rfc6020)
-- Syntax highlighting 
+- Syntax highlighting
 - Auto completion
 - Code folding (curly brackets, multi-line strings, multi-line comments)
 - Commenting
@@ -27,15 +29,19 @@ Please note that the YANGinator plugin does not completely follow the rfc, becau
 
 # Development Environment
 
-Follow this tutorial [IntelliJ Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html) to add custom lanugage support in IntelliJ.
+Follow this
+tutorial [IntelliJ Custom Language Support Tutorial](https://plugins.jetbrains.com/docs/intellij/custom-language-support-tutorial.html)
+to add custom lanugage support in IntelliJ.
 
 # Installing YANGinator
 
 ### 1. Install YANGinator
 
-The easiest way to find the *Plugins* window in IntelliJ, is by using the *Search everywhere* window (by default, double-tap the Shift key). Search for *plugins*.
+The easiest way to find the *Plugins* window in IntelliJ, is by using the *Search everywhere* window (by default,
+double-tap the Shift key). Search for *plugins*.
 
-You can also find YANGinator in the [official IntelliJ Marketplace here.](https://plugins.jetbrains.com/plugin/17935-yanginator)
+You can also find YANGinator in
+the [official IntelliJ Marketplace here.](https://plugins.jetbrains.com/plugin/17935-yanginator)
 
 ### 2. Search for YANGinator
 
@@ -70,7 +76,8 @@ YANGinator will be enabled by now. Enjoy!
 
 ### 6. Help Us Continue
 
-If you found a bug, problem, or have an idea for a possible feature, create an [Issue here](https://github.com/PANTHEONtech/YANGinator/issues).
+If you found a bug, problem, or have an idea for a possible feature, create
+an [Issue here](https://github.com/PANTHEONtech/YANGinator/issues).
 
 *Please browse the open issues before opening a new one.*
 

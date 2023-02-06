@@ -37,7 +37,6 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.parseTokens;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
-import static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
@@ -457,7 +456,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return yang(b, l + 1);
     }
 
-    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
+    public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
                     YANG_CHOICE_STMT, YANG_CONFIG_STMT, YANG_CONTACT_STMT, YANG_CONTAINER_STMT,

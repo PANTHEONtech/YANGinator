@@ -1,14 +1,16 @@
 # Generating BNF grammar with Lexer and Parser
+
 path = intelij-plugin/src/main/gen/tech/pantheon/yanginator/plugin
 
 **In order to generate fully functional grammar with lexer and parser follow these steps :**
 
 * Run RFCParser.main() with correct paths to your ABNF files
 * Right-click on your generated BNF (path/YangGrammar.bnf) and select "Generate Parser Code"
-* Right-click your BNF file again and select "Generate JFlex Lexer", select your path into lexer directory(path/lexer) with name _YangLexer.flex
+* Right-click your BNF file again and select "Generate JFlex Lexer", select your path into lexer directory(path/lexer)
+  with name _YangLexer.flex
 * Run RFCParser.main() again
 * Right-click on _YangLexer.flex and select "Run JFlex Generator"
-  
+
 ## Transformation of ABNF to BNF
 
 Following methods are used for transformation of Augmented Backus–Naur form (.abnf) grammar into Backus–Naur form (.bnf)
@@ -39,14 +41,14 @@ Abnf specification for different YANG versions can be found in RFCs:
 
 ### 1. Replace tokens
 
-Method  `replaceAllAbnfTokens(List<String> oldGrammar)` takes original .abnf grammar as a parameter. 
+Method  `replaceAllAbnfTokens(List<String> oldGrammar)` takes original .abnf grammar as a parameter.
 Except tokens enclosed inside double quotes.
 
 * The method transforms:
-    * Equal sign: `=` changed to `::=` 
+    * Equal sign: `=` changed to `::=`
     * Or: `/` changed to `|`
-    * Comment: `;;` changed to `//` 
-    * Comment: `;` changed to `//` 
+    * Comment: `;;` changed to `//`
+    * Comment: `;` changed to `//`
 
 Example of original .abnf grammar:
 
@@ -225,6 +227,7 @@ After transformation of rule:
 ![Rewritten string rule](doc-images/24_stringRule_after.png)
 
 ### 12. ReplaceTokens
+
 Method `replaceTokens(List<String> lines, List<FlexerToken> tokens)` replaces all the values in double quotes
 that were added into tokens.xml
 
@@ -232,7 +235,7 @@ Example before replacing :
 
 ![ReplaceTokens_before](doc-images/replaceTokens_before.png)
 
-After token replacement: 
+After token replacement:
 
 ![ReplaceTokens_after](doc-images/replaceTokens_after.png)
 
@@ -241,11 +244,11 @@ After token replacement:
 Method `commentDeprecatedDefinition(List<String> lines, String deprecatedDefinition)` puts two forward slashes before
 definition int the parameter
 
-Example before : 
+Example before :
 
 ![Deprecated_before](doc-images/commentDeprecated_before.png)
 
-After method finishes : 
+After method finishes :
 
 ![Deprecated_after](doc-images/commentDeprecated_after.png)
 
@@ -253,27 +256,29 @@ After method finishes :
 
 Method `replaceWords(List<String> lines, String wordToBeReplaced, String excludedCombination, String replacement)`
 will look for wordToBeReplaced in the list and replace it with replacement. Additionally, method removes all necessary
-duplicates without changing the logic of expression. Additional information can be given via excludedCombination if necessary,
+duplicates without changing the logic of expression. Additional information can be given via excludedCombination if
+necessary,
 otherwise should be null.
 
-Example before : 
+Example before :
 
 ![replaceWords_before](doc-images/replaceWords_before.png)
 
-After method finishes : 
+After method finishes :
 
 ![replaceWords_after](doc-images/replaceWords_after.png)
 
 ### 15. Comment Rules
 
-Method `commentRules(List<String> lines, String comment, String delimiter)` will extract definition from 
-comment after delimiter and puts it in the expression. Comment can specify in the definition should be quoted or unquoted
+Method `commentRules(List<String> lines, String comment, String delimiter)` will extract definition from
+comment after delimiter and puts it in the expression. Comment can specify in the definition should be quoted or
+unquoted
 
 Example before:
 
-![commentRules_before](doc-images/commentRules_before.png)  
+![commentRules_before](doc-images/commentRules_before.png)
 
-Example after quoted : 
+Example after quoted :
 
 ![commentRules_after_quoted](doc-images/commentRules_after.png)
 
@@ -285,7 +290,7 @@ Example after unquoted :
 
 Method `addTokensIntoLexer(List<String> lines, List<FlexerToken> tokens)` adds tokens used in replacing into lexer file
 
-Example before : 
+Example before :
 
 ![lexerTokens_before](doc-images/addLexerTokens_before.png)
 
@@ -295,7 +300,8 @@ Example after :
 
 ### 17. XML start for 6020
 
-Method `xmlStartFor6020(List<String> lines, String comment)` extract special comment definition in rfc6020 and applies it
+Method `xmlStartFor6020(List<String> lines, String comment)` extract special comment definition in rfc6020 and applies
+it
 
 Example before :
 
@@ -324,21 +330,23 @@ Example after with RIGHT_BRACE :
 
 ### 19. Add checkString
 
-Method `addCheckString(List<String> lines, List<String> ranges)` adds external rule checkString to yang-string expression.
+Method `addCheckString(List<String> lines, List<String> ranges)` adds external rule checkString to yang-string
+expression.
 Parameter ranges is obtained from `extractRangesfromABNF(List<String> abnf)` method.
 
 Example before :
 
 ![checkString_before](doc-images/checkString_before.png)
 
-Example after : 
+Example after :
 
 ![checkString_after](doc-images/checkString_after.png)
 
 ### 20. Extract ranges from ABNF
 
-Method `extractRangesfromABNF(List<String> abnf)` extracts ranges from ABNF file containing yang-string and yang-char definitions.
+Method `extractRangesfromABNF(List<String> abnf)` extracts ranges from ABNF file containing yang-string and yang-char
+definitions.
 
-Example of yang-char definition in ABNF file : 
+Example of yang-char definition in ABNF file :
 
 ![extractRanges](doc-images/extractRangesFromABNF.png)

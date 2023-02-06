@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.icons.YangIcons;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 public class YangFileType extends LanguageFileType {
     public static final YangFileType INSTANCE = new YangFileType();

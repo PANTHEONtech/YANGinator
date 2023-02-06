@@ -537,8 +537,7 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
-    public void visitInstanceIdentifierSpecification(
-            @NotNull YangInstanceIdentifierSpecification o) {
+    public void visitInstanceIdentifierSpecification(@NotNull YangInstanceIdentifierSpecification o) {
         visitNamedElement(o);
     }
 
