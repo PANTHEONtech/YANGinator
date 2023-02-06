@@ -26,7 +26,7 @@ public class YangBreadcrumbsProvider implements BreadcrumbsProvider {
 
     @Override
     public Language[] getLanguages() {
-        return new Language[] { YangLanguage.INSTANCE };
+        return new Language[]{YangLanguage.INSTANCE};
     }
 
     @Override

@@ -14,11 +14,12 @@ import com.google.common.collect.ImmutableList;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
+import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
 
 public final class YangCompletionContributorDataUtil {
     public static final String IDENTITYREF_STR = "identityref";
@@ -169,7 +170,7 @@ public final class YangCompletionContributorDataUtil {
             "units",
             "when"
     );
-    private static final List<String> LEAF_LIST_SUBSTATEMENTS = new ArrayList<>(){
+    private static final List<String> LEAF_LIST_SUBSTATEMENTS = new ArrayList<>() {
         {
             addAll(LEAF_SUBSTATEMENTS);
             remove("mandatory");
@@ -178,7 +179,7 @@ public final class YangCompletionContributorDataUtil {
             add("ordered-by");
         }
     };
-    private static final List<String> LIST_SUBSTATEMENTS = new ArrayList<>(){
+    private static final List<String> LIST_SUBSTATEMENTS = new ArrayList<>() {
         {
             addAll(CONTAINER_SUBSTATEMENTS);
             remove("presence");
@@ -379,7 +380,7 @@ public final class YangCompletionContributorDataUtil {
             "status"
     );
 
-    public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>(){
+    public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>() {
         {
             put("FILE", List.of("module", "submodule"));
             put("YANG_MODULE_STMT", MODULE_SUBSTATEMENTS);
@@ -446,7 +447,7 @@ public final class YangCompletionContributorDataUtil {
 
     public static PsiElement getFirstParentAfterSkip(PsiElement currentPosition) {
         PsiElement parent = currentPosition.getParent();
-        while(SKIP_TOKENS.contains(parent.getNode().getElementType())) {
+        while (SKIP_TOKENS.contains(parent.getNode().getElementType())) {
             parent = parent.getParent();
         }
         return parent;

@@ -21,7 +21,7 @@ import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 public class YangPairedCurlyBraceMatcher implements PairedBraceMatcher {
     private static final BracePair[] BRACE_PAIRS = {
-        new BracePair(YangTypes.YANG_LEFT_BRACE, YangTypes.YANG_RIGHT_BRACE, true),
+            new BracePair(YangTypes.YANG_LEFT_BRACE, YangTypes.YANG_RIGHT_BRACE, true),
     };
 
     @NotNull

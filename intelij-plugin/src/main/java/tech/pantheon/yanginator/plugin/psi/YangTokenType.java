@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.YangLanguage;
 
 
-public class  YangTokenType extends IElementType {
+public class YangTokenType extends IElementType {
 
     public YangTokenType(@NotNull @NonNls String debugName) {
         super(debugName, YangLanguage.INSTANCE);

@@ -188,7 +188,6 @@ public class YangCurlyBraceFoldingManager extends FoldingBuilderEx implements Du
     }
 
 
-
     private List<CurlyBraceDocumentPositionType> findBracePositionsInDocument(
             final Document document, final CurlyBraceStringEnum curlyBraceType) {
         return YangFoldingManagerUtil.findTextPositionsInDocumentIgnoringCommentsAndStrings(

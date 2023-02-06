@@ -26,7 +26,7 @@ public abstract class YangGeneratedReferenceTypeImpl extends YangNamedElementImp
 
     @NotNull
     @Override
-    public PsiReference [] getReferences() {
+    public PsiReference[] getReferences() {
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
     }
 

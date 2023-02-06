@@ -29,6 +29,7 @@ public class YangYangCharCheck_v1_1 extends AbstractYangStmtCheck {
             "%xBFFFE-BFFFF", "%xCFFFE-CFFFF", "%xDFFFE-DFFFF",
             "%xEFFFE-EFFFF", "%xFFFFE-FFFFF", "%x10FFFE-10FFFF");
     private static final List<Character> charList = stringsToChars(stringList);
+
     @Override
     public boolean isApplicable(@NotNull final PsiElement element) {
         return element instanceof YangVchar;
