@@ -28,14 +28,14 @@ class GrammarKitRFCServiceTest {
     void parseInputFilev2Test() throws URISyntaxException {
         List<String> testList = createList("inputFileV2.bnf");
         File outputFile = new File("../rfc-parser/src/test/resources/outputFileV2.bnf");
-        List<String> result  ;
+        List<String> result;
         result = rfcservice.parseInputFilev2(testList);
         try (final PrintWriter printWriter = new PrintWriter(outputFile)) {
             result.forEach(printWriter::println);
         } catch (final IOException ignored) {
         }
         List<String> correct = createList("correctOutputFileV2.bnf");
-        assertEquals(result, correct );
+        assertEquals(result, correct);
 
     }
 
@@ -44,8 +44,8 @@ class GrammarKitRFCServiceTest {
         List<String> testList = createList("inputFileV2.bnf");
         File outputFile = new File("../rfc-parser/src/test/resources/outputFileV3.bnf");
         File input = new File("../rfc-parser/src/main/gen/rfc-3986/rfc-3986-grammar-kitv2.bnf");
-        List<String> result  ;
-        result = rfcservice.parseInputFilev3(testList,createList("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"),input);
+        List<String> result;
+        result = rfcservice.parseInputFilev3(testList, createList("yang-rfc-grammar/yang-1_1/yang-rfc-7950.abnf"), input);
         try (final PrintWriter printWriter = new PrintWriter(outputFile)) {
             result.forEach(printWriter::println);
         } catch (final IOException ignored) {
@@ -53,18 +53,19 @@ class GrammarKitRFCServiceTest {
         result = createList("outputFileV3.bnf");
         List<String> correct = createList("correctOutputFileV3.bnf");
 
-        assertEquals(result, correct );
+        assertEquals(result, correct);
 
     }
+
     @Test
     void generateLexerTest() throws URISyntaxException {
-        File input =rfcservice.getFile("inputLexer.txt");
+        File input = rfcservice.getFile("inputLexer.txt");
         File outputFile = new File("../rfc-parser/src/test/resources/outputLexer.txt");
         rfcservice.generateLexer(input, outputFile);
         List<String> result = createList("outputLexer.txt");
         List<String> correct = createList("correctOutputLexer.txt");
 
-        assertEquals(result, correct );
+        assertEquals(result, correct);
 
     }
 

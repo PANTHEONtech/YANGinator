@@ -10,10 +10,6 @@
 
 package tech.pantheon.yanginator.plugin.completion;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_SUBSTATEMENTS;
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.getFirstParentAfterSkip;
-
 import com.intellij.codeInsight.completion.CompletionContributor;
 import com.intellij.codeInsight.completion.CompletionInitializationContext;
 import com.intellij.codeInsight.completion.CompletionParameters;
@@ -22,9 +18,14 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
+
+import java.util.List;
+
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_SUBSTATEMENTS;
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.getFirstParentAfterSkip;
 
 public class YangCompletionContributor extends CompletionContributor {
 
@@ -32,6 +33,7 @@ public class YangCompletionContributor extends CompletionContributor {
     private PsiElement contextParent = null;
     // isAfterKeyword tracks if the caret is after keyword and an identifier suggestion should be triggered
     private boolean isAfterKeyword = false;
+
     @Override
     public void beforeCompletion(@NotNull CompletionInitializationContext context) {
         int caretOffset = context.getCaret().getOffset();
@@ -65,25 +67,25 @@ public class YangCompletionContributor extends CompletionContributor {
         isAfterKeyword = false;
         ASTNode prevSibling = current.getTreePrev();
         ASTNode parent = current.getTreeParent();
-        if(prevSibling == null) {
+        if (prevSibling == null) {
             // some logic to prevent crashes
-            if (parent == null || parent.getElementType().toString().equals("FILE")){
+            if (parent == null || parent.getElementType().toString().equals("FILE")) {
                 return null;
             }
             return findContextParentOfCurrentNode(parent);
         }
         // if there is a semicolon, a whole statement needs to be skipped
         if (prevSibling.getElementType() == YangTypes.YANG_SEMICOLON) {
-        /* sometimes the ';' is within YANG_STMTEND, if so, skip that too
-         *  it is still the same statement, just the semicolon (';') has extra parent => YANG_STMTEND
-         */
+            /* sometimes the ';' is within YANG_STMTEND, if so, skip that too
+             *  it is still the same statement, just the semicolon (';') has extra parent => YANG_STMTEND
+             */
             if (prevSibling.getTreeParent().getElementType() == YangTypes.YANG_STMTEND) {
                 return findContextParentOfCurrentNode(prevSibling.getTreeParent().getTreeParent());
             }
             return findContextParentOfCurrentNode(prevSibling.getTreeParent());
         }
         // if the caret is situated after a keyword, the user wants us to suggest an identifier (built-in-types or other keywords)
-        if (prevSibling.getElementType().toString().contains("_KEYWORD")){
+        if (prevSibling.getElementType().toString().contains("_KEYWORD")) {
             isAfterKeyword = true;
             return prevSibling;
         }
@@ -106,22 +108,21 @@ public class YangCompletionContributor extends CompletionContributor {
         PsiElement position = parameters.getPosition();
 
         // base case -> when the file is empty (or only having whitespaces and comments)
-        if(getFirstParentAfterSkip(position).getNode().getElementType().toString().equals("FILE")){
+        if (getFirstParentAfterSkip(position).getNode().getElementType().toString().equals("FILE")) {
             MAP_OF_SUBSTATEMENTS.get("FILE")
-                                .forEach(s -> result.addElement(LookupElementBuilder.create(s).withTypeText("yang-keyword")));
+                    .forEach(s -> result.addElement(LookupElementBuilder.create(s).withTypeText("yang-keyword")));
             return;
         }
         if (contextParent == null) return;
         List<String> possibleResults;
         String typeText;
-        if (isAfterKeyword){
+        if (isAfterKeyword) {
             possibleResults = MAP_OF_IDENTIFIER_KEYWORDS.get(contextParent.getNode().getElementType().toString());
             typeText = "built-in-type";
-        }
-        else {
+        } else {
             possibleResults = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
             String type = contextParent.getNode().getElementType().toString();
-            type = type.replaceFirst("YANG_","");
+            type = type.replaceFirst("YANG_", "");
             type = type.replaceAll("STMT(S?)", "sub-statement");
             type = type.replace("_", "-");
             type = type.toLowerCase();

@@ -10,7 +10,8 @@
 
 package tech.pantheon.yanginator.parser.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +19,8 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RFCServiceTest {
     private static RFCService rfcService;
@@ -43,7 +44,7 @@ class RFCServiceTest {
 
         assertEquals(originalFile.size(), newFile.size());
 
-        for(int i = 0; i < originalFile.size(); i++) {
+        for (int i = 0; i < originalFile.size(); i++) {
             assertEquals(originalFile.get(i), newFile.get(i));
 
         }

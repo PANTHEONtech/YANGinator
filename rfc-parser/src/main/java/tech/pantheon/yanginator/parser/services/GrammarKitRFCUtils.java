@@ -49,6 +49,7 @@ public class GrammarKitRFCUtils {
             "%x0A", "\"\\n\"",
             "%x22", "'\"'",
             "%x5C", "\\");
+
     /**
      * Replaces each occurrence of an abnfTokens in provided list with a bnfTokens.
      * Gathers one or more calls for {@link #replaceBnfToken} method.
@@ -65,6 +66,7 @@ public class GrammarKitRFCUtils {
         result = replaceBnfToken(result, "%s", "");
         return result;
     }
+
     /**
      * Replaces each occurrence of an abnfToken in provided list with a bnfToken.
      *
@@ -85,6 +87,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Returns a list of strings with all leading, trailing and inner line whitespaces
      * replaced so that the returned list if formatted accordingly to .bnf convention.
@@ -103,6 +106,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Removes each occurrence of abnf operator (for example "*" or "1*") placed in front of
      * parentheses "*(...)" or brackets "1*[...]" using {@link #removeOperator}.
@@ -154,6 +158,7 @@ public class GrammarKitRFCUtils {
         }
         return Stream.of(concatenatedLines.split("\n")).map(String::stripTrailing).collect(Collectors.toList());
     }
+
     /**
      * Removes the operator at specified position in provided string.
      *
@@ -167,6 +172,7 @@ public class GrammarKitRFCUtils {
         sb.delete(position, position + operator.length() - 1);
         return sb.toString();
     }
+
     /**
      * Adds the operator at specified position in provided string.
      *
@@ -180,6 +186,7 @@ public class GrammarKitRFCUtils {
         sb.insert(position + 1, operator);
         return sb.toString();
     }
+
     /**
      * Removes each occurrence of abnf operator (for example "*" or "1*") placed in front of
      * a string (for example "*WSP", "1*DIGIT") using {@link #removeOperator}.
@@ -214,6 +221,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Returns a list of string in which string rules are modified. Each string rule
      * in provided list contains commentaries enclosed in angle brackets ("<...>").
@@ -251,6 +259,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Replaces each occurrence of a hexadecimal range of values with corresponding characters.
      *
@@ -286,6 +295,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Replaces each occurrence of single hexadecimal value with corresponding character.
      *
@@ -313,6 +323,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Returns {@code true} if the string is hexadecimal representation
      * of: '\r', '\t', '\n', '"', or '\'.
@@ -323,6 +334,7 @@ public class GrammarKitRFCUtils {
     private static boolean isSpecialCharacter(final String originalHexDef) {
         return SPECIAL_CHARACTER.containsKey(originalHexDef);
     }
+
     /**
      * Transforms hexadecimal value of given string into its string representation
      * if the string is equal to: '\r', '\t', '\n', '"', or '\'.
@@ -333,6 +345,7 @@ public class GrammarKitRFCUtils {
     private static String transformSpecialChars(final String originalHexDef) {
         return SPECIAL_CHARACTER.get(originalHexDef);
     }
+
     /**
      * Replaces each occurrence of a multiplier specifying min and max number of token repetition
      * inside a rule. Multiplier together with token will be replaced by expanded rule.
@@ -370,9 +383,11 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     private static String extractDefinition(String line) {
         return line.contains("::=") ? line.substring(line.indexOf("=") + 1) : line;
     }
+
     /**
      * Finds each occurrence of abnf simple-digit and zeto-to-N multiplier placed in front of
      * parentheses "3( h16 ":" )", "*3( h16 ":" )" or word "4DIGIT". Then, tokens in direct contact with
@@ -407,6 +422,7 @@ public class GrammarKitRFCUtils {
         }
         return result;
     }
+
     /**
      * Checks every String in the list if it contains substrings that need to be replaced
      * and replace them. It does not remove duplicates.
@@ -996,7 +1012,7 @@ public class GrammarKitRFCUtils {
      *
      * @param lines list of strings
      */
-    public static void addRecoveryRules(List<String> lines){
+    public static void addRecoveryRules(List<String> lines) {
         lines.add("");
         lines.add("private revision-recover ::= !(revision-stmt |\n" +
                 " body-stmts |\n" +

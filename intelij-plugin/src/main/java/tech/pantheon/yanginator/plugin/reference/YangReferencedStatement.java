@@ -17,9 +17,9 @@ import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 
 public interface YangReferencedStatement extends YangNamedElement {
 
-  @NotNull
-  YangIdentifierArgStr getIdentifierArgStr();
+    @NotNull
+    YangIdentifierArgStr getIdentifierArgStr();
 
-  @NotNull
-  YangIdentifierRefArgStr getIdentifierRefArgStr();
+    @NotNull
+    YangIdentifierRefArgStr getIdentifierRefArgStr();
 }

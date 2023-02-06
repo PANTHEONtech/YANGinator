@@ -45,6 +45,7 @@ public class YangCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
             }
         };
     }
+
     private static class YangCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
         public YangCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
             super(YangLanguage.INSTANCE, currentSettings, settings);

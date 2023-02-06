@@ -152,7 +152,7 @@ public class ExternalRules {
         final List<String> stringList = new ArrayList<>(List.of(strings));
         final List<Character> charList = stringsToChars(stringList);
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
-        boolean result = charList.parallelStream().anyMatch(character -> consumeToken(psiBuilder, "" + character));
+        boolean result = charList.parallelStream().anyMatch(character -> consumeToken(psiBuilder, String.valueOf(character)));
         parser.parse(psiBuilder, level);
         if (result) {
             exit_section_(psiBuilder, marker, null, false);

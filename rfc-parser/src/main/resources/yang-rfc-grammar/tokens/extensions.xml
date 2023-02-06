@@ -49,11 +49,11 @@
         </statement>
         <statement>
             <name>module-stmt ::=</name>
-            <pin> = 2</pin>
+            <pin>= 2</pin>
         </statement>
         <statement>
             <name>submodule-stmt ::=</name>
-            <pin> = 2</pin>
+            <pin>= 2</pin>
         </statement>
         <statement>
             <name>module-header-stmts ::=</name>

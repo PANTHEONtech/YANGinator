@@ -33,6 +33,7 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
     private static @NotNull String readCodeSample() {
         return CodeStyleAbstractPanel.readFromFile(YangLanguageCodeStyleSettingsProvider.class, "preview.yang");
     }
+
     @Override
     public void customizeSettings(@NotNull final CodeStyleSettingsCustomizable consumer,
                                   @NotNull final SettingsType settingsType) {
