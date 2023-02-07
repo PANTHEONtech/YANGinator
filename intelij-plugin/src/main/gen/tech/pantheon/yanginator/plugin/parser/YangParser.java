@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -2379,7 +2379,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE)
+    // augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE) | (DQUOTE augment-arg FORWARD_SLASH (string-splitter node-identifier)+ DQUOTE)
     public static boolean augment_arg_str(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "augment_arg_str")) return false;
         if (!nextTokenIs(b, "<augment arg str>", YANG_DOUBLE_QUOTE, YANG_FORWARD_SLASH)) return false;
@@ -2387,6 +2387,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b, l, _NONE_, YANG_AUGMENT_ARG_STR, "<augment arg str>");
         r = augment_arg(b, l + 1);
         if (!r) r = augment_arg_str_1(b, l + 1);
+        if (!r) r = augment_arg_str_2(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
@@ -2422,6 +2423,46 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b);
         r = string_splitter(b, l + 1);
         r = r && augment_arg(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // DQUOTE augment-arg FORWARD_SLASH (string-splitter node-identifier)+ DQUOTE
+    private static boolean augment_arg_str_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_arg_str_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = DQUOTE(b, l + 1);
+        r = r && augment_arg(b, l + 1);
+        r = r && consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && augment_arg_str_2_3(b, l + 1);
+        r = r && DQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // (string-splitter node-identifier)+
+    private static boolean augment_arg_str_2_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_arg_str_2_3")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = augment_arg_str_2_3_0(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!augment_arg_str_2_3_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "augment_arg_str_2_3", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter node-identifier
+    private static boolean augment_arg_str_2_3_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_arg_str_2_3_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = string_splitter(b, l + 1);
+        r = r && node_identifier(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
