@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -16,6 +16,8 @@ import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 
 
 public class YangCodeStyleSettings extends CustomCodeStyleSettings {
+    // This initializes custom code style option
+    public boolean spacesBeforeLeftBrace = true;
     public YangCodeStyleSettings(final CodeStyleSettings settings) {
         super("YangCodeStyleSettings", settings);
     }
