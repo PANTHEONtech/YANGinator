@@ -91,7 +91,7 @@ APOSTROPHE = "’"
 DATE = \d{4}-(1[0-2]|0[1-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])
 DIGITS = [0-9]{2,999}
 IPV4 = ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
-ALPHANUMERICAL_ALPHA_FIRST = ([a-zA-Z]+[0-9]+[a-zA-Z]+)|([a-zA-Z]+[0-9]+)+
+ALPHANUMERICAL_ALPHA_FIRST = ([a-zA-Z]+[0-9]+([a-zA-Z]+[0-9]*)+)|([a-zA-Z]+[0-9]+)+
 ALPHANUMERICAL_DIGIT_FIRST = ([0-9]+[a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)+
 FRACTIONS = 1[0-8]
 ZEROS = 0{2,999}
@@ -125,10 +125,10 @@ EOL=\R
   {SEMICOLON}                     { return YANG_SEMICOLON; }
   {LEFT_PARENTHESIS}              { return YANG_LEFT_PARENTHESIS; }
   {RIGHT_PARENTHESIS}             { return YANG_RIGHT_PARENTHESIS; }
+  {FORWARD_SLASH}                 { return YANG_FORWARD_SLASH; }
   {COLON}                         { return YANG_COLON; }
   {PIPE}                          { return YANG_PIPE; }
   {DOUBLE_DOT}                    { return YANG_DOUBLE_DOT; }
-  {FORWARD_SLASH}                 { return YANG_FORWARD_SLASH; }
   {OPEN_BRACKET}                  { return YANG_OPEN_BRACKET; }
   {CLOSED_BRACKET}                { return YANG_CLOSED_BRACKET; }
   {EQUALS}                        { return YANG_EQUALS; }
