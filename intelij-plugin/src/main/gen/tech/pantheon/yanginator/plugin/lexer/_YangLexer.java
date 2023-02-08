@@ -103,7 +103,7 @@ public class _YangLexer implements FlexLexer {
      * at the beginning of a line
      * l is of the form l = 2*k, k a non negative integer
      */
-    private static final int ZZ_LEXSTATE[] = {
+    private static final int[] ZZ_LEXSTATE = {
             0, 0
     };
 
@@ -117,7 +117,7 @@ public class _YangLexer implements FlexLexer {
     }
 
     /* The ZZ_CMAP_Z table has 1088 entries */
-    static final char ZZ_CMAP_Z[] = zzUnpackCMap(
+    static final char[] ZZ_CMAP_Z = zzUnpackCMap(
             "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\6\15\1\16\23\15" +
                     "\1\17\1\15\1\20\1\21\12\15\1\22\10\12\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1" +
                     "\32\1\33\1\34\1\35\1\36\2\12\1\15\1\37\3\12\1\40\10\12\1\41\1\42\5\15\1\43" +
@@ -126,7 +126,7 @@ public class _YangLexer implements FlexLexer {
                     "\12");
 
     /* The ZZ_CMAP_Y table has 3328 entries */
-    static final char ZZ_CMAP_Y[] = zzUnpackCMap(
+    static final char[] ZZ_CMAP_Y = zzUnpackCMap(
             "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\1\1\11\1\12\1\13\1\14\1\13\1\14\34" +
                     "\13\1\15\1\16\1\17\1\1\7\13\1\20\1\21\1\13\1\22\4\13\1\23\10\13\1\22\12\13" +
                     "\1\24\1\13\1\25\1\24\1\13\1\26\1\24\1\13\1\27\1\30\1\13\1\31\1\32\1\1\1\31" +
@@ -188,7 +188,7 @@ public class _YangLexer implements FlexLexer {
                     "\25\1\41\13\1\42\56\1\17\13\41\1");
 
     /* The ZZ_CMAP_A table has 3472 entries */
-    static final char ZZ_CMAP_A[] = zzUnpackCMap(
+    static final char[] ZZ_CMAP_A = zzUnpackCMap(
             "\11\0\1\53\1\51\2\50\1\52\22\0\1\50\1\36\1\4\1\37\1\40\1\41\1\42\1\5\1\14" +
                     "\1\15\1\2\1\43\1\44\1\13\1\12\1\21\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1\32" +
                     "\1\33\1\34\1\7\1\6\1\0\1\16\1\0\1\45\1\46\32\35\1\17\1\3\1\20\1\0\1\1\1\0" +
@@ -2551,7 +2551,7 @@ public class _YangLexer implements FlexLexer {
     /**
      * the input device
      */
-    private java.io.Reader zzReader;
+    private final java.io.Reader zzReader;
 
     /**
      * the current state of the DFA
@@ -2607,7 +2607,7 @@ public class _YangLexer implements FlexLexer {
 
     /* user code: */
     public _YangLexer() {
-        this((java.io.Reader) null);
+        this(null);
     }
 
 
