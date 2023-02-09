@@ -86,7 +86,7 @@ VERSION = "v"
 DOUBLE_FORWARD_SLASH = "//"
 HEXDIG = {HEXDIGIT}
 BLOCK_COMMENT_END = "*/"
-ZERO_LENGTH_STRING = ""
+ZERO_LENGHT_STRING = ""
 APOSTROPHE = "’"
 DATE = \d{4}-(1[0-2]|0[1-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])
 DIGITS = [0-9]{2,999}
@@ -104,10 +104,6 @@ EOL=\R
 %%
 <YYINITIAL> {
 
-  {ZERO_LENGTH_STRING}            { return YANG_ZERO_LENGTH_STRING; }
-  {SPACE}                         { return YANG_SPACE; }
-  {LINEFEED}                      { return YANG_LINEFEED; }
-  {CARRIAGE_RETURN}               { return YANG_CARRIAGE_RETURN; }
   {BLOCK_COMMENT}                 { return YANG_BLOCK_COMMENT; }
   {ONE}                           { return YANG_ONE; }
   {TWO}                           { return YANG_TWO; }
@@ -145,7 +141,10 @@ EOL=\R
   {DASH}                          { return YANG_DASH; }
   {ZERO}                          { return YANG_ZERO; }
   {SINGLE_QUOTE}                  { return YANG_SINGLE_QUOTE; }
+  {CARRIAGE_RETURN}               { return YANG_CARRIAGE_RETURN; }
   {TAB}                           { return YANG_TAB; }
+  {LINEFEED}                      { return YANG_LINEFEED; }
+  {SPACE}                         { return YANG_SPACE; }
   {QUESTION_MARK}                 { return YANG_QUESTION_MARK; }
   {HASH}                          { return YANG_HASH; }
   {DOUBLE_FORWARD_SLASH}          { return YANG_DOUBLE_FORWARD_SLASH; }
@@ -155,6 +154,7 @@ EOL=\R
   {HEXDIG}                        { return YANG_HEXDIG; }
   {DOUBLE_COLON}                  { return YANG_DOUBLE_COLON; }
   {IPV4}                          { return YANG_IPV4; }
+  {ZERO_LENGHT_STRING}            { return YANG_ZERO_LENGHT_STRING; }
   {PERCENT_SIGN}                  { return YANG_PERCENT_SIGN; }
   {TILDE}                         { return YANG_TILDE; }
   {EXCLAMATION_MARK}              { return YANG_EXCLAMATION_MARK; }
