@@ -739,7 +739,7 @@ public interface YangTypes {
     IElementType YANG_VERSION = new YangTokenType("VERSION");
     IElementType YANG_ZERO = new YangTokenType("ZERO");
     IElementType YANG_ZEROS = new YangTokenType("ZEROS");
-    IElementType YANG_ZERO_LENGHT_STRING = new YangTokenType("ZERO_LENGHT_STRING");
+    IElementType YANG_ZERO_LENGTH_STRING = new YangTokenType("ZERO_LENGTH_STRING");
 
     class Factory {
         public static PsiElement createElement(ASTNode node) {

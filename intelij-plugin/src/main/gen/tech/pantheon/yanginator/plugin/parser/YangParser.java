@@ -430,7 +430,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YIN_ELEMENT_STM
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZEROS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_INTEGER_VALUE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGHT_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STRING;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
@@ -8548,13 +8548,13 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // ZERO_LENGHT_STRING
+    // ZERO_LENGTH_STRING
     public static boolean path_empty(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_empty")) return false;
-        if (!nextTokenIs(b, YANG_ZERO_LENGHT_STRING)) return false;
+        if (!nextTokenIs(b, YANG_ZERO_LENGTH_STRING)) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_ZERO_LENGHT_STRING);
+        r = consumeToken(b, YANG_ZERO_LENGTH_STRING);
         exit_section_(b, m, YANG_PATH_EMPTY, r);
         return r;
     }
