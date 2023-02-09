@@ -17,6 +17,6 @@ import org.jetbrains.annotations.NotNull;
 public interface YangPathEmpty extends YangNamedElement {
 
     @NotNull
-    PsiElement getZeroLengthString();
+    PsiElement getZeroLenghtString();
 
 }

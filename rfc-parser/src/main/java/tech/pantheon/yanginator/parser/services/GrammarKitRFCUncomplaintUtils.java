@@ -531,7 +531,6 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
-                line = "yang ::=  (module-stmt | submodule-stmt |(ZERO_LENGTH_STRING | SPACE | LINEFEED| CARRIAGE_RETURN)*)";
                 result.add(line);
                 result.add("");
                 result.add("private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |");
