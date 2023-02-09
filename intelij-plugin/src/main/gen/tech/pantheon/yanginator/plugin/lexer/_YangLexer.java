@@ -72,7 +72,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNDERSCORE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZEROS;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGHT_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STRING;
 
 
 /**
@@ -2848,7 +2848,7 @@ public class _YangLexer implements FlexLexer {
             } else {
                 switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
                     case 1: {
-                        return YANG_ZERO_LENGHT_STRING;
+                        return YANG_ZERO_LENGTH_STRING;
                     }
                     // fall through
                     case 59:

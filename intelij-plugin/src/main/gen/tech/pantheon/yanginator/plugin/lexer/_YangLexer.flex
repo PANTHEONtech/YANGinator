@@ -86,7 +86,7 @@ VERSION = "v"
 DOUBLE_FORWARD_SLASH = "//"
 HEXDIG = {HEXDIGIT}
 BLOCK_COMMENT_END = "*/"
-ZERO_LENGHT_STRING = ""
+ZERO_LENGTH_STRING = ""
 APOSTROPHE = "’"
 DATE = \d{4}-(1[0-2]|0[1-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])
 DIGITS = [0-9]{2,999}
@@ -154,7 +154,7 @@ EOL=\R
   {HEXDIG}                        { return YANG_HEXDIG; }
   {DOUBLE_COLON}                  { return YANG_DOUBLE_COLON; }
   {IPV4}                          { return YANG_IPV4; }
-  {ZERO_LENGHT_STRING}            { return YANG_ZERO_LENGHT_STRING; }
+  {ZERO_LENGTH_STRING}            { return YANG_ZERO_LENGTH_STRING; }
   {PERCENT_SIGN}                  { return YANG_PERCENT_SIGN; }
   {TILDE}                         { return YANG_TILDE; }
   {EXCLAMATION_MARK}              { return YANG_EXCLAMATION_MARK; }

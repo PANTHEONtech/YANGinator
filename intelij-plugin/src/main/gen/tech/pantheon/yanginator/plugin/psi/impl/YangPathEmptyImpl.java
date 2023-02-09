@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangPathEmpty;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGHT_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STRING;
 
 public class YangPathEmptyImpl extends YangNamedElementImpl implements YangPathEmpty {
 
@@ -38,8 +38,8 @@ public class YangPathEmptyImpl extends YangNamedElementImpl implements YangPathE
 
     @Override
     @NotNull
-    public PsiElement getZeroLenghtString() {
-        return findNotNullChildByType(YANG_ZERO_LENGHT_STRING);
+    public PsiElement getZeroLengthString() {
+        return findNotNullChildByType(YANG_ZERO_LENGTH_STRING);
     }
 
 }
