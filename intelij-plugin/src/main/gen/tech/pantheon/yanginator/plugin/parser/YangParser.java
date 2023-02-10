@@ -11953,12 +11953,37 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // module-stmt | submodule-stmt
+    // module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*
     static boolean yang(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "yang")) return false;
         boolean r;
+        Marker m = enter_section_(b);
         r = module_stmt(b, l + 1);
         if (!r) r = submodule_stmt(b, l + 1);
+        if (!r) r = yang_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*
+    private static boolean yang_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "yang_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!yang_2_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "yang_2", c)) break;
+        }
+        return true;
+    }
+
+    // WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN
+    private static boolean yang_2_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "yang_2_0")) return false;
+        boolean r;
+        r = WSP(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_ZERO_LENGTH_STRING);
+        if (!r) r = consumeToken(b, YANG_LINEFEED);
+        if (!r) r = consumeToken(b, YANG_CARRIAGE_RETURN);
         return r;
     }
 
