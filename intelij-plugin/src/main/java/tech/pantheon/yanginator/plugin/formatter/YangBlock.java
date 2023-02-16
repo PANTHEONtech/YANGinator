@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -18,7 +18,6 @@ import com.intellij.formatting.Indent;
 import com.intellij.formatting.Spacing;
 import com.intellij.formatting.SpacingBuilder;
 import com.intellij.formatting.Wrap;
-import com.intellij.formatting.WrapType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.formatter.common.AbstractBlock;
@@ -71,7 +70,7 @@ public class YangBlock extends AbstractBlock {
                 started = true;
             }
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
-                Block block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
+                Block block = new YangBlock(child, null, null,
                         spacingBuilder, Indent.getNoneIndent());
                 blocks.add(block);
             }
@@ -82,15 +81,8 @@ public class YangBlock extends AbstractBlock {
 
     @NotNull
     private Block buildBlock(final ASTNode child) {
-        Block block;
-        if (YangFormatterUtils.shouldAlign(child.getElementType())) {
-            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
-                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
-        } else {
-            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), null,
-                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
-        }
-        return block;
+        return new YangBlock(child, null, null,
+                spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
     }
 
     @Override
