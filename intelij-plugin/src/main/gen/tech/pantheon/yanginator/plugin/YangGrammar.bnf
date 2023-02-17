@@ -182,17 +182,17 @@ organization-stmt ::= organization-keyword sep ( quoted-string | string ) stmten
 pin(".*") = 1
 }
 
-contact-stmt ::= contact-keyword sep ( quoted-string | string ) stmtend
+contact-stmt ::= contact-keyword sep indentable-string stmtend
 {
 pin(".*") = 1
 }
 
-description-stmt ::= description-keyword sep ( quoted-string | string ) stmtend
+description-stmt ::= description-keyword sep indentable-string stmtend
 {
 pin(".*") = 1
 }
 
-reference-stmt ::= reference-keyword sep ( quoted-string | string ) stmtend
+reference-stmt ::= reference-keyword sep indentable-string stmtend
 {
 pin(".*") = 1
 }

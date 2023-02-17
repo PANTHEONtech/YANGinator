@@ -48,6 +48,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = adjustRelPathKeyexpr(result);
         result = swapDecimalWithIntegerInRangeBoundaryDef(result);
         result = allowComments(result);
+        result = allowIndentString(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -822,6 +823,25 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * TODO : allows indents when string is on a new line for certain statements
+     *
+     * @param lines lines of the generated bnf grammar file
+     * @return resulting lines of the bnf grammar file
+     */
+    private static List<String> allowIndentString(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if ((line.contains("contact-stmt ::= contact-keyword sep") && line.contains("( quoted-string | string )"))
+                    || (line.contains("description-stmt ::= description-keyword sep") && line.contains("( quoted-string | string )"))
+                    || (line.contains("reference-stmt ::= reference-keyword sep") && line.contains("( quoted-string | string )"))) {
+                line = line.replace("( quoted-string | string )", "indentable-string");
             }
             result.add(line);
         }

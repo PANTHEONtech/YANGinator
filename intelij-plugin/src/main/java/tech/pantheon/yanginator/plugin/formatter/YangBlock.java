@@ -107,7 +107,7 @@ public class YangBlock extends AbstractBlock {
             return new ChildAttributes(getIndentForInvalid(newChildIndex), null);
         }
         if (YangFormatterUtils.indentSubStmt(myNode.getElementType())) {
-            return new ChildAttributes(Indent.getNormalIndent(true), null);
+            return new ChildAttributes(Indent.getNormalIndent(), null);
         }
         return super.getChildAttributes(newChildIndex);
     }

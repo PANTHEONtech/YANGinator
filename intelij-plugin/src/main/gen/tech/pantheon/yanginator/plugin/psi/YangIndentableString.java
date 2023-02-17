@@ -11,29 +11,14 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public interface YangDescriptionStmt extends YangYangStmt {
-
-    @NotNull
-    List<YangWsp> getWspList();
-
-    @NotNull
-    List<YangComment> getCommentList();
-
-    @NotNull
-    YangDescriptionKeyword getDescriptionKeyword();
+public interface YangIndentableString extends YangNamedElement {
 
     @Nullable
-    YangIndentableString getIndentableString();
-
-    @NotNull
-    List<YangLineBreak> getLineBreakList();
+    YangQuotedString getQuotedString();
 
     @Nullable
-    YangStmtend getStmtend();
+    YangString getString();
 
 }

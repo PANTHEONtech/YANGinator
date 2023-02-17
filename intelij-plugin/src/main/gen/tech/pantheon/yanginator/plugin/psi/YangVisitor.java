@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -523,6 +523,10 @@ public class YangVisitor extends PsiElementVisitor {
 
     public void visitIncludeStmt(@NotNull YangIncludeStmt o) {
         visitYangStmt(o);
+    }
+
+    public void visitIndentableString(@NotNull YangIndentableString o) {
+        visitNamedElement(o);
     }
 
     public void visitInputKeyword(@NotNull YangInputKeyword o) {
