@@ -830,7 +830,7 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
-     * TODO : allows indents when string is on a new line for certain statements
+     * Allows certain strings to start with an indent on a new line
      *
      * @param lines lines of the generated bnf grammar file
      * @return resulting lines of the bnf grammar file
@@ -845,6 +845,8 @@ public class GrammarKitRFCUncomplaintUtils {
             }
             result.add(line);
         }
+        result.add("");
+        result.add("indentable-string ::= ( quoted-string | string )");
         return result;
     }
 }

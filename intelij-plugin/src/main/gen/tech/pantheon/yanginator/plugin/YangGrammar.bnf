@@ -1487,6 +1487,8 @@ VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICA
 
 comment ::= BLOCK_COMMENT |(DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB | BACK_SLASH | SINGLE_QUOTE | CARRIAGE_RETURN )+ ) | DOUBLE_FORWARD_SLASH
 
+indentable-string ::= ( quoted-string | string )
+
 private revision-recover ::= !(revision-stmt |
  body-stmts |
  (RIGHT_BRACE stmtsep <<eof>>))
