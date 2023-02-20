@@ -1,0 +1,33 @@
+<code_scheme name="YANGinatorCodeStyle" version="173">
+    <JavaCodeStyleSettings>
+        <option name="INSERT_INNER_CLASS_IMPORTS" value="true"/>
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999"/>
+        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999"/>
+        <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
+            <value/>
+        </option>
+        <option name="IMPORT_LAYOUT_TABLE">
+            <value>
+                <emptyLine/>
+                <package name="" withSubpackages="true" static="false"/>
+                <emptyLine/>
+                <package name="javax" withSubpackages="true" static="false"/>
+                <package name="java" withSubpackages="true" static="false"/>
+                <emptyLine/>
+                <package name="" withSubpackages="true" static="true"/>
+            </value>
+        </option>
+    </JavaCodeStyleSettings>
+    <YangCodeStyleSettings>
+        <option name="spacesBeforeLeftBrace" value="false"/>
+    </YangCodeStyleSettings>
+    <editorconfig>
+        <option name="ENABLED" value="false"/>
+    </editorconfig>
+    <codeStyleSettings language="yang-pantheon">
+        <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+            <option name="USE_TAB_CHARACTER" value="true"/>
+        </indentOptions>
+    </codeStyleSettings>
+</code_scheme>
