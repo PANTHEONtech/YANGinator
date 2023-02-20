@@ -838,9 +838,10 @@ public class GrammarKitRFCUncomplaintUtils {
     private static List<String> allowIndentString(List<String> lines) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if ((line.contains("contact-stmt ::= contact-keyword sep") && line.contains("( quoted-string | string )"))
-                    || (line.contains("description-stmt ::= description-keyword sep") && line.contains("( quoted-string | string )"))
-                    || (line.contains("reference-stmt ::= reference-keyword sep") && line.contains("( quoted-string | string )"))) {
+            if ((line.contains("contact-stmt ::=") && line.contains("( quoted-string | string )"))
+                    || (line.contains("description-stmt ::= ") && line.contains("( quoted-string | string )"))
+                    || (line.contains("reference-stmt ::= ") && line.contains("( quoted-string | string )"))
+                    || (line.contains("organization-stmt ::= ") && line.contains("( quoted-string | string )"))) {
                 line = line.replace("( quoted-string | string )", "indentable-string");
             }
             result.add(line);

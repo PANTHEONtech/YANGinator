@@ -177,7 +177,7 @@ belongs-to-stmt ::= belongs-to-keyword sep identifier-arg-str
 pin(".*") = 1
 }
 
-organization-stmt ::= organization-keyword sep ( quoted-string | string ) stmtend
+organization-stmt ::= organization-keyword sep indentable-string stmtend
 {
 pin(".*") = 1
 }
