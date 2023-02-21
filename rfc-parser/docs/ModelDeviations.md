@@ -551,6 +551,44 @@ This change solves problem with formatting. The problem was, that comments were 
 (whitespaces are skipped during block creation). This resulted in an exception being thrown when
 manipulating with comments.
 
+
+### String separation possibility for paths
+
+The method addStringSplitterForPaths() adds support for string separators into the path definition.
+String separation in paths was not possible for not completed definitions of path based on RFC.
+This threw an error that did not allow next elements to be parsed correctly. The solution is to insert 
+split-strings (plus sign surrounded with quotes) inside the definitions of paths.
+
+**Augment arg str**  
+
+before:  
+
+![](doc-images/augment_arg_str_before.png)
+
+after:  
+
+![](doc-images/augment_arg_str_after.png)  
+
+**Absolute schema nodeid**  
+
+before:  
+
+![](doc-images/absolute_schema_nodeid_before.png)  
+
+after:  
+
+![](doc-images/absolute_schema_nodeid_after.png)  
+
+**Path definitions**  
+
+before:  
+
+![](doc-images/path_definition_before.png)  
+
+after:  
+
+![](doc-images/path_definition_after.png)  
+
 ### Allow indents for certain strings
 
 The method allowIndentString() adds support for keyword strings to have proper indent. 
