@@ -59,6 +59,9 @@ For grammar these **rfc** models are used:
 * [**YANG 1.0**](https://www.rfc-editor.org/rfc/rfc6020)
 * [**YANG 1.1**](https://www.rfc-editor.org/rfc/rfc7950)
 
+For error search or check [***THESE***](https://github.com/openconfig/public/tree/master/release/models) 
+open-config YANG files can be used  
+
 All changes in comparison to rfc model should by noted to file
 **[ModelDeviations](rfc-parser/docs/ModelDeviations.md)** where you can also find solutions to problems
 
