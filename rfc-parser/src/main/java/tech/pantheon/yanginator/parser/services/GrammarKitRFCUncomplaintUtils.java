@@ -48,6 +48,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = adjustRelPathKeyexpr(result);
         result = swapDecimalWithIntegerInRangeBoundaryDef(result);
         result = allowComments(result);
+        result = addStringSplitterForPaths(result);
         result = allowIndentString(result);
         return makeSeparatorRulesPrivate(result);
     }
@@ -823,6 +824,33 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adds string-splitter to absolute-node-id (so it can start and end with / when it is multi lined),
+     * absolute-path, relative-path, descendant-path. It makes multi lined paths possible.
+     *
+     * @param lines lines of the generated bnf grammar file
+     * @return resulting lines of the bnf grammar file
+     */
+    private static List<String> addStringSplitterForPaths(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("absolute-schema-nodeid ::=")) {
+                line = "absolute-schema-nodeid ::= (FORWARD_SLASH string-splitter? node-identifier string-splitter?)+";
+            }
+            if (line.contains("absolute-path ::=")) {
+                line = "absolute-path ::= (FORWARD_SLASH string-splitter? (node-identifier string-splitter? path-predicate*) string-splitter?)+";
+            }
+            if (line.contains("relative-path ::=")) {
+                line = "relative-path ::= (PARENT_FOLDER string-splitter?)+ descendant-path";
+            }
+            if (line.contains("descendant-path ::=")) {
+                line = "descendant-path ::= node-identifier string-splitter?";
             }
             result.add(line);
         }

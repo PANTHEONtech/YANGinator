@@ -20,6 +20,7 @@ import tech.pantheon.yanginator.plugin.psi.YangAbsolutePath;
 import tech.pantheon.yanginator.plugin.psi.YangDescendantPath;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangPathPredicate;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -56,6 +57,12 @@ public class YangDescendantPathImpl extends YangNamedElementImpl implements Yang
     @NotNull
     public List<YangPathPredicate> getPathPredicateList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathPredicate.class);
+    }
+
+    @Override
+    @Nullable
+    public YangStringSplitter getStringSplitter() {
+        return findChildByClass(YangStringSplitter.class);
     }
 
 }

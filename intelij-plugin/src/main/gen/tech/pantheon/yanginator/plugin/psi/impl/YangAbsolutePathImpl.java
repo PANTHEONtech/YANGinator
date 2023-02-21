@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangAbsolutePath;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangPathPredicate;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -48,6 +49,12 @@ public class YangAbsolutePathImpl extends YangNamedElementImpl implements YangAb
     @NotNull
     public List<YangPathPredicate> getPathPredicateList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPathPredicate.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }

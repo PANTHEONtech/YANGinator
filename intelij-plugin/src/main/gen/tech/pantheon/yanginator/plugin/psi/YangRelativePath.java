@@ -13,9 +13,14 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangRelativePath extends YangNamedElement {
 
     @NotNull
     YangDescendantPath getDescendantPath();
+
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
 
 }

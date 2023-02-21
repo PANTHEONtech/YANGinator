@@ -12,21 +12,16 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangAugmentArg;
 import tech.pantheon.yanginator.plugin.psi.YangAugmentArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
-import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
-import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
+import tech.pantheon.yanginator.plugin.psi.YangSquote;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
-
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
 
 public class YangAugmentArgStrImpl extends YangNamedElementImpl implements YangAugmentArgStr {
 
@@ -52,26 +47,14 @@ public class YangAugmentArgStrImpl extends YangNamedElementImpl implements YangA
 
     @Override
     @NotNull
-    public List<YangAugmentArg> getAugmentArgList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangAugmentArg.class);
+    public List<YangSquote> getSquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
     }
 
     @Override
     @NotNull
-    public List<YangNodeIdentifier> getNodeIdentifierList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
-    }
-
-    @Override
-    @NotNull
-    public List<YangStringSplitter> getStringSplitterList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getForwardSlash() {
-        return findChildByType(YANG_FORWARD_SLASH);
+    public YangAugmentArg getAugmentArg() {
+        return findNotNullChildByClass(YangAugmentArg.class);
     }
 
 }
