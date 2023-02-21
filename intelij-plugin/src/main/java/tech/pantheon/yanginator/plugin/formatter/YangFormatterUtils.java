@@ -194,7 +194,6 @@ public final class YangFormatterUtils {
             YangTypes.YANG_REFERENCE_STMT,
             YangTypes.YANG_STATUS_STMT,
             YangTypes.YANG_DESCRIPTION_STMT,
-            YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_STRING,
             YangTypes.YANG_ACTION_STMT,
             YangTypes.YANG_ANYDATA_STMT,
