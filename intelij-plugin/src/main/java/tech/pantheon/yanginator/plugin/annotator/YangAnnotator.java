@@ -81,6 +81,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.version_1_1.YangYangCha
 import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionArg;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
@@ -160,8 +161,10 @@ public class YangAnnotator implements Annotator {
     public void annotate(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         if (version.equals("")) {
             PsiElement root = holder.getCurrentAnnotationSession().getFile().getFirstChild();
-            while ((root != null) && !(root instanceof YangModuleStmt)) {
-                root = root.getNextSibling();
+            if (!(root instanceof YangSubmoduleStmt)){
+                while ((root != null) && !(root instanceof YangModuleStmt)) {
+                    root = root.getNextSibling();
+                }
             }
             if (root != null) {
                 for (PsiElement child : root.getChildren()) {
