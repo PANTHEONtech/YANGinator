@@ -52,9 +52,13 @@ public class YangBlock extends AbstractBlock {
         if (YangFormatterUtils.shouldBuildBeforeModule(myNode.getElementType())) {
             child = buildBeforeModule(blocks, child);
         }
+        Alignment alignment = myAlignment;
+        if(myNode.getElementType().equals(YangTypes.YANG_PATH_ARG_STR)) {
+            alignment = Alignment.createAlignment();
+        }
         while (child != null) {
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
-                blocks.add(buildBlock(child));
+                blocks.add(buildBlock(child, alignment));
             }
             child = child.getTreeNext();
         }
@@ -80,8 +84,8 @@ public class YangBlock extends AbstractBlock {
     }
 
     @NotNull
-    private Block buildBlock(final ASTNode child) {
-        return new YangBlock(child, null, null,
+    private Block buildBlock(final ASTNode child, Alignment alignment) {
+        return new YangBlock(child, null, alignment,
                 spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
     }
 

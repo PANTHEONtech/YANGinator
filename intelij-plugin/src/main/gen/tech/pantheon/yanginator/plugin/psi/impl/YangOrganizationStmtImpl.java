@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -17,12 +17,11 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangIndentableString;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangOrganizationKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangOrganizationStmt;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
-import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -58,6 +57,12 @@ public class YangOrganizationStmtImpl extends YangYangStmtImpl implements YangOr
     }
 
     @Override
+    @Nullable
+    public YangIndentableString getIndentableString() {
+        return findChildByClass(YangIndentableString.class);
+    }
+
+    @Override
     @NotNull
     public List<YangLineBreak> getLineBreakList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
@@ -71,20 +76,8 @@ public class YangOrganizationStmtImpl extends YangYangStmtImpl implements YangOr
 
     @Override
     @Nullable
-    public YangQuotedString getQuotedString() {
-        return findChildByClass(YangQuotedString.class);
-    }
-
-    @Override
-    @Nullable
     public YangStmtend getStmtend() {
         return findChildByClass(YangStmtend.class);
-    }
-
-    @Override
-    @Nullable
-    public YangString getString() {
-        return findChildByClass(YangString.class);
     }
 
 }
