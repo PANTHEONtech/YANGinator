@@ -161,10 +161,11 @@ public class YangAnnotator implements Annotator {
     public void annotate(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         if (version.equals("")) {
             PsiElement root = holder.getCurrentAnnotationSession().getFile().getFirstChild();
-            if (!(root instanceof YangSubmoduleStmt)){
-                while ((root != null) && !(root instanceof YangModuleStmt)) {
-                    root = root.getNextSibling();
+            while ((root != null) && !(root instanceof YangModuleStmt)) {
+                if (root instanceof YangSubmoduleStmt) {
+                    break;
                 }
+                root = root.getNextSibling();
             }
             if (root != null) {
                 for (PsiElement child : root.getChildren()) {
