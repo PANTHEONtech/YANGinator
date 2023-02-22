@@ -378,7 +378,7 @@
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
-        <key>([0-9]+[a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)+</key>
+        <key>([0-9]+[a-zA-Z]+([0-9]+[a-zA-Z]*)+)|([0-9]+[a-zA-Z]+)+</key>
         <value>ALPHANUMERICAL_DIGIT_FIRST</value>
         <lexerOnly>true</lexerOnly>
     </token>
