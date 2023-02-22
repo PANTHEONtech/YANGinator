@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2022 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -194,7 +194,6 @@ public final class YangFormatterUtils {
             YangTypes.YANG_REFERENCE_STMT,
             YangTypes.YANG_STATUS_STMT,
             YangTypes.YANG_DESCRIPTION_STMT,
-            YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_STRING,
             YangTypes.YANG_ACTION_STMT,
             YangTypes.YANG_ANYDATA_STMT,
