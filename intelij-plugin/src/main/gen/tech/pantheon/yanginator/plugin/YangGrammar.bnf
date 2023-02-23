@@ -863,7 +863,7 @@ augment-stmt ::= augment-keyword sep augment-arg-str optsep
 pin(".*") = 1
 }
 
-augment-arg-str ::= augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE) | (DQUOTE augment-arg FORWARD_SLASH (string-splitter node-identifier)+ DQUOTE)
+augment-arg-str ::= augment-arg | (DQUOTE augment-arg DQUOTE) | (SQUOTE augment-arg SQUOTE)
 
 augment-arg ::= absolute-schema-nodeid
 
@@ -1144,7 +1144,7 @@ date-arg ::= DATE
 schema-nodeid ::= absolute-schema-nodeid |
   descendant-schema-nodeid
 
-absolute-schema-nodeid ::= (FORWARD_SLASH node-identifier)+
+absolute-schema-nodeid ::= (FORWARD_SLASH string-splitter? node-identifier string-splitter?)+
 
 descendant-schema-nodeid ::=
   node-identifier
@@ -1175,11 +1175,11 @@ path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
 
 path-arg ::= absolute-path | relative-path
 
-absolute-path ::= (FORWARD_SLASH (node-identifier path-predicate*))+
+absolute-path ::= (FORWARD_SLASH string-splitter? (node-identifier string-splitter? path-predicate*) string-splitter?)+
 
-relative-path ::= (PARENT_FOLDER)+ descendant-path
+relative-path ::= (PARENT_FOLDER string-splitter?)+ descendant-path
 
-descendant-path ::= node-identifier
+descendant-path ::= node-identifier string-splitter?
   [path-predicate* absolute-path]
 
 path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET

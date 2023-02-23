@@ -23,4 +23,7 @@ public interface YangAbsolutePath extends YangNamedElement {
     @NotNull
     List<YangPathPredicate> getPathPredicateList();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }

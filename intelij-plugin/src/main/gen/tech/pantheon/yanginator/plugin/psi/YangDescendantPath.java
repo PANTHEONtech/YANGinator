@@ -27,4 +27,7 @@ public interface YangDescendantPath extends YangNamedElement {
     @NotNull
     List<YangPathPredicate> getPathPredicateList();
 
+    @Nullable
+    YangStringSplitter getStringSplitter();
+
 }

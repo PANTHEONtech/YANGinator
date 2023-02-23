@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangAbsoluteSchemaNodeid;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -41,6 +42,12 @@ public class YangAbsoluteSchemaNodeidImpl extends YangNamedElementImpl implement
     @NotNull
     public List<YangNodeIdentifier> getNodeIdentifierList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }
