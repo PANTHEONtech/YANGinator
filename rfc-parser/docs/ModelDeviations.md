@@ -43,6 +43,8 @@ correctly.
 
 * `rewriteZeroIntegerValue(result);`
 
+* `allowIndentString(result);`
+
   Rewrites zero-integer-value with proper tokens
 
   Before:
@@ -548,6 +550,17 @@ comments having non-whitespace parents (shown in next figure). Finally, no probl
 This change solves problem with formatting. The problem was, that comments were not being covered by block
 (whitespaces are skipped during block creation). This resulted in an exception being thrown when
 manipulating with comments.
+
+### Allow indents for certain strings
+
+The method allowIndentString() adds support for keyword strings to have proper indent. 
+
+Before:  
+![statements_to_indent_before.png](doc-images/statements_to_indent_before.png)
+
+After:  
+![statements_to_indent_after.png](doc-images/statements_to_indent_after.png)
+![indentable_string.png](doc-images/indentable_string.png)
 
 ---
 

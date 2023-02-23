@@ -189,6 +189,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INDENTABLE_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INSTANCE_IDENTIFIER;
@@ -3350,7 +3351,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // contact-keyword sep ( quoted-string | string ) stmtend
+    // contact-keyword sep indentable-string stmtend
     public static boolean contact_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "contact_stmt")) return false;
         boolean r, p;
@@ -3358,19 +3359,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = contact_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, contact_stmt_2(b, l + 1)) && r;
+        r = p && report_error_(b, indentable_string(b, l + 1)) && r;
         r = p && stmtend(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
         return r || p;
-    }
-
-    // quoted-string | string
-    private static boolean contact_stmt_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "contact_stmt_2")) return false;
-        boolean r;
-        r = quoted_string(b, l + 1);
-        if (!r) r = string(b, l + 1);
-        return r;
     }
 
     /* ********************************************************** */
@@ -4002,7 +3994,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // description-keyword sep ( quoted-string | string ) stmtend
+    // description-keyword sep indentable-string stmtend
     public static boolean description_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "description_stmt")) return false;
         boolean r, p;
@@ -4010,19 +4002,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = description_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, description_stmt_2(b, l + 1)) && r;
+        r = p && report_error_(b, indentable_string(b, l + 1)) && r;
         r = p && stmtend(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
         return r || p;
-    }
-
-    // quoted-string | string
-    private static boolean description_stmt_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "description_stmt_2")) return false;
-        boolean r;
-        r = quoted_string(b, l + 1);
-        if (!r) r = string(b, l + 1);
-        return r;
     }
 
     /* ********************************************************** */
@@ -6029,6 +6012,18 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!recursion_guard_(b, l, "include_stmt_4_1_2_2")) return false;
         reference_stmt(b, l + 1);
         return true;
+    }
+
+    /* ********************************************************** */
+    // quoted-string | string
+    public static boolean indentable_string(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "indentable_string")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_INDENTABLE_STRING, "<indentable string>");
+        r = quoted_string(b, l + 1);
+        if (!r) r = string(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
     }
 
     /* ********************************************************** */
@@ -8308,7 +8303,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // organization-keyword sep ( quoted-string | string ) stmtend
+    // organization-keyword sep indentable-string stmtend
     public static boolean organization_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "organization_stmt")) return false;
         boolean r, p;
@@ -8316,19 +8311,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = organization_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, organization_stmt_2(b, l + 1)) && r;
+        r = p && report_error_(b, indentable_string(b, l + 1)) && r;
         r = p && stmtend(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
         return r || p;
-    }
-
-    // quoted-string | string
-    private static boolean organization_stmt_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "organization_stmt_2")) return false;
-        boolean r;
-        r = quoted_string(b, l + 1);
-        if (!r) r = string(b, l + 1);
-        return r;
     }
 
     /* ********************************************************** */
@@ -9642,7 +9628,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // reference-keyword sep ( quoted-string | string ) stmtend
+    // reference-keyword sep indentable-string stmtend
     public static boolean reference_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "reference_stmt")) return false;
         boolean r, p;
@@ -9650,19 +9636,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = reference_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, reference_stmt_2(b, l + 1)) && r;
+        r = p && report_error_(b, indentable_string(b, l + 1)) && r;
         r = p && stmtend(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
         return r || p;
-    }
-
-    // quoted-string | string
-    private static boolean reference_stmt_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "reference_stmt_2")) return false;
-        boolean r;
-        r = quoted_string(b, l + 1);
-        if (!r) r = string(b, l + 1);
-        return r;
     }
 
     /* ********************************************************** */

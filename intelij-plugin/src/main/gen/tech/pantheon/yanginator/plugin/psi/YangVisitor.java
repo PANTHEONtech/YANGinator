@@ -525,6 +525,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitYangStmt(o);
     }
 
+    public void visitIndentableString(@NotNull YangIndentableString o) {
+        visitNamedElement(o);
+    }
+
     public void visitInputKeyword(@NotNull YangInputKeyword o) {
         visitNamedElement(o);
     }

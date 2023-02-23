@@ -263,11 +263,15 @@ public final class YangFormatterUtils {
             FILE
     );
 
+    private static final TokenSet EXTRA_INDENT_SET = TokenSet.create(
+            YangTypes.YANG_INDENTABLE_STRING
+    );
+
     private YangFormatterUtils() {
     }
 
     static Indent getIndentForType(final IElementType type) {
-        if (STATEMENT_SET.contains(type)) {
+        if (STATEMENT_SET.contains(type) || EXTRA_INDENT_SET.contains(type)) {
             return Indent.getNormalIndent();
         }
         return Indent.getNoneIndent();

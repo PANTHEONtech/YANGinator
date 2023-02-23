@@ -24,6 +24,9 @@ public interface YangOrganizationStmt extends YangYangStmt {
     @NotNull
     List<YangComment> getCommentList();
 
+    @Nullable
+    YangIndentableString getIndentableString();
+
     @NotNull
     List<YangLineBreak> getLineBreakList();
 
@@ -31,12 +34,6 @@ public interface YangOrganizationStmt extends YangYangStmt {
     YangOrganizationKeyword getOrganizationKeyword();
 
     @Nullable
-    YangQuotedString getQuotedString();
-
-    @Nullable
     YangStmtend getStmtend();
-
-    @Nullable
-    YangString getString();
 
 }

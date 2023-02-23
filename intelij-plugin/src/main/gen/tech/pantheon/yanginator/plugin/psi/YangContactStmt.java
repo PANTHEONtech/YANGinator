@@ -27,16 +27,13 @@ public interface YangContactStmt extends YangYangStmt {
     @NotNull
     YangContactKeyword getContactKeyword();
 
+    @Nullable
+    YangIndentableString getIndentableString();
+
     @NotNull
     List<YangLineBreak> getLineBreakList();
 
     @Nullable
-    YangQuotedString getQuotedString();
-
-    @Nullable
     YangStmtend getStmtend();
-
-    @Nullable
-    YangString getString();
 
 }

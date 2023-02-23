@@ -24,19 +24,16 @@ public interface YangReferenceStmt extends YangYangStmt {
     @NotNull
     List<YangComment> getCommentList();
 
+    @Nullable
+    YangIndentableString getIndentableString();
+
     @NotNull
     List<YangLineBreak> getLineBreakList();
-
-    @Nullable
-    YangQuotedString getQuotedString();
 
     @NotNull
     YangReferenceKeyword getReferenceKeyword();
 
     @Nullable
     YangStmtend getStmtend();
-
-    @Nullable
-    YangString getString();
 
 }

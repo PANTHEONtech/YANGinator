@@ -48,6 +48,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = adjustRelPathKeyexpr(result);
         result = swapDecimalWithIntegerInRangeBoundaryDef(result);
         result = allowComments(result);
+        result = allowIndentString(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -825,6 +826,28 @@ public class GrammarKitRFCUncomplaintUtils {
             }
             result.add(line);
         }
+        return result;
+    }
+
+    /**
+     * Allows certain strings to start with an indent on a new line
+     *
+     * @param lines lines of the generated bnf grammar file
+     * @return resulting lines of the bnf grammar file
+     */
+    private static List<String> allowIndentString(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if ((line.contains("contact-stmt ::=") && line.contains("( quoted-string | string )"))
+                    || (line.contains("description-stmt ::= ") && line.contains("( quoted-string | string )"))
+                    || (line.contains("reference-stmt ::= ") && line.contains("( quoted-string | string )"))
+                    || (line.contains("organization-stmt ::= ") && line.contains("( quoted-string | string )"))) {
+                line = line.replace("( quoted-string | string )", "indentable-string");
+            }
+            result.add(line);
+        }
+        result.add("");
+        result.add("indentable-string ::= ( quoted-string | string )");
         return result;
     }
 }

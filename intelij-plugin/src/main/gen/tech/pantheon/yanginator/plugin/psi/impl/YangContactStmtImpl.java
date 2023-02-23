@@ -19,10 +19,9 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangContactKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangContactStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIndentableString;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangStmtend;
-import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -64,6 +63,12 @@ public class YangContactStmtImpl extends YangYangStmtImpl implements YangContact
     }
 
     @Override
+    @Nullable
+    public YangIndentableString getIndentableString() {
+        return findChildByClass(YangIndentableString.class);
+    }
+
+    @Override
     @NotNull
     public List<YangLineBreak> getLineBreakList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
@@ -71,20 +76,8 @@ public class YangContactStmtImpl extends YangYangStmtImpl implements YangContact
 
     @Override
     @Nullable
-    public YangQuotedString getQuotedString() {
-        return findChildByClass(YangQuotedString.class);
-    }
-
-    @Override
-    @Nullable
     public YangStmtend getStmtend() {
         return findChildByClass(YangStmtend.class);
-    }
-
-    @Override
-    @Nullable
-    public YangString getString() {
-        return findChildByClass(YangString.class);
     }
 
 }

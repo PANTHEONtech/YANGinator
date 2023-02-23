@@ -18,7 +18,6 @@ import com.intellij.formatting.Indent;
 import com.intellij.formatting.Spacing;
 import com.intellij.formatting.SpacingBuilder;
 import com.intellij.formatting.Wrap;
-import com.intellij.formatting.WrapType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.formatter.common.AbstractBlock;
@@ -53,9 +52,13 @@ public class YangBlock extends AbstractBlock {
         if (YangFormatterUtils.shouldBuildBeforeModule(myNode.getElementType())) {
             child = buildBeforeModule(blocks, child);
         }
+        Alignment alignment = myAlignment;
+        if(myNode.getElementType().equals(YangTypes.YANG_PATH_ARG_STR)) {
+            alignment = Alignment.createAlignment();
+        }
         while (child != null) {
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
-                blocks.add(buildBlock(child));
+                blocks.add(buildBlock(child, alignment));
             }
             child = child.getTreeNext();
         }
@@ -71,7 +74,7 @@ public class YangBlock extends AbstractBlock {
                 started = true;
             }
             if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
-                Block block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
+                Block block = new YangBlock(child, null, null,
                         spacingBuilder, Indent.getNoneIndent());
                 blocks.add(block);
             }
@@ -81,16 +84,9 @@ public class YangBlock extends AbstractBlock {
     }
 
     @NotNull
-    private Block buildBlock(final ASTNode child) {
-        Block block;
-        if (YangFormatterUtils.shouldAlign(child.getElementType())) {
-            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), Alignment.createAlignment(),
-                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
-        } else {
-            block = new YangBlock(child, Wrap.createWrap(WrapType.NONE, false), null,
-                    spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
-        }
-        return block;
+    private Block buildBlock(final ASTNode child, Alignment alignment) {
+        return new YangBlock(child, null, alignment,
+                spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
     }
 
     @Override
@@ -115,7 +111,7 @@ public class YangBlock extends AbstractBlock {
             return new ChildAttributes(getIndentForInvalid(newChildIndex), null);
         }
         if (YangFormatterUtils.indentSubStmt(myNode.getElementType())) {
-            return new ChildAttributes(Indent.getNormalIndent(true), null);
+            return new ChildAttributes(Indent.getNormalIndent(), null);
         }
         return super.getChildAttributes(newChildIndex);
     }
