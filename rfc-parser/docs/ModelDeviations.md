@@ -600,44 +600,6 @@ After:
 ![statements_to_indent_after.png](doc-images/statements_to_indent_after.png)
 ![indentable_string.png](doc-images/indentable_string.png)
 
-
-### String separation possibility for paths
-
-The method addStringSplitterForPaths() adds support for string separators into the path definition.
-String separation in paths was not possible for not completed definitions of path based on RFC.
-This threw an error that did not allow next elements to be parsed correctly. The solution is to insert 
-split-strings (plus sign surrounded with quotes) inside the definitions of paths.
-
-**Augment arg str**  
-
-before:  
-
-![](doc-images/augment_arg_str_before.png)
-
-after:  
-
-![](doc-images/augment_arg_str_after.png)  
-
-**Absolute schema nodeid**  
-
-before:  
-
-![](doc-images/absolute_schema_nodeid_before.png)  
-
-after:  
-
-![](doc-images/absolute_schema_nodeid_after.png)  
-
-**Path definitions**  
-
-before:  
-
-![](doc-images/path_definition_before.png)  
-
-after:  
-
-![](doc-images/path_definition_after.png)  
-
 ---
 
 ## ***More methods are used that are not yet documented***
