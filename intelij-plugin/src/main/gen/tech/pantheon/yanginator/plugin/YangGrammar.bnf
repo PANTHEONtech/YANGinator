@@ -863,9 +863,7 @@ augment-stmt ::= augment-keyword sep augment-arg-str optsep
 pin(".*") = 1
 }
 
-augment-arg-str ::= augment-arg
-        | (DQUOTE augment-arg DQUOTE)
-        | (SQUOTE augment-arg SQUOTE)
+augment-arg-str ::= augment-arg | (DQUOTE augment-arg DQUOTE) | (SQUOTE augment-arg SQUOTE)
 
 augment-arg ::= absolute-schema-nodeid
 

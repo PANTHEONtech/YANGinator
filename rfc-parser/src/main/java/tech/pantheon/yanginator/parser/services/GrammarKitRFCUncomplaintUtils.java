@@ -221,8 +221,8 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("augment-arg-str ::= augment-arg")) {
-                line = "augment-arg-str ::= augment-arg | (DQUOTE augment-arg (string-splitter augment-arg)* DQUOTE)" +
-                        " | (DQUOTE augment-arg FORWARD_SLASH (string-splitter node-identifier)+ DQUOTE)";
+                line = "augment-arg-str ::= augment-arg | (DQUOTE augment-arg DQUOTE)" +
+                        " | (SQUOTE augment-arg SQUOTE)";
             }
             result.add(line);
         }
