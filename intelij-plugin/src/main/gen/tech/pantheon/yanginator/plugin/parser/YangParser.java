@@ -2880,19 +2880,17 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // body-sub-stmt+
+    // body-sub-stmt*
     public static boolean body_stmts(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "body_stmts")) return false;
-        boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_BODY_STMTS, "<body stmts>");
-        r = body_sub_stmt(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!body_sub_stmt(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "body_stmts", c)) break;
         }
-        exit_section_(b, l, m, r, false, null);
-        return r;
+        exit_section_(b, l, m, true, false, null);
+        return true;
     }
 
     /* ********************************************************** */
@@ -7048,19 +7046,17 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (import-stmt | include-stmt)+
+    // (import-stmt | include-stmt)*
     public static boolean linkage_stmts(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "linkage_stmts")) return false;
-        boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_LINKAGE_STMTS, "<linkage stmts>");
-        r = linkage_stmts_0(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!linkage_stmts_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "linkage_stmts", c)) break;
         }
-        exit_section_(b, l, m, r, false, YangParser::linkage_recover);
-        return r;
+        exit_section_(b, l, m, true, false, YangParser::linkage_recover);
+        return true;
     }
 
     // import-stmt | include-stmt
