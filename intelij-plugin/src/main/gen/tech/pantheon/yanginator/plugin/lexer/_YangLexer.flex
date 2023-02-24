@@ -128,10 +128,10 @@ EOL=\R
   {SEMICOLON}                     { return YANG_SEMICOLON; }
   {LEFT_PARENTHESIS}              { return YANG_LEFT_PARENTHESIS; }
   {RIGHT_PARENTHESIS}             { return YANG_RIGHT_PARENTHESIS; }
-  {FORWARD_SLASH}                 { return YANG_FORWARD_SLASH; }
   {COLON}                         { return YANG_COLON; }
   {PIPE}                          { return YANG_PIPE; }
   {DOUBLE_DOT}                    { return YANG_DOUBLE_DOT; }
+  {FORWARD_SLASH}                 { return YANG_FORWARD_SLASH; }
   {OPEN_BRACKET}                  { return YANG_OPEN_BRACKET; }
   {CLOSED_BRACKET}                { return YANG_CLOSED_BRACKET; }
   {EQUALS}                        { return YANG_EQUALS; }

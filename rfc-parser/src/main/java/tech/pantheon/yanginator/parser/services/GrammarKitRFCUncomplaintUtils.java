@@ -16,6 +16,7 @@ import java.util.List;
 public class GrammarKitRFCUncomplaintUtils {
     public static List<String> additionalAdjustments(List<String> lines) {
         List<String> result = quoteStmts(lines);
+        result = rewriteYangInitialization(result);
         result = splitDeviationStmt(result);
         result = removeOptional(result);
         result = subDelimsAdjustment(result);
@@ -532,8 +533,7 @@ public class GrammarKitRFCUncomplaintUtils {
     private static List<String> orderTokensForLexer(List<String> lines) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
-                line = "yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
+            if (line.contains("yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)")) {
                 result.add(line);
                 result.add("");
                 result.add("private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |");
@@ -876,6 +876,23 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         result.add("");
         result.add("indentable-string ::= ( quoted-string | string )");
+        return result;
+    }
+
+    /**
+     * Adds WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN against empty yang error.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteYangInitialization(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
+                line = "yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
+            }
+            result.add(line);
+        }
         return result;
     }
 }
