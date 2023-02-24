@@ -57,8 +57,8 @@ public class ExternalRules {
                 int oldOffset = psiBuilder.getCurrentOffset();
                 //try parsing item
                 result = parsersHolder.get(j).parse(psiBuilder, level + 1);
-                if (i == j && result) {
-                    individualParserResults[i] = true;
+                if (result) {
+                    individualParserResults[j] = true;
                 }
                 int newOffset = psiBuilder.getCurrentOffset();
                 //optional or not optional
