@@ -27,12 +27,10 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 public class ExternalRules {
 
     /**
-     * First loop will go from first statement(word) to last, second loop will try to match every single item
-     * from parsers with the statement,
-     * if the item matches but offset does not change that means that the parsed word was optional. if we match optional word
-     * we save it to HashSet and try parsing it later. if it does match and offset moves that mean that it was parsed, so we
-     * can remove it.
-     * see more in /yanginator/plugin/external/AnyOrderRuleTutorial.md
+     * First for loop will find and parse all optional statements, so they will not be treated as missing
+     * when the parsing ends.
+     * The while loop parses every statement possible for the current block, the offset changed after parsing.
+     * It makes sure that all mandatory statements are present.
      *
      * @param psiBuilder Psi builder
      * @param level      Level, by increasing it we move to the next element
@@ -50,43 +48,30 @@ public class ExternalRules {
         Set<Parser> optionalParserHolder = new HashSet<>();
         //enter the section to match
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
-
-        for (int i = 0; i < parsers.length; i++) {
-            result = false;
-            for (int j = 0; j < parsersHolder.size(); j++) {
-                int oldOffset = psiBuilder.getCurrentOffset();
-                //try parsing item
-                result = parsersHolder.get(j).parse(psiBuilder, level + 1);
-                if (result) {
-                    individualParserResults[j] = true;
-                }
-                int newOffset = psiBuilder.getCurrentOffset();
-                //optional or not optional
-                if (result && (oldOffset == newOffset)) {
-                    optionalParserHolder.add(parsers[j]);
-                    //try parsing optional
-                    for (Parser item : optionalParserHolder) {
-                        oldOffset = psiBuilder.getCurrentOffset();
-                        result = item.parse(psiBuilder, level + 1);
-                        if (result && oldOffset != newOffset) {
-                            //remove optional item if it was parsed
-                            optionalParserHolder.remove(item);
-                            individualParserResults[i] = true;
-                            //no need to loop futher, the item has been parsed
-                            break;
-                        } else {
-                            result = false;
-                        }
-                    }
-                }
-                if (result) {
-                    individualParserResults[j] = true;
-                    //no need to loop futher, the item has been parsed
+        //find and parse all optional statements
+        for (int i = 0; i < parsersHolder.size(); i++) {
+            result = parsersHolder.get(i).parse(psiBuilder, level + 1);
+            if(result)
+                individualParserResults[i] = true;
+        }
+        int oldOffset = psiBuilder.getCurrentOffset();;
+        int newOffset = oldOffset;
+        boolean parsing = true;
+        while (parsing) {
+            parsing = false;
+            oldOffset = psiBuilder.getCurrentOffset();
+            for (int i = 0; i < parsersHolder.size(); i++) {
+                result = parsersHolder.get(i).parse(psiBuilder, level + 1);
+                newOffset = psiBuilder.getCurrentOffset();
+                if(result && (oldOffset != newOffset)) {
+                    individualParserResults[i] = true;
                     break;
                 }
             }
-            //move to next element and try matching it
-            level += 1;
+            if(oldOffset != newOffset) {
+                parsing = true;
+                level += 1;
+            }
         }
         exit_section_(psiBuilder, marker, null, unanimousResults(individualParserResults));
         return unanimousResults(individualParserResults);
