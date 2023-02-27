@@ -14,9 +14,7 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.parser.GeneratedParserUtilBase.Parser;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
@@ -45,16 +43,15 @@ public class ExternalRules {
         boolean[] individualParserResults = new boolean[parsers.length];
         //create list out of parsers array, so we can remove items that were already matched
         List<Parser> parsersHolder = new ArrayList<>(List.of(parsers));
-        Set<Parser> optionalParserHolder = new HashSet<>();
         //enter the section to match
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
         //find and parse all optional statements
         for (int i = 0; i < parsersHolder.size(); i++) {
             result = parsersHolder.get(i).parse(psiBuilder, level + 1);
-            if(result)
+            if (result)
                 individualParserResults[i] = true;
         }
-        int oldOffset = psiBuilder.getCurrentOffset();;
+        int oldOffset = psiBuilder.getCurrentOffset();
         int newOffset = oldOffset;
         boolean parsing = true;
         while (parsing) {
@@ -63,12 +60,12 @@ public class ExternalRules {
             for (int i = 0; i < parsersHolder.size(); i++) {
                 result = parsersHolder.get(i).parse(psiBuilder, level + 1);
                 newOffset = psiBuilder.getCurrentOffset();
-                if(result && (oldOffset != newOffset)) {
+                if (result && (oldOffset != newOffset)) {
                     individualParserResults[i] = true;
                     break;
                 }
             }
-            if(oldOffset != newOffset) {
+            if (oldOffset != newOffset) {
                 parsing = true;
                 level += 1;
             }
