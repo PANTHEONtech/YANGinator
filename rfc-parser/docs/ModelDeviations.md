@@ -15,6 +15,8 @@ correctly.
 
 * `subDelimsAdjustment(result);` [link](#Sub-delims-adjustment)
 
+* `rewriteYangInitialization(result);` [link](#Rewrite-Yang-Initialization)
+
 * `additionalRules(result);` [link](#Additional-rules)
 
 * `quotedAugmentArg(result);` [link](#Quoted-augment-arg)
@@ -88,6 +90,18 @@ correctly.
   After:
 
   ![rewriteFractionDigitsArg](doc-images/rewriteFractionDigitsArg_output.png)
+
+* `rewriteYangInitialization(result);`
+
+  Adds WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN against empty yang error.
+
+  Before:
+
+  ![rewriteYangInitialization](doc-images/rewriteYangInitialization_input.png)
+
+  After:
+
+  ![rewriteYangInitialization](doc-images/rewriteYangInitialization_output.png)
 
 * `rewritePositiveIntegerValue(result);`
 
