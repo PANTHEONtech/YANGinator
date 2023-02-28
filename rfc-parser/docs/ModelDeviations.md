@@ -603,6 +603,14 @@ after:
 
 ![](doc-images/path_definition_after.png)  
 
+before:
+
+![](doc-images/path_predicate_before.png)
+
+after:
+
+![](doc-images/path_predicate_after.png)
+
 ### Allow indents for certain strings
 
 The method allowIndentString() adds support for keyword strings to have proper indent. 
