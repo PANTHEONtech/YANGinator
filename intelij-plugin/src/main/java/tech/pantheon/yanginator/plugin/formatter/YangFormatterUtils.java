@@ -257,7 +257,7 @@ public final class YangFormatterUtils {
             DUMMY_BLOCK
     );
 
-    private static final TokenSet BEFORE_MODULE_SET = TokenSet.create(
+    public static final TokenSet BEFORE_MODULE_SET = TokenSet.create(
             YangTypes.YANG_MODULE_STMT,
             YangTypes.YANG_SUBMODULE_STMT,
             FILE
