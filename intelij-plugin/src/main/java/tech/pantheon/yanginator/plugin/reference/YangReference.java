@@ -48,12 +48,8 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
     @NotNull
     @Override
     public ResolveResult[] multiResolve(final boolean incompleteCode) {
-        ArrayList<String> fileNames = new ArrayList<>();
-        if (prefix.isEmpty()) {
-            fileNames.add(myElement.getContainingFile().getName());
-        } else {
-            fileNames.addAll(resolveImports());
-        }
+        ArrayList<String> fileNames = resolveImports();
+        fileNames.add(myElement.getContainingFile().getName());
         final List<PsiElement> declarations
                 = YangUtil.findIdentifierLiterals(this.myElement.getProject(), this.identifierKeyword, genericElement, fileNames);
         final List<ResolveResult> results = new ArrayList<>();
@@ -72,15 +68,28 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
 
     @NotNull
     private ArrayList<String> resolveImports() {
-        ArrayList<String> fileNames= new ArrayList<>();
-        ASTNode linkageElements = myElement.getContainingFile().getNode().findChildByType(YangFormatterUtils.BEFORE_MODULE_SET).findChildByType(YangTypes.YANG_LINKAGE_STMTS);
+        ArrayList<String> fileNames = new ArrayList<>();
+        ASTNode linkageElements = Objects.requireNonNull(myElement.getContainingFile().getNode()
+                .findChildByType(YangFormatterUtils.BEFORE_MODULE_SET)).findChildByType(YangTypes.YANG_LINKAGE_STMTS);
         if (linkageElements != null) {
             for (ASTNode link : linkageElements.getChildren(null)) {
-                String file = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_ARG_STR)).getText();
-                fileNames.add(file + ".yang");
+                String fileName = "";
+                if (link.getElementType().equals(YangTypes.YANG_IMPORT_STMT)) {
+                    if (!prefix.isEmpty()) {
+                        if (prefix.equals(Objects.requireNonNull(Objects.requireNonNull(link.findChildByType(YangTypes.YANG_PREFIX_STMT))
+                                .findChildByType(YangTypes.YANG_PREFIX_ARG_STR)).getText())) {
+                            fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_ARG_STR)).getText();
+                        }
+                    } else {
+                        fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_ARG_STR)).getText();
+                    }
+                } else if (link.getElementType().equals(YangTypes.YANG_INCLUDE_STMT)) {
+                    fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_ARG_STR)).getText();
+                }
+                if (!fileName.isEmpty())
+                    fileNames.add(fileName + ".yang");
             }
         }
         return fileNames;
     }
 }
-
