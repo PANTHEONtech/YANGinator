@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class YangUtil {
 
@@ -65,11 +66,12 @@ public class YangUtil {
     }
 
     public static <T extends PsiElement> List<T> findIdentifierLiterals(Project project, String identifierKeyword,
-                                                                        Object genericElement) {
+                                                                        Object genericElement, List<String> fileNames) {
         List<T> result = null;
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
-
+        virtualFiles = virtualFiles.stream().filter(file ->
+                fileNames.contains(file.getName())).collect(Collectors.toList());
         for (VirtualFile virtualFile : virtualFiles) {
             PsiFile yangFile = PsiManager.getInstance(project).findFile(virtualFile);
             if (yangFile != null) {
