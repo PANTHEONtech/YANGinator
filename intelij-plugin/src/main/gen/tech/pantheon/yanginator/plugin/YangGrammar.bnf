@@ -86,13 +86,13 @@ private meta-body ::=(organization-stmt |
         description-stmt |
         reference-stmt )
 
-linkage-stmts ::= (import-stmt | include-stmt)+ 
+linkage-stmts ::= (import-stmt | include-stmt)* 
 //revision-stmts ::= revision-stmt*
 {
 pin(".*") = 1 recoverWhile=linkage-recover
 }
 
-body-stmts ::= body-sub-stmt+
+body-stmts ::= body-sub-stmt*
 
 private body-sub-stmt ::=body-body-stmts stmtsep
 {
