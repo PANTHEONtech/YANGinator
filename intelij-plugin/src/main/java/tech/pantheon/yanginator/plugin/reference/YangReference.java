@@ -66,6 +66,11 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
 
+
+    /**
+     * This method finds all imports and includes from the opened yang and returns names of imported and included
+     * yang files if the referenced element has no prefix ,or it returns the imported yang file with the same prefix.
+     */
     @NotNull
     private ArrayList<String> resolveImports() {
         ArrayList<String> fileNames = new ArrayList<>();
