@@ -10636,8 +10636,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     /* ********************************************************** */
     // choice-stmt |
     //   container-stmt |
-    //   leaf-stmt |
     //   leaf-list-stmt |
+    //   leaf-stmt |
     //   list-stmt |
     //   anydata-stmt |
     //   anyxml-stmt
@@ -10647,8 +10647,8 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b, l, _COLLAPSE_, YANG_SHORT_CASE_STMT, "<short case stmt>");
         r = choice_stmt(b, l + 1);
         if (!r) r = container_stmt(b, l + 1);
-        if (!r) r = leaf_stmt(b, l + 1);
         if (!r) r = leaf_list_stmt(b, l + 1);
+        if (!r) r = leaf_stmt(b, l + 1);
         if (!r) r = list_stmt(b, l + 1);
         if (!r) r = anydata_stmt(b, l + 1);
         if (!r) r = anyxml_stmt(b, l + 1);
