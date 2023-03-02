@@ -622,6 +622,14 @@ After:
 ![statements_to_indent_after.png](doc-images/statements_to_indent_after.png)
 ![indentable_string.png](doc-images/indentable_string.png)
 
+### Resolved inconsistent quantifiers
+
+Changed quantifiers for **linkage-stmts** and **body-stmts** according to RFC6020  
+Before:  
+![](doc-images/resolved_inconsistent_quantifiers_before.png)  
+After:  
+![](doc-images/resolved_inconsistent_quantifiers_after.png)
+
 ---
 
 ## ***More methods are used that are not yet documented***

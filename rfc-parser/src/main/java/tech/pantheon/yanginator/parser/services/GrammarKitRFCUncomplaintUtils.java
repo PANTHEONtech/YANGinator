@@ -319,7 +319,7 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("linkage-stmts ::=")) {
                 tmp = true;
-                line = "linkage-stmts ::= (import-stmt | include-stmt)+ ";
+                line = "linkage-stmts ::= (import-stmt | include-stmt)* ";
             }
             result.add(line);
             if (tmp && (line.contains("<<anyOrder  import-stmt*"))) {
@@ -692,7 +692,7 @@ public class GrammarKitRFCUncomplaintUtils {
         boolean found = false;
         for (String line : lines) {
             if (line.contains("body-stmts ::= (extension-stmt |")) {
-                result.add("body-stmts ::= body-sub-stmt+");
+                result.add("body-stmts ::= body-sub-stmt*");
                 result.add("");
                 result.add("private body-sub-stmt ::=body-body-stmts stmtsep");
                 result.add("");

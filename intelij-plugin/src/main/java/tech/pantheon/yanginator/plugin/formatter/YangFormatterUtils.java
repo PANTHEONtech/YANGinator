@@ -129,8 +129,6 @@ public final class YangFormatterUtils {
     static final TokenSet STATEMENT_SET = TokenSet.create(
             YangTypes.YANG_YANG_VERSION_STMT,
             YangTypes.YANG_NAMESPACE_STMT,
-            YangTypes.YANG_IMPORT_STMT,
-            YangTypes.YANG_INCLUDE_STMT,
             YangTypes.YANG_ORGANIZATION_STMT,
             YangTypes.YANG_CONTACT_STMT,
             YangTypes.YANG_REVISION_STMT,
@@ -264,7 +262,8 @@ public final class YangFormatterUtils {
     );
 
     private static final TokenSet EXTRA_INDENT_SET = TokenSet.create(
-            YangTypes.YANG_INDENTABLE_STRING
+            YangTypes.YANG_INDENTABLE_STRING,
+            YangTypes.YANG_LINKAGE_STMTS
     );
 
     private YangFormatterUtils() {
