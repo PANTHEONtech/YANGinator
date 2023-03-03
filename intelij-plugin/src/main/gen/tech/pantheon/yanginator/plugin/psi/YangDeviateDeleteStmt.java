@@ -25,7 +25,7 @@ public interface YangDeviateDeleteStmt extends YangYangStmt {
     @NotNull
     List<YangComment> getCommentList();
 
-    @Nullable
+    @NotNull
     YangDeleteKeywordStr getDeleteKeywordStr();
 
     @NotNull

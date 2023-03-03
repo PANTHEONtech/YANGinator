@@ -74,9 +74,9 @@ public class YangDeviateReplaceStmtImpl extends YangYangStmtImpl implements Yang
     }
 
     @Override
-    @Nullable
+    @NotNull
     public YangReplaceKeywordStr getReplaceKeywordStr() {
-        return findChildByClass(YangReplaceKeywordStr.class);
+        return findNotNullChildByClass(YangReplaceKeywordStr.class);
     }
 
     @Override

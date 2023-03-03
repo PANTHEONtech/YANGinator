@@ -62,9 +62,9 @@ public class YangDeviateDeleteStmtImpl extends YangYangStmtImpl implements YangD
     }
 
     @Override
-    @Nullable
+    @NotNull
     public YangDeleteKeywordStr getDeleteKeywordStr() {
-        return findChildByClass(YangDeleteKeywordStr.class);
+        return findNotNullChildByClass(YangDeleteKeywordStr.class);
     }
 
     @Override

@@ -30,7 +30,7 @@ public interface YangDeviateNotSupportedStmt extends YangYangStmt {
     @NotNull
     List<YangLineBreak> getLineBreakList();
 
-    @Nullable
+    @NotNull
     YangNotSupportedKeywordStr getNotSupportedKeywordStr();
 
     @Nullable
