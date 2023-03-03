@@ -14,10 +14,11 @@ package tech.pantheon.yanginator.plugin.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 import java.util.List;
 
-public interface YangIncludeStmt extends YangYangStmt {
+public interface YangIncludeStmt extends YangGeneratedReferenceType {
 
     @NotNull
     List<YangWsp> getWspList();
@@ -26,7 +27,7 @@ public interface YangIncludeStmt extends YangYangStmt {
     List<YangComment> getCommentList();
 
     @Nullable
-    YangIdentifierArgStr getIdentifierArgStr();
+    YangIdentifierRefArgStr getIdentifierRefArgStr();
 
     @NotNull
     YangIncludeKeyword getIncludeKeyword();

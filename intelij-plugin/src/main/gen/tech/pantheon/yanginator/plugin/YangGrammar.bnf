@@ -40,6 +40,8 @@ module-stmt ::= optsep module-keyword sep identifier-arg-str
   RIGHT_BRACE optsep
 {
 pin= 2
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
@@ -53,6 +55,8 @@ submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
   RIGHT_BRACE optsep
 {
 pin= 2
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 module-header-stmts ::= // these stmts can appear in any order
@@ -132,7 +136,7 @@ yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE
 
 yang-version-arg ::= ONE [DOT ONE]
 
-import-stmt ::= import-keyword sep identifier-arg-str optsep
+import-stmt ::= import-keyword sep identifier-ref-arg-str optsep
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
 <<anyOrder  prefix-stmt
@@ -142,9 +146,11 @@ import-stmt ::= import-keyword sep identifier-arg-str optsep
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
-include-stmt ::= include-keyword sep identifier-arg-str optsep
+include-stmt ::= include-keyword sep identifier-ref-arg-str optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -154,6 +160,8 @@ include-stmt ::= include-keyword sep identifier-arg-str optsep
   RIGHT_BRACE) stmtsep
 {
 pin(".*") = 1
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 namespace-stmt ::= namespace-keyword sep uri-str stmtend

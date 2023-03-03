@@ -1,13 +1,3 @@
-/*
- *
- *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available under the
- *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
- *   and is available at http://www.eclipse.org/legal/epl-v10.html
- *
- */
-
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.parser;
 
@@ -436,27 +426,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
-    }
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
-
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -464,19 +433,22 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_DATA_DEF_STMT, YANG_DEFAULT_STMT, YANG_DESCRIPTION_STMT, YANG_DEVIATE_ADD_STMT,
                     YANG_DEVIATE_DELETE_STMT, YANG_DEVIATE_NOT_SUPPORTED_STMT, YANG_DEVIATE_REPLACE_STMT, YANG_DEVIATION_STMT,
                     YANG_ENUM_STMT, YANG_ERROR_APP_TAG_STMT, YANG_ERROR_MESSAGE_STMT, YANG_EXTENSION_STMT,
-                    YANG_FEATURE_STMT, YANG_FRACTION_DIGITS_STMT, YANG_IF_FEATURE_STMT, YANG_IMPORT_STMT,
-                    YANG_INCLUDE_STMT, YANG_INPUT_STMT, YANG_KEY_STMT, YANG_LEAF_LIST_STMT,
-                    YANG_LEAF_STMT, YANG_LENGTH_STMT, YANG_LIST_STMT, YANG_MANDATORY_STMT,
-                    YANG_MAX_ELEMENTS_STMT, YANG_MIN_ELEMENTS_STMT, YANG_MODIFIER_STMT, YANG_MODULE_STMT,
-                    YANG_MUST_STMT, YANG_NAMESPACE_STMT, YANG_NOTIFICATION_STMT, YANG_ORDERED_BY_STMT,
-                    YANG_ORGANIZATION_STMT, YANG_OUTPUT_STMT, YANG_PATH_STMT, YANG_PATTERN_STMT,
-                    YANG_POSITION_STMT, YANG_PREFIX_STMT, YANG_PRESENCE_STMT, YANG_RANGE_STMT,
-                    YANG_REFERENCE_STMT, YANG_REFINE_STMT, YANG_REQUIRE_INSTANCE_STMT, YANG_REVISION_DATE_STMT,
-                    YANG_REVISION_STMT, YANG_RPC_STMT, YANG_SHORT_CASE_STMT, YANG_STATUS_STMT,
-                    YANG_SUBMODULE_STMT, YANG_UNIQUE_STMT, YANG_UNITS_STMT, YANG_USES_AUGMENT_STMT,
+                    YANG_FEATURE_STMT, YANG_FRACTION_DIGITS_STMT, YANG_IF_FEATURE_STMT, YANG_INPUT_STMT,
+                    YANG_KEY_STMT, YANG_LEAF_LIST_STMT, YANG_LEAF_STMT, YANG_LENGTH_STMT,
+                    YANG_LIST_STMT, YANG_MANDATORY_STMT, YANG_MAX_ELEMENTS_STMT, YANG_MIN_ELEMENTS_STMT,
+                    YANG_MODIFIER_STMT, YANG_MUST_STMT, YANG_NAMESPACE_STMT, YANG_NOTIFICATION_STMT,
+                    YANG_ORDERED_BY_STMT, YANG_ORGANIZATION_STMT, YANG_OUTPUT_STMT, YANG_PATH_STMT,
+                    YANG_PATTERN_STMT, YANG_POSITION_STMT, YANG_PREFIX_STMT, YANG_PRESENCE_STMT,
+                    YANG_RANGE_STMT, YANG_REFERENCE_STMT, YANG_REFINE_STMT, YANG_REQUIRE_INSTANCE_STMT,
+                    YANG_REVISION_DATE_STMT, YANG_REVISION_STMT, YANG_RPC_STMT, YANG_SHORT_CASE_STMT,
+                    YANG_STATUS_STMT, YANG_UNIQUE_STMT, YANG_UNITS_STMT, YANG_USES_AUGMENT_STMT,
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
 
     /* ********************************************************** */
     // CARRIAGE_RETURN
@@ -5869,7 +5841,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // import-keyword sep identifier-arg-str optsep
+    // import-keyword sep identifier-ref-arg-str optsep
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
     // <<anyOrder  prefix-stmt
@@ -5884,7 +5856,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = import_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, identifier_arg_str(b, l + 1)) && r;
+        r = p && report_error_(b, identifier_ref_arg_str(b, l + 1)) && r;
         r = p && report_error_(b, optsep(b, l + 1)) && r;
         r = p && report_error_(b, consumeToken(b, YANG_LEFT_BRACE)) && r;
         r = p && report_error_(b, stmtsep(b, l + 1)) && r;
@@ -5928,7 +5900,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // include-keyword sep identifier-arg-str optsep
+    // include-keyword sep identifier-ref-arg-str optsep
     //   (SEMICOLON |
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
@@ -5943,7 +5915,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = include_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, identifier_arg_str(b, l + 1)) && r;
+        r = p && report_error_(b, identifier_ref_arg_str(b, l + 1)) && r;
         r = p && report_error_(b, optsep(b, l + 1)) && r;
         r = p && report_error_(b, include_stmt_4(b, l + 1)) && r;
         r = p && stmtsep(b, l + 1) && r;
@@ -12322,6 +12294,23 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
+    }
+
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
     }
 
 }
