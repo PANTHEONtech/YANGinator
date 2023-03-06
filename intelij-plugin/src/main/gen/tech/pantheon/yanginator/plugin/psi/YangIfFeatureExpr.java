@@ -36,4 +36,7 @@ public interface YangIfFeatureExpr extends YangNamedElement {
     @Nullable
     YangOrKeyword getOrKeyword();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }

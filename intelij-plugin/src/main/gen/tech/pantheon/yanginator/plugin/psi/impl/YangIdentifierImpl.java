@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangDigit;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -41,6 +42,12 @@ public class YangIdentifierImpl extends YangNamedElementImpl implements YangIden
     @NotNull
     public List<YangDigit> getDigitList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }

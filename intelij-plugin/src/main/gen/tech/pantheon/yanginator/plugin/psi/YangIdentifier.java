@@ -20,4 +20,7 @@ public interface YangIdentifier extends YangNamedElement {
     @NotNull
     List<YangDigit> getDigitList();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }

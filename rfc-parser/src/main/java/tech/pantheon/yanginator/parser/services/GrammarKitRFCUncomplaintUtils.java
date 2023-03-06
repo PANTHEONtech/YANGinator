@@ -51,6 +51,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = allowComments(result);
         result = addStringSplitterForPaths(result);
         result = allowIndentString(result);
+        result = addStringSplittersForIfFeatures(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -184,7 +185,7 @@ public class GrammarKitRFCUncomplaintUtils {
      */
     private static void additionalRules(List<String> lines) {
         lines.add("");
-        lines.add("string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)");
+        lines.add("string-splitter ::= (WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*) | (WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*)");
         lines.add("");
         lines.add("quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)");
         lines.add("");
@@ -425,7 +426,7 @@ public class GrammarKitRFCUncomplaintUtils {
         boolean found = false;
         for (String line : lines) {
             if (found) {
-                line = "(ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)*";
+                line = "(string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*";
                 found = false;
             }
             if (line.contains("identifier ::= (ALPHA | UNDERSCORE)")) {
@@ -832,7 +833,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Adds string-splitter to absolute-node-id (so it can start and end with / when it is multi lined),
-     * absolute-path, relative-path, descendant-path. It makes multi lined paths possible.
+     * absolute-path, relative-path, descendant-path, path expressions and segments. It makes multi lined paths possible.
      *
      * @param lines lines of the generated bnf grammar file
      * @return resulting lines of the bnf grammar file
@@ -847,10 +848,31 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "absolute-path ::= (FORWARD_SLASH string-splitter? (node-identifier string-splitter? path-predicate*) string-splitter?)+";
             }
             if (line.contains("relative-path ::=")) {
-                line = "relative-path ::= (PARENT_FOLDER string-splitter?)+ descendant-path";
+                line = "relative-path ::= (DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* | PARENT_FOLDER string-splitter?)+ descendant-path";
             }
             if (line.contains("descendant-path ::=")) {
                 line = "descendant-path ::= node-identifier string-splitter?";
+            }
+            if (line.contains("path-predicate ::=")) {
+                line = "path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?";
+            }
+            if(line.contains("path-equality-expr ::=")) {
+                line = "path-equality-expr ::= node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr";
+            }
+            if(line.contains("path-key-expr ::=")) {
+                line = "path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*";
+            }
+            if(line.contains("rel-path-keyexpr ::=")) {
+                line = "rel-path-keyexpr ::= (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+";
+            }
+            if(line.contains("(node-identifier WSP* FORWARD_SLASH WSP*)*")) {
+                line = "  (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*";
+            }
+            if (line.contains("segment ::=" )|| line.contains("segment-nz ::=")) {
+                line = line.replace("pchar", "(string-splitter? pchar string-splitter?)");
+            }
+            if(line.contains("segment-nz-nc ::=")) {
+                line = "segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+";
             }
             result.add(line);
         }
@@ -890,6 +912,33 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
                 line = "yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adds string-splitters to if-feature statements.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> addStringSplittersForIfFeatures(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("[sep or-keyword sep if-feature-expr]")) {
+                line = line.replaceAll("sep", "(string-splitter|sep)");
+            } if (line.contains("[sep and-keyword sep if-feature-term]")) {
+                line = line.replaceAll("sep", "(string-splitter|sep)");
+            }if (line.contains("if-feature-factor ::=")) {
+                line = line.replaceAll("sep", "(string-splitter|sep)");
+                line = line.replace("not-keyword", "string-splitter? not-keyword");
+            }if (line.contains("LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |")) {
+                line = line.replace("LEFT_PARENTHESIS", "string-splitter? LEFT_PARENTHESIS");
+                line = line.replace("if-feature-expr", "string-splitter? if-feature-expr string-splitter?");
+            } if (line.equals("  identifier-ref-arg")) {
+                line = line.replace("identifier-ref-arg", "string-splitter? identifier-ref-arg");
             }
             result.add(line);
         }

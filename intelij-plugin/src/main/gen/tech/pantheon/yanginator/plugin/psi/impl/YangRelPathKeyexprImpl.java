@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangRelPathKeyexpr;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -48,6 +49,12 @@ public class YangRelPathKeyexprImpl extends YangNamedElementImpl implements Yang
     @NotNull
     public List<YangNodeIdentifier> getNodeIdentifierList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNodeIdentifier.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }
