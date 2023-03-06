@@ -81,6 +81,8 @@ correctly.
 
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
+* `addStringSplittersForIfFeatures(result);` [link](#add-splitters-for-if-features) 
+
 ### Rewrite Zero Integer Value
   Rewrites zero-integer-value with proper tokens
 
