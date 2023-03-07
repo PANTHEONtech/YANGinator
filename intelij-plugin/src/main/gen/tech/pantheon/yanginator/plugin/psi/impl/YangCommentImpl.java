@@ -17,7 +17,9 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangBackslashQuote;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleBackslash;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangVchar;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
@@ -41,6 +43,18 @@ public class YangCommentImpl extends YangNamedElementImpl implements YangComment
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangBackslashQuote> getBackslashQuoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangBackslashQuote.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangDoubleBackslash> getDoubleBackslashList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDoubleBackslash.class);
     }
 
     @Override
