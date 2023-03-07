@@ -33,6 +33,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangAugmentArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangAugmentKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangAugmentStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangAuthorityImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangBackslashQuoteImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangBaseKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangBaseStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangBelongsToKeywordImpl;
@@ -85,6 +86,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtBodyArgsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDeviationStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDigitImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangDoubleBackslashImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDoubleQuotedVcharImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangDquoteImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangEnumKeywordImpl;
@@ -365,6 +367,7 @@ public interface YangTypes {
     IElementType YANG_AUGMENT_KEYWORD = new YangElementType("YANG_AUGMENT_KEYWORD");
     IElementType YANG_AUGMENT_STMT = new YangElementType("YANG_AUGMENT_STMT");
     IElementType YANG_AUTHORITY = new YangElementType("YANG_AUTHORITY");
+    IElementType YANG_BACKSLASH_QUOTE = new YangElementType("YANG_BACKSLASH_QUOTE");
     IElementType YANG_BASE_KEYWORD = new YangElementType("YANG_BASE_KEYWORD");
     IElementType YANG_BASE_STMT = new YangElementType("YANG_BASE_STMT");
     IElementType YANG_BELONGS_TO_KEYWORD = new YangElementType("YANG_BELONGS_TO_KEYWORD");
@@ -417,6 +420,7 @@ public interface YangTypes {
     IElementType YANG_DEVIATION_STMT = new YangElementType("YANG_DEVIATION_STMT");
     IElementType YANG_DEVIATION_STMT_BODY_ARGS = new YangElementType("YANG_DEVIATION_STMT_BODY_ARGS");
     IElementType YANG_DIGIT = new YangElementType("YANG_DIGIT");
+    IElementType YANG_DOUBLE_BACKSLASH = new YangElementType("YANG_DOUBLE_BACKSLASH");
     IElementType YANG_DOUBLE_QUOTED_VCHAR = new YangElementType("YANG_DOUBLE_QUOTED_VCHAR");
     IElementType YANG_DQUOTE = new YangElementType("YANG_DQUOTE");
     IElementType YANG_ENUM_KEYWORD = new YangElementType("YANG_ENUM_KEYWORD");
@@ -784,6 +788,8 @@ public interface YangTypes {
                 return new YangAugmentStmtImpl(node);
             } else if (type == YANG_AUTHORITY) {
                 return new YangAuthorityImpl(node);
+            } else if (type == YANG_BACKSLASH_QUOTE) {
+                return new YangBackslashQuoteImpl(node);
             } else if (type == YANG_BASE_KEYWORD) {
                 return new YangBaseKeywordImpl(node);
             } else if (type == YANG_BASE_STMT) {
@@ -888,6 +894,8 @@ public interface YangTypes {
                 return new YangDeviationStmtBodyArgsImpl(node);
             } else if (type == YANG_DIGIT) {
                 return new YangDigitImpl(node);
+            } else if (type == YANG_DOUBLE_BACKSLASH) {
+                return new YangDoubleBackslashImpl(node);
             } else if (type == YANG_DOUBLE_QUOTED_VCHAR) {
                 return new YangDoubleQuotedVcharImpl(node);
             } else if (type == YANG_DQUOTE) {

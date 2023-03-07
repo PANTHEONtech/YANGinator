@@ -17,6 +17,10 @@ import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public class YangVisitor extends PsiElementVisitor {
 
+    public void visitBackslashQuote(@NotNull YangBackslashQuote o) {
+        visitNamedElement(o);
+    }
+
     public void visitCr(@NotNull YangCr o) {
         visitNamedElement(o);
     }
@@ -26,6 +30,10 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitDigit(@NotNull YangDigit o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDoubleBackslash(@NotNull YangDoubleBackslash o) {
         visitNamedElement(o);
     }
 
