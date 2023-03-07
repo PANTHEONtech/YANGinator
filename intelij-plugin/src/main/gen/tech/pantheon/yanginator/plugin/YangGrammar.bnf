@@ -982,7 +982,7 @@ deviate-not-supported-stmt ::=
   deviate-keyword sep
   not-supported-keyword-str stmtend
 {
-pin(".*") = 1
+pin(".*") = 3
 }
 
 deviate-add-stmt ::= deviate-keyword sep add-keyword-str optsep
@@ -999,7 +999,7 @@ deviate-add-stmt ::= deviate-keyword sep add-keyword-str optsep
   [max-elements-stmt]>>
   RIGHT_BRACE) stmtsep
 {
-pin(".*") = 1
+pin(".*") = 3
 }
 
 deviate-delete-stmt ::= deviate-keyword sep delete-keyword-str optsep
@@ -1012,7 +1012,7 @@ deviate-delete-stmt ::= deviate-keyword sep delete-keyword-str optsep
   default-stmt*>>
   RIGHT_BRACE) stmtsep
 {
-pin(".*") = 1
+pin(".*") = 3
 }
 
 deviate-replace-stmt ::= deviate-keyword sep replace-keyword-str optsep
@@ -1028,7 +1028,7 @@ deviate-replace-stmt ::= deviate-keyword sep replace-keyword-str optsep
   [max-elements-stmt]>>
   RIGHT_BRACE) stmtsep
 {
-pin(".*") = 1
+pin(".*") = 3
 }
 
 not-supported-keyword-str ::= not-supported-keyword | ( DQUOTE not-supported-keyword DQUOTE ) // a string that matches the rule  < not-supported-keyword

@@ -80,6 +80,22 @@
             <pin>(".*") = 1 recoverWhile=revision-recover</pin>
         </statement>
         <statement>
+            <name>deviate-replace-stmt ::=</name>
+            <pin>(".*") = 3</pin>
+        </statement>
+        <statement>
+            <name>deviate-add-stmt ::=</name>
+            <pin>(".*") = 3</pin>
+        </statement>
+        <statement>
+            <name>deviate-delete-stmt ::=</name>
+            <pin>(".*") = 3</pin>
+        </statement>
+        <statement>
+            <name>deviate-not-supported-stmt ::=</name>
+            <pin>(".*") = 3</pin>
+        </statement>
+        <statement>
             <name>stmt ::=</name>
             <pin>(".*") = 1</pin>
         </statement>
