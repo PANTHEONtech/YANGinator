@@ -20,6 +20,12 @@ import java.util.List;
 public interface YangComment extends YangNamedElement {
 
     @NotNull
+    List<YangBackslashQuote> getBackslashQuoteList();
+
+    @NotNull
+    List<YangDoubleBackslash> getDoubleBackslashList();
+
+    @NotNull
     List<YangDquote> getDquoteList();
 
     @NotNull

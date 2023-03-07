@@ -263,7 +263,10 @@ public class GrammarKitRFCUncomplaintUtils {
             result.add(line);
         }
         result.add("");
-        result.add("comment ::= BLOCK_COMMENT |(DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB | BACK_SLASH | SINGLE_QUOTE | CARRIAGE_RETURN )+ ) | DOUBLE_FORWARD_SLASH");
+        result.add("comment ::= BLOCK_COMMENT |(DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | DOUBLE_BACKSLASH | BACKSLASH_QUOTE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB | BACK_SLASH | SINGLE_QUOTE | CARRIAGE_RETURN )+ ) | DOUBLE_FORWARD_SLASH");
+        //add extra keywords only for comment
+        result.add("DOUBLE_BACKSLASH ::= '\\\\'");
+        result.add("BACKSLASH_QUOTE ::= '\\\"'");
         return result;
     }
 
