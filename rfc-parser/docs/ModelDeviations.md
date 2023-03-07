@@ -265,6 +265,7 @@ correctly.
 
   Comment initialization:
 
+  add extra keywords only for comment
   ![allowComments](doc-images/allowComments_commentInit.png)
 
 * `makeSeparatorRulesPrivate(result);` [link](#make-separator-rules-private)
