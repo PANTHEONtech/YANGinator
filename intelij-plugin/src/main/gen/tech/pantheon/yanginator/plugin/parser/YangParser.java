@@ -8662,7 +8662,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?
+    // OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET
     public static boolean path_predicate(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_predicate")) return false;
         if (!nextTokenIs(b, YANG_OPEN_BRACKET)) return false;
@@ -8673,7 +8673,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = r && path_equality_expr(b, l + 1);
         r = r && path_predicate_3(b, l + 1);
         r = r && consumeToken(b, YANG_CLOSED_BRACKET);
-        r = r && path_predicate_5(b, l + 1);
         exit_section_(b, m, YANG_PATH_PREDICATE, r);
         return r;
     }
@@ -8697,13 +8696,6 @@ public class YangParser implements PsiParser, LightPsiParser {
             if (!WSP(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "path_predicate_3", c)) break;
         }
-        return true;
-    }
-
-    // string-splitter?
-    private static boolean path_predicate_5(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "path_predicate_5")) return false;
-        string_splitter(b, l + 1);
         return true;
     }
 
