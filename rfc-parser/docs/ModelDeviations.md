@@ -43,10 +43,43 @@ correctly.
 
 * `rewriteUnreserved(result);` [link](#Rewrite-unreserved)
 
-* `rewriteZeroIntegerValue(result);`
+* `rewriteZeroIntegerValue(result);`[link](#Rewrite-Zero-Integer-Value)
 
-* `allowIndentString(result);`
+* `rewriteIPV4Address(result);`[link](#Rewrite-IPV4-Address)
 
+* `makeSeparatorRulesPrivate(result);` [link](#make-separator-rules-private)
+
+* `orderTokensForLexer(result);`[link](#Order-Tokens-For-Lexer)
+
+* `rewriteFractionDigitsArg(result);`[link](#Rewrite-Fraction-DigitsArg)
+
+* `rewritePositiveIntegerValue(result);`[link](#Rewrite-Positive-Integer-Value)
+
+* `adjustModuleAndSubmoduleStmt(result);`[link](#Adjust-Module-And-Submodule-Stmt)
+
+* `rewriteModuleHeaderStmts(result);`[link](#Rewrite-Module-Header-Stmts)
+
+* `rewriteSubModuleHeaderStmts(result);`[link](#Rewrite-SubModule-Header-Stmts)
+
+* `rewriteDataDefStmt(result);`[link](#Rewrite-Data-Def-Stmt)
+
+* `rewriteBodyStmts(result);`[link](#Rewrite-Body-Stmts)
+
+* `adjustUnknownStatement(result);`[link](#Adjust-Unknown-Statement)
+
+* `allowVersionOne(result);`[link](#Allow-Version-One)
+
+* `patternBodyChange(result);`[link](#Pattern-Body-Change)
+
+* `adjustRelPathKeyexpr(result);`[link](#Adjust-Rel-Path-Keyexpr)
+
+* `swapDecimalWithIntegerInRangeBoundaryDef(result);`[link](#Swap-Decimal-With-Integer-In-Range-Boundary-Def)
+
+* `allowComments(result);`[link](#Allow-Comments)
+
+* `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
+
+### Rewrite Zero Integer Value
   Rewrites zero-integer-value with proper tokens
 
   Before:
@@ -57,7 +90,7 @@ correctly.
 
   ![rewriteZeroIntegerValue](doc-images/rewriteZeroIntegerValue_output.png)
 
-* `rewriteIPV4Address(result);`
+### Rewrite IPV4 Address
 
   Rewrites IPv4address with proper token
 
@@ -69,7 +102,7 @@ correctly.
 
   ![rewriteIPV4Address](doc-images/rewriteIPV4Address_output.png)
 
-* `orderTokensForLexer(result);`
+### Order Tokens For Lexer
 
   Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
@@ -79,7 +112,7 @@ correctly.
 
   ![orderTokensForLexer](doc-images/orderTokensForLexer_output.png)
 
-* `rewriteFractionDigitsArg(result);`
+### Rewrite Fraction DigitsArg
 
   Rewrites fraction-digits-arg with proper tokens
 
@@ -91,7 +124,7 @@ correctly.
 
   ![rewriteFractionDigitsArg](doc-images/rewriteFractionDigitsArg_output.png)
 
-* `rewriteYangInitialization(result);`
+### Rewrite Yang Initialization
 
   Adds WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN against empty yang error.
 
@@ -103,7 +136,7 @@ correctly.
 
   ![rewriteYangInitialization](doc-images/rewriteYangInitialization_output.png)
 
-* `rewritePositiveIntegerValue(result);`
+### Rewrite Positive Integer Value
 
   Rewrites positive-integer-value with proper tokens
 
@@ -115,7 +148,7 @@ correctly.
 
   ![rewritePositiveIntegerValue](doc-images/rewritePositiveIntegerValue_output.png)
 
-* `adjustModuleAndSubmoduleStmt(result);`
+### Adjust Module And Submodule Stmt
 
   Making meta and linkage stmts optional in module and submodule stmts
   due to changes in their definitions to prevent grammar logic changes.
@@ -128,7 +161,7 @@ correctly.
 
   ![adjustModuleAndSubmoduleStmt](doc-images/adjustModuleAndSubmoduleStmt_output.png)
 
-* `rewriteModuleHeaderStmts(result);`
+### Rewrite Module Header Stmts
 
   Adjust module-header-stmts for error recovery. Logic stays the same,
   statements can appear in any order and duplicities are checked in annotator.
@@ -141,7 +174,7 @@ correctly.
 
   ![rewriteModuleHeaderStmts](doc-images/rewriteModuleHeaderStmts_output.png)
 
-* `rewriteSubModuleHeaderStmts(result);`
+### Rewrite SubModule Header Stmts
 
   Adjust submodule-header-stmts for error recovery. Logic stays the same,
   statements can appear in any order and duplicities are checked in annotator.
@@ -154,7 +187,7 @@ correctly.
 
   ![rewriteSubModuleHeaderStmts](doc-images/rewriteSubModuleHeaderStmts_output.png)
 
-* `rewriteDataDefStmt(result);`
+### Rewrite Data Def Stmt
 
   Switching positions of leaf-list-stmt and leaf-stmt due to error recovery always
   matching leaf-stmt if it was before leaf-list-stmt.
@@ -167,7 +200,7 @@ correctly.
 
   ![rewriteDataDefStmt](doc-images/rewriteDataDefStmt_output.png)
 
-* `rewriteBodyStmts(result);`
+### Rewrite Body Stmts
 
   Decomposing body-stmts into sub statements due error recovery.
   Logic should remain the same only change against RFC 7950 is
@@ -181,7 +214,7 @@ correctly.
 
   ![rewriteBodyStmts](doc-images/rewriteBodyStmts_output.png)
 
-* `adjustUnknownStatement(result);`
+### Adjust Unknown Statement
 
   Allowing quoted-string in unknown statement.
 
@@ -193,7 +226,8 @@ correctly.
 
   ![adjustUnknownStatement](doc-images/adjustUnknownStatement_output.png)
 
-* `allowVersionOne(result);`
+
+### Allow Version One
 
   Allowing version to be 1 or 1.1 instead of only 1.1
 
@@ -205,7 +239,7 @@ correctly.
 
   ![allowVersionOne](doc-images/allowVersionOne_output.png)
 
-* `patternBodyChange(result);`
+### Pattern Body Change
 
   Adding new pattern-body Statement to pattern-stmt expression in BNF file for separate
   Regex value expression
@@ -218,7 +252,7 @@ correctly.
 
   ![patternBodyChange](doc-images/patternBodyChange_output.png)
 
-* `adjustRelPathKeyexpr(result);`
+### Adjust Rel Path Keyexpr
 
   Adding token to the definition because it's prioritized to be matched in lexer
   as it's matching more characters at once.
@@ -231,7 +265,7 @@ correctly.
 
   ![adjustRelPathKeyexpr](doc-images/adjustRelPathKeyexpr_output.png)
 
-* `swapDecimalWithIntegerInRangeBoundaryDef(result);`
+### Swap Decimal With Integer In Range Boundary Def
 
   When a decimal value was used, the integer-value statement was recognized first,
   and it resulted in an error. See [link](#swap-decimal-value-with-integer-value).
@@ -247,7 +281,7 @@ correctly.
 
   ![swapDecimalWithIntegerInRangeBoundaryDef](doc-images/swapDecimalWithIntegerInRangeBoundaryDef_output.png)
 
-* `allowComments(result);`
+### Allow Comments
 
   Allowing single and multi-line comments in yang 1.1 according to validator.
 
@@ -267,7 +301,6 @@ correctly.
 
   ![allowComments](doc-images/allowComments_commentInit.png)
 
-* `makeSeparatorRulesPrivate(result);` [link](#make-separator-rules-private)
 
 ---
 
