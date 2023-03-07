@@ -16,8 +16,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangPathEqualityExpr;
 import tech.pantheon.yanginator.plugin.psi.YangPathPredicate;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -52,6 +54,12 @@ public class YangPathPredicateImpl extends YangNamedElementImpl implements YangP
     @NotNull
     public YangPathEqualityExpr getPathEqualityExpr() {
         return findNotNullChildByClass(YangPathEqualityExpr.class);
+    }
+
+    @Override
+    @Nullable
+    public YangStringSplitter getStringSplitter() {
+        return findChildByClass(YangStringSplitter.class);
     }
 
     @Override
