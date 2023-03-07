@@ -5518,25 +5518,38 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+    // identifier-arg | DQUOTE identifier-arg DQUOTE | SQUOTE identifier-arg SQUOTE
     public static boolean identifier_arg_str(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_arg_str")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_IDENTIFIER_ARG_STR, "<identifier arg str>");
         r = identifier_arg(b, l + 1);
         if (!r) r = identifier_arg_str_1(b, l + 1);
+        if (!r) r = identifier_arg_str_2(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+    // DQUOTE identifier-arg DQUOTE
     private static boolean identifier_arg_str_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_arg_str_1")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_DOUBLE_QUOTE);
+        r = DQUOTE(b, l + 1);
         r = r && identifier_arg(b, l + 1);
-        r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
+        r = r && DQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // SQUOTE identifier-arg SQUOTE
+    private static boolean identifier_arg_str_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_arg_str_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SQUOTE(b, l + 1);
+        r = r && identifier_arg(b, l + 1);
+        r = r && SQUOTE(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
@@ -5583,25 +5596,38 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+    // identifier-ref-arg | DQUOTE identifier-ref-arg DQUOTE | SQUOTE identifier-ref-arg SQUOTE
     public static boolean identifier_ref_arg_str(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_ref_arg_str")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_IDENTIFIER_REF_ARG_STR, "<identifier ref arg str>");
         r = identifier_ref_arg(b, l + 1);
         if (!r) r = identifier_ref_arg_str_1(b, l + 1);
+        if (!r) r = identifier_ref_arg_str_2(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+    // DQUOTE identifier-ref-arg DQUOTE
     private static boolean identifier_ref_arg_str_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_ref_arg_str_1")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_DOUBLE_QUOTE);
+        r = DQUOTE(b, l + 1);
         r = r && identifier_ref_arg(b, l + 1);
-        r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
+        r = r && DQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // SQUOTE identifier-ref-arg SQUOTE
+    private static boolean identifier_ref_arg_str_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_ref_arg_str_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SQUOTE(b, l + 1);
+        r = r && identifier_ref_arg(b, l + 1);
+        r = r && SQUOTE(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }

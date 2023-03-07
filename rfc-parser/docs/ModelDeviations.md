@@ -768,6 +768,13 @@ after:
 
 ![linkage_stmts_after_ref.png](doc-images%2Flinkage_stmts_after_ref.png)
 
+### Added single quote possibility 
+Added single quote possibility for **identifier-ref-arg** and **identifier-ref-arg-str** statements
+
+Before:  
+![](doc-images/identifier-ref-arg_SQOTE_before.png)
+After:  
+![](doc-images/identifier-ref-arg_SQOTE_after.png)
 
 ---
 

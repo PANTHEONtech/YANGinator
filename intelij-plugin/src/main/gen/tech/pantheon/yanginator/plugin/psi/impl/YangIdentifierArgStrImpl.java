@@ -13,10 +13,15 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArg;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangSquote;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+
+import java.util.List;
 
 public class YangIdentifierArgStrImpl extends YangNamedElementImpl implements YangIdentifierArgStr {
 
@@ -32,6 +37,18 @@ public class YangIdentifierArgStrImpl extends YangNamedElementImpl implements Ya
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangSquote> getSquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
     }
 
     @Override
