@@ -17,7 +17,7 @@ comment support and other reasons. All these deviations are documented [here](rf
 
 # Features
 
-- Base validation for [YANG 1.0](https://datatracker.ietf.org/doc/html/rfc6020)
+- Base validation for [YANG 1.0](https://datatracker.ietf.org/doc/html/rfc6020) and [YANG 1.1](https://datatracker.ietf.org/doc/html/rfc7950)
 - Syntax highlighting
 - Auto completion
 - Code folding (curly brackets, multi-line strings, multi-line comments)
