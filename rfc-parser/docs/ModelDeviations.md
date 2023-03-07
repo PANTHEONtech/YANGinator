@@ -664,6 +664,14 @@ Before:
 After:  
 ![](doc-images/resolved_inconsistent_quantifiers_after.png)
 
+### Added single quote possibility 
+Added single quote possibility for **identifier-ref-arg** and **identifier-ref-arg-str** statements
+
+Before:  
+![](doc-images/identifier-ref-arg_SQOTE_before.png)
+After:  
+![](doc-images/identifier-ref-arg_SQOTE_after.png)
+
 ---
 
 ## ***More methods are used that are not yet documented***
