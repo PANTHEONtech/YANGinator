@@ -54,6 +54,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = adjustDoubleColonInPchar(result);
         result = addStringSplittersForIfFeatures(result);
         result = allowReferenceLinkage(result);
+        result = addSingleQuotePossibility(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -966,7 +967,7 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
-        
+
      /**
      * Changes import and include string arguments, so they can be referenced.
      * @param lines list of strings
@@ -977,6 +978,26 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("import-stmt ::=") || line.contains("include-stmt ::=")) {
                 line = line.replace("identifier-arg-str", "identifier-ref-arg-str");
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Adds single quote possibility to identifier-ref-arg-str and identifier-arg-str.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> addSingleQuotePossibility(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("identifier-ref-arg-str ::= identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE")) {
+                line = "identifier-ref-arg-str ::= identifier-ref-arg | DQUOTE identifier-ref-arg DQUOTE | SQUOTE identifier-ref-arg SQUOTE";
+            }
+            if (line.contains("identifier-arg-str ::= identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE")) {
+                line = "identifier-arg-str ::= identifier-arg | DQUOTE identifier-arg DQUOTE | SQUOTE identifier-arg SQUOTE";
             }
             result.add(line);
         }

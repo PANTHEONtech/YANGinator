@@ -1302,14 +1302,14 @@ prefix-arg ::= prefix
 
 prefix ::= identifier
 
-identifier-arg-str ::= identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
+identifier-arg-str ::= identifier-arg | DQUOTE identifier-arg DQUOTE | SQUOTE identifier-arg SQUOTE
 
 identifier-arg ::= identifier
 
 identifier ::= (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
 (string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
 
-identifier-ref-arg-str ::= identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
+identifier-ref-arg-str ::= identifier-ref-arg | DQUOTE identifier-ref-arg DQUOTE | SQUOTE identifier-ref-arg SQUOTE
 
 identifier-ref-arg ::= identifier-ref
 
