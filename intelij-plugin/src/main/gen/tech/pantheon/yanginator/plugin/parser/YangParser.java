@@ -438,27 +438,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
-    }
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
-
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -479,6 +458,10 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
 
     /* ********************************************************** */
     // '\"'
@@ -4047,10 +4030,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_, YANG_DEVIATE_ADD_STMT, "<deviate add stmt>");
         r = deviate_keyword(b, l + 1);
-        p = r; // pin = 1
-        r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, add_keyword_str(b, l + 1)) && r;
-        r = p && report_error_(b, optsep(b, l + 1)) && r;
+        r = r && sep(b, l + 1);
+        r = r && add_keyword_str(b, l + 1);
+        p = r; // pin = 3
+        r = r && report_error_(b, optsep(b, l + 1));
         r = p && report_error_(b, deviate_add_stmt_4(b, l + 1)) && r;
         r = p && stmtsep(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
@@ -4095,10 +4078,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_);
         r = consumeToken(b, YANG_LEFT_BRACE);
-        p = r; // pin = 1
-        r = r && report_error_(b, stmtsep(b, l + 1));
-        r = p && report_error_(b, anyOrder(b, l + 1, YangParser::deviate_add_stmt_4_1_2_0, YangParser::deviate_add_stmt_4_1_2_1, YangParser::deviate_add_stmt_4_1_2_2, YangParser::deviate_add_stmt_4_1_2_3, YangParser::deviate_add_stmt_4_1_2_4, YangParser::deviate_add_stmt_4_1_2_5, YangParser::deviate_add_stmt_4_1_2_6, YangParser::deviate_add_stmt_4_1_2_7)) && r;
-        r = p && consumeToken(b, YANG_RIGHT_BRACE) && r;
+        r = r && stmtsep(b, l + 1);
+        r = r && anyOrder(b, l + 1, YangParser::deviate_add_stmt_4_1_2_0, YangParser::deviate_add_stmt_4_1_2_1, YangParser::deviate_add_stmt_4_1_2_2, YangParser::deviate_add_stmt_4_1_2_3, YangParser::deviate_add_stmt_4_1_2_4, YangParser::deviate_add_stmt_4_1_2_5, YangParser::deviate_add_stmt_4_1_2_6, YangParser::deviate_add_stmt_4_1_2_7);
+        p = r; // pin = 3
+        r = r && consumeToken(b, YANG_RIGHT_BRACE);
         exit_section_(b, l, m, r, p, null);
         return r || p;
     }
@@ -4186,10 +4169,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_, YANG_DEVIATE_DELETE_STMT, "<deviate delete stmt>");
         r = deviate_keyword(b, l + 1);
-        p = r; // pin = 1
-        r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, delete_keyword_str(b, l + 1)) && r;
-        r = p && report_error_(b, optsep(b, l + 1)) && r;
+        r = r && sep(b, l + 1);
+        r = r && delete_keyword_str(b, l + 1);
+        p = r; // pin = 3
+        r = r && report_error_(b, optsep(b, l + 1));
         r = p && report_error_(b, deviate_delete_stmt_4(b, l + 1)) && r;
         r = p && stmtsep(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
@@ -4226,10 +4209,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_);
         r = consumeToken(b, YANG_LEFT_BRACE);
-        p = r; // pin = 1
-        r = r && report_error_(b, stmtsep(b, l + 1));
-        r = p && report_error_(b, anyOrder(b, l + 1, YangParser::deviate_delete_stmt_4_1_2_0, YangParser::deviate_delete_stmt_4_1_2_1, YangParser::deviate_delete_stmt_4_1_2_2, YangParser::deviate_delete_stmt_4_1_2_3)) && r;
-        r = p && consumeToken(b, YANG_RIGHT_BRACE) && r;
+        r = r && stmtsep(b, l + 1);
+        r = r && anyOrder(b, l + 1, YangParser::deviate_delete_stmt_4_1_2_0, YangParser::deviate_delete_stmt_4_1_2_1, YangParser::deviate_delete_stmt_4_1_2_2, YangParser::deviate_delete_stmt_4_1_2_3);
+        p = r; // pin = 3
+        r = r && consumeToken(b, YANG_RIGHT_BRACE);
         exit_section_(b, l, m, r, p, null);
         return r || p;
     }
@@ -4293,10 +4276,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_, YANG_DEVIATE_NOT_SUPPORTED_STMT, "<deviate not supported stmt>");
         r = deviate_keyword(b, l + 1);
-        p = r; // pin = 1
-        r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, not_supported_keyword_str(b, l + 1)) && r;
-        r = p && stmtend(b, l + 1) && r;
+        r = r && sep(b, l + 1);
+        r = r && not_supported_keyword_str(b, l + 1);
+        p = r; // pin = 3
+        r = r && stmtend(b, l + 1);
         exit_section_(b, l, m, r, p, null);
         return r || p;
     }
@@ -4319,10 +4302,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_, YANG_DEVIATE_REPLACE_STMT, "<deviate replace stmt>");
         r = deviate_keyword(b, l + 1);
-        p = r; // pin = 1
-        r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, replace_keyword_str(b, l + 1)) && r;
-        r = p && report_error_(b, optsep(b, l + 1)) && r;
+        r = r && sep(b, l + 1);
+        r = r && replace_keyword_str(b, l + 1);
+        p = r; // pin = 3
+        r = r && report_error_(b, optsep(b, l + 1));
         r = p && report_error_(b, deviate_replace_stmt_4(b, l + 1)) && r;
         r = p && stmtsep(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
@@ -4365,10 +4348,10 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_);
         r = consumeToken(b, YANG_LEFT_BRACE);
-        p = r; // pin = 1
-        r = r && report_error_(b, stmtsep(b, l + 1));
-        r = p && report_error_(b, anyOrder(b, l + 1, YangParser::deviate_replace_stmt_4_1_2_0, YangParser::deviate_replace_stmt_4_1_2_1, YangParser::deviate_replace_stmt_4_1_2_2, YangParser::deviate_replace_stmt_4_1_2_3, YangParser::deviate_replace_stmt_4_1_2_4, YangParser::deviate_replace_stmt_4_1_2_5, YangParser::deviate_replace_stmt_4_1_2_6)) && r;
-        r = p && consumeToken(b, YANG_RIGHT_BRACE) && r;
+        r = r && stmtsep(b, l + 1);
+        r = r && anyOrder(b, l + 1, YangParser::deviate_replace_stmt_4_1_2_0, YangParser::deviate_replace_stmt_4_1_2_1, YangParser::deviate_replace_stmt_4_1_2_2, YangParser::deviate_replace_stmt_4_1_2_3, YangParser::deviate_replace_stmt_4_1_2_4, YangParser::deviate_replace_stmt_4_1_2_5, YangParser::deviate_replace_stmt_4_1_2_6);
+        p = r; // pin = 3
+        r = r && consumeToken(b, YANG_RIGHT_BRACE);
         exit_section_(b, l, m, r, p, null);
         return r || p;
     }
@@ -12340,6 +12323,23 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
+    }
+
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
     }
 
 }

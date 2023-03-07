@@ -22,7 +22,7 @@ public interface YangDeviateAddStmt extends YangYangStmt {
     @NotNull
     List<YangWsp> getWspList();
 
-    @Nullable
+    @NotNull
     YangAddKeywordStr getAddKeywordStr();
 
     @NotNull

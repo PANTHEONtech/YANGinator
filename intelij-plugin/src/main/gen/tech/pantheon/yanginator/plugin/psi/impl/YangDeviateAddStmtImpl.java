@@ -56,9 +56,9 @@ public class YangDeviateAddStmtImpl extends YangYangStmtImpl implements YangDevi
     }
 
     @Override
-    @Nullable
+    @NotNull
     public YangAddKeywordStr getAddKeywordStr() {
-        return findChildByClass(YangAddKeywordStr.class);
+        return findNotNullChildByClass(YangAddKeywordStr.class);
     }
 
     @Override
