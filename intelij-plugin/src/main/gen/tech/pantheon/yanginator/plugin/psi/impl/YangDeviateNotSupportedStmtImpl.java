@@ -69,9 +69,9 @@ public class YangDeviateNotSupportedStmtImpl extends YangYangStmtImpl implements
     }
 
     @Override
-    @Nullable
+    @NotNull
     public YangNotSupportedKeywordStr getNotSupportedKeywordStr() {
-        return findChildByClass(YangNotSupportedKeywordStr.class);
+        return findNotNullChildByClass(YangNotSupportedKeywordStr.class);
     }
 
     @Override

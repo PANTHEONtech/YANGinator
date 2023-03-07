@@ -31,7 +31,7 @@ public interface YangDeviateReplaceStmt extends YangYangStmt {
     @NotNull
     List<YangLineBreak> getLineBreakList();
 
-    @Nullable
+    @NotNull
     YangReplaceKeywordStr getReplaceKeywordStr();
 
     @NotNull
