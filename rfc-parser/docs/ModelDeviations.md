@@ -117,7 +117,7 @@ correctly.
 
   ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_output.png)
 
-### Order Tokens For Lexer
+### Order Tokens For Lexer 
 
   Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
