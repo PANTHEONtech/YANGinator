@@ -31,4 +31,7 @@ public interface YangPchar extends YangNamedElement {
     @Nullable
     PsiElement getColon();
 
+    @Nullable
+    PsiElement getDoubleColon();
+
 }

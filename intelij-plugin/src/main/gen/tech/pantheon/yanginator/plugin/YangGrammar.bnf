@@ -1461,7 +1461,7 @@ segment-nz ::= pchar+
 segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
   // non-zero-length segment without any colon COLON
 
-pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 
 query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
