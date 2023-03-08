@@ -740,7 +740,7 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
-     * Allows double colon in unknown statement.
+     * Allows double colon in pchar.
      *
      * @param lines list of strings
      * @return list of strings

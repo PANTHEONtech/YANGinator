@@ -79,6 +79,9 @@ correctly.
 
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
+* `adjustDoubleColonInPchar(result);`[link](#Adjust-Double-Colon-In-Pchar)
+
+
 ### Rewrite Zero Integer Value
   Rewrites zero-integer-value with proper tokens
 
@@ -101,6 +104,18 @@ correctly.
   After:
 
   ![rewriteIPV4Address](doc-images/rewriteIPV4Address_output.png)
+
+### Adjust Double Colon In Pchar
+
+  Adjust Double Colon In Pchar
+
+  Before:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_input.png)
+
+  After:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_output.png)
 
 ### Order Tokens For Lexer
 
