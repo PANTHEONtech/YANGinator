@@ -86,7 +86,7 @@ public class YangUtil {
                     for (T literal : literals) {
                         String valueOfLiteral;
                         YangReferencedStatement referencedStatement = (YangReferencedStatement) literal;
-                        valueOfLiteral = givMeSome(referencedStatement);
+                        valueOfLiteral = getStmtArgText(referencedStatement);
                         if (identifierKeyword.equals(valueOfLiteral)) {
                             if (result == null) {
                                 result = new ArrayList<>();
@@ -101,7 +101,7 @@ public class YangUtil {
         return result != null ? result : Collections.emptyList();
     }
 
-    private static String givMeSome(YangReferencedStatement referencedStatement) {
+    private static String getStmtArgText(YangReferencedStatement referencedStatement) {
         return Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
     }
 
