@@ -18,6 +18,9 @@ import java.util.List;
 public interface YangLinkageStmts extends YangNamedElement {
 
     @NotNull
-    List<YangYangStmt> getYangStmtList();
+    List<YangImportStmt> getImportStmtList();
+
+    @NotNull
+    List<YangIncludeStmt> getIncludeStmtList();
 
 }

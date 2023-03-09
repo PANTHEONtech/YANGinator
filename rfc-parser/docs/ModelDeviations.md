@@ -79,6 +79,8 @@ correctly.
 
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
+* `allowReferenceLinkage(result);`[link](#Make-linkages-referencable)
+
 ### Rewrite Zero Integer Value
   Rewrites zero-integer-value with proper tokens
 
@@ -663,6 +665,19 @@ Before:
 ![](doc-images/resolved_inconsistent_quantifiers_before.png)  
 After:  
 ![](doc-images/resolved_inconsistent_quantifiers_after.png)
+
+### Make linkages referencable
+
+Changed import and linkage statements string arguments so hey can be referenced. 
+Grammar is the same, only these elements implement referencing
+
+before:
+
+![linkage_stmts_before_ref.png](doc-images%2Flinkage_stmts_before_ref.png)
+
+after:
+
+![linkage_stmts_after_ref.png](doc-images%2Flinkage_stmts_after_ref.png)
 
 ---
 

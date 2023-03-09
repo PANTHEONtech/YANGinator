@@ -23,6 +23,8 @@ import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRef;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArg;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangNamedElement;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
@@ -53,6 +55,14 @@ public class YangReferenceContributor extends PsiReferenceContributor {
                             if (!value.equals(IDENTITYREF_STR)) {
                                 return YangReferenceContributor.this.getYangReference(element, typeStmt, value);
                             }
+                        } else if (element instanceof YangImportStmt) {
+                            final YangImportStmt importStmt = (YangImportStmt) element;
+                            final String value = YangReferenceContributor.this.getIdentifierOf(importStmt);
+                            return YangReferenceContributor.this.getYangReference(element, importStmt, value);
+                        } else if (element instanceof YangIncludeStmt) {
+                            final YangIncludeStmt includeStmt = (YangIncludeStmt) element;
+                            final String value = YangReferenceContributor.this.getIdentifierOf(includeStmt);
+                            return YangReferenceContributor.this.getYangReference(element, includeStmt, value);
                         }
                         return PsiReference.EMPTY_ARRAY;
                     }

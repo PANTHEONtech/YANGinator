@@ -30,19 +30,19 @@ import tech.pantheon.yanginator.plugin.psi.YangRevisionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
 import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
-public class YangModuleStmtImpl extends YangYangStmtImpl implements YangModuleStmt {
+public class YangModuleStmtImpl extends YangGeneratedReferenceTypeImpl implements YangModuleStmt {
 
     public YangModuleStmtImpl(@NotNull ASTNode node) {
         super(node);
     }
 
-    @Override
     public void accept(@NotNull YangVisitor visitor) {
         visitor.visitModuleStmt(this);
     }

@@ -445,16 +445,15 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_DATA_DEF_STMT, YANG_DEFAULT_STMT, YANG_DESCRIPTION_STMT, YANG_DEVIATE_ADD_STMT,
                     YANG_DEVIATE_DELETE_STMT, YANG_DEVIATE_NOT_SUPPORTED_STMT, YANG_DEVIATE_REPLACE_STMT, YANG_DEVIATION_STMT,
                     YANG_ENUM_STMT, YANG_ERROR_APP_TAG_STMT, YANG_ERROR_MESSAGE_STMT, YANG_EXTENSION_STMT,
-                    YANG_FEATURE_STMT, YANG_FRACTION_DIGITS_STMT, YANG_IF_FEATURE_STMT, YANG_IMPORT_STMT,
-                    YANG_INCLUDE_STMT, YANG_INPUT_STMT, YANG_KEY_STMT, YANG_LEAF_LIST_STMT,
-                    YANG_LEAF_STMT, YANG_LENGTH_STMT, YANG_LIST_STMT, YANG_MANDATORY_STMT,
-                    YANG_MAX_ELEMENTS_STMT, YANG_MIN_ELEMENTS_STMT, YANG_MODIFIER_STMT, YANG_MODULE_STMT,
-                    YANG_MUST_STMT, YANG_NAMESPACE_STMT, YANG_NOTIFICATION_STMT, YANG_ORDERED_BY_STMT,
-                    YANG_ORGANIZATION_STMT, YANG_OUTPUT_STMT, YANG_PATH_STMT, YANG_PATTERN_STMT,
-                    YANG_POSITION_STMT, YANG_PREFIX_STMT, YANG_PRESENCE_STMT, YANG_RANGE_STMT,
-                    YANG_REFERENCE_STMT, YANG_REFINE_STMT, YANG_REQUIRE_INSTANCE_STMT, YANG_REVISION_DATE_STMT,
-                    YANG_REVISION_STMT, YANG_RPC_STMT, YANG_SHORT_CASE_STMT, YANG_STATUS_STMT,
-                    YANG_SUBMODULE_STMT, YANG_UNIQUE_STMT, YANG_UNITS_STMT, YANG_USES_AUGMENT_STMT,
+                    YANG_FEATURE_STMT, YANG_FRACTION_DIGITS_STMT, YANG_IF_FEATURE_STMT, YANG_INPUT_STMT,
+                    YANG_KEY_STMT, YANG_LEAF_LIST_STMT, YANG_LEAF_STMT, YANG_LENGTH_STMT,
+                    YANG_LIST_STMT, YANG_MANDATORY_STMT, YANG_MAX_ELEMENTS_STMT, YANG_MIN_ELEMENTS_STMT,
+                    YANG_MODIFIER_STMT, YANG_MUST_STMT, YANG_NAMESPACE_STMT, YANG_NOTIFICATION_STMT,
+                    YANG_ORDERED_BY_STMT, YANG_ORGANIZATION_STMT, YANG_OUTPUT_STMT, YANG_PATH_STMT,
+                    YANG_PATTERN_STMT, YANG_POSITION_STMT, YANG_PREFIX_STMT, YANG_PRESENCE_STMT,
+                    YANG_RANGE_STMT, YANG_REFERENCE_STMT, YANG_REFINE_STMT, YANG_REQUIRE_INSTANCE_STMT,
+                    YANG_REVISION_DATE_STMT, YANG_REVISION_STMT, YANG_RPC_STMT, YANG_SHORT_CASE_STMT,
+                    YANG_STATUS_STMT, YANG_UNIQUE_STMT, YANG_UNITS_STMT, YANG_USES_AUGMENT_STMT,
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
@@ -5878,7 +5877,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // import-keyword sep identifier-arg-str optsep
+    // import-keyword sep identifier-ref-arg-str optsep
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
     // <<anyOrder  prefix-stmt
@@ -5893,7 +5892,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = import_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, identifier_arg_str(b, l + 1)) && r;
+        r = p && report_error_(b, identifier_ref_arg_str(b, l + 1)) && r;
         r = p && report_error_(b, optsep(b, l + 1)) && r;
         r = p && report_error_(b, consumeToken(b, YANG_LEFT_BRACE)) && r;
         r = p && report_error_(b, stmtsep(b, l + 1)) && r;
@@ -5937,7 +5936,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // include-keyword sep identifier-arg-str optsep
+    // include-keyword sep identifier-ref-arg-str optsep
     //   (SEMICOLON |
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
@@ -5952,7 +5951,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = include_keyword(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, sep(b, l + 1));
-        r = p && report_error_(b, identifier_arg_str(b, l + 1)) && r;
+        r = p && report_error_(b, identifier_ref_arg_str(b, l + 1)) && r;
         r = p && report_error_(b, optsep(b, l + 1)) && r;
         r = p && report_error_(b, include_stmt_4(b, l + 1)) && r;
         r = p && stmtsep(b, l + 1) && r;
