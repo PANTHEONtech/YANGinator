@@ -49,6 +49,11 @@
         <lexerOnly>false</lexerOnly>
     </token>
     <token>
+        <key>"::"</key>
+        <value>DOUBLE_COLON</value>
+        <lexerOnly>false</lexerOnly>
+    </token>
+    <token>
         <key>"{"</key>
         <value>LEFT_BRACE</value>
         <lexerOnly>false</lexerOnly>

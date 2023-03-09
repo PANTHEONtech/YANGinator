@@ -21,6 +21,9 @@ public interface YangSegmentNzNc extends YangNamedElement {
     List<YangPctEncoded> getPctEncodedList();
 
     @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
+    @NotNull
     List<YangSubDelims> getSubDelimsList();
 
     @NotNull

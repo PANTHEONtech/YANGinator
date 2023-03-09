@@ -12,6 +12,18 @@
 <configuration>
     <statements>
         <statement>
+            <name>module-stmt ::=</name>
+            <pin>= 2</pin>
+            <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
+        </statement>
+        <statement>
+            <name>submodule-stmt ::=</name>
+            <pin>= 2</pin>
+            <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
+        </statement>
+        <statement>
             <name>type-stmt ::=</name>
             <pin>(".*") = 1</pin>
             <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
@@ -48,12 +60,16 @@
             <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
-            <name>module-stmt ::=</name>
-            <pin>= 2</pin>
+            <name>import-stmt ::=</name>
+            <pin>(".*") = 1</pin>
+            <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
-            <name>submodule-stmt ::=</name>
-            <pin>= 2</pin>
+            <name>include-stmt ::=</name>
+            <pin>(".*") = 1</pin>
+            <implements>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"</extends>
         </statement>
         <statement>
             <name>module-header-stmts ::=</name>

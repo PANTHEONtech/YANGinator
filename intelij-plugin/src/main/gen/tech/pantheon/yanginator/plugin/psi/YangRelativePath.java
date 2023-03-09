@@ -18,6 +18,9 @@ import java.util.List;
 public interface YangRelativePath extends YangNamedElement {
 
     @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
     YangDescendantPath getDescendantPath();
 
     @NotNull

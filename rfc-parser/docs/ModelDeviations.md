@@ -77,11 +77,21 @@ correctly.
 
 * `allowComments(result);`[link](#Allow-Comments)
 
+* `addStringSplittersForIfFeatures(result);` [link](#add-splitters-for-if-features) 
+
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
 * `rewriteUsesAugmentStmt(result);`[link](#Rewrite-Uses-Augment-Stmt)
 
 ### Rewrite Zero Integer Value 
+
+* `adjustDoubleColonInPchar(result);`[link](#Adjust-Double-Colon-In-Pchar)
+
+* `allowReferenceLinkage(result);`[link](#Make-linkages-referencable)
+
+
+### Rewrite Zero Integer Value
+
   Rewrites zero-integer-value with proper tokens
 
   Before:
@@ -104,7 +114,19 @@ correctly.
 
   ![rewriteIPV4Address](doc-images/rewriteIPV4Address_output.png)
 
-### Order Tokens For Lexer
+### Adjust Double Colon In Pchar
+
+  Adjust Double Colon In Pchar
+
+  Before:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_input.png)
+
+  After:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_output.png)
+
+### Order Tokens For Lexer 
 
   Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
@@ -227,7 +249,6 @@ correctly.
   After:
 
   ![adjustUnknownStatement](doc-images/adjustUnknownStatement_output.png)
-
 
 ### Allow Version One
 
@@ -373,10 +394,17 @@ string-splitter allows that some stmts can be in multiple strings joined with +
 quoted-path-arg allows quoted path
 vchar and quoted-vchar are replacement for yang-char until external rule checkString will work properly
 Everything except chars is valid in yang 1.1 according to validators.
+These rules have been changed during development.
 
 **Added rules**
 
+new:
+
 ![added rules](doc-images/added_rules.png)
+
+changed: 
+
+![added_rules_after.png](doc-images/added_rules_after.png)
 
 ### Quoted augment arg
 
@@ -525,7 +553,7 @@ After
 
 ### Rewrite identifier
 
-New tokens added due to double-click word selection.
+New tokens added due to double-click word selection and multi-line capability.
 
 **Example**
 
@@ -535,7 +563,7 @@ Before
 
 After
 
-![rewrite identifier after](doc-images/rewrite_identifier_after.png)
+![identifier_after.png](doc-images/identifier_after.png)
 
 ### Rewrite unreserved
 
@@ -629,7 +657,7 @@ after:
 
 ![](doc-images/absolute_schema_nodeid_after.png)  
 
-**Path definitions**  
+### Path definitions
 
 before:  
 
@@ -639,6 +667,8 @@ after:
 
 ![](doc-images/path_definition_after.png)  
 
+#### Path predicate
+
 before:
 
 ![](doc-images/path_predicate_before.png)
@@ -646,6 +676,25 @@ before:
 after:
 
 ![](doc-images/path_predicate_after.png)
+
+#### Relative Path expressions
+
+before:
+
+![rel_path_exp_before.png](doc-images%2Frel_path_exp_before.png)
+
+after:
+
+![rel_path_exp_after.png](doc-images%2Frel_path_exp_after.png)
+
+#### Segments
+before:
+
+![segment_before.png](doc-images%2Fsegment_before.png)
+
+after:
+
+![segment_after.png](doc-images%2Fsegment_after.png)
 
 ### Allow indents for certain strings
 
@@ -656,6 +705,7 @@ Before:
 
 After:  
 ![statements_to_indent_after.png](doc-images/statements_to_indent_after.png)
+
 ![indentable_string.png](doc-images/indentable_string.png)
 
 ### Resolved inconsistent quantifiers
@@ -665,6 +715,7 @@ Before:
 ![](doc-images/resolved_inconsistent_quantifiers_before.png)  
 After:  
 ![](doc-images/resolved_inconsistent_quantifiers_after.png)
+
 
 ### Rewrite Uses Augment Stmt
 
@@ -689,6 +740,35 @@ Before:
 After:
 
 ![](doc-images/path_predicate_after.png)
+
+
+### Add splitters for if-features
+
+Changed if-feature expressions, so that splitting the string is possible.
+
+before:
+
+![if_feature_before.png](doc-images/if_feature_before.png)
+
+after:
+
+![if_feature_after.png](doc-images/if_feature_after.png)
+
+
+### Make linkages referencable
+
+Changed import and linkage statements string arguments so hey can be referenced. 
+Grammar is the same, only these elements implement referencing
+
+before:
+
+![linkage_stmts_before_ref.png](doc-images%2Flinkage_stmts_before_ref.png)
+
+after:
+
+![linkage_stmts_after_ref.png](doc-images%2Flinkage_stmts_after_ref.png)
+
+
 ---
 
 ## ***More methods are used that are not yet documented***

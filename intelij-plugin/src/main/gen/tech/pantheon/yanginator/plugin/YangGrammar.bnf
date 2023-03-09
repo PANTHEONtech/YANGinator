@@ -40,6 +40,8 @@ module-stmt ::= optsep module-keyword sep identifier-arg-str
   RIGHT_BRACE optsep
 {
 pin= 2
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
@@ -53,6 +55,8 @@ submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
   RIGHT_BRACE optsep
 {
 pin= 2
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 module-header-stmts ::= // these stmts can appear in any order
@@ -132,7 +136,7 @@ yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE
 
 yang-version-arg ::= ONE [DOT ONE]
 
-import-stmt ::= import-keyword sep identifier-arg-str optsep
+import-stmt ::= import-keyword sep identifier-ref-arg-str optsep
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
 <<anyOrder  prefix-stmt
@@ -142,9 +146,11 @@ import-stmt ::= import-keyword sep identifier-arg-str optsep
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
-include-stmt ::= include-keyword sep identifier-arg-str optsep
+include-stmt ::= include-keyword sep identifier-ref-arg-str optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -154,6 +160,8 @@ include-stmt ::= include-keyword sep identifier-arg-str optsep
   RIGHT_BRACE) stmtsep
 {
 pin(".*") = 1
+implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
 namespace-stmt ::= namespace-keyword sep uri-str stmtend
@@ -298,14 +306,14 @@ pin(".*") = 1
 if-feature-expr-str ::= if-feature-expr | ( DQUOTE if-feature-expr DQUOTE ) // a string that matches the rule  < if-feature-expr
 
 if-feature-expr ::= if-feature-term
-  [sep or-keyword sep if-feature-expr]
+  [(string-splitter|sep) or-keyword (string-splitter|sep) if-feature-expr]
 
 if-feature-term ::= if-feature-factor
-  [sep and-keyword sep if-feature-term]
+  [(string-splitter|sep) and-keyword (string-splitter|sep) if-feature-term]
 
-if-feature-factor ::= not-keyword sep if-feature-factor |
-  LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |
-  identifier-ref-arg
+if-feature-factor ::= string-splitter? not-keyword (string-splitter|sep) if-feature-factor |
+  string-splitter? LEFT_PARENTHESIS optsep string-splitter? if-feature-expr string-splitter? optsep RIGHT_PARENTHESIS |
+  string-splitter? identifier-ref-arg
 
 typedef-stmt ::= typedef-keyword sep identifier-arg-str optsep
   LEFT_BRACE stmtsep
@@ -731,8 +739,8 @@ pin(".*") = 1
 
 short-case-stmt ::= choice-stmt |
   container-stmt |
-  leaf-stmt |
   leaf-list-stmt |
+  leaf-stmt |
   list-stmt |
   anydata-stmt |
   anyxml-stmt
@@ -1177,20 +1185,20 @@ path-arg ::= absolute-path | relative-path
 
 absolute-path ::= (FORWARD_SLASH string-splitter? (node-identifier string-splitter? path-predicate*) string-splitter?)+
 
-relative-path ::= (PARENT_FOLDER string-splitter?)+ descendant-path
+relative-path ::= (DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* | PARENT_FOLDER string-splitter?)+ descendant-path
 
 descendant-path ::= node-identifier string-splitter?
   [path-predicate* absolute-path]
 
-path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET
+path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?
 
-path-equality-expr ::= node-identifier WSP* EQUALS WSP* path-key-expr
+path-equality-expr ::= node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr
 
-path-key-expr ::= current-function-invocation WSP* FORWARD_SLASH WSP*
+path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*
   rel-path-keyexpr
 
-rel-path-keyexpr ::= (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
-  (node-identifier WSP* FORWARD_SLASH WSP*)*
+rel-path-keyexpr ::= (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+
+  (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*
   node-identifier
 //; Keywords, using the syntax for case-sensitive strings (RFC 7405)
 // statement keywords
@@ -1299,7 +1307,7 @@ identifier-arg-str ::= identifier-arg | DOUBLE_QUOTE identifier-arg DOUBLE_QUOTE
 identifier-arg ::= identifier
 
 identifier ::= (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-(ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)*
+(string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
 
 identifier-ref-arg-str ::= identifier-ref-arg | DOUBLE_QUOTE identifier-ref-arg DOUBLE_QUOTE
 
@@ -1456,12 +1464,12 @@ path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
 path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
 path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
 path-empty ::= ZERO_LENGTH_STRING// pchar deviation against original rfc 3986
-segment ::= pchar*
-segment-nz ::= pchar+
-segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
+segment ::= (string-splitter? pchar string-splitter?)*
+segment-nz ::= (string-splitter? pchar string-splitter?)+
+segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+
   // non-zero-length segment without any colon COLON
 
-pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 
 query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
@@ -1475,7 +1483,7 @@ gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLO
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
   | ASTERISK | PLUS_SIGN | COMMA | EQUALS
 
-string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)
+string-splitter ::= (WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*) | (WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*)
 
 quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)
 

@@ -25,6 +25,10 @@ import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
+import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
@@ -33,6 +37,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class YangUtil {
 
@@ -65,10 +70,13 @@ public class YangUtil {
     }
 
     public static <T extends PsiElement> List<T> findIdentifierLiterals(Project project, String identifierKeyword,
-                                                                        Object genericElement) {
+                                                                        Object genericElement, List<String> fileNames) {
         List<T> result = null;
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        virtualFiles = virtualFiles.stream()
+                .filter(file -> fileNames.contains(file.getName()))
+                .collect(Collectors.toList());
 
         for (VirtualFile virtualFile : virtualFiles) {
             PsiFile yangFile = PsiManager.getInstance(project).findFile(virtualFile);
@@ -78,7 +86,7 @@ public class YangUtil {
                     for (T literal : literals) {
                         String valueOfLiteral;
                         YangReferencedStatement referencedStatement = (YangReferencedStatement) literal;
-                        valueOfLiteral = Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
+                        valueOfLiteral = getStmtArgText(referencedStatement);
                         if (identifierKeyword.equals(valueOfLiteral)) {
                             if (result == null) {
                                 result = new ArrayList<>();
@@ -89,7 +97,12 @@ public class YangUtil {
                 }
             }
         }
+
         return result != null ? result : Collections.emptyList();
+    }
+
+    private static String getStmtArgText(YangReferencedStatement referencedStatement) {
+        return Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
     }
 
     @SuppressWarnings("unchecked")
@@ -99,6 +112,10 @@ public class YangUtil {
             classType = (Class<T>) YangIdentityStmt.class;
         } else if (genericElement instanceof YangUsesStmt) {
             classType = (Class<T>) YangGroupingStmt.class;
+        } else if (genericElement instanceof YangImportStmt) {
+            classType = (Class<T>) YangModuleStmt.class;
+        } else if (genericElement instanceof YangIncludeStmt) {
+            classType = (Class<T>) YangSubmoduleStmt.class;
         }
         return classType;
     }

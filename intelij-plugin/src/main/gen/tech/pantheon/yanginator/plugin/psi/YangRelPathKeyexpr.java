@@ -23,4 +23,7 @@ public interface YangRelPathKeyexpr extends YangNamedElement {
     @NotNull
     List<YangNodeIdentifier> getNodeIdentifierList();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }
