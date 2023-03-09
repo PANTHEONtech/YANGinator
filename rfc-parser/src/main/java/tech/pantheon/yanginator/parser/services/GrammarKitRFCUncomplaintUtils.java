@@ -52,6 +52,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = addStringSplitterForPaths(result);
         result = allowIndentString(result);
         result = adjustDoubleColonInPchar(result);
+        result = allowReferenceLinkage(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -667,7 +668,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("data-def-stmt ::=")) {
+            if (line.contains("data-def-stmt ::=")||line.contains("short-case-stmt")) {
                 found = true;
             }
             if (found && line.contains("  leaf-stmt |")) {
@@ -911,6 +912,23 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
                 line = "yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Changes import and include string arguments, so they can be referenced.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> allowReferenceLinkage(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("import-stmt ::=") || line.contains("include-stmt ::=")) {
+                line = line.replace("identifier-arg-str", "identifier-ref-arg-str");
             }
             result.add(line);
         }

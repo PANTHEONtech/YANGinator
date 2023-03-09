@@ -25,6 +25,18 @@ public interface YangYangStmt extends YangNamedElement {
     YangIdentityStmt getIdentityStmt();
 
     @Nullable
+    YangImportStmt getImportStmt();
+
+    @Nullable
+    YangIncludeStmt getIncludeStmt();
+
+    @Nullable
+    YangModuleStmt getModuleStmt();
+
+    @Nullable
+    YangSubmoduleStmt getSubmoduleStmt();
+
+    @Nullable
     YangTypeStmt getTypeStmt();
 
     @Nullable

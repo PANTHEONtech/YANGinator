@@ -522,7 +522,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitImportStmt(@NotNull YangImportStmt o) {
-        visitYangStmt(o);
+        visitGeneratedReferenceType(o);
     }
 
     public void visitIncludeKeyword(@NotNull YangIncludeKeyword o) {
@@ -530,7 +530,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitIncludeStmt(@NotNull YangIncludeStmt o) {
-        visitYangStmt(o);
+        visitGeneratedReferenceType(o);
     }
 
     public void visitIndentableString(@NotNull YangIndentableString o) {
@@ -746,7 +746,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitModuleStmt(@NotNull YangModuleStmt o) {
-        visitYangStmt(o);
+        visitGeneratedReferenceType(o);
     }
 
     public void visitMustKeyword(@NotNull YangMustKeyword o) {
@@ -1178,7 +1178,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitSubmoduleStmt(@NotNull YangSubmoduleStmt o) {
-        visitYangStmt(o);
+        visitGeneratedReferenceType(o);
     }
 
     public void visitSystemKeyword(@NotNull YangSystemKeyword o) {

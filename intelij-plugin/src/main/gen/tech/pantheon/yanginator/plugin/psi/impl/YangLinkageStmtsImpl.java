@@ -15,9 +15,10 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-import tech.pantheon.yanginator.plugin.psi.YangYangStmt;
 
 import java.util.List;
 
@@ -39,8 +40,14 @@ public class YangLinkageStmtsImpl extends YangNamedElementImpl implements YangLi
 
     @Override
     @NotNull
-    public List<YangYangStmt> getYangStmtList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangYangStmt.class);
+    public List<YangImportStmt> getImportStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangImportStmt.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangIncludeStmt> getIncludeStmtList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangIncludeStmt.class);
     }
 
 }
