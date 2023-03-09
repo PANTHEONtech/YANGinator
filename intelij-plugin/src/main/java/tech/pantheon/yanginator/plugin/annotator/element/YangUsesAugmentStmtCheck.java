@@ -38,10 +38,5 @@ public class YangUsesAugmentStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangStatusStmt.class);
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
-        final List<Class<?>> dataDefStatements = new ArrayList<>(ElementCheckUtils.getDataDefStatements());
-        dataDefStatements.add(YangCaseStmt.class);
-        dataDefStatements.add(YangActionStmt.class);
-        dataDefStatements.add(YangNotificationStmt.class);
-        minOne.checkMany(element, holder, dataDefStatements);
     }
 }

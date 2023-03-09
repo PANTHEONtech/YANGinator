@@ -438,6 +438,27 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
+    }
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
+
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -458,10 +479,6 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
 
     /* ********************************************************** */
     // '\"'
@@ -11600,7 +11617,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     //   [description-stmt]
     //   [reference-stmt]
     //   (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+>>
+    //   action-stmt | notification-stmt)*>>
     //   RIGHT_BRACE stmtsep
     public static boolean uses_augment_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "uses_augment_stmt")) return false;
@@ -11660,19 +11677,15 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+
+    //   action-stmt | notification-stmt)*
     private static boolean uses_augment_stmt_6_5(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "uses_augment_stmt_6_5")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = uses_augment_stmt_6_5_0(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!uses_augment_stmt_6_5_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "uses_augment_stmt_6_5", c)) break;
         }
-        exit_section_(b, m, null, r);
-        return r;
+        return true;
     }
 
     // data-def-stmt | case-stmt |
@@ -12323,23 +12336,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
-    }
-
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
     }
 
 }

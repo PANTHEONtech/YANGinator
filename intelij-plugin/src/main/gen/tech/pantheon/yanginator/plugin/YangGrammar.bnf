@@ -838,7 +838,7 @@ uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep
   [description-stmt]
   [reference-stmt]
   (data-def-stmt | case-stmt |
-  action-stmt | notification-stmt)+>>
+  action-stmt | notification-stmt)*>>
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1
