@@ -19,6 +19,7 @@ import tech.pantheon.yanginator.plugin.psi.YangDescendantPath;
 import tech.pantheon.yanginator.plugin.psi.YangRelativePath;
 import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
@@ -36,6 +37,12 @@ public class YangRelativePathImpl extends YangNamedElementImpl implements YangRe
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
     }
 
     @Override

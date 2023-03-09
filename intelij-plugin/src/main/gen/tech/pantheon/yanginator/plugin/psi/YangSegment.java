@@ -20,4 +20,7 @@ public interface YangSegment extends YangNamedElement {
     @NotNull
     List<YangPchar> getPcharList();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }

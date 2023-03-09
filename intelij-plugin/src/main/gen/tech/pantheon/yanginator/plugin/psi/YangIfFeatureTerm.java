@@ -36,4 +36,7 @@ public interface YangIfFeatureTerm extends YangNamedElement {
     @NotNull
     List<YangLineBreak> getLineBreakList();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
 }

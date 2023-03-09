@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangPctEncoded;
 import tech.pantheon.yanginator.plugin.psi.YangSegmentNzNc;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangSubDelims;
 import tech.pantheon.yanginator.plugin.psi.YangUnreserved;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
@@ -43,6 +44,12 @@ public class YangSegmentNzNcImpl extends YangNamedElementImpl implements YangSeg
     @NotNull
     public List<YangPctEncoded> getPctEncodedList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPctEncoded.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
     @Override

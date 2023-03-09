@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangPchar;
 import tech.pantheon.yanginator.plugin.psi.YangSegment;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -41,6 +42,12 @@ public class YangSegmentImpl extends YangNamedElementImpl implements YangSegment
     @NotNull
     public List<YangPchar> getPcharList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangPchar.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }
