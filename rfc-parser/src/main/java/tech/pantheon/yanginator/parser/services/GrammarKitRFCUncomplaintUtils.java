@@ -947,6 +947,7 @@ public class GrammarKitRFCUncomplaintUtils {
             result.add(line);
         }
         return result;
+    }
         
      /**
      * Changes import and include string arguments, so they can be referenced.
