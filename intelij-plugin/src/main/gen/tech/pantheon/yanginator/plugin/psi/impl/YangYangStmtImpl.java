@@ -18,6 +18,10 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
+import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
@@ -56,6 +60,30 @@ public class YangYangStmtImpl extends YangNamedElementImpl implements YangYangSt
     @Nullable
     public YangIdentityStmt getIdentityStmt() {
         return findChildByClass(YangIdentityStmt.class);
+    }
+
+    @Override
+    @Nullable
+    public YangImportStmt getImportStmt() {
+        return findChildByClass(YangImportStmt.class);
+    }
+
+    @Override
+    @Nullable
+    public YangIncludeStmt getIncludeStmt() {
+        return findChildByClass(YangIncludeStmt.class);
+    }
+
+    @Override
+    @Nullable
+    public YangModuleStmt getModuleStmt() {
+        return findChildByClass(YangModuleStmt.class);
+    }
+
+    @Override
+    @Nullable
+    public YangSubmoduleStmt getSubmoduleStmt() {
+        return findChildByClass(YangSubmoduleStmt.class);
     }
 
     @Override

@@ -10,6 +10,7 @@
 
 package tech.pantheon.yanginator.plugin.reference;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
@@ -18,26 +19,44 @@ import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
+import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
+import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
 
     private final String identifierKeyword;
-    private static Object genericElement;
+    private final String prefix;
 
     public YangReference(@NotNull final PsiElement element, final TextRange rangeInElement) {
         super(element, rangeInElement);
-        this.identifierKeyword = element.getText().substring(rangeInElement.getStartOffset(), rangeInElement.getEndOffset());
-        genericElement = element;
+        String identifier = element.getText().substring(rangeInElement.getStartOffset(), rangeInElement.getEndOffset());
+        if (identifier.split(":").length > 1) {
+            this.prefix = identifier.split(":")[0];
+            this.identifierKeyword = identifier.split(":")[1];
+        } else {
+            this.prefix = "";
+            this.identifierKeyword = identifier;
+        }
     }
 
     @NotNull
     @Override
     public ResolveResult[] multiResolve(final boolean incompleteCode) {
+        ArrayList<String> fileNames = new ArrayList<>();
+        if (myElement instanceof YangIncludeStmt || myElement instanceof YangImportStmt) {
+            fileNames.add(Objects.requireNonNull(((YangGeneratedReferenceType) myElement).getIdentifierRefArgStr()).getText() + ".yang");
+        } else {
+            fileNames = resolveImports();
+        }
+        fileNames.add(myElement.getContainingFile().getName());
         final List<PsiElement> declarations
-                = YangUtil.findIdentifierLiterals(this.myElement.getProject(), this.identifierKeyword, genericElement);
+                = YangUtil.findIdentifierLiterals(this.myElement.getProject(), this.identifierKeyword, myElement, fileNames);
         final List<ResolveResult> results = new ArrayList<>();
 
         for (final PsiElement declaration : declarations) {
@@ -51,5 +70,42 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
         final ResolveResult[] resolveResults = this.multiResolve(false);
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
-}
 
+
+    /**
+     * This method finds all imports and includes from the opened yang and returns names of imported and included
+     * yang files if the referenced element has no prefix ,or it returns the imported yang file with the same prefix.
+     */
+    @NotNull
+    private ArrayList<String> resolveImports() {
+        ArrayList<String> fileNames = new ArrayList<>();
+        ASTNode linkageElements = Objects
+                .requireNonNull(myElement.getContainingFile().getNode().findChildByType(YangFormatterUtils.BEFORE_MODULE_SET))
+                .findChildByType(YangTypes.YANG_LINKAGE_STMTS);
+        if (linkageElements != null) {
+            for (ASTNode link : linkageElements.getChildren(null)) {
+                String fileName = "";
+                if (link.getElementType().equals(YangTypes.YANG_IMPORT_STMT)) {
+                    if (!prefix.isEmpty()) {
+                        String importPrefix = Objects.requireNonNull(Objects.requireNonNull(link.findChildByType(YangTypes.YANG_PREFIX_STMT))
+                                        .findChildByType(YangTypes.YANG_PREFIX_ARG_STR))
+                                .getText();
+                        if (importPrefix.length() >= 2 && importPrefix.charAt(0) == '\"' && importPrefix.charAt(importPrefix.length() - 1) == '\"') {
+                            importPrefix = importPrefix.substring(1, importPrefix.length() - 1);
+                        }
+                        if (prefix.equals(importPrefix)) {
+                            fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
+                        }
+                    } else {
+                        fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
+                    }
+                } else if (link.getElementType().equals(YangTypes.YANG_INCLUDE_STMT)) {
+                    fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
+                }
+                if (!fileName.isEmpty())
+                    fileNames.add(fileName + ".yang");
+            }
+        }
+        return fileNames;
+    }
+}

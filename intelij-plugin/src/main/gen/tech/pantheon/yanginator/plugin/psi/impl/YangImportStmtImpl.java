@@ -18,26 +18,26 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
-import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangImportKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
 import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 
-public class YangImportStmtImpl extends YangYangStmtImpl implements YangImportStmt {
+public class YangImportStmtImpl extends YangGeneratedReferenceTypeImpl implements YangImportStmt {
 
     public YangImportStmtImpl(@NotNull ASTNode node) {
         super(node);
     }
 
-    @Override
     public void accept(@NotNull YangVisitor visitor) {
         visitor.visitImportStmt(this);
     }
@@ -62,8 +62,8 @@ public class YangImportStmtImpl extends YangYangStmtImpl implements YangImportSt
 
     @Override
     @Nullable
-    public YangIdentifierArgStr getIdentifierArgStr() {
-        return findChildByClass(YangIdentifierArgStr.class);
+    public YangIdentifierRefArgStr getIdentifierRefArgStr() {
+        return findChildByClass(YangIdentifierRefArgStr.class);
     }
 
     @Override
