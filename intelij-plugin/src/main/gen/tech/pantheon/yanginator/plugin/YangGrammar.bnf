@@ -739,8 +739,8 @@ pin(".*") = 1
 
 short-case-stmt ::= choice-stmt |
   container-stmt |
-  leaf-stmt |
   leaf-list-stmt |
+  leaf-stmt |
   list-stmt |
   anydata-stmt |
   anyxml-stmt

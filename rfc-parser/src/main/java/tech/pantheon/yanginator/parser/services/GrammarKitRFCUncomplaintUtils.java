@@ -667,7 +667,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("data-def-stmt ::=")) {
+            if (line.contains("data-def-stmt ::=")||line.contains("short-case-stmt")) {
                 found = true;
             }
             if (found && line.contains("  leaf-stmt |")) {
