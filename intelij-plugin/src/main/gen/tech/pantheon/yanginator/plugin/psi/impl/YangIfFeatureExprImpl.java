@@ -21,6 +21,7 @@ import tech.pantheon.yanginator.plugin.psi.YangIfFeatureExpr;
 import tech.pantheon.yanginator.plugin.psi.YangIfFeatureTerm;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangOrKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -76,6 +77,12 @@ public class YangIfFeatureExprImpl extends YangNamedElementImpl implements YangI
     @Nullable
     public YangOrKeyword getOrKeyword() {
         return findChildByClass(YangOrKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
 }

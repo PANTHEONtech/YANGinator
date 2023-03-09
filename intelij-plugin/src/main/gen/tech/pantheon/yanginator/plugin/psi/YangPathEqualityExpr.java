@@ -28,6 +28,9 @@ public interface YangPathEqualityExpr extends YangNamedElement {
     YangPathKeyExpr getPathKeyExpr();
 
     @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
+    @NotNull
     PsiElement getEquals();
 
 }

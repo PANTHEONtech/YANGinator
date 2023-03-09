@@ -5422,7 +5422,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-    // (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)*
+    // (string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     public static boolean identifier(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier")) return false;
         boolean r;
@@ -5443,7 +5443,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)*
+    // (string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     private static boolean identifier_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1")) return false;
         while (true) {
@@ -5454,9 +5454,27 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
+    // string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     private static boolean identifier_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = identifier_1_0_0(b, l + 1);
+        r = r && identifier_1_0_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean identifier_1_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
+    private static boolean identifier_1_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
         boolean r;
         r = consumeToken(b, YANG_ALPHA);
         if (!r) r = DIGIT(b, l + 1);
@@ -5709,7 +5727,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // if-feature-term
-    //   [sep or-keyword sep if-feature-expr]
+    //   [(string-splitter|sep) or-keyword (string-splitter|sep) if-feature-expr]
     public static boolean if_feature_expr(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_expr")) return false;
         boolean r;
@@ -5720,23 +5738,41 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // [sep or-keyword sep if-feature-expr]
+    // [(string-splitter|sep) or-keyword (string-splitter|sep) if-feature-expr]
     private static boolean if_feature_expr_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_expr_1")) return false;
         if_feature_expr_1_0(b, l + 1);
         return true;
     }
 
-    // sep or-keyword sep if-feature-expr
+    // (string-splitter|sep) or-keyword (string-splitter|sep) if-feature-expr
     private static boolean if_feature_expr_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_expr_1_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = sep(b, l + 1);
+        r = if_feature_expr_1_0_0(b, l + 1);
         r = r && or_keyword(b, l + 1);
-        r = r && sep(b, l + 1);
+        r = r && if_feature_expr_1_0_2(b, l + 1);
         r = r && if_feature_expr(b, l + 1);
         exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter|sep
+    private static boolean if_feature_expr_1_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_expr_1_0_0")) return false;
+        boolean r;
+        r = string_splitter(b, l + 1);
+        if (!r) r = sep(b, l + 1);
+        return r;
+    }
+
+    // string-splitter|sep
+    private static boolean if_feature_expr_1_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_expr_1_0_2")) return false;
+        boolean r;
+        r = string_splitter(b, l + 1);
+        if (!r) r = sep(b, l + 1);
         return r;
     }
 
@@ -5765,44 +5801,103 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // not-keyword sep if-feature-factor |
-    //   LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |
-    //   identifier-ref-arg
+    // string-splitter? not-keyword (string-splitter|sep) if-feature-factor |
+    //   string-splitter? LEFT_PARENTHESIS optsep string-splitter? if-feature-expr string-splitter? optsep RIGHT_PARENTHESIS |
+    //   string-splitter? identifier-ref-arg
     public static boolean if_feature_factor(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_factor")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_IF_FEATURE_FACTOR, "<if feature factor>");
         r = if_feature_factor_0(b, l + 1);
         if (!r) r = if_feature_factor_1(b, l + 1);
-        if (!r) r = identifier_ref_arg(b, l + 1);
+        if (!r) r = if_feature_factor_2(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // not-keyword sep if-feature-factor
+    // string-splitter? not-keyword (string-splitter|sep) if-feature-factor
     private static boolean if_feature_factor_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_factor_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = not_keyword(b, l + 1);
-        r = r && sep(b, l + 1);
+        r = if_feature_factor_0_0(b, l + 1);
+        r = r && not_keyword(b, l + 1);
+        r = r && if_feature_factor_0_2(b, l + 1);
         r = r && if_feature_factor(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS
+    // string-splitter?
+    private static boolean if_feature_factor_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter|sep
+    private static boolean if_feature_factor_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_0_2")) return false;
+        boolean r;
+        r = string_splitter(b, l + 1);
+        if (!r) r = sep(b, l + 1);
+        return r;
+    }
+
+    // string-splitter? LEFT_PARENTHESIS optsep string-splitter? if-feature-expr string-splitter? optsep RIGHT_PARENTHESIS
     private static boolean if_feature_factor_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_factor_1")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_LEFT_PARENTHESIS);
+        r = if_feature_factor_1_0(b, l + 1);
+        r = r && consumeToken(b, YANG_LEFT_PARENTHESIS);
         r = r && optsep(b, l + 1);
+        r = r && if_feature_factor_1_3(b, l + 1);
         r = r && if_feature_expr(b, l + 1);
+        r = r && if_feature_factor_1_5(b, l + 1);
         r = r && optsep(b, l + 1);
         r = r && consumeToken(b, YANG_RIGHT_PARENTHESIS);
         exit_section_(b, m, null, r);
         return r;
+    }
+
+    // string-splitter?
+    private static boolean if_feature_factor_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_1_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean if_feature_factor_1_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_1_3")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean if_feature_factor_1_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_1_5")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter? identifier-ref-arg
+    private static boolean if_feature_factor_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = if_feature_factor_2_0(b, l + 1);
+        r = r && identifier_ref_arg(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean if_feature_factor_2_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_factor_2_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
     }
 
     /* ********************************************************** */
@@ -5834,7 +5929,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // if-feature-factor
-    //   [sep and-keyword sep if-feature-term]
+    //   [(string-splitter|sep) and-keyword (string-splitter|sep) if-feature-term]
     public static boolean if_feature_term(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_term")) return false;
         boolean r;
@@ -5845,23 +5940,41 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // [sep and-keyword sep if-feature-term]
+    // [(string-splitter|sep) and-keyword (string-splitter|sep) if-feature-term]
     private static boolean if_feature_term_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_term_1")) return false;
         if_feature_term_1_0(b, l + 1);
         return true;
     }
 
-    // sep and-keyword sep if-feature-term
+    // (string-splitter|sep) and-keyword (string-splitter|sep) if-feature-term
     private static boolean if_feature_term_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "if_feature_term_1_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = sep(b, l + 1);
+        r = if_feature_term_1_0_0(b, l + 1);
         r = r && and_keyword(b, l + 1);
-        r = r && sep(b, l + 1);
+        r = r && if_feature_term_1_0_2(b, l + 1);
         r = r && if_feature_term(b, l + 1);
         exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter|sep
+    private static boolean if_feature_term_1_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_term_1_0_0")) return false;
+        boolean r;
+        r = string_splitter(b, l + 1);
+        if (!r) r = sep(b, l + 1);
+        return r;
+    }
+
+    // string-splitter|sep
+    private static boolean if_feature_term_1_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "if_feature_term_1_0_2")) return false;
+        boolean r;
+        r = string_splitter(b, l + 1);
+        if (!r) r = sep(b, l + 1);
         return r;
     }
 
@@ -8499,7 +8612,6 @@ public class YangParser implements PsiParser, LightPsiParser {
     // absolute-path | relative-path
     public static boolean path_arg(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_arg")) return false;
-        if (!nextTokenIs(b, "<path arg>", YANG_FORWARD_SLASH, YANG_PARENT_FOLDER)) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_PATH_ARG, "<path arg>");
         r = absolute_path(b, l + 1);
@@ -8546,44 +8658,60 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // node-identifier WSP* EQUALS WSP* path-key-expr
+    // node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr
     public static boolean path_equality_expr(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_equality_expr")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_PATH_EQUALITY_EXPR, "<path equality expr>");
         r = node_identifier(b, l + 1);
         r = r && path_equality_expr_1(b, l + 1);
+        r = r && path_equality_expr_2(b, l + 1);
         r = r && consumeToken(b, YANG_EQUALS);
-        r = r && path_equality_expr_3(b, l + 1);
+        r = r && path_equality_expr_4(b, l + 1);
+        r = r && path_equality_expr_5(b, l + 1);
         r = r && path_key_expr(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // WSP*
+    // string-splitter?
     private static boolean path_equality_expr_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_equality_expr_1")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // WSP*
+    private static boolean path_equality_expr_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_equality_expr_2")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "path_equality_expr_1", c)) break;
+            if (!empty_element_parsed_guard_(b, "path_equality_expr_2", c)) break;
         }
         return true;
     }
 
     // WSP*
-    private static boolean path_equality_expr_3(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "path_equality_expr_3")) return false;
+    private static boolean path_equality_expr_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_equality_expr_4")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "path_equality_expr_3", c)) break;
+            if (!empty_element_parsed_guard_(b, "path_equality_expr_4", c)) break;
         }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean path_equality_expr_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_equality_expr_5")) return false;
+        string_splitter(b, l + 1);
         return true;
     }
 
     /* ********************************************************** */
-    // current-function-invocation WSP* FORWARD_SLASH WSP*
+    // current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*
     //   rel-path-keyexpr
     public static boolean path_key_expr(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_key_expr")) return false;
@@ -8591,31 +8719,39 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b, l, _NONE_, YANG_PATH_KEY_EXPR, "<path key expr>");
         r = current_function_invocation(b, l + 1);
         r = r && path_key_expr_1(b, l + 1);
+        r = r && path_key_expr_2(b, l + 1);
         r = r && consumeToken(b, YANG_FORWARD_SLASH);
-        r = r && path_key_expr_3(b, l + 1);
+        r = r && path_key_expr_4(b, l + 1);
         r = r && rel_path_keyexpr(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // WSP*
+    // string-splitter?
     private static boolean path_key_expr_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_key_expr_1")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // WSP*
+    private static boolean path_key_expr_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_key_expr_2")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "path_key_expr_1", c)) break;
+            if (!empty_element_parsed_guard_(b, "path_key_expr_2", c)) break;
         }
         return true;
     }
 
     // WSP*
-    private static boolean path_key_expr_3(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "path_key_expr_3")) return false;
+    private static boolean path_key_expr_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_key_expr_4")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "path_key_expr_3", c)) break;
+            if (!empty_element_parsed_guard_(b, "path_key_expr_4", c)) break;
         }
         return true;
     }
@@ -8666,7 +8802,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET
+    // OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?
     public static boolean path_predicate(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_predicate")) return false;
         if (!nextTokenIs(b, YANG_OPEN_BRACKET)) return false;
@@ -8677,6 +8813,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = r && path_equality_expr(b, l + 1);
         r = r && path_predicate_3(b, l + 1);
         r = r && consumeToken(b, YANG_CLOSED_BRACKET);
+        r = r && path_predicate_5(b, l + 1);
         exit_section_(b, m, YANG_PATH_PREDICATE, r);
         return r;
     }
@@ -8700,6 +8837,13 @@ public class YangParser implements PsiParser, LightPsiParser {
             if (!WSP(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "path_predicate_3", c)) break;
         }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean path_predicate_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "path_predicate_5")) return false;
+        string_splitter(b, l + 1);
         return true;
     }
 
@@ -9828,12 +9972,11 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
-    //   (node-identifier WSP* FORWARD_SLASH WSP*)*
+    // (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+
+    //   (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*
     //   node-identifier
     public static boolean rel_path_keyexpr(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr")) return false;
-        if (!nextTokenIs(b, "<rel path keyexpr>", YANG_DOUBLE_DOT, YANG_PARENT_FOLDER)) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_REL_PATH_KEYEXPR, "<rel path keyexpr>");
         r = rel_path_keyexpr_0(b, l + 1);
@@ -9843,7 +9986,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // (DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER)+
+    // (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+
     private static boolean rel_path_keyexpr_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_0")) return false;
         boolean r;
@@ -9858,38 +10001,44 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // DOUBLE_DOT WSP* FORWARD_SLASH WSP* | PARENT_FOLDER
+    // string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?
     private static boolean rel_path_keyexpr_0_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = rel_path_keyexpr_0_0_0(b, l + 1);
-        if (!r) r = consumeToken(b, YANG_PARENT_FOLDER);
+        if (!r) r = rel_path_keyexpr_0_0_1(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // DOUBLE_DOT WSP* FORWARD_SLASH WSP*
+    // string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?
     private static boolean rel_path_keyexpr_0_0_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_DOUBLE_DOT);
-        r = r && rel_path_keyexpr_0_0_0_1(b, l + 1);
-        r = r && consumeToken(b, YANG_FORWARD_SLASH);
+        r = rel_path_keyexpr_0_0_0_0(b, l + 1);
+        r = r && consumeToken(b, YANG_DOUBLE_DOT);
+        r = r && rel_path_keyexpr_0_0_0_2(b, l + 1);
         r = r && rel_path_keyexpr_0_0_0_3(b, l + 1);
+        r = r && consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && rel_path_keyexpr_0_0_0_5(b, l + 1);
+        r = r && rel_path_keyexpr_0_0_0_6(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // WSP*
-    private static boolean rel_path_keyexpr_0_0_0_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_1")) return false;
-        while (true) {
-            int c = current_position_(b);
-            if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_0_1", c)) break;
-        }
+    // string-splitter?
+    private static boolean rel_path_keyexpr_0_0_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean rel_path_keyexpr_0_0_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_2")) return false;
+        string_splitter(b, l + 1);
         return true;
     }
 
@@ -9904,7 +10053,51 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // (node-identifier WSP* FORWARD_SLASH WSP*)*
+    // WSP*
+    private static boolean rel_path_keyexpr_0_0_0_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_5")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_0_0_0_5", c)) break;
+        }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean rel_path_keyexpr_0_0_0_6(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_0_6")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter? PARENT_FOLDER string-splitter?
+    private static boolean rel_path_keyexpr_0_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = rel_path_keyexpr_0_0_1_0(b, l + 1);
+        r = r && consumeToken(b, YANG_PARENT_FOLDER);
+        r = r && rel_path_keyexpr_0_0_1_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean rel_path_keyexpr_0_0_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_1_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean rel_path_keyexpr_0_0_1_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_0_0_1_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*
     private static boolean rel_path_keyexpr_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_1")) return false;
         while (true) {
@@ -9915,38 +10108,54 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // node-identifier WSP* FORWARD_SLASH WSP*
+    // node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?
     private static boolean rel_path_keyexpr_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = node_identifier(b, l + 1);
         r = r && rel_path_keyexpr_1_0_1(b, l + 1);
+        r = r && rel_path_keyexpr_1_0_2(b, l + 1);
         r = r && consumeToken(b, YANG_FORWARD_SLASH);
-        r = r && rel_path_keyexpr_1_0_3(b, l + 1);
+        r = r && rel_path_keyexpr_1_0_4(b, l + 1);
+        r = r && rel_path_keyexpr_1_0_5(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // WSP*
+    // string-splitter?
     private static boolean rel_path_keyexpr_1_0_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0_1")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // WSP*
+    private static boolean rel_path_keyexpr_1_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0_2")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_1_0_1", c)) break;
+            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_1_0_2", c)) break;
         }
         return true;
     }
 
     // WSP*
-    private static boolean rel_path_keyexpr_1_0_3(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0_3")) return false;
+    private static boolean rel_path_keyexpr_1_0_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0_4")) return false;
         while (true) {
             int c = current_position_(b);
             if (!WSP(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_1_0_3", c)) break;
+            if (!empty_element_parsed_guard_(b, "rel_path_keyexpr_1_0_4", c)) break;
         }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean rel_path_keyexpr_1_0_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rel_path_keyexpr_1_0_5")) return false;
+        string_splitter(b, l + 1);
         return true;
     }
 
@@ -9980,19 +10189,19 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (PARENT_FOLDER string-splitter?)+ descendant-path
+    // (DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* | PARENT_FOLDER string-splitter?)+ descendant-path
     public static boolean relative_path(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "relative_path")) return false;
-        if (!nextTokenIs(b, YANG_PARENT_FOLDER)) return false;
+        if (!nextTokenIs(b, "<relative path>", YANG_DOUBLE_DOT, YANG_PARENT_FOLDER)) return false;
         boolean r;
-        Marker m = enter_section_(b);
+        Marker m = enter_section_(b, l, _NONE_, YANG_RELATIVE_PATH, "<relative path>");
         r = relative_path_0(b, l + 1);
         r = r && descendant_path(b, l + 1);
-        exit_section_(b, m, YANG_RELATIVE_PATH, r);
+        exit_section_(b, l, m, r, false, null);
         return r;
     }
 
-    // (PARENT_FOLDER string-splitter?)+
+    // (DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* | PARENT_FOLDER string-splitter?)+
     private static boolean relative_path_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "relative_path_0")) return false;
         boolean r;
@@ -10007,20 +10216,74 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // PARENT_FOLDER string-splitter?
+    // DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* | PARENT_FOLDER string-splitter?
     private static boolean relative_path_0_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "relative_path_0_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_PARENT_FOLDER);
-        r = r && relative_path_0_0_1(b, l + 1);
+        r = relative_path_0_0_0(b, l + 1);
+        if (!r) r = relative_path_0_0_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP*
+    private static boolean relative_path_0_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "relative_path_0_0_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_DOUBLE_DOT);
+        r = r && relative_path_0_0_0_1(b, l + 1);
+        r = r && relative_path_0_0_0_2(b, l + 1);
+        r = r && consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && relative_path_0_0_0_4(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
     // string-splitter?
+    private static boolean relative_path_0_0_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "relative_path_0_0_0_1")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // WSP*
+    private static boolean relative_path_0_0_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "relative_path_0_0_0_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "relative_path_0_0_0_2", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean relative_path_0_0_0_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "relative_path_0_0_0_4")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "relative_path_0_0_0_4", c)) break;
+        }
+        return true;
+    }
+
+    // PARENT_FOLDER string-splitter?
     private static boolean relative_path_0_0_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "relative_path_0_0_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_PARENT_FOLDER);
+        r = r && relative_path_0_0_1_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean relative_path_0_0_1_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "relative_path_0_0_1_1")) return false;
         string_splitter(b, l + 1);
         return true;
     }
@@ -10547,37 +10810,89 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // pchar*
+    // (string-splitter? pchar string-splitter?)*
     public static boolean segment(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "segment")) return false;
         Marker m = enter_section_(b, l, _NONE_, YANG_SEGMENT, "<segment>");
         while (true) {
             int c = current_position_(b);
-            if (!pchar(b, l + 1)) break;
+            if (!segment_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "segment", c)) break;
         }
         exit_section_(b, l, m, true, false, null);
         return true;
     }
 
+    // string-splitter? pchar string-splitter?
+    private static boolean segment_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = segment_0_0(b, l + 1);
+        r = r && pchar(b, l + 1);
+        r = r && segment_0_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean segment_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean segment_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_0_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
     /* ********************************************************** */
-    // pchar+
+    // (string-splitter? pchar string-splitter?)+
     public static boolean segment_nz(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "segment_nz")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_SEGMENT_NZ, "<segment nz>");
-        r = pchar(b, l + 1);
+        r = segment_nz_0(b, l + 1);
         while (r) {
             int c = current_position_(b);
-            if (!pchar(b, l + 1)) break;
+            if (!segment_nz_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "segment_nz", c)) break;
         }
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
+    // string-splitter? pchar string-splitter?
+    private static boolean segment_nz_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = segment_nz_0_0(b, l + 1);
+        r = r && pchar(b, l + 1);
+        r = r && segment_nz_0_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean segment_nz_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean segment_nz_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_0_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
     /* ********************************************************** */
-    // ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
+    // (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+
     public static boolean segment_nz_nc(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "segment_nz_nc")) return false;
         boolean r;
@@ -10592,15 +10907,41 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // unreserved | pct-encoded | sub-delims | AT_SIGN
+    // string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?
     private static boolean segment_nz_nc_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "segment_nz_nc_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = segment_nz_nc_0_0(b, l + 1);
+        r = r && segment_nz_nc_0_1(b, l + 1);
+        r = r && segment_nz_nc_0_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean segment_nz_nc_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_nc_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // unreserved | pct-encoded | sub-delims | AT_SIGN
+    private static boolean segment_nz_nc_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_nc_0_1")) return false;
         boolean r;
         r = unreserved(b, l + 1);
         if (!r) r = pct_encoded(b, l + 1);
         if (!r) r = sub_delims(b, l + 1);
         if (!r) r = consumeToken(b, YANG_AT_SIGN);
         return r;
+    }
+
+    // string-splitter?
+    private static boolean segment_nz_nc_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "segment_nz_nc_0_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
     }
 
     /* ********************************************************** */
@@ -10823,10 +11164,9 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)
+    // (WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*) | (WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*)
     public static boolean string_splitter(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "string_splitter")) return false;
-        if (!nextTokenIs(b, "<string splitter>", YANG_DOUBLE_QUOTE, YANG_SINGLE_QUOTE)) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_STRING_SPLITTER, "<string splitter>");
         r = string_splitter_0(b, l + 1);
@@ -10835,32 +11175,80 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // SQUOTE optsep PLUS_SIGN optsep SQUOTE
+    // WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*
     private static boolean string_splitter_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "string_splitter_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = SQUOTE(b, l + 1);
+        r = string_splitter_0_0(b, l + 1);
+        r = r && SQUOTE(b, l + 1);
         r = r && optsep(b, l + 1);
         r = r && consumeToken(b, YANG_PLUS_SIGN);
         r = r && optsep(b, l + 1);
         r = r && SQUOTE(b, l + 1);
+        r = r && string_splitter_0_6(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // DQUOTE optsep PLUS_SIGN optsep DQUOTE
+    // WSP*
+    private static boolean string_splitter_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "string_splitter_0_0")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "string_splitter_0_0", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean string_splitter_0_6(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "string_splitter_0_6")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "string_splitter_0_6", c)) break;
+        }
+        return true;
+    }
+
+    // WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*
     private static boolean string_splitter_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "string_splitter_1")) return false;
         boolean r;
         Marker m = enter_section_(b);
-        r = DQUOTE(b, l + 1);
+        r = string_splitter_1_0(b, l + 1);
+        r = r && DQUOTE(b, l + 1);
         r = r && optsep(b, l + 1);
         r = r && consumeToken(b, YANG_PLUS_SIGN);
         r = r && optsep(b, l + 1);
         r = r && DQUOTE(b, l + 1);
+        r = r && string_splitter_1_6(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
+    }
+
+    // WSP*
+    private static boolean string_splitter_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "string_splitter_1_0")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "string_splitter_1_0", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean string_splitter_1_6(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "string_splitter_1_6")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "string_splitter_1_6", c)) break;
+        }
+        return true;
     }
 
     /* ********************************************************** */

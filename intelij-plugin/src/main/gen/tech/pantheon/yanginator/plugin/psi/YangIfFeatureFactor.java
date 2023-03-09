@@ -40,6 +40,9 @@ public interface YangIfFeatureFactor extends YangNamedElement {
     @Nullable
     YangNotKeyword getNotKeyword();
 
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
+
     @Nullable
     PsiElement getLeftParenthesis();
 

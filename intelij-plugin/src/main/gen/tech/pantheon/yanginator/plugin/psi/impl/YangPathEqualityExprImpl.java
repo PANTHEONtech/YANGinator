@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangPathEqualityExpr;
 import tech.pantheon.yanginator.plugin.psi.YangPathKeyExpr;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
@@ -58,6 +59,12 @@ public class YangPathEqualityExprImpl extends YangNamedElementImpl implements Ya
     @NotNull
     public YangPathKeyExpr getPathKeyExpr() {
         return findNotNullChildByClass(YangPathKeyExpr.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
     }
 
     @Override
