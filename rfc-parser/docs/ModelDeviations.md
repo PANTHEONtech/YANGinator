@@ -79,7 +79,9 @@ correctly.
 
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
-### Rewrite Zero Integer Value
+* `rewriteUsesAugmentStmt(result);`[link](#Rewrite-Uses-Augment-Stmt)
+
+### Rewrite Zero Integer Value 
   Rewrites zero-integer-value with proper tokens
 
   Before:
@@ -664,6 +666,29 @@ Before:
 After:  
 ![](doc-images/resolved_inconsistent_quantifiers_after.png)
 
+### Rewrite Uses Augment Stmt
+
+Overwrite UsesAugmentStmt according to rfc.
+
+                 +--------------+---------+-------------+
+                 | substatement | section | cardinality |
+                 +--------------+---------+-------------+
+                 | augment      | 7.15    | 0..1        |
+                 | description  | 7.19.3  | 0..1        |
+                 | if-feature   | 7.18.2  | 0..n        |
+                 | refine       | 7.12.2  | 0..1        |
+                 | reference    | 7.19.4  | 0..1        |
+                 | status       | 7.19.2  | 0..1        |
+                 | when         | 7.19.5  | 0..1        |
+                 +--------------+---------+-------------+
+
+Before:
+
+![](doc-images/path_predicate_before.png)
+
+After:
+
+![](doc-images/path_predicate_after.png)
 ---
 
 ## ***More methods are used that are not yet documented***
