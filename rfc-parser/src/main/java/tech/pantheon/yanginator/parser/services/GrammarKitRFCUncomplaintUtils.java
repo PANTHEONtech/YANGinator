@@ -51,6 +51,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = allowComments(result);
         result = addStringSplitterForPaths(result);
         result = allowIndentString(result);
+        result = adjustDoubleColonInPchar(result);
         result = addStringSplittersForIfFeatures(result);
         result = allowReferenceLinkage(result);
         return makeSeparatorRulesPrivate(result);
@@ -734,6 +735,23 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("unknown-statement ::=")) {
                 line = "unknown-statement ::= prefix COLON identifier ([sep] [quoted-string | string]) optsep";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Allows double colon in pchar.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> adjustDoubleColonInPchar(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("pchar ::=")) {
+                line = "pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON";
             }
             result.add(line);
         }

@@ -24,6 +24,7 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_COLON;
 
 public class YangPcharImpl extends YangNamedElementImpl implements YangPchar {
 
@@ -69,6 +70,12 @@ public class YangPcharImpl extends YangNamedElementImpl implements YangPchar {
     @Nullable
     public PsiElement getColon() {
         return findChildByType(YANG_COLON);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getDoubleColon() {
+        return findChildByType(YANG_DOUBLE_COLON);
     }
 
 }

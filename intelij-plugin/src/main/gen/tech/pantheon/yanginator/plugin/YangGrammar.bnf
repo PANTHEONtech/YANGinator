@@ -1469,7 +1469,7 @@ segment-nz ::= (string-splitter? pchar string-splitter?)+
 segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+
   // non-zero-length segment without any colon COLON
 
-pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 
 query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 

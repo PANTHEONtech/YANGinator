@@ -438,6 +438,27 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
+    }
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
+
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -457,10 +478,6 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
 
     /* ********************************************************** */
     // '\"'
@@ -9021,7 +9038,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+    // unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
     public static boolean pchar(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "pchar")) return false;
         boolean r;
@@ -9031,6 +9048,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = sub_delims(b, l + 1);
         if (!r) r = consumeToken(b, YANG_COLON);
         if (!r) r = consumeToken(b, YANG_AT_SIGN);
+        if (!r) r = consumeToken(b, YANG_DOUBLE_COLON);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
@@ -12710,23 +12728,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
-    }
-
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
     }
 
 }

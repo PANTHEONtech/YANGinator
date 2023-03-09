@@ -28,6 +28,7 @@ DOUBLE_QUOTE = \"
 SINGLE_QUOTE = [\'"'"]
 SEMICOLON = ";"
 COLON = ":"
+DOUBLE_COLON = "::"
 LEFT_BRACE = "{"
 RIGHT_BRACE = "}"
 DOT = "."

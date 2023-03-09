@@ -81,7 +81,10 @@ correctly.
 
 * `allowIndentString(result);`[link](#Allow-indents-for-certain-strings)
 
+* `adjustDoubleColonInPchar(result);`[link](#Adjust-Double-Colon-In-Pchar)
+
 * `allowReferenceLinkage(result);`[link](#Make-linkages-referencable)
+
 
 ### Rewrite Zero Integer Value
   Rewrites zero-integer-value with proper tokens
@@ -106,7 +109,19 @@ correctly.
 
   ![rewriteIPV4Address](doc-images/rewriteIPV4Address_output.png)
 
-### Order Tokens For Lexer
+### Adjust Double Colon In Pchar
+
+  Adjust Double Colon In Pchar
+
+  Before:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_input.png)
+
+  After:
+
+  ![adjustDoubleColonInPchar](doc-images/adjustDoubleColonInPchar_output.png)
+
+### Order Tokens For Lexer 
 
   Order of tokens sets the priority for lexer when it needs to pick one of the multiple matches.
   The sooner it occurs in bnf the higher the priority to be matched if multiple tokens can match multiple
