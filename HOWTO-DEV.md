@@ -67,3 +67,33 @@ All changes in comparison to rfc model should by noted to file
 
 ***
 
+### ABNF
+Since generating grammar does not function with .abnf files it is required for the RFC to be translated
+to .bnf format. This is done in the RFCParser class. 
+BNF and ABNF format basics can be found here:
+ - ABNF grammar rules can be found here: https://datatracker.ietf.org/doc/html/rfc5234
+ - BNF basics are described here https://www.geeksforgeeks.org/bnf-notation-in-compiler-design/
+
+### REGEX
+Since we are generating Lexer it is required for the regex to only use lexer supported regex.
+It can be found here:
+ - https://westes.github.io/flex/manual/Patterns.html
+
+## Pins
+Pins are used when parsing. They describe the number of elements required for the statement to be considered
+as parsable? The best example for this are deviation statements : each one of them require a deviation keyword
+at the start, then a separator and finally a corresponding keyword representing the statement(add delete ...).
+The pin for these statements is 3 because it is required to know what kind of deviation is to be parsed and 
+checked for errors. Otherwise, it would be stuck at the first defined deviation statement in the grammar.
+
+## Annotator
+Annotator checks if the yang uses the correct version of the grammar. It takes the elements and checks 
+if the statement consists of elements defined in the version of yang grammar. Yang version is written at the top
+of the module (in the header statements) or if it is not written, then it is automatically version 1.0.
+
+If there are some missing element errors, then it probably has something to do with grammar and/or annotator.
+Annotator checks what yang version is used, then performs basic checks for elements defined in both versions
+and then performs checks based on the yang-version. Checks consist of maxOne, minOne and maxZero element checks.
+Elements surrounded in [ ] have to be checked with maxOne check. Elements with + have to be checked by minOne check.
+Elements that aren't defined in version 1.0, but were added in 1.1 have to be checked by maxZero check if the file
+uses yang-version 1.0.
