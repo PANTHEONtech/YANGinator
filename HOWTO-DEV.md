@@ -93,7 +93,7 @@ of the module (in the header statements) or if it is not written, then it is aut
 
 If there are some missing element errors, then it probably has something to do with grammar and/or annotator.
 Annotator checks what yang version is used, then performs basic checks for elements defined in both versions
-and then performs checks based on the yang-version. Checks consist of maxOne, minOne and maxZero element checks.
+and then performs checks based on the yang-version. These checks consist of maxOne, minOne and maxZero element checks.
 Elements surrounded in [ ] have to be checked with maxOne check. Elements with + have to be checked by minOne check.
 Elements that aren't defined in version 1.0, but were added in 1.1 have to be checked by maxZero check if the file
 uses yang-version 1.0.
