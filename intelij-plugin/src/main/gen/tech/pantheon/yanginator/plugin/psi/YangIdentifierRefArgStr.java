@@ -13,7 +13,15 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public interface YangIdentifierRefArgStr extends YangNamedElement {
+
+    @NotNull
+    List<YangDquote> getDquoteList();
+
+    @NotNull
+    List<YangSquote> getSquoteList();
 
     @NotNull
     YangIdentifierRefArg getIdentifierRefArg();
