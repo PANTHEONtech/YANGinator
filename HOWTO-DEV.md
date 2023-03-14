@@ -62,7 +62,7 @@ For grammar these **rfc** models are used:
 For error search or check [***THESE***](https://github.com/openconfig/public/tree/master/release/models) 
 open-config YANG files can be used  
 
-All changes in comparison to rfc model should by noted to file
+All changes in comparison to rfc model should be noted to file
 **[ModelDeviations](rfc-parser/docs/ModelDeviations.md)** where you can also find solutions to problems
 
 ***
