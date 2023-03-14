@@ -12005,7 +12005,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     //   [description-stmt]
     //   [reference-stmt]
     //   (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+>>
+    //   action-stmt | notification-stmt)*>>
     //   RIGHT_BRACE stmtsep
     public static boolean uses_augment_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "uses_augment_stmt")) return false;
@@ -12065,19 +12065,15 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+
+    //   action-stmt | notification-stmt)*
     private static boolean uses_augment_stmt_6_5(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "uses_augment_stmt_6_5")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = uses_augment_stmt_6_5_0(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!uses_augment_stmt_6_5_0(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "uses_augment_stmt_6_5", c)) break;
         }
-        exit_section_(b, m, null, r);
-        return r;
+        return true;
     }
 
     // data-def-stmt | case-stmt |

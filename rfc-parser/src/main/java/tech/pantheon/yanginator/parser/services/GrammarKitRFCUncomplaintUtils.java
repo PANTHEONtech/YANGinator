@@ -51,6 +51,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = allowComments(result);
         result = addStringSplitterForPaths(result);
         result = allowIndentString(result);
+        result = rewriteUsesAugmentStmt(result);
         result = adjustDoubleColonInPchar(result);
         result = addStringSplittersForIfFeatures(result);
         result = allowReferenceLinkage(result);
@@ -829,6 +830,52 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = line.replace("integer-value | decimal-value", "decimal-value | integer-value");
             }
             result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Overwrite UsesAugmentStmt according to rfc.
+     *
+     +--------------+---------+-------------+
+     | substatement | section | cardinality |
+     +--------------+---------+-------------+
+     | augment      | 7.15    | 0..1        |
+     | description  | 7.19.3  | 0..1        |
+     | if-feature   | 7.18.2  | 0..n        |
+     | refine       | 7.12.2  | 0..1        |
+     | reference    | 7.19.4  | 0..1        |
+     | status       | 7.19.2  | 0..1        |
+     | when         | 7.19.5  | 0..1        |
+     +--------------+---------+-------------+
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteUsesAugmentStmt(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep")){
+                result.add(line);
+                result.add("  LEFT_BRACE stmtsep");
+                result.add("  // these stmts can appear in any order");
+                result.add("<<anyOrder  [when-stmt]");
+                result.add("  if-feature-stmt*");
+                result.add("  [status-stmt]");
+                result.add("  [description-stmt]");
+                result.add("  [reference-stmt]");
+                result.add("  (data-def-stmt | case-stmt |");
+                result.add("  action-stmt | notification-stmt)*>>");
+                result.add("  RIGHT_BRACE stmtsep");
+                found = true;
+            }
+            if (found && line.equals("")) {
+                found = false;
+            }
+            if (!found) {
+                result.add(line);
+            }
         }
         return result;
     }
