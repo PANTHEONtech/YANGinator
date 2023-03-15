@@ -16,11 +16,13 @@ import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
@@ -31,11 +33,27 @@ public class YangCompletionContributor extends CompletionContributor {
 
     // the most relevant parent (in cases where caret is after keyword it is a sibling), which is then used in fillCompletionVariants()
     private PsiElement contextParent = null;
+    private PsiElement contextParentNextSibling = null;
     // isAfterKeyword tracks if the caret is after keyword and an identifier suggestion should be triggered
     private boolean isAfterKeyword = false;
+    private boolean isFirstStmtInGroup = false;
+    private boolean isLastStmtInGroup = false;
+
+    private final List<String> moduleStmtsContinuation = List.of(
+            "YANG_MODULE_HEADER_STMTS",
+            "YANG_LINKAGE_STMTS",
+            "YANG_META_STMTS",
+            "YANG_REVISION_STMTS",
+            "YANG_BODY_STMTS"
+    );
 
     @Override
     public void beforeCompletion(@NotNull CompletionInitializationContext context) {
+        contextParent = null;
+        contextParentNextSibling = null;
+        isAfterKeyword = false;
+        isFirstStmtInGroup = false;
+        isLastStmtInGroup = false;
         int caretOffset = context.getCaret().getOffset();
         PsiFile file = context.getFile();
         PsiElement caretElement = file.findElementAt(caretOffset);
@@ -50,6 +68,7 @@ public class YangCompletionContributor extends CompletionContributor {
 
         ASTNode realParent = findContextParentOfCurrentNode(searchStartElement.getNode());
         contextParent = realParent != null ? realParent.getPsi() : null;
+        contextParentNextSibling = contextParent != null ? contextParent.getNextSibling() : null;
     }
 
     /**
@@ -64,9 +83,14 @@ public class YangCompletionContributor extends CompletionContributor {
      * @return the relevant parent (or sibling - in case of built-in keyword suggestion) node, of the current context
      */
     private ASTNode findContextParentOfCurrentNode(ASTNode current) {
+        ProgressManager.checkCanceled();
         isAfterKeyword = false;
         ASTNode prevSibling = current.getTreePrev();
         ASTNode parent = current.getTreeParent();
+        if (parent != null && parent.getElementType().toString().matches(".*STMTS")) {
+            getStmtSituation(current);
+            return parent;
+        }
         if (prevSibling == null) {
             // some logic to prevent crashes
             if (parent == null || parent.getElementType().toString().equals("FILE")) {
@@ -101,6 +125,23 @@ public class YangCompletionContributor extends CompletionContributor {
         return findContextParentOfCurrentNode(prevSibling);
     }
 
+    private void getStmtSituation(ASTNode current) {
+        ASTNode prevSiblingPsi = current.getTreePrev();
+        ASTNode nextSiblingPsi = current.getTreeNext();
+        if (prevSiblingPsi == null && nextSiblingPsi == null) {
+            this.isLastStmtInGroup = true;
+            this.isFirstStmtInGroup = true;
+        } else if (prevSiblingPsi == null) {
+            if (nextSiblingPsi.getElementType().toString().contains("_STMT")) {
+                this.isFirstStmtInGroup = true;
+            }
+        } else {
+            if (prevSiblingPsi.getElementType().toString().contains("_STMT")) {
+                this.isLastStmtInGroup = true;
+            }
+        }
+    }
+
 
     @Override
     public void fillCompletionVariants(@NotNull CompletionParameters parameters, @NotNull CompletionResultSet result) {
@@ -114,22 +155,77 @@ public class YangCompletionContributor extends CompletionContributor {
             return;
         }
         if (contextParent == null) return;
-        List<String> possibleResults;
+        ArrayList<String> possibleResults = null;
         String typeText;
         if (isAfterKeyword) {
-            possibleResults = MAP_OF_IDENTIFIER_KEYWORDS.get(contextParent.getNode().getElementType().toString());
+            List<String> results = MAP_OF_IDENTIFIER_KEYWORDS.get(contextParent.getNode().getElementType().toString());
+            if (results != null) {
+                possibleResults = new ArrayList<>(results);
+            }
             typeText = "built-in-type";
         } else {
-            possibleResults = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
-            String type = contextParent.getNode().getElementType().toString();
-            type = type.replaceFirst("YANG_", "");
-            type = type.replaceAll("STMT(S?)", "sub-statement");
-            type = type.replace("_", "-");
-            type = type.toLowerCase();
-            typeText = type;
+            if (moduleStmtsContinuation.contains(contextParent.toString())) {
+                findPossibleResultsForGroup(result);
+                return;
+            } else {
+                List<String> results = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
+                if (results != null) {
+                    possibleResults = new ArrayList<>(results);
+                }
+                String type = contextParent.getNode().getElementType().toString();
+                type = type.replaceFirst("YANG_", "");
+                type = type.replaceAll("STMT(S?)", "sub-statement");
+                type = type.replace("_", "-");
+                type = type.toLowerCase();
+                typeText = type;
+            }
         }
 
         if (possibleResults == null) return;
-        possibleResults.forEach(s -> result.addElement(LookupElementBuilder.create(s).withTypeText(typeText)));
+        possibleResults.forEach(s ->
+                result.addElement(LookupElementBuilder.create(s).withTypeText(typeText.isEmpty() ? s : typeText))
+        );
+    }
+
+    /**
+     * Loops through all possible group statements in module, checks in which group it should start adding
+     * results and also checks
+     */
+    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result) {
+        boolean start = false;
+        //loops in possible stmts groups and finds in which group results should start and end
+        // i = module group iteration
+        String moduleStmt = "";
+        for (int i = 0; i < moduleStmtsContinuation.size(); i++) {
+            moduleStmt = moduleStmtsContinuation.get(i);
+            if (!start) {
+                start = contextParent.getNode().getElementType().toString().equals(moduleStmt);
+                if (start && isFirstStmtInGroup) {
+                    if (i > 0) {
+                        --i;
+                        moduleStmt = moduleStmtsContinuation.get(i);
+                    }
+                }
+            }
+            if (start) {
+                List<String> possibleResults = MAP_OF_SUBSTATEMENTS.get(moduleStmt);
+                String type = moduleStmt;
+                type = type.replaceFirst("YANG_", "");
+                type = type.replaceAll("STMT(S?)", "sub-statement");
+                type = type.replace("_", "-");
+                type = type.toLowerCase();
+                String finalType = type;
+                possibleResults.forEach(s ->
+                        result.addElement(LookupElementBuilder.create(s).withTypeText(finalType))
+                );
+                if (isLastStmtInGroup && moduleStmt.equals(contextParentNextSibling.getNode().getElementType().toString())) {
+                    return;
+                }
+                if (!isLastStmtInGroup && moduleStmt.equals(contextParent.getNode().getElementType().toString())) {
+                    return;
+                }
+
+            }
+        }
     }
 }

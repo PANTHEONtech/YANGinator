@@ -1101,6 +1101,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitYangStmt(o);
     }
 
+    public void visitRevisionStmts(@NotNull YangRevisionStmts o) {
+        visitNamedElement(o);
+    }
+
     public void visitRpcKeyword(@NotNull YangRpcKeyword o) {
         visitNamedElement(o);
     }

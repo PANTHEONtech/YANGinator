@@ -279,6 +279,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangRevisionDateKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRevisionDateStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRevisionKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRevisionStmtImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangRevisionStmtsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRpcKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangRpcStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSchemaNodeidImpl;
@@ -613,6 +614,7 @@ public interface YangTypes {
     IElementType YANG_REVISION_DATE_STMT = new YangElementType("YANG_REVISION_DATE_STMT");
     IElementType YANG_REVISION_KEYWORD = new YangElementType("YANG_REVISION_KEYWORD");
     IElementType YANG_REVISION_STMT = new YangElementType("YANG_REVISION_STMT");
+    IElementType YANG_REVISION_STMTS = new YangElementType("YANG_REVISION_STMTS");
     IElementType YANG_RPC_KEYWORD = new YangElementType("YANG_RPC_KEYWORD");
     IElementType YANG_RPC_STMT = new YangElementType("YANG_RPC_STMT");
     IElementType YANG_SCHEMA_NODEID = new YangElementType("YANG_SCHEMA_NODEID");
@@ -1280,6 +1282,8 @@ public interface YangTypes {
                 return new YangRevisionKeywordImpl(node);
             } else if (type == YANG_REVISION_STMT) {
                 return new YangRevisionStmtImpl(node);
+            } else if (type == YANG_REVISION_STMTS) {
+                return new YangRevisionStmtsImpl(node);
             } else if (type == YANG_RPC_KEYWORD) {
                 return new YangRpcKeywordImpl(node);
             } else if (type == YANG_RPC_STMT) {

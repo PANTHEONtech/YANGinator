@@ -35,7 +35,7 @@ module-stmt ::= optsep module-keyword sep identifier-arg-str
   module-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  revision-stmt*
+  revision-stmts
   body-stmts
   RIGHT_BRACE optsep
 {
@@ -50,7 +50,7 @@ submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
   submodule-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  revision-stmt*
+  revision-stmts
   body-stmts
   RIGHT_BRACE optsep
 {
@@ -90,11 +90,12 @@ private meta-body ::=(organization-stmt |
         description-stmt |
         reference-stmt )
 
-linkage-stmts ::= (import-stmt | include-stmt)* 
-//revision-stmts ::= revision-stmt*
+linkage-stmts ::= (import-stmt | include-stmt)*
 {
 pin(".*") = 1 recoverWhile=linkage-recover
 }
+
+revision-stmts ::= revision-stmt*
 
 body-stmts ::= body-sub-stmt*
 

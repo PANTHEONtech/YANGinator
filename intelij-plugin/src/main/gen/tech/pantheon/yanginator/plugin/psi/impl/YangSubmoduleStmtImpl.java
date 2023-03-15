@@ -23,7 +23,7 @@ import tech.pantheon.yanginator.plugin.psi.YangIdentifierArgStr;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangLinkageStmts;
 import tech.pantheon.yanginator.plugin.psi.YangMetaStmts;
-import tech.pantheon.yanginator.plugin.psi.YangRevisionStmt;
+import tech.pantheon.yanginator.plugin.psi.YangRevisionStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
@@ -96,9 +96,9 @@ public class YangSubmoduleStmtImpl extends YangGeneratedReferenceTypeImpl implem
     }
 
     @Override
-    @NotNull
-    public List<YangRevisionStmt> getRevisionStmtList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangRevisionStmt.class);
+    @Nullable
+    public YangRevisionStmts getRevisionStmts() {
+        return findChildByClass(YangRevisionStmts.class);
     }
 
     @Override

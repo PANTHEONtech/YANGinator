@@ -47,8 +47,8 @@ public interface YangModuleStmt extends YangGeneratedReferenceType {
     @NotNull
     YangModuleKeyword getModuleKeyword();
 
-    @NotNull
-    List<YangRevisionStmt> getRevisionStmtList();
+    @Nullable
+    YangRevisionStmts getRevisionStmts();
 
     @NotNull
     List<YangUnknownStatement> getUnknownStatementList();
