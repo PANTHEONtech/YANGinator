@@ -860,12 +860,12 @@ augment-stmt ::= augment-keyword sep augment-arg-str optsep
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
 <<anyOrder  [when-stmt]
-  if-feature-stmt*
   [status-stmt]
   [description-stmt]
   [reference-stmt]
   (data-def-stmt | case-stmt |
-  action-stmt | notification-stmt)+>>
+  action-stmt | notification-stmt |
+  if-feature-stmt)*>>
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1

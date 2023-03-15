@@ -773,8 +773,38 @@ Added single quote possibility for **identifier-ref-arg** and **identifier-ref-a
 
 Before:  
 ![](doc-images/identifier-ref-arg_SQOTE_before.png)
+
 After:  
 ![](doc-images/identifier-ref-arg_SQOTE_after.png)
+
+
+### Rewrite Augment Stmt  
+
+Changed Augment-Stmt according to rfc6020.
+
+                 +--------------+---------+-------------+
+                 | substatement | section | cardinality |
+                 +--------------+---------+-------------+
+                 | anyxml       | 7.10    | 0..n        |
+                 | case         | 7.9.2   | 0..n        |
+                 | choice       | 7.9     | 0..n        |
+                 | container    | 7.5     | 0..n        |
+                 | description  | 7.19.3  | 0..1        |
+                 | if-feature   | 7.18.2  | 0..n        |
+                 | leaf         | 7.6     | 0..n        |
+                 | leaf-list    | 7.7     | 0..n        |
+                 | list         | 7.8     | 0..n        |
+                 | reference    | 7.19.4  | 0..1        |
+                 | status       | 7.19.2  | 0..1        |
+                 | uses         | 7.12    | 0..n        |
+                 | when         | 7.19.5  | 0..1        |
+                 +--------------+---------+-------------+
+
+Before:  
+![](doc-images/Augment-stmt-before.png)
+
+After:  
+![](doc-images/Augment-stmt-after.png)
 
 ---
 

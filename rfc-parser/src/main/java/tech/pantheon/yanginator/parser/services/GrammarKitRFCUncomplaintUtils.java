@@ -56,6 +56,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = addStringSplittersForIfFeatures(result);
         result = allowReferenceLinkage(result);
         result = addSingleQuotePossibility(result);
+        result = rewriteAugment(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1047,6 +1048,39 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "identifier-arg-str ::= identifier-arg | DQUOTE identifier-arg DQUOTE | SQUOTE identifier-arg SQUOTE";
             }
             result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Changes quantifiers of augment's substatments according to cardinality in table in rfc6020 - 7.15.1.
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> rewriteAugment(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("augment-stmt ::= augment-keyword sep augment-arg-str optsep")) {
+                result.add(line);
+                result.add("  LEFT_BRACE stmtsep");
+                result.add("  // these stmts can appear in any order");
+                result.add("<<anyOrder  [when-stmt]");
+                result.add("  [status-stmt]");
+                result.add("  [description-stmt]");
+                result.add("  [reference-stmt]");
+                result.add("  (data-def-stmt | case-stmt |");
+                result.add("  action-stmt | notification-stmt |");
+                result.add("  if-feature-stmt)*>>");
+                result.add("  RIGHT_BRACE stmtsep");
+                found = true;
+            }
+            if (found && line.equals("")) {
+                found = false;
+            }
+            if (!found) {
+                result.add(line);
+            }
         }
         return result;
     }
