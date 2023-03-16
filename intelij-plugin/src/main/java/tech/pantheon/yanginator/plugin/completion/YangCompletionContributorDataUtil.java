@@ -430,9 +430,9 @@ public final class YangCompletionContributorDataUtil {
     public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>() {
         {
             put("FILE", List.of("module", "submodule"));
-            put("YANG_MODULE_STMT", MODULE_SUBSTATEMENTS);
+            put("YANG_MODULE_STMT", MODULE_HEADER_STMTS);
             put("YANG_MODULE_HEADER_STMTS", MODULE_HEADER_STMTS);
-            put("YANG_SUBMODULE_STMT", SUBMODULE_SUBSTATEMENTS);
+            put("YANG_SUBMODULE_STMT", SUBMODULE_HEADER_STMTS);
             put("YANG_SUBMODULE_HEADER_STMTS", SUBMODULE_HEADER_STMTS);
             put("YANG_META_STMTS", META_STMTS);
             put("YANG_LINKAGE_STMTS", LINKAGE_STMTS);

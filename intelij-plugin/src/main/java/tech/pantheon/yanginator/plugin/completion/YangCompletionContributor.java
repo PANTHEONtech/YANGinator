@@ -20,9 +20,12 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
@@ -38,14 +41,29 @@ public class YangCompletionContributor extends CompletionContributor {
     private boolean isAfterKeyword = false;
     private boolean isFirstStmtInGroup = false;
     private boolean isLastStmtInGroup = false;
+    private int caretOffset;
 
-    private final List<String> moduleStmtsContinuation = List.of(
-            "YANG_MODULE_HEADER_STMTS",
+    private static final List<String> anymoduleStmtsContinuation = List.of(
             "YANG_LINKAGE_STMTS",
             "YANG_META_STMTS",
             "YANG_REVISION_STMTS",
             "YANG_BODY_STMTS"
     );
+
+    private static final List<String> moduleStmtsContinuation = new ArrayList<>() {
+        {
+            add("YANG_MODULE_HEADER_STMTS");
+            addAll(anymoduleStmtsContinuation);
+        }
+    };
+    private static final List<String> submoduleStmtsContinuation = new ArrayList<>() {
+        {
+            add("YANG_SUBMODULE_HEADER_STMTS");
+            addAll(anymoduleStmtsContinuation);
+        }
+    };
+
+
 
     @Override
     public void beforeCompletion(@NotNull CompletionInitializationContext context) {
@@ -54,7 +72,7 @@ public class YangCompletionContributor extends CompletionContributor {
         isAfterKeyword = false;
         isFirstStmtInGroup = false;
         isLastStmtInGroup = false;
-        int caretOffset = context.getCaret().getOffset();
+        caretOffset = context.getCaret().getOffset();
         PsiFile file = context.getFile();
         PsiElement caretElement = file.findElementAt(caretOffset);
         if (caretElement == null) return;
@@ -129,17 +147,41 @@ public class YangCompletionContributor extends CompletionContributor {
         ASTNode prevSiblingPsi = current.getTreePrev();
         ASTNode nextSiblingPsi = current.getTreeNext();
         if (prevSiblingPsi == null && nextSiblingPsi == null) {
-            this.isLastStmtInGroup = true;
-            this.isFirstStmtInGroup = true;
-        } else if (prevSiblingPsi == null) {
-            if (nextSiblingPsi.getElementType().toString().contains("_STMT")) {
-                this.isFirstStmtInGroup = true;
-            }
-        } else {
-            if (prevSiblingPsi.getElementType().toString().contains("_STMT")) {
+            if(getOffsetForEnd(current)) {
                 this.isLastStmtInGroup = true;
             }
+            if (current.getStartOffset() == caretOffset) {
+                this.isFirstStmtInGroup = true;
+            }
+        } else if (prevSiblingPsi == null) {
+            if (nextSiblingPsi.getElementType().toString().contains("_STMT")) {
+                if (current.getStartOffset() == caretOffset) {
+                    this.isFirstStmtInGroup = true;
+                }
+            }
+        } else if (nextSiblingPsi == null) {
+            if (prevSiblingPsi.getElementType().toString().contains("_STMT")) {
+                if(getOffsetForEnd(current)) {
+                    this.isLastStmtInGroup = true;
+                }
+            }
         }
+    }
+
+    private boolean getOffsetForEnd(ASTNode node) {
+        //astnode?
+        ASTNode lastNode = node.getLastChildNode();
+        int lastEndElemOffset = lastNode.getStartOffset()+ lastNode.getTextLength();
+        while(!lastNode.getElementType().toString().matches(".*RIGHT_BRACE|.*SEMICOLON|.*END")) {
+            lastNode = lastNode.getTreePrev() != null ? lastNode.getTreePrev() : lastNode.getTreeParent();
+            if(lastNode == null)
+                break;
+        }
+        if(lastNode == null) {
+            return false;
+        }
+        int firstEndElemOffset = lastNode.getStartOffset();
+        return caretOffset >= firstEndElemOffset && caretOffset <= lastEndElemOffset;
     }
 
 
@@ -164,20 +206,19 @@ public class YangCompletionContributor extends CompletionContributor {
             }
             typeText = "built-in-type";
         } else {
-            if (moduleStmtsContinuation.contains(contextParent.toString())) {
-                findPossibleResultsForGroup(result);
+            String parentType = contextParent.getNode().getElementType().toString();
+            if (moduleStmtsContinuation.contains(parentType)) {
+                findPossibleResultsForGroup(result, true);
+                return;
+            } else if (submoduleStmtsContinuation.contains(parentType)) {
+                findPossibleResultsForGroup(result, false);
                 return;
             } else {
                 List<String> results = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
                 if (results != null) {
                     possibleResults = new ArrayList<>(results);
                 }
-                String type = contextParent.getNode().getElementType().toString();
-                type = type.replaceFirst("YANG_", "");
-                type = type.replaceAll("STMT(S?)", "sub-statement");
-                type = type.replace("_", "-");
-                type = type.toLowerCase();
-                typeText = type;
+                typeText = getCompletionDescription(contextParent.getNode().getElementType().toString());
             }
         }
 
@@ -187,34 +228,39 @@ public class YangCompletionContributor extends CompletionContributor {
         );
     }
 
+    @NotNull
+    private String getCompletionDescription(String type) {
+        type = type.replaceFirst("YANG_", "");
+        type = type.replaceAll("STMT(S?)", "sub-statement");
+        type = type.replace("_", "-");
+        type = type.toLowerCase();
+        return type;
+    }
+
     /**
      * Loops through all possible group statements in module, checks in which group it should start adding
      * results and also checks
      */
-    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result) {
+    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result, boolean isModule) {
         boolean start = false;
         //loops in possible stmts groups and finds in which group results should start and end
         // i = module group iteration
+        List<String> continuation = isModule? moduleStmtsContinuation : submoduleStmtsContinuation;
         String moduleStmt = "";
-        for (int i = 0; i < moduleStmtsContinuation.size(); i++) {
-            moduleStmt = moduleStmtsContinuation.get(i);
+        for (int i = 0; i < continuation.size(); i++) {
+            moduleStmt = continuation.get(i);
             if (!start) {
                 start = contextParent.getNode().getElementType().toString().equals(moduleStmt);
                 if (start && isFirstStmtInGroup) {
                     if (i > 0) {
                         --i;
-                        moduleStmt = moduleStmtsContinuation.get(i);
+                        moduleStmt = continuation.get(i);
                     }
                 }
             }
             if (start) {
                 List<String> possibleResults = MAP_OF_SUBSTATEMENTS.get(moduleStmt);
-                String type = moduleStmt;
-                type = type.replaceFirst("YANG_", "");
-                type = type.replaceAll("STMT(S?)", "sub-statement");
-                type = type.replace("_", "-");
-                type = type.toLowerCase();
-                String finalType = type;
+                String finalType = getCompletionDescription(moduleStmt);
                 possibleResults.forEach(s ->
                         result.addElement(LookupElementBuilder.create(s).withTypeText(finalType))
                 );
