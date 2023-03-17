@@ -2495,12 +2495,12 @@ public class YangParser implements PsiParser, LightPsiParser {
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
     // <<anyOrder  [when-stmt]
-    //   if-feature-stmt*
     //   [status-stmt]
     //   [description-stmt]
     //   [reference-stmt]
     //   (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+>>
+    //   action-stmt | notification-stmt |
+    //   if-feature-stmt)*>>
     //   RIGHT_BRACE stmtsep
     public static boolean augment_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "augment_stmt")) return false;
@@ -2513,7 +2513,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = p && report_error_(b, optsep(b, l + 1)) && r;
         r = p && report_error_(b, consumeToken(b, YANG_LEFT_BRACE)) && r;
         r = p && report_error_(b, stmtsep(b, l + 1)) && r;
-        r = p && report_error_(b, anyOrder(b, l + 1, YangParser::augment_stmt_6_0, YangParser::augment_stmt_6_1, YangParser::augment_stmt_6_2, YangParser::augment_stmt_6_3, YangParser::augment_stmt_6_4, YangParser::augment_stmt_6_5)) && r;
+        r = p && report_error_(b, anyOrder(b, l + 1, YangParser::augment_stmt_6_0, YangParser::augment_stmt_6_1, YangParser::augment_stmt_6_2, YangParser::augment_stmt_6_3, YangParser::augment_stmt_6_4)) && r;
         r = p && report_error_(b, consumeToken(b, YANG_RIGHT_BRACE)) && r;
         r = p && stmtsep(b, l + 1) && r;
         exit_section_(b, l, m, r, p, null);
@@ -2527,63 +2527,51 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // if-feature-stmt*
+    // [status-stmt]
     private static boolean augment_stmt_6_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "augment_stmt_6_1")) return false;
-        while (true) {
-            int c = current_position_(b);
-            if (!if_feature_stmt(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "augment_stmt_6_1", c)) break;
-        }
-        return true;
-    }
-
-    // [status-stmt]
-    private static boolean augment_stmt_6_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "augment_stmt_6_2")) return false;
         status_stmt(b, l + 1);
         return true;
     }
 
     // [description-stmt]
-    private static boolean augment_stmt_6_3(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "augment_stmt_6_3")) return false;
+    private static boolean augment_stmt_6_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_stmt_6_2")) return false;
         description_stmt(b, l + 1);
         return true;
     }
 
     // [reference-stmt]
-    private static boolean augment_stmt_6_4(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "augment_stmt_6_4")) return false;
+    private static boolean augment_stmt_6_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_stmt_6_3")) return false;
         reference_stmt(b, l + 1);
         return true;
     }
 
     // (data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt)+
-    private static boolean augment_stmt_6_5(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "augment_stmt_6_5")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = augment_stmt_6_5_0(b, l + 1);
-        while (r) {
+    //   action-stmt | notification-stmt |
+    //   if-feature-stmt)*
+    private static boolean augment_stmt_6_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_stmt_6_4")) return false;
+        while (true) {
             int c = current_position_(b);
-            if (!augment_stmt_6_5_0(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "augment_stmt_6_5", c)) break;
+            if (!augment_stmt_6_4_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "augment_stmt_6_4", c)) break;
         }
-        exit_section_(b, m, null, r);
-        return r;
+        return true;
     }
 
     // data-def-stmt | case-stmt |
-    //   action-stmt | notification-stmt
-    private static boolean augment_stmt_6_5_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "augment_stmt_6_5_0")) return false;
+    //   action-stmt | notification-stmt |
+    //   if-feature-stmt
+    private static boolean augment_stmt_6_4_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "augment_stmt_6_4_0")) return false;
         boolean r;
         r = data_def_stmt(b, l + 1);
         if (!r) r = case_stmt(b, l + 1);
         if (!r) r = action_stmt(b, l + 1);
         if (!r) r = notification_stmt(b, l + 1);
+        if (!r) r = if_feature_stmt(b, l + 1);
         return r;
     }
 
