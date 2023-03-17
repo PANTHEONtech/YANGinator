@@ -32,6 +32,53 @@ public final class YangCompletionContributorDataUtil {
             )
     );
 
+    private static final List<String> MODULE_HEADER_STMTS = List.of(
+            "yang-version",
+            "namespace",
+            "prefix"
+    );
+
+    private static final List<String> SUBMODULE_HEADER_STMTS = List.of(
+            "yang-version",
+            "belongs-to"
+    );
+
+    private static final List<String> META_STMTS = List.of(
+            "organization",
+            "contact",
+            "description",
+            "reference"
+    );
+
+    private static final List<String> LINKAGE_STMTS = List.of(
+            "import",
+            "include"
+    );
+
+    private static final List<String> REVISION_STMTS = List.of(
+            "revision"
+    );
+
+    private static final List<String> BODY_STMTS = List.of(
+            "extension",
+            "feature",
+            "identity",
+            "typedef",
+            "grouping",
+            "augment",
+            "rpc",
+            "notification",
+            "deviation",
+            "container",
+            "leaf",
+            "leaf-list",
+            "list",
+            "choice",
+            "anydata",
+            "anyxml",
+            "uses"
+    );
+
     private static final List<String> BUILT_IN_TYPES = ImmutableList.of(
             "binary",
             "bits",
@@ -383,13 +430,14 @@ public final class YangCompletionContributorDataUtil {
     public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>() {
         {
             put("FILE", List.of("module", "submodule"));
-            put("YANG_MODULE_STMT", MODULE_SUBSTATEMENTS);
-            put("YANG_MODULE_HEADER_STMTS", MODULE_SUBSTATEMENTS);
-            put("YANG_SUBMODULE_STMT", SUBMODULE_SUBSTATEMENTS);
-            put("YANG_SUBMODULE_HEADER_STMTS", SUBMODULE_SUBSTATEMENTS);
-            put("YANG_META_STMTS", BASE_MODULE_SUBSTATEMENTS);
-            put("YANG_LINKAGE_STMTS", BASE_MODULE_SUBSTATEMENTS);
-            put("YANG_BODY_STMTS", BASE_MODULE_SUBSTATEMENTS);
+            put("YANG_MODULE_STMT", MODULE_HEADER_STMTS);
+            put("YANG_MODULE_HEADER_STMTS", MODULE_HEADER_STMTS);
+            put("YANG_SUBMODULE_STMT", SUBMODULE_HEADER_STMTS);
+            put("YANG_SUBMODULE_HEADER_STMTS", SUBMODULE_HEADER_STMTS);
+            put("YANG_META_STMTS", META_STMTS);
+            put("YANG_LINKAGE_STMTS", LINKAGE_STMTS);
+            put("YANG_REVISION_STMTS", REVISION_STMTS);
+            put("YANG_BODY_STMTS", BODY_STMTS);
             put("YANG_IMPORT_STMT", IMPORT_SUBSTATEMENTS);
             put("YANG_INCLUDE_STMT", INCLUDE_SUBSTATEMENTS);
             put("YANG_REVISION_STMT", REVISION_SUBSTATEMENTS);

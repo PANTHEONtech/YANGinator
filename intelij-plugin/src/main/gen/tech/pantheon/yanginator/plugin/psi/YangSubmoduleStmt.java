@@ -41,8 +41,8 @@ public interface YangSubmoduleStmt extends YangGeneratedReferenceType {
     @Nullable
     YangMetaStmts getMetaStmts();
 
-    @NotNull
-    List<YangRevisionStmt> getRevisionStmtList();
+    @Nullable
+    YangRevisionStmts getRevisionStmts();
 
     @Nullable
     YangSubmoduleHeaderStmts getSubmoduleHeaderStmts();

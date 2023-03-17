@@ -24,8 +24,6 @@ public class GrammarKitRFCUncomplaintUtils {
         result = quotedAugmentArg(result);
         result = quotedPath(result);
         result = quotedStringSplitter(result);
-        result = revisionComment(result);
-        result = revisionReplace(result);
         result = linkageBodyReplace(result);
         result = metaBodyReplace(result);
         result = rewriteScheme(result);
@@ -276,46 +274,6 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
-     * Comment revision statement to make revision optional
-     *
-     * @param lines list of strings
-     * @return list of strings
-     */
-    private static List<String> revisionComment(List<String> lines) {
-        List<String> result = new ArrayList<>();
-        for (String line : lines) {
-            if (line.contains("revision-stmts ::=")) {
-                line = "//" + line;
-            }
-            result.add(line);
-        }
-        return result;
-    }
-
-    /**
-     * Changing revision statement in module and submodule to make revision optional
-     * and Format correctly in Yang 1.1
-     *
-     * @param lines list of strings
-     * @return list of strings
-     */
-    private static List<String> revisionReplace(List<String> lines) {
-        List<String> result = new ArrayList<>();
-        boolean tmp = false;
-        for (String line : lines) {
-            if (line.contains("module-stmt ::=") || line.contains("submodule-stmt ::=")) {
-                tmp = true;
-            }
-            if (tmp && line.contains("revision-stmts")) {
-                line = "  revision-stmt*";
-                tmp = false;
-            }
-            result.add(line);
-        }
-        return result;
-    }
-
-    /**
      * Changing linkage body statement in BNF file to define that linkage must contain
      * at least one statement to Format correctly in Yang 1.1
      *
@@ -328,7 +286,7 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("linkage-stmts ::=")) {
                 tmp = true;
-                line = "linkage-stmts ::= (import-stmt | include-stmt)* ";
+                line = "linkage-stmts ::= (import-stmt | include-stmt)*";
             }
             result.add(line);
             if (tmp && (line.contains("<<anyOrder  import-stmt*"))) {
@@ -339,6 +297,7 @@ public class GrammarKitRFCUncomplaintUtils {
             }
             if (tmp && (line.contains(">>"))) {
                 result.remove(result.size() - 1);
+                result.add("");
                 tmp = false;
             }
         }

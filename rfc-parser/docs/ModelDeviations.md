@@ -25,10 +25,6 @@ correctly.
 
 * `quotedStringSplitter(result);` [link](#Quoted-string-splitter)
 
-* `revisionComment(result);` [link](#Comment-revision)
-
-* `revisionReplace(result);` [link](#Changing-revision-statement)
-
 * `linkageBodyReplace(result);` [link](#Changing-linkage-body)
 
 * `metaBodyReplace(result);` [link](#Changing-meta-statement-body)
@@ -447,35 +443,6 @@ Before
 After
 
 ![quoted string splitter after](doc-images/quoted_string_splitter_after.png)
-
-### Comment revision
-
-Comment revision statement to make revision optional.
-
-**Example**
-
-Before
-
-![revision comment before](doc-images/revision_comment_before.png)
-
-After
-
-![revision comment after](doc-images/revision_comment_after.png)
-
-### Changing revision statement
-
-Changing revision statement in module and submodule to make revision optional
-and Format correctly in Yang 1.1
-
-**Example**
-
-Before
-
-![revision replace before](doc-images/revision_replace_before.png)
-
-After
-
-![revision replace after](doc-images/revision_replace_after.png)
 
 ### Changing linkage body
 
