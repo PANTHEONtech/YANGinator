@@ -5411,7 +5411,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-    // (string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     public static boolean identifier(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier")) return false;
         boolean r;
@@ -5432,7 +5432,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // (string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     private static boolean identifier_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1")) return false;
         while (true) {
@@ -5443,7 +5443,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // string-splitter? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
+    // string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     private static boolean identifier_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0")) return false;
         boolean r;
@@ -5461,11 +5461,12 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
+    // ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
     private static boolean identifier_1_0_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
         boolean r;
         r = consumeToken(b, YANG_ALPHA);
+        if (!r) r = consumeToken(b, YANG_ZEROS);
         if (!r) r = DIGIT(b, l + 1);
         if (!r) r = consumeToken(b, YANG_DATE);
         if (!r) r = consumeToken(b, YANG_ALPHANUMERICAL_ALPHA_FIRST);
