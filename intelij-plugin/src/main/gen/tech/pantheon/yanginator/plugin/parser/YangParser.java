@@ -439,6 +439,27 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
+    }
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
+
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -458,10 +479,6 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
 
     /* ********************************************************** */
     // '\"'
@@ -5411,6 +5428,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
+    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     public static boolean identifier(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier")) return false;
@@ -5432,6 +5450,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
+    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     private static boolean identifier_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1")) return false;
@@ -5443,6 +5462,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
+    // string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     // string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     private static boolean identifier_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0")) return false;
@@ -5450,6 +5470,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b);
         r = identifier_1_0_0(b, l + 1);
         r = r && identifier_1_0_1(b, l + 1);
+        r = r && identifier_1_0_2(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
@@ -5461,9 +5482,27 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
+    // (or-keyword | and-keyword | not-keyword)?
     // ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
     private static boolean identifier_1_0_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
+        identifier_1_0_1_0(b, l + 1);
+        return true;
+    }
+
+    // or-keyword | and-keyword | not-keyword
+    private static boolean identifier_1_0_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_1_0")) return false;
+        boolean r;
+        r = or_keyword(b, l + 1);
+        if (!r) r = and_keyword(b, l + 1);
+        if (!r) r = not_keyword(b, l + 1);
+        return r;
+    }
+
+    // ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
+    private static boolean identifier_1_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_2")) return false;
         boolean r;
         r = consumeToken(b, YANG_ALPHA);
         if (!r) r = consumeToken(b, YANG_ZEROS);
@@ -12707,23 +12746,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
-    }
-
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
     }
 
 }
