@@ -81,7 +81,7 @@ public class YangUtil {
                 .filter(file -> fileNames.contains(file.getName()))
                 .collect(Collectors.toList());
         //in case the referenced yang files are not in the same directory
-        if (temp.size() <= 1) {
+        if (temp.size() < 1) {
             virtualFiles =
                     FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
             temp = virtualFiles.stream()
