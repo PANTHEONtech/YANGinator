@@ -21,6 +21,15 @@ public interface YangIdentifier extends YangNamedElement {
     List<YangDigit> getDigitList();
 
     @NotNull
+    List<YangAndKeyword> getAndKeywordList();
+
+    @NotNull
+    List<YangNotKeyword> getNotKeywordList();
+
+    @NotNull
+    List<YangOrKeyword> getOrKeywordList();
+
+    @NotNull
     List<YangStringSplitter> getStringSplitterList();
 
 }

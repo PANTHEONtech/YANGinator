@@ -773,6 +773,17 @@ Before:
 After:  
 ![](doc-images/Augment-stmt-after.png)
 
+
+### Edited identifier for support string splitter in if-feature
+Added "**or**","**and**" and "**not**" keywords as possible to **identifier** to support 
+string-splitter in **if-feature** stmt after these keywords
+
+Before:  
+![](doc-images/identifier_for_if-feature_before.png)
+
+After:  
+![](doc-images/identifier_for_if-feature_after.png)
+
 ---
 
 ## ***More methods are used that are not yet documented***

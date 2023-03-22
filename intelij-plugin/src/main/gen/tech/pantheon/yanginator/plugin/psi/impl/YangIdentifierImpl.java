@@ -15,8 +15,11 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangAndKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDigit;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
+import tech.pantheon.yanginator.plugin.psi.YangNotKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangOrKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
@@ -42,6 +45,24 @@ public class YangIdentifierImpl extends YangNamedElementImpl implements YangIden
     @NotNull
     public List<YangDigit> getDigitList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDigit.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangAndKeyword> getAndKeywordList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangAndKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangNotKeyword> getNotKeywordList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangNotKeyword.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangOrKeyword> getOrKeywordList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangOrKeyword.class);
     }
 
     @Override
