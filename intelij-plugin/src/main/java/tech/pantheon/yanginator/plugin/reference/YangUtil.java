@@ -32,6 +32,7 @@ import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -70,14 +71,24 @@ public class YangUtil {
     }
 
     public static <T extends PsiElement> List<T> findIdentifierLiterals(Project project, String identifierKeyword,
-                                                                        Object genericElement, List<String> fileNames) {
+                                                                        PsiElement genericElement, List<String> fileNames) {
         List<T> result = null;
+        String path = getPathOfYang(genericElement.getContainingFile().getVirtualFile().getPath());
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
-        virtualFiles = virtualFiles.stream()
+        Collection<VirtualFile> temp = virtualFiles.stream()
+                .filter(file -> file.getPath().contains(path))
                 .filter(file -> fileNames.contains(file.getName()))
                 .collect(Collectors.toList());
-
+        //in case the referenced yang files are not in the same directory
+        if (temp.size() < 1) {
+            virtualFiles =
+                    FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
+            temp = virtualFiles.stream()
+                    .filter(file -> fileNames.contains(file.getName()))
+                    .collect(Collectors.toList());
+        }
+        virtualFiles = temp;
         for (VirtualFile virtualFile : virtualFiles) {
             PsiFile yangFile = PsiManager.getInstance(project).findFile(virtualFile);
             if (yangFile != null) {
@@ -99,6 +110,11 @@ public class YangUtil {
         }
 
         return result != null ? result : Collections.emptyList();
+    }
+
+    private static String getPathOfYang(String file) {
+        Path path = Path.of(file);
+        return path.getParent().toString();
     }
 
     private static String getStmtArgText(YangReferencedStatement referencedStatement) {
