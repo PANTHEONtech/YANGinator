@@ -6173,7 +6173,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     //   // these stmts can appear in any order
     // <<anyOrder  must-stmt*
     //   (typedef-stmt | grouping-stmt)*
-    //   data-def-stmt+>>
+    //   data-def-stmt*>>
     //   RIGHT_BRACE stmtsep
     public static boolean input_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "input_stmt")) return false;
@@ -6222,19 +6222,15 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // data-def-stmt+
+    // data-def-stmt*
     private static boolean input_stmt_4_2(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "input_stmt_4_2")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = data_def_stmt(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!data_def_stmt(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "input_stmt_4_2", c)) break;
         }
-        exit_section_(b, m, null, r);
-        return r;
+        return true;
     }
 
     /* ********************************************************** */
@@ -8451,7 +8447,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     //   // these stmts can appear in any order
     // <<anyOrder  must-stmt*
     //   (typedef-stmt | grouping-stmt)*
-    //   data-def-stmt+>>
+    //   data-def-stmt*>>
     //   RIGHT_BRACE stmtsep
     public static boolean output_stmt(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "output_stmt")) return false;
@@ -8500,19 +8496,15 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // data-def-stmt+
+    // data-def-stmt*
     private static boolean output_stmt_4_2(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "output_stmt_4_2")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = data_def_stmt(b, l + 1);
-        while (r) {
+        while (true) {
             int c = current_position_(b);
             if (!data_def_stmt(b, l + 1)) break;
             if (!empty_element_parsed_guard_(b, "output_stmt_4_2", c)) break;
         }
-        exit_section_(b, m, null, r);
-        return r;
+        return true;
     }
 
     /* ********************************************************** */

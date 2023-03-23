@@ -924,7 +924,7 @@ input-stmt ::= input-keyword optsep
   // these stmts can appear in any order
 <<anyOrder  must-stmt*
   (typedef-stmt | grouping-stmt)*
-  data-def-stmt+>>
+  data-def-stmt*>>
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1
@@ -935,7 +935,7 @@ output-stmt ::= output-keyword optsep
   // these stmts can appear in any order
 <<anyOrder  must-stmt*
   (typedef-stmt | grouping-stmt)*
-  data-def-stmt+>>
+  data-def-stmt*>>
   RIGHT_BRACE stmtsep
 {
 pin(".*") = 1

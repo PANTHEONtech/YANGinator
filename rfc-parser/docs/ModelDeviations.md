@@ -79,11 +79,11 @@ correctly.
 
 * `rewriteUsesAugmentStmt(result);`[link](#Rewrite-Uses-Augment-Stmt)
 
-### Rewrite Zero Integer Value 
-
 * `adjustDoubleColonInPchar(result);`[link](#Adjust-Double-Colon-In-Pchar)
 
 * `allowReferenceLinkage(result);`[link](#Make-linkages-referencable)
+
+* `changeInputOutputCardinality(result);`[link](#Change-input-and-output-data-def-stmt-cardinality)
 
 
 ### Rewrite Zero Integer Value
@@ -773,6 +773,64 @@ Before:
 After:  
 ![](doc-images/Augment-stmt-after.png)
 
----
+
+### Change input and output data def stmt cardinality
+Changed input-stmt and output-stmt data-def-stmt cardinality to 0..n 
+
+Input-stmt
+
+            7.14.2.1.  The input's Substatements (RFC7950)
+
+                +--------------+---------+-------------+
+                | substatement | section | cardinality |
+                +--------------+---------+-------------+
+                | anydata      | 7.10    | 0..n        |
+                | anyxml       | 7.11    | 0..n        |
+                | choice       | 7.9     | 0..n        |
+                | container    | 7.5     | 0..n        |
+                | grouping     | 7.12    | 0..n        |
+                | leaf         | 7.6     | 0..n        |
+                | leaf-list    | 7.7     | 0..n        |
+                | list         | 7.8     | 0..n        |
+                | must         | 7.5.3   | 0..n        |
+                | typedef      | 7.3     | 0..n        |
+                | uses         | 7.13    | 0..n        |
+                +--------------+---------+-------------+
+
+Before:
+
+![input_stmt_before.png](doc-images/input_stmt_before.png)
+
+After:
+
+![input_stmt_after.png](doc-images/input_stmt_after.png)
+
+Output-stmt
+
+            7.14.3.1.  The output's Substatements (RFC7950)
+
+                +--------------+---------+-------------+
+                | substatement | section | cardinality |
+                +--------------+---------+-------------+
+                | anydata      | 7.10    | 0..n        |
+                | anyxml       | 7.11    | 0..n        |
+                | choice       | 7.9     | 0..n        |
+                | container    | 7.5     | 0..n        |
+                | grouping     | 7.12    | 0..n        |
+                | leaf         | 7.6     | 0..n        |
+                | leaf-list    | 7.7     | 0..n        |
+                | list         | 7.8     | 0..n        |
+                | must         | 7.5.3   | 0..n        |
+                | typedef      | 7.3     | 0..n        |
+                | uses         | 7.13    | 0..n        |
+                +--------------+---------+-------------+
+
+Before:
+
+![output_stmt_before.png](doc-images/output_stmt_before.png)
+
+After:
+
+![output_stmt_after.png](doc-images/output_stmt_after.png)
 
 ## ***More methods are used that are not yet documented***

@@ -55,6 +55,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = allowReferenceLinkage(result);
         result = addSingleQuotePossibility(result);
         result = rewriteAugment(result);
+        result = changeInputOutputCardinality(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1040,6 +1041,28 @@ public class GrammarKitRFCUncomplaintUtils {
             if (!found) {
                 result.add(line);
             }
+        }
+        return result;
+    }
+
+    /**
+     * Changes cardinality of data-def-stmt for input and output statements based on the RFC statements description table.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> changeInputOutputCardinality(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("output-stmt ::=") || line.contains("input-stmt ::=")) {
+                found = true;
+            }
+            if (found && line.contains("data-def-stmt")) {
+                line = "  data-def-stmt*>>";
+                found = false;
+            }
+            result.add(line);
         }
         return result;
     }
