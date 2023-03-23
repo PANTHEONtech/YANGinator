@@ -5428,8 +5428,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
-    // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     public static boolean identifier(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier")) return false;
         boolean r;
@@ -5450,8 +5449,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
-    // (string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     private static boolean identifier_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1")) return false;
         while (true) {
@@ -5462,8 +5460,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
-    // string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
+    // string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     private static boolean identifier_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0")) return false;
         boolean r;
@@ -5483,7 +5480,6 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // (or-keyword | and-keyword | not-keyword)?
-    // ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
     private static boolean identifier_1_0_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
         identifier_1_0_1_0(b, l + 1);
@@ -5500,7 +5496,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
+    // ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
     private static boolean identifier_1_0_2(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0_2")) return false;
         boolean r;
