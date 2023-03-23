@@ -394,7 +394,7 @@ public class GrammarKitRFCUncomplaintUtils {
         boolean found = false;
         for (String line : lines) {
             if (found) {
-                line = "(string-splitter? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*";
+                line = "(string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*";
                 found = false;
             }
             if (line.contains("identifier ::= (ALPHA | UNDERSCORE)")) {

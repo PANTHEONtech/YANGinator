@@ -86,10 +86,36 @@ public class _YangLexer implements FlexLexer {
      * This character denotes the end of file
      */
     public static final int YYEOF = -1;
+
+    /**
+     * initial size of the lookahead buffer
+     */
+    private static final int ZZ_BUFFERSIZE = 16384;
+
     /**
      * lexical states
      */
     public static final int YYINITIAL = 0;
+
+    /**
+     * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
+     * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l
+     * at the beginning of a line
+     * l is of the form l = 2*k, k a non negative integer
+     */
+    private static final int[] ZZ_LEXSTATE = {
+            0, 0
+    };
+
+    /**
+     * Translates characters to character classes
+     * Chosen bits are [11, 6, 4]
+     * Total runtime size is 15776 bytes
+     */
+    public static int ZZ_CMAP(int ch) {
+        return ZZ_CMAP_A[(ZZ_CMAP_Y[(ZZ_CMAP_Z[ch >> 10] << 6) | ((ch >> 4) & 0x3f)] << 4) | (ch & 0xf)];
+    }
+
     /* The ZZ_CMAP_Z table has 1088 entries */
     static final char[] ZZ_CMAP_Z = zzUnpackCMap(
             "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\6\15\1\16\23\15" +
@@ -98,6 +124,7 @@ public class _YangLexer implements FlexLexer {
                     "\1\44\11\12\1\45\2\12\1\46\4\12\1\47\1\50\1\51\1\12\1\52\1\12\1\53\1\54\1" +
                     "\55\3\12\51\15\1\56\3\15\1\57\1\60\4\15\1\61\12\12\1\62\u02c1\12\1\63\277" +
                     "\12");
+
     /* The ZZ_CMAP_Y table has 3328 entries */
     static final char[] ZZ_CMAP_Y = zzUnpackCMap(
             "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\1\1\11\1\12\1\13\1\14\1\13\1\14\34" +
@@ -159,6 +186,7 @@ public class _YangLexer implements FlexLexer {
                     "\1\322\1\323\1\324\1\325\1\326\1\327\1\43\1\330\1\43\47\1\1\13\1\162\1\13" +
                     "\1\162\1\13\1\162\47\1\55\13\1\212\2\1\103\13\1\155\15\13\1\42\150\13\1\16" +
                     "\25\1\41\13\1\42\56\1\17\13\41\1");
+
     /* The ZZ_CMAP_A table has 3472 entries */
     static final char[] ZZ_CMAP_A = zzUnpackCMap(
             "\11\0\1\53\1\51\2\50\1\52\22\0\1\50\1\36\1\4\1\37\1\40\1\41\1\42\1\5\1\14" +
@@ -215,19 +243,12 @@ public class _YangLexer implements FlexLexer {
                     "\55\1\0\1\55\1\0\1\55\1\0\3\55\1\0\2\55\1\0\1\55\2\0\1\55\1\0\1\55\1\0\1\55" +
                     "\1\0\1\55\1\0\1\55\1\0\2\55\1\0\1\55\2\0\4\55\1\0\7\55\1\0\4\55\1\0\4\55\1" +
                     "\0\1\55\1\0\12\55\1\0\5\55\1\0\3\55\1\0\5\55\1\0\5\55");
+
     /**
-     * initial size of the lookahead buffer
+     * Translates DFA states to action switch labels.
      */
-    private static final int ZZ_BUFFERSIZE = 16384;
-    /**
-     * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
-     * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l
-     * at the beginning of a line
-     * l is of the form l = 2*k, k a non negative integer
-     */
-    private static final int[] ZZ_LEXSTATE = {
-            0, 0
-    };
+    private static final int[] ZZ_ACTION = zzUnpackAction();
+
     private static final String ZZ_ACTION_PACKED_0 =
             "\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10" +
                     "\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20" +
@@ -488,10 +509,32 @@ public class _YangLexer implements FlexLexer {
                     "\1\63\1\64\1\63\1\64\1\63\1\64\1\63\1\64" +
                     "\1\63\1\64\1\63\1\64\1\63\1\64\1\63\1\64" +
                     "\1\63\1\64\1\63\1\64\1\2";
+
+    private static int[] zzUnpackAction() {
+        int[] result = new int[2088];
+        int offset = 0;
+        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackAction(String packed, int offset, int[] result) {
+        int i = 0;       /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int count = packed.charAt(i++);
+            int value = packed.charAt(i++);
+            do result[j++] = value; while (--count > 0);
+        }
+        return j;
+    }
+
+
     /**
-     * Translates DFA states to action switch labels.
+     * Translates a state to a row index in the transition table
      */
-    private static final int[] ZZ_ACTION = zzUnpackAction();
+    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
+
     private static final String ZZ_ROWMAP_PACKED_0 =
             "\0\0\0\57\0\57\0\57\0\136\0\57\0\57\0\57" +
                     "\0\215\0\57\0\57\0\274\0\57\0\57\0\57\0\57" +
@@ -754,10 +797,30 @@ public class _YangLexer implements FlexLexer {
                     "\1\u733a\1\u7369\1\u7398\1\u73c7\1\u73f6\1\u7425\1\u7454\1\u7483" +
                     "\1\u74b2\1\u74e1\1\u7510\1\u753f\1\u756e\1\u759d\1\u75cc\1\u75fb" +
                     "\1\u762a\1\u7659\1\u7688\1\u76b7\1\u76e6\1\u7715\1\u7715\1\u7715";
+
+    private static int[] zzUnpackRowMap() {
+        int[] result = new int[2088];
+        int offset = 0;
+        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
+        int i = 0;  /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int high = packed.charAt(i++) << 16;
+            result[j++] = high | packed.charAt(i++);
+        }
+        return j;
+    }
+
     /**
-     * Translates a state to a row index in the transition table
+     * The transition table of the DFA
      */
-    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
+    private static final int[] ZZ_TRANS = zzUnpackTrans();
+
     private static final String ZZ_TRANS_PACKED_0 =
             "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11" +
                     "\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21" +
@@ -2415,136 +2478,6 @@ public class _YangLexer implements FlexLexer {
                     "\1\70\23\0\1\u0826\11\u0827\1\70\16\0\2\57\1\70" +
                     "\23\0\12\u0827\1\70\16\0\2\57\1\70\23\0\12\u0828" +
                     "\1\70\16\0\2\57\1\70";
-    /**
-     * The transition table of the DFA
-     */
-    private static final int[] ZZ_TRANS = zzUnpackTrans();
-    /* error codes */
-    private static final int ZZ_UNKNOWN_ERROR = 0;
-    private static final int ZZ_NO_MATCH = 1;
-    private static final int ZZ_PUSHBACK_2BIG = 2;
-    /* error messages for the codes above */
-    private static final String[] ZZ_ERROR_MSG = {
-            "Unknown internal scanner error",
-            "Error: could not match input",
-            "Error: pushback value was too large"
-    };
-    private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\1\1\3\11\1\1\3\11\1\1\2\11\1\1\6\11" +
-                    "\1\1\1\11\13\1\16\11\2\1\2\11\2\1\1\11" +
-                    "\1\0\10\1\1\11\4\0\4\1\1\11\3\0\3\1" +
-                    "\4\0\2\1\5\0\5\1\1\0\3\1\1\11\1\0" +
-                    "\2\1\3\0\2\1\1\11\u07bd\1";
-    /**
-     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
-     */
-    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
-    /**
-     * the input device
-     */
-    private final java.io.Reader zzReader;
-    /**
-     * the current state of the DFA
-     */
-    private int zzState;
-    /**
-     * the current lexical state
-     */
-    private int zzLexicalState = YYINITIAL;
-    /**
-     * this buffer contains the current text to be matched and is
-     * the source of the yytext() string
-     */
-    private CharSequence zzBuffer = "";
-    /**
-     * the textposition at the last accepting state
-     */
-    private int zzMarkedPos;
-    /**
-     * the current text position in the buffer
-     */
-    private int zzCurrentPos;
-    /**
-     * startRead marks the beginning of the yytext() string in the buffer
-     */
-    private int zzStartRead;
-    /**
-     * endRead marks the last character in the buffer, that has been read
-     * from input
-     */
-    private int zzEndRead;
-    /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
-     */
-    private boolean zzAtBOL = true;
-    /**
-     * zzAtEOF == true <=> the scanner is at the EOF
-     */
-    private boolean zzAtEOF;
-    /**
-     * denotes if the user-EOF-code has already been executed
-     */
-    private boolean zzEOFDone;
-
-    /* user code: */
-    public _YangLexer() {
-        this(null);
-    }
-
-    /**
-     * Creates a new scanner
-     *
-     * @param in the java.io.Reader to read input from.
-     */
-    public _YangLexer(java.io.Reader in) {
-        this.zzReader = in;
-    }
-
-    /**
-     * Translates characters to character classes
-     * Chosen bits are [11, 6, 4]
-     * Total runtime size is 15776 bytes
-     */
-    public static int ZZ_CMAP(int ch) {
-        return ZZ_CMAP_A[(ZZ_CMAP_Y[(ZZ_CMAP_Z[ch >> 10] << 6) | ((ch >> 4) & 0x3f)] << 4) | (ch & 0xf)];
-    }
-
-    private static int[] zzUnpackAction() {
-        int[] result = new int[2088];
-        int offset = 0;
-        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackAction(String packed, int offset, int[] result) {
-        int i = 0;       /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int count = packed.charAt(i++);
-            int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
-        }
-        return j;
-    }
-
-    private static int[] zzUnpackRowMap() {
-        int[] result = new int[2088];
-        int offset = 0;
-        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
-        int i = 0;  /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int high = packed.charAt(i++) << 16;
-            result[j++] = high | packed.charAt(i++);
-        }
-        return j;
-    }
 
     private static int[] zzUnpackTrans() {
         int[] result = new int[96068];
@@ -2566,6 +2499,31 @@ public class _YangLexer implements FlexLexer {
         return j;
     }
 
+
+    /* error codes */
+    private static final int ZZ_UNKNOWN_ERROR = 0;
+    private static final int ZZ_NO_MATCH = 1;
+    private static final int ZZ_PUSHBACK_2BIG = 2;
+
+    /* error messages for the codes above */
+    private static final String[] ZZ_ERROR_MSG = {
+            "Unknown internal scanner error",
+            "Error: could not match input",
+            "Error: pushback value was too large"
+    };
+
+    /**
+     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
+     */
+    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+
+    private static final String ZZ_ATTRIBUTE_PACKED_0 =
+            "\1\1\3\11\1\1\3\11\1\1\2\11\1\1\6\11" +
+                    "\1\1\1\11\13\1\16\11\2\1\2\11\2\1\1\11" +
+                    "\1\0\10\1\1\11\4\0\4\1\1\11\3\0\3\1" +
+                    "\4\0\2\1\5\0\5\1\1\0\3\1\1\11\1\0" +
+                    "\2\1\3\0\2\1\1\11\u07bd\1";
+
     private static int[] zzUnpackAttribute() {
         int[] result = new int[2088];
         int offset = 0;
@@ -2584,6 +2542,79 @@ public class _YangLexer implements FlexLexer {
         }
         return j;
     }
+
+    /**
+     * the input device
+     */
+    private final java.io.Reader zzReader;
+
+    /**
+     * the current state of the DFA
+     */
+    private int zzState;
+
+    /**
+     * the current lexical state
+     */
+    private int zzLexicalState = YYINITIAL;
+
+    /**
+     * this buffer contains the current text to be matched and is
+     * the source of the yytext() string
+     */
+    private CharSequence zzBuffer = "";
+
+    /**
+     * the textposition at the last accepting state
+     */
+    private int zzMarkedPos;
+
+    /**
+     * the current text position in the buffer
+     */
+    private int zzCurrentPos;
+
+    /**
+     * startRead marks the beginning of the yytext() string in the buffer
+     */
+    private int zzStartRead;
+
+    /**
+     * endRead marks the last character in the buffer, that has been read
+     * from input
+     */
+    private int zzEndRead;
+
+    /**
+     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
+     */
+    private boolean zzAtBOL = true;
+
+    /**
+     * zzAtEOF == true <=> the scanner is at the EOF
+     */
+    private boolean zzAtEOF;
+
+    /**
+     * denotes if the user-EOF-code has already been executed
+     */
+    private boolean zzEOFDone;
+
+    /* user code: */
+    public _YangLexer() {
+        this(null);
+    }
+
+
+    /**
+     * Creates a new scanner
+     *
+     * @param in the java.io.Reader to read input from.
+     */
+    public _YangLexer(java.io.Reader in) {
+        this.zzReader = in;
+    }
+
 
     /**
      * Unpacks the compressed character translation table.
