@@ -704,6 +704,7 @@ public interface YangTypes {
     IElementType YANG_AT_SIGN = new YangTokenType("AT_SIGN");
     IElementType YANG_BACK_SLASH = new YangTokenType("BACK_SLASH");
     IElementType YANG_CARRIAGE_RETURN = new YangTokenType("CARRIAGE_RETURN");
+    IElementType YANG_CARRIAGE_RETURNLINEFEED = new YangTokenType("CARRIAGE_RETURNLINEFEED");
     IElementType YANG_CHARS = new YangTokenType("CHARS");
     IElementType YANG_CIRCUMFLEX_ACCENT = new YangTokenType("CIRCUMFLEX_ACCENT");
     IElementType YANG_CLOSED_BRACKET = new YangTokenType("CLOSED_BRACKET");
