@@ -15,6 +15,7 @@ import com.intellij.lang.parser.GeneratedParserUtilBase.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
@@ -166,5 +167,26 @@ public class ExternalRules {
             }
         }
         return charList;
+    }
+
+
+    public static boolean blockComment(PsiBuilder psiBuilder, int level, Parser parser) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+        boolean result = false;
+        boolean parsing = true;
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
+
+        while (parsing) {
+            parsing = false;
+            result = parser.parse(psiBuilder, level + 1);
+            if (Objects.equals(psiBuilder.getTokenText(), "*") &&
+                    psiBuilder.getOriginalText().charAt(psiBuilder.getCurrentOffset() + 1) != '/') {
+
+                consumeToken(psiBuilder, "*");
+                parsing = true;
+            }
+        }
+        exit_section_(psiBuilder, marker, null, result);
+        return result;
     }
 }

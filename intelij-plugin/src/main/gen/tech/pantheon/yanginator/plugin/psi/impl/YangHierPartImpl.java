@@ -12,19 +12,17 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangAuthority;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleForwardSlash;
 import tech.pantheon.yanginator.plugin.psi.YangHierPart;
 import tech.pantheon.yanginator.plugin.psi.YangPathAbempty;
 import tech.pantheon.yanginator.plugin.psi.YangPathAbsolute;
 import tech.pantheon.yanginator.plugin.psi.YangPathEmpty;
 import tech.pantheon.yanginator.plugin.psi.YangPathRootless;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_SLASH;
 
 public class YangHierPartImpl extends YangNamedElementImpl implements YangHierPart {
 
@@ -40,6 +38,12 @@ public class YangHierPartImpl extends YangNamedElementImpl implements YangHierPa
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @Nullable
+    public YangDoubleForwardSlash getDoubleForwardSlash() {
+        return findChildByClass(YangDoubleForwardSlash.class);
     }
 
     @Override
@@ -70,12 +74,6 @@ public class YangHierPartImpl extends YangNamedElementImpl implements YangHierPa
     @Nullable
     public YangPathRootless getPathRootless() {
         return findChildByClass(YangPathRootless.class);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getDoubleForwardSlash() {
-        return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
     }
 
 }

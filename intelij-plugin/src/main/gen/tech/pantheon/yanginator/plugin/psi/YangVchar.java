@@ -17,6 +17,9 @@ import org.jetbrains.annotations.Nullable;
 public interface YangVchar extends YangNamedElement {
 
     @Nullable
+    YangDoubleForwardSlash getDoubleForwardSlash();
+
+    @Nullable
     PsiElement getAlpha();
 
     @Nullable
@@ -72,9 +75,6 @@ public interface YangVchar extends YangNamedElement {
 
     @Nullable
     PsiElement getDoubleDot();
-
-    @Nullable
-    PsiElement getDoubleForwardSlash();
 
     @Nullable
     PsiElement getEight();

@@ -16,6 +16,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleForwardSlash;
 import tech.pantheon.yanginator.plugin.psi.YangVchar;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
@@ -38,7 +39,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOLLAR_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_COLON;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_DOT;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_SLASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EIGHT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXCLAMATION_MARK;
@@ -84,6 +84,12 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     public void accept(@NotNull PsiElementVisitor visitor) {
         if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
         else super.accept(visitor);
+    }
+
+    @Override
+    @Nullable
+    public YangDoubleForwardSlash getDoubleForwardSlash() {
+        return findChildByClass(YangDoubleForwardSlash.class);
     }
 
     @Override
@@ -198,12 +204,6 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getDoubleDot() {
         return findChildByType(YANG_DOUBLE_DOT);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getDoubleForwardSlash() {
-        return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
     }
 
     @Override
