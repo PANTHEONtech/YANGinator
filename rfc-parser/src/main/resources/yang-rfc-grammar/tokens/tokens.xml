@@ -327,6 +327,11 @@
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
+        <key>"//"</key>
+        <value>DOUBLE_FORWARD_SLASH</value>
+        <lexerOnly>false</lexerOnly>
+    </token>
+    <token>
         <key>{HEXDIGIT}</key>
         <value>HEXDIG</value>
         <lexerOnly>true</lexerOnly>
