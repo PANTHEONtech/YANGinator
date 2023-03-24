@@ -80,7 +80,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT_E
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT_START;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BODY_STMTS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURNLINEFEED;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CASE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CASE_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHARS;
@@ -558,7 +557,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // SINGLE_QUOTE | DOUBLE_QUOTE | CARRIAGE_RETURN | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURNLINEFEED | DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER
+    // SINGLE_QUOTE | DOUBLE_QUOTE | CARRIAGE_RETURN | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER
     public static boolean COMCHAR(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "COMCHAR")) return false;
         boolean r;
@@ -575,7 +574,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = consumeToken(b, YANG_TAB);
         if (!r) r = COMCHAR_10(b, l + 1);
         if (!r) r = consumeToken(b, YANG_LINEFEED);
-        if (!r) r = consumeToken(b, YANG_CARRIAGE_RETURNLINEFEED);
         if (!r) r = consumeToken(b, YANG_DATE);
         if (!r) r = consumeToken(b, YANG_FRACTIONS);
         if (!r) r = consumeToken(b, YANG_ZEROS);

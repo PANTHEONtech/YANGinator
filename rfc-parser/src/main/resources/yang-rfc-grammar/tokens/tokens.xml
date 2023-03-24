@@ -332,11 +332,6 @@
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
-        <key>"*/"</key>
-        <value>BLOCK_COMMENT_END</value>
-        <lexerOnly>true</lexerOnly>
-    </token>
-    <token>
         <key>""</key>
         <value>ZERO_LENGTH_STRING</value>
         <lexerOnly>false</lexerOnly>
