@@ -56,6 +56,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = addSingleQuotePossibility(result);
         result = rewriteAugment(result);
         result = changeInputOutputCardinality(result);
+        result = changeOrderOfTypeBodyStmt(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1070,6 +1071,32 @@ public class GrammarKitRFCUncomplaintUtils {
             }
             if (found && line.contains("data-def-stmt")) {
                 line = "  data-def-stmt*>>";
+                found = false;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+
+    /**
+     * Swap two first statements in type-body-stmts because numerical-restrictions
+     * can have only range-stmt inside, but when there is fraction-digits stmt after range-stmt,
+     * it doesn't recognize it as a decimal64-restriction.
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> changeOrderOfTypeBodyStmt(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+
+            if (line.contains("type-body-stmts ::=")) {
+                found = true;
+                line = "type-body-stmts ::= decimal64-specification |";
+            } else if (found && line.contains("decimal64-specification")) {
+                line = "  numerical-restrictions |";
                 found = false;
             }
             result.add(line);
