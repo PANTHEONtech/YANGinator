@@ -858,7 +858,7 @@ Block comment recognition is realised by ***blockComment*** method in External r
 
 ### Changed order of type-body-stmt
 
-Swapped two first statements in type-body-stmts, because numerical-restrictions 
+Swapped first two statements in type-body-stmts, because numerical-restrictions 
 can have only range-stmt inside, but when there was fraction-digits stmt after range-stmt, 
 it didn't recognize it as a decimal64-restriction
 
