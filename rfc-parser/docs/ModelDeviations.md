@@ -844,6 +844,17 @@ Before:
 After:  
 ![](doc-images/identifier_for_if-feature_after.png)
 
+### Block comment rework
+
+Removed block comment functionality from lexer 
+and added into bnf and ExternalRules.
+
+Block comment recognition is realised by ***blockComment*** method in External rules
+
+**COMCHAR** contains all characters except asterisk "\*"
+
+
+![](doc-images/Block_Comment.png)
 
 ---
 

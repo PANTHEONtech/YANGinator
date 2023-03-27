@@ -169,7 +169,17 @@ public class ExternalRules {
         return charList;
     }
 
-
+    /**
+     * parser parse everything except asterisk
+     * If parser stops at asterisk in comment, next char is checked,
+     * if next char is slash (end of block comment) parsing is stopped,
+     * otherwise "*" is consumed and parsing continue
+     *
+     * @param psiBuilder Psi builder
+     * @param level      Level of element
+     * @param parser     contains everything except asterisk
+     * @return return true if end of block comment is found
+     */
     public static boolean blockComment(PsiBuilder psiBuilder, int level, Parser parser) {
         if (!recursion_guard_(psiBuilder, level, "rule")) return false;
         boolean result = false;
