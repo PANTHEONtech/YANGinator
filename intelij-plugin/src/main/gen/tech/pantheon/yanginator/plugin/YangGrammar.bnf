@@ -343,8 +343,8 @@ implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType
 extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"
 }
 
-type-body-stmts ::= numerical-restrictions |
-  decimal64-specification |
+type-body-stmts ::= decimal64-specification |
+  numerical-restrictions |
   string-restrictions |
   enum-specification |
   leafref-specification |

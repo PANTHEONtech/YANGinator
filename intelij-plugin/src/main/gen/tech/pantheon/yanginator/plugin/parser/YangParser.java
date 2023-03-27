@@ -11462,8 +11462,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // numerical-restrictions |
-    //   decimal64-specification |
+    // decimal64-specification |
+    //   numerical-restrictions |
     //   string-restrictions |
     //   enum-specification |
     //   leafref-specification |
@@ -11476,8 +11476,8 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!recursion_guard_(b, l, "type_body_stmts")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_TYPE_BODY_STMTS, "<type body stmts>");
-        r = numerical_restrictions(b, l + 1);
-        if (!r) r = decimal64_specification(b, l + 1);
+        r = decimal64_specification(b, l + 1);
+        if (!r) r = numerical_restrictions(b, l + 1);
         if (!r) r = string_restrictions(b, l + 1);
         if (!r) r = enum_specification(b, l + 1);
         if (!r) r = leafref_specification(b, l + 1);
