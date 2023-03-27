@@ -633,7 +633,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("data-def-stmt ::=")||line.contains("short-case-stmt")) {
+            if (line.contains("data-def-stmt ::=") || line.contains("short-case-stmt")) {
                 found = true;
             }
             if (found && line.contains("  leaf-stmt |")) {
@@ -799,18 +799,18 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Overwrite UsesAugmentStmt according to rfc.
-     *
-     +--------------+---------+-------------+
-     | substatement | section | cardinality |
-     +--------------+---------+-------------+
-     | augment      | 7.15    | 0..1        |
-     | description  | 7.19.3  | 0..1        |
-     | if-feature   | 7.18.2  | 0..n        |
-     | refine       | 7.12.2  | 0..1        |
-     | reference    | 7.19.4  | 0..1        |
-     | status       | 7.19.2  | 0..1        |
-     | when         | 7.19.5  | 0..1        |
-     +--------------+---------+-------------+
+     * <p>
+     * +--------------+---------+-------------+
+     * | substatement | section | cardinality |
+     * +--------------+---------+-------------+
+     * | augment      | 7.15    | 0..1        |
+     * | description  | 7.19.3  | 0..1        |
+     * | if-feature   | 7.18.2  | 0..n        |
+     * | refine       | 7.12.2  | 0..1        |
+     * | reference    | 7.19.4  | 0..1        |
+     * | status       | 7.19.2  | 0..1        |
+     * | when         | 7.19.5  | 0..1        |
+     * +--------------+---------+-------------+
      *
      * @param lines list of strings
      * @return list of strings
@@ -819,7 +819,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep")){
+            if (line.contains("uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep")) {
                 result.add(line);
                 result.add("  LEFT_BRACE stmtsep");
                 result.add("  // these stmts can appear in any order");
@@ -888,22 +888,22 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("path-predicate ::=")) {
                 line = "path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?";
             }
-            if(line.contains("path-equality-expr ::=")) {
+            if (line.contains("path-equality-expr ::=")) {
                 line = "path-equality-expr ::= node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr";
             }
-            if(line.contains("path-key-expr ::=")) {
+            if (line.contains("path-key-expr ::=")) {
                 line = "path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*";
             }
-            if(line.contains("rel-path-keyexpr ::=")) {
+            if (line.contains("rel-path-keyexpr ::=")) {
                 line = "rel-path-keyexpr ::= (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+";
             }
-            if(line.contains("(node-identifier WSP* FORWARD_SLASH WSP*)*")) {
+            if (line.contains("(node-identifier WSP* FORWARD_SLASH WSP*)*")) {
                 line = "  (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*";
             }
-            if (line.contains("segment ::=" )|| line.contains("segment-nz ::=")) {
+            if (line.contains("segment ::=") || line.contains("segment-nz ::=")) {
                 line = line.replace("pchar", "(string-splitter? pchar string-splitter?)");
             }
-            if(line.contains("segment-nz-nc ::=")) {
+            if (line.contains("segment-nz-nc ::=")) {
                 line = "segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+";
             }
             result.add(line);
@@ -961,24 +961,29 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("[sep or-keyword sep if-feature-expr]")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
-            } if (line.contains("[sep and-keyword sep if-feature-term]")) {
+            }
+            if (line.contains("[sep and-keyword sep if-feature-term]")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
-            }if (line.contains("if-feature-factor ::=")) {
+            }
+            if (line.contains("if-feature-factor ::=")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
                 line = line.replace("not-keyword", "string-splitter? not-keyword");
-            }if (line.contains("LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |")) {
+            }
+            if (line.contains("LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |")) {
                 line = line.replace("LEFT_PARENTHESIS", "string-splitter? LEFT_PARENTHESIS");
                 line = line.replace("if-feature-expr", "string-splitter? if-feature-expr string-splitter?");
-            } if (line.equals("  identifier-ref-arg")) {
+            }
+            if (line.equals("  identifier-ref-arg")) {
                 line = line.replace("identifier-ref-arg", "string-splitter? identifier-ref-arg");
-                 }
+            }
             result.add(line);
         }
         return result;
     }
 
-     /**
+    /**
      * Changes import and include string arguments, so they can be referenced.
+     *
      * @param lines list of strings
      * @return list of strings
      */
@@ -1015,6 +1020,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Changes quantifiers of augment's substatments according to cardinality in table in rfc6020 - 7.15.1.
+     *
      * @param lines list of strings
      * @return list of strings
      */
@@ -1070,7 +1076,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
 
     /**
-     * Swap two first statements in type-body-stmts because numerical-restrictions
+     * Swap first two statements in type-body-stmts because numerical-restrictions
      * can have only range-stmt inside, but when there is fraction-digits stmt after range-stmt,
      * it doesn't recognize it as a decimal64-restriction.
      *
@@ -1081,13 +1087,12 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-
             if (line.contains("type-body-stmts ::=")) {
                 found = true;
                 line = "type-body-stmts ::= decimal64-specification |";
             } else if (found && line.contains("decimal64-specification")) {
-                line = "  numerical-restrictions |";
                 found = false;
+                line = "  numerical-restrictions |";
             }
             result.add(line);
         }
