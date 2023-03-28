@@ -869,19 +869,6 @@ After:
 ![](doc-images/Type_body_stmts_after.png)
 
 
-### Changed order of type-body-stmt
-
-Swapped first two statements in type-body-stmts, because numerical-restrictions 
-can have only range-stmt inside, but when there was fraction-digits stmt after range-stmt, 
-it didn't recognize it as a decimal64-restriction
-
-Before:  
-![](doc-images/Type_body_stmts_before.png)
-
-After:  
-![](doc-images/Type_body_stmts_after.png)
-
-
 ---
 
 ## ***More methods are used that are not yet documented***
