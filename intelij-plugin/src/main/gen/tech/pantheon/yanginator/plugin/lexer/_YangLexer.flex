@@ -73,7 +73,6 @@ LINEFEED = \n
 CARRIAGE_RETURN = \r
 SPACE = [\s \x0B\f]
 OTHER_CHARACTER = "."
-BLOCK_COMMENT = \/\*([^*]|\*+[^*/])*(\*+\/)?
 DOUBLE_PIPE = "||"
 DOUBLE_COLON = "::"
 PARENT_FOLDER = "../"
@@ -81,12 +80,10 @@ ALPHA = {LETTERS}
 POSITIVE_NUMBER = {ONE} | {TWO} | {THREE} | {FOUR} | {FIVE} | {SIX} | {SEVEN} | {EIGHT} | {NINE}
 STRINGS_SINGLE_QUOTE = {BACK_SLASH}{SINGLE_QUOTE}
 STRINGS_DOUBLE_QUOTE = {BACK_SLASH}{DOUBLE_QUOTE}
-SINGLE_LINE_COMMENT_START = {FORWARD_SLASH}{2}
 NEW_LINE = {LINEFEED} | {CARRIAGE_RETURN}
 VERSION = "v"
 DOUBLE_FORWARD_SLASH = "//"
 HEXDIG = {HEXDIGIT}
-BLOCK_COMMENT_END = "*/"
 ZERO_LENGTH_STRING = ""
 APOSTROPHE = "’"
 DATE = \d{4}-(1[0-2]|0[1-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])
@@ -108,7 +105,6 @@ EOL=\R
   {ZERO_LENGTH_STRING}            { return YANG_ZERO_LENGTH_STRING; }
   {LINEFEED}                      { return YANG_LINEFEED; }
   {CARRIAGE_RETURN}               { return YANG_CARRIAGE_RETURN; }
-  {BLOCK_COMMENT}                 { return YANG_BLOCK_COMMENT; }
   {ONE}                           { return YANG_ONE; }
   {TWO}                           { return YANG_TWO; }
   {THREE}                         { return YANG_THREE; }
@@ -149,7 +145,6 @@ EOL=\R
   {SPACE}                         { return YANG_SPACE; }
   {QUESTION_MARK}                 { return YANG_QUESTION_MARK; }
   {HASH}                          { return YANG_HASH; }
-  {DOUBLE_FORWARD_SLASH}          { return YANG_DOUBLE_FORWARD_SLASH; }
   {PLUS_SIGN}                     { return YANG_PLUS_SIGN; }
   {AT_SIGN}                       { return YANG_AT_SIGN; }
   {VERSION}                       { return YANG_VERSION; }

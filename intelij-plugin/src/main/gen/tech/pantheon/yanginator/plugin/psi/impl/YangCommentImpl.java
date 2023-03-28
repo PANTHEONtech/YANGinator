@@ -12,22 +12,20 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangBackslashQuote;
+import tech.pantheon.yanginator.plugin.psi.YangBlockComment;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangDoubleBackslash;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleForwardSlash;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangVchar;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
-
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_FORWARD_SLASH;
 
 public class YangCommentImpl extends YangNamedElementImpl implements YangComment {
 
@@ -52,9 +50,21 @@ public class YangCommentImpl extends YangNamedElementImpl implements YangComment
     }
 
     @Override
+    @Nullable
+    public YangBlockComment getBlockComment() {
+        return findChildByClass(YangBlockComment.class);
+    }
+
+    @Override
     @NotNull
     public List<YangDoubleBackslash> getDoubleBackslashList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDoubleBackslash.class);
+    }
+
+    @Override
+    @Nullable
+    public YangDoubleForwardSlash getDoubleForwardSlash() {
+        return findChildByClass(YangDoubleForwardSlash.class);
     }
 
     @Override
@@ -67,18 +77,6 @@ public class YangCommentImpl extends YangNamedElementImpl implements YangComment
     @NotNull
     public List<YangVchar> getVcharList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangVchar.class);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getBlockComment() {
-        return findChildByType(YANG_BLOCK_COMMENT);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getDoubleForwardSlash() {
-        return findChildByType(YANG_DOUBLE_FORWARD_SLASH);
     }
 
 }

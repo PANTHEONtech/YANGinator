@@ -11,26 +11,17 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public interface YangRelativePart extends YangNamedElement {
+public interface YangBlockComment extends YangNamedElement {
 
-    @Nullable
-    YangDoubleForwardSlash getDoubleForwardSlash();
+    @NotNull
+    YangBlockCommentBody getBlockCommentBody();
 
-    @Nullable
-    YangAuthority getAuthority();
+    @NotNull
+    YangBlockCommentEnd getBlockCommentEnd();
 
-    @Nullable
-    YangPathAbempty getPathAbempty();
-
-    @Nullable
-    YangPathAbsolute getPathAbsolute();
-
-    @Nullable
-    YangPathEmpty getPathEmpty();
-
-    @Nullable
-    YangPathNoscheme getPathNoscheme();
+    @NotNull
+    YangBlockCommentStart getBlockCommentStart();
 
 }

@@ -12,12 +12,24 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface YangVchar extends YangNamedElement {
+import java.util.List;
+
+public interface YangComchar extends YangNamedElement {
 
     @Nullable
     YangDoubleForwardSlash getDoubleForwardSlash();
+
+    @NotNull
+    List<YangWsp> getWspList();
+
+    @NotNull
+    List<YangComment> getCommentList();
+
+    @NotNull
+    List<YangLineBreak> getLineBreakList();
 
     @Nullable
     PsiElement getAlpha();
@@ -35,10 +47,13 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getApostrophe();
 
     @Nullable
-    PsiElement getAsterisk();
+    PsiElement getAtSign();
 
     @Nullable
-    PsiElement getAtSign();
+    PsiElement getBackSlash();
+
+    @Nullable
+    PsiElement getCarriageReturn();
 
     @Nullable
     PsiElement getChars();
@@ -77,10 +92,16 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getDoubleDot();
 
     @Nullable
+    PsiElement getDoubleQuote();
+
+    @Nullable
     PsiElement getEight();
 
     @Nullable
     PsiElement getEquals();
+
+    @Nullable
+    PsiElement getEscapes();
 
     @Nullable
     PsiElement getExclamationMark();
@@ -110,10 +131,16 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getIpv4();
 
     @Nullable
+    PsiElement getLeftBrace();
+
+    @Nullable
     PsiElement getLeftParenthesis();
 
     @Nullable
     PsiElement getLessThanSign();
+
+    @Nullable
+    PsiElement getLinefeed();
 
     @Nullable
     PsiElement getNine();
@@ -140,13 +167,28 @@ public interface YangVchar extends YangNamedElement {
     PsiElement getQuestionMark();
 
     @Nullable
+    PsiElement getRightBrace();
+
+    @Nullable
     PsiElement getRightParenthesis();
+
+    @Nullable
+    PsiElement getSemicolon();
 
     @Nullable
     PsiElement getSeven();
 
     @Nullable
+    PsiElement getSingleQuote();
+
+    @Nullable
     PsiElement getSix();
+
+    @Nullable
+    PsiElement getSpace();
+
+    @Nullable
+    PsiElement getTab();
 
     @Nullable
     PsiElement getThree();

@@ -14,19 +14,26 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangComchar;
+import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangDoubleForwardSlash;
-import tech.pantheon.yanginator.plugin.psi.YangVchar;
+import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.psi.YangWsp;
+
+import java.util.List;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHA;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHANUMERICAL_ALPHA_FIRST;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ALPHANUMERICAL_DIGIT_FIRST;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AMPERSAND;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_APOSTROPHE;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ASTERISK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_AT_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BACK_SLASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CARRIAGE_RETURN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHARS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CIRCUMFLEX_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CLOSED_BRACKET;
@@ -39,8 +46,10 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOLLAR_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_COLON;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_DOT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOUBLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EIGHT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ESCAPES;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXCLAMATION_MARK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FIVE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
@@ -50,8 +59,10 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GRAVE_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GREATER_THAN_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_HASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IPV4;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_PARENTHESIS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LESS_THAN_SIGN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LINEFEED;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_NINE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ONE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_OPEN_BRACKET;
@@ -60,9 +71,14 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PERCENT_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PIPE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_PLUS_SIGN;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_BRACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEMICOLON;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SEVEN;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SINGLE_QUOTE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TAB;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_THREE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TILDE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_TWO;
@@ -70,14 +86,14 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_UNDERSCORE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZEROS;
 
-public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
+public class YangComcharImpl extends YangNamedElementImpl implements YangComchar {
 
-    public YangVcharImpl(@NotNull ASTNode node) {
+    public YangComcharImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitVchar(this);
+        visitor.visitComchar(this);
     }
 
     @Override
@@ -90,6 +106,24 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public YangDoubleForwardSlash getDoubleForwardSlash() {
         return findChildByClass(YangDoubleForwardSlash.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangWsp> getWspList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangComment> getCommentList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangComment.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override
@@ -124,14 +158,20 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
 
     @Override
     @Nullable
-    public PsiElement getAsterisk() {
-        return findChildByType(YANG_ASTERISK);
+    public PsiElement getAtSign() {
+        return findChildByType(YANG_AT_SIGN);
     }
 
     @Override
     @Nullable
-    public PsiElement getAtSign() {
-        return findChildByType(YANG_AT_SIGN);
+    public PsiElement getBackSlash() {
+        return findChildByType(YANG_BACK_SLASH);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getCarriageReturn() {
+        return findChildByType(YANG_CARRIAGE_RETURN);
     }
 
     @Override
@@ -208,6 +248,12 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
 
     @Override
     @Nullable
+    public PsiElement getDoubleQuote() {
+        return findChildByType(YANG_DOUBLE_QUOTE);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getEight() {
         return findChildByType(YANG_EIGHT);
     }
@@ -216,6 +262,12 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getEquals() {
         return findChildByType(YANG_EQUALS);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getEscapes() {
+        return findChildByType(YANG_ESCAPES);
     }
 
     @Override
@@ -274,6 +326,12 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
 
     @Override
     @Nullable
+    public PsiElement getLeftBrace() {
+        return findChildByType(YANG_LEFT_BRACE);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getLeftParenthesis() {
         return findChildByType(YANG_LEFT_PARENTHESIS);
     }
@@ -282,6 +340,12 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
     @Nullable
     public PsiElement getLessThanSign() {
         return findChildByType(YANG_LESS_THAN_SIGN);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getLinefeed() {
+        return findChildByType(YANG_LINEFEED);
     }
 
     @Override
@@ -334,8 +398,20 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
 
     @Override
     @Nullable
+    public PsiElement getRightBrace() {
+        return findChildByType(YANG_RIGHT_BRACE);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getRightParenthesis() {
         return findChildByType(YANG_RIGHT_PARENTHESIS);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getSemicolon() {
+        return findChildByType(YANG_SEMICOLON);
     }
 
     @Override
@@ -346,8 +422,26 @@ public class YangVcharImpl extends YangNamedElementImpl implements YangVchar {
 
     @Override
     @Nullable
+    public PsiElement getSingleQuote() {
+        return findChildByType(YANG_SINGLE_QUOTE);
+    }
+
+    @Override
+    @Nullable
     public PsiElement getSix() {
         return findChildByType(YANG_SIX);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getSpace() {
+        return findChildByType(YANG_SPACE);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getTab() {
+        return findChildByType(YANG_TAB);
     }
 
     @Override

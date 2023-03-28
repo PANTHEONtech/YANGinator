@@ -31,7 +31,7 @@ import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 public class YangParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
-    public static final TokenSet COMMENTS = TokenSet.create(YangTypes.YANG_BLOCK_COMMENT, YangTypes.YANG_COMMENT);
+    public static final TokenSet COMMENTS = TokenSet.create(YangTypes.YANG_COMMENT);
     public static final IFileElementType FILE = new IFileElementType(Language.findInstance(YangLanguage.class));
 
     @NotNull

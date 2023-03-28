@@ -279,11 +279,6 @@
         <lexerOnly>false</lexerOnly>
     </token>
     <token>
-        <key>"\/\*([^*]|\*+[^*/])*(\*+\/)?"</key>
-        <value>BLOCK_COMMENT</value>
-        <lexerOnly>true</lexerOnly>
-    </token>
-    <token>
         <key>"||"</key>
         <value>DOUBLE_PIPE</value>
         <lexerOnly>false</lexerOnly>
@@ -321,12 +316,6 @@
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
-        <key>{FORWARD_SLASH}</key>
-        <key>{2}</key>
-        <value>SINGLE_LINE_COMMENT_START</value>
-        <lexerOnly>true</lexerOnly>
-    </token>
-    <token>
         <key>"{LINEFEED} | "</key>
         <key>{CARRIAGE_RETURN}</key>
         <value>NEW_LINE</value>
@@ -345,11 +334,6 @@
     <token>
         <key>{HEXDIGIT}</key>
         <value>HEXDIG</value>
-        <lexerOnly>true</lexerOnly>
-    </token>
-    <token>
-        <key>"*/"</key>
-        <value>BLOCK_COMMENT_END</value>
         <lexerOnly>true</lexerOnly>
     </token>
     <token>
