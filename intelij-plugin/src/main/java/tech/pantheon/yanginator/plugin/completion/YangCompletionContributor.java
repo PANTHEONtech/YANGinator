@@ -25,7 +25,6 @@ import tech.pantheon.yanginator.plugin.psi.YangTypes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_SUBSTATEMENTS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.getFirstParentAfterSkip;
 
@@ -83,7 +82,11 @@ public class YangCompletionContributor extends CompletionContributor {
 
         ASTNode realParent = findContextParentOfCurrentNode(searchStartElement.getNode());
         contextParent = realParent != null ? realParent.getPsi() : null;
-        contextParentNextSibling = contextParent != null ? contextParent.getNextSibling() : null;
+        contextParentNextSibling =
+                contextParent != null ? contextParent.getNextSibling() != null ?
+                        contextParent.getNextSibling().getChildren().length > 0 ?
+                                contextParent.getNextSibling() : null
+                        : null : null;
     }
 
     /**
@@ -220,10 +223,7 @@ public class YangCompletionContributor extends CompletionContributor {
         ArrayList<String> possibleResults = null;
         String typeText;
         if (isAfterKeyword) {
-            List<String> results = MAP_OF_IDENTIFIER_KEYWORDS.get(contextParent.getNode().getElementType().toString());
-            if (results != null) {
-                possibleResults = new ArrayList<>(results);
-            }
+            possibleResults = (ArrayList<String>) YangCompletionContributorDataUtil.getResults(position, contextParent);
             typeText = "built-in-type";
         } else {
             String parentType = contextParent.getNode().getElementType().toString();
@@ -234,7 +234,7 @@ public class YangCompletionContributor extends CompletionContributor {
                 findPossibleResultsForGroup(result, false);
                 return;
             } else {
-                List<String> results = MAP_OF_SUBSTATEMENTS.get(contextParent.getNode().getElementType().toString());
+                List<String> results = YangCompletionContributorDataUtil.getResults(position, contextParent);
                 if (results != null) {
                     possibleResults = new ArrayList<>(results);
                 }
@@ -294,7 +294,7 @@ public class YangCompletionContributor extends CompletionContributor {
                 possibleResults.forEach(s ->
                         result.addElement(LookupElementBuilder.create(s).withTypeText(finalType))
                 );
-                if (isLastStmtInGroup && moduleStmt.equals(contextParentNextSibling.getNode().getElementType().toString())) {
+                if (isLastStmtInGroup && contextParentNextSibling != null && moduleStmt.equals(contextParentNextSibling.getNode().getElementType().toString())) {
                     return;
                 }
                 if (!isLastStmtInGroup && moduleStmt.equals(contextParent.getNode().getElementType().toString())) {

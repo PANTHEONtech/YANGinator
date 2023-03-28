@@ -14,12 +14,21 @@ import com.google.common.collect.ImmutableList;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.psi.util.PsiTreeUtil;
 import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
+import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleHeaderStmts;
+import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionArg;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionArgStr;
+import tech.pantheon.yanginator.plugin.psi.YangYangVersionStmt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class YangCompletionContributorDataUtil {
     public static final String IDENTITYREF_STR = "identityref";
@@ -102,7 +111,7 @@ public final class YangCompletionContributorDataUtil {
     );
 
     private static final List<String> BASE_MODULE_SUBSTATEMENTS = List.of(
-            "anydata",
+
             "anyxml",
             "augment",
             "choice",
@@ -133,8 +142,17 @@ public final class YangCompletionContributorDataUtil {
             add("namespace");
             add("prefix");
             addAll(BASE_MODULE_SUBSTATEMENTS);
+
         }
     };
+
+    private static final List<String> MODULE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(MODULE_SUBSTATEMENTS);
+            add("anydata");
+        }
+    };
+
     private static final List<String> SUBMODULE_SUBSTATEMENTS = new ArrayList<>() {
         {
             add("belongs-to");
@@ -142,16 +160,29 @@ public final class YangCompletionContributorDataUtil {
         }
     };
     private static final List<String> IMPORT_SUBSTATEMENTS = List.of(
-            "description",
             "prefix",
-            "reference",
             "revision-date"
     );
+
+    private static final List<String> IMPORT_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(IMPORT_SUBSTATEMENTS);
+            add("description");
+            add("reference");
+        }
+    };
+
     private static final List<String> INCLUDE_SUBSTATEMENTS = List.of(
-            "description",
-            "reference",
             "revision-date"
     );
+
+    private static final List<String> INCLUDE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(INCLUDE_SUBSTATEMENTS);
+            add("description");
+            add("reference");
+        }
+    };
     private static final List<String> REVISION_SUBSTATEMENTS = List.of(
             "description",
             "reference"
@@ -165,10 +196,8 @@ public final class YangCompletionContributorDataUtil {
             "units"
     );
     private static final List<String> TYPE_SUBSTATEMENTS = List.of(
-            "base",
             "bit",
             "enum",
-            "fraction-digits",
             "length",
             "path",
             "pattern",
@@ -176,9 +205,15 @@ public final class YangCompletionContributorDataUtil {
             "require-instance",
             "type"
     );
+
+    private static final List<String> TYPE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(TYPE_SUBSTATEMENTS);
+            add("fraction-digits");
+            add("base");
+        }
+    };
     private static final List<String> CONTAINER_SUBSTATEMENTS = List.of(
-            "action",
-            "anydata",
             "anyxml",
             "choice",
             "config",
@@ -190,7 +225,6 @@ public final class YangCompletionContributorDataUtil {
             "leaf-list",
             "list",
             "must",
-            "notification",
             "presence",
             "reference",
             "status",
@@ -198,6 +232,15 @@ public final class YangCompletionContributorDataUtil {
             "uses",
             "when"
     );
+
+    private static final List<String> CONTAINER_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(CONTAINER_SUBSTATEMENTS);
+            add("action");
+            add("anydata");
+            add("notification");
+        }
+    };
     private static final List<String> MUST_SUBSTATEMENTS = List.of(
             "description",
             "error-app-tag",
@@ -221,9 +264,17 @@ public final class YangCompletionContributorDataUtil {
         {
             addAll(LEAF_SUBSTATEMENTS);
             remove("mandatory");
+            remove("default");
             add("max-elements");
             add("min-elements");
             add("ordered-by");
+        }
+    };
+
+    private static final List<String> LEAF_LIST_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(LEAF_LIST_SUBSTATEMENTS);
+            add("default");
         }
     };
     private static final List<String> LIST_SUBSTATEMENTS = new ArrayList<>() {
@@ -237,11 +288,18 @@ public final class YangCompletionContributorDataUtil {
             add("unique");
         }
     };
+
+    private static final List<String> LIST_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(LIST_SUBSTATEMENTS);
+            add("action");
+            add("anydata");
+            add("notification");
+        }
+    };
     private static final List<String> CHOICE_SUBSTATEMENTS = List.of(
-            "anydata",
             "anyxml",
             "case",
-            "choice",
             "config",
             "container",
             "default",
@@ -255,8 +313,15 @@ public final class YangCompletionContributorDataUtil {
             "status",
             "when"
     );
+
+    private static final List<String> CHOICE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(CHOICE_SUBSTATEMENTS);
+            add("anydata");
+            add("choice");
+        }
+    };
     private static final List<String> CASE_SUBSTATEMENTS = List.of(
-            "anydata",
             "anyxml",
             "choice",
             "container",
@@ -270,6 +335,12 @@ public final class YangCompletionContributorDataUtil {
             "uses",
             "when"
     );
+    private static final List<String> CASE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(CASE_SUBSTATEMENTS);
+            add("anydata");
+        }
+    };
     private static final List<String> ANYDATA_SUBSTATEMENTS = List.of(
             "config",
             "description",
@@ -289,6 +360,15 @@ public final class YangCompletionContributorDataUtil {
             remove("must");
             remove("presence");
             remove("when");
+        }
+    };
+
+    private static final List<String> GROUPING_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(GROUPING_SUBSTATEMENTS);
+            add("action");
+            add("anydata");
+            add("notification");
         }
     };
     private static final List<String> USES_SUBSTATEMENTS = List.of(
@@ -311,7 +391,6 @@ public final class YangCompletionContributorDataUtil {
             "typedef"
     );
     private static final List<String> INPUT_SUBSTATEMENTS = List.of(
-            "anydata",
             "anyxml",
             "choice",
             "container",
@@ -319,11 +398,21 @@ public final class YangCompletionContributorDataUtil {
             "leaf",
             "leaf-list",
             "list",
-            "must",
             "typedef",
             "uses"
     );
+
+    private static final List<String> INPUT_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(INPUT_SUBSTATEMENTS);
+            add("anydata");
+            add("must");
+        }
+    };
     private static final List<String> OUTPUT_SUBSTATEMENTS = INPUT_SUBSTATEMENTS;
+
+    private static final List<String> OUTPUT_SUBSTATEMENTS_1_1 = INPUT_SUBSTATEMENTS_1_1;
+
     private static final List<String> ACTION_SUBSTATEMENTS = List.of(
             "description",
             "grouping",
@@ -335,7 +424,6 @@ public final class YangCompletionContributorDataUtil {
             "typedef"
     );
     private static final List<String> NOTIFICATION_SUBSTATEMENTS = List.of(
-            "anydata",
             "anyxml",
             "choice",
             "container",
@@ -345,15 +433,20 @@ public final class YangCompletionContributorDataUtil {
             "leaf",
             "leaf-list",
             "list",
-            "must",
             "reference",
             "status",
             "typedef",
             "uses"
     );
+
+    private static final List<String> NOTIFICATION_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(NOTIFICATION_SUBSTATEMENTS);
+            add("anydata");
+            add("must");
+        }
+    };
     private static final List<String> AUGMENT_SUBSTATEMENTS = List.of(
-            "action",
-            "anydata",
             "anyxml",
             "case",
             "choice",
@@ -363,19 +456,33 @@ public final class YangCompletionContributorDataUtil {
             "leaf",
             "leaf-list",
             "list",
-            "notification",
             "reference",
             "status",
             "uses",
             "when"
     );
+
+    private static final List<String> AUGMENT_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(AUGMENT_SUBSTATEMENTS);
+            add("action");
+            add("anydata");
+            add("notification");
+        }
+    };
     private static final List<String> IDENTITY_SUBSTATEMENTS = List.of(
             "base",
             "description",
-            "if-feature",
             "reference",
             "status"
     );
+
+    private static final List<String> IDENTITY_SUBSTATEMENTS_1_1 = new ArrayList<>() {
+        {
+            addAll(IDENTITY_SUBSTATEMENTS);
+            add("if-feature");
+        }
+    };
     private static final List<String> EXTENSION_SUBSTATEMENTS = List.of(
             "argument",
             "description",
@@ -430,7 +537,8 @@ public final class YangCompletionContributorDataUtil {
     public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>() {
         {
             put("FILE", List.of("module", "submodule"));
-            put("YANG_MODULE_STMT", MODULE_HEADER_STMTS);
+            put("YANG_MODULE_STMT", MODULE_SUBSTATEMENTS);
+            put("YANG_MODULE_STMT_1_1", MODULE_SUBSTATEMENTS_1_1);
             put("YANG_MODULE_HEADER_STMTS", MODULE_HEADER_STMTS);
             put("YANG_SUBMODULE_STMT", SUBMODULE_HEADER_STMTS);
             put("YANG_SUBMODULE_HEADER_STMTS", SUBMODULE_HEADER_STMTS);
@@ -439,31 +547,45 @@ public final class YangCompletionContributorDataUtil {
             put("YANG_REVISION_STMTS", REVISION_STMTS);
             put("YANG_BODY_STMTS", BODY_STMTS);
             put("YANG_IMPORT_STMT", IMPORT_SUBSTATEMENTS);
+            put("YANG_IMPORT_STMT_1_1", IMPORT_SUBSTATEMENTS_1_1);
             put("YANG_INCLUDE_STMT", INCLUDE_SUBSTATEMENTS);
+            put("YANG_INCLUDE_STMT_1_1", INCLUDE_SUBSTATEMENTS_1_1);
             put("YANG_REVISION_STMT", REVISION_SUBSTATEMENTS);
             put("YANG_AUGMENT_STMT", AUGMENT_SUBSTATEMENTS);
+            put("YANG_AUGMENT_STMT_1_1", AUGMENT_SUBSTATEMENTS_1_1);
             put("YANG_USES_AUGMENT_STMT", AUGMENT_SUBSTATEMENTS);
             put("YANG_EXTENSION_STMT", EXTENSION_SUBSTATEMENTS);
             put("YANG_FEATURE_STMT", FEATURE_SUBSTATEMENTS);
             put("YANG_IDENTITY_STMT", IDENTITY_SUBSTATEMENTS);
+            put("YANG_IDENTITY_STMT_1_1", IDENTITY_SUBSTATEMENTS_1_1);
             put("YANG_TYPEDEF_STMT", TYPEDEF_SUBSTATEMENTS);
             put("YANG_TYPE_STMT", TYPE_SUBSTATEMENTS);
+            put("YANG_TYPE_STMT_1_1", TYPE_SUBSTATEMENTS_1_1);
             put("YANG_MUST_STMT", MUST_SUBSTATEMENTS);
             put("YANG_GROUPING_STMT", GROUPING_SUBSTATEMENTS);
+            put("YANG_GROUPING_STMT_1_1", GROUPING_SUBSTATEMENTS_1_1);
             put("YANG_RPC_STMT", RPC_SUBSTATEMENTS);
             put("YANG_NOTIFICATION_STMT", NOTIFICATION_SUBSTATEMENTS);
+            put("YANG_NOTIFICATION_STMT_1_1", NOTIFICATION_SUBSTATEMENTS_1_1);
             put("YANG_DEVIATION_STMT", DEVIATION_SUBSTATEMENTS);
             put("YANG_CONTAINER_STMT", CONTAINER_SUBSTATEMENTS);
+            put("YANG_CONTAINER_STMT_1_1", CONTAINER_SUBSTATEMENTS_1_1);
             put("YANG_LEAF_LIST_STMT", LEAF_LIST_SUBSTATEMENTS);
+            put("YANG_LEAF_LIST_STMT_1_1", LEAF_LIST_SUBSTATEMENTS_1_1);
             put("YANG_LEAF_STMT", LEAF_SUBSTATEMENTS);
             put("YANG_LIST_STMT", LIST_SUBSTATEMENTS);
+            put("YANG_LIST_STMT_1_1", LIST_SUBSTATEMENTS_1_1);
             put("YANG_CHOICE_STMT", CHOICE_SUBSTATEMENTS);
+            put("YANG_CHOICE_STMT_1_1", CHOICE_SUBSTATEMENTS_1_1);
             put("YANG_ANYDATA_STMT", ANYDATA_SUBSTATEMENTS);
             put("YANG_ANYXML_STMT", ANYXML_SUBSTATEMENTS);
             put("YANG_CASE_STMT", CASE_SUBSTATEMENTS);
+            put("YANG_CASE_STMT_1_1", CASE_SUBSTATEMENTS_1_1);
             put("YANG_USES_STMT", USES_SUBSTATEMENTS);
             put("YANG_INPUT_STMT", INPUT_SUBSTATEMENTS);
+            put("YANG_INPUT_STMT_1_1", INPUT_SUBSTATEMENTS_1_1);
             put("YANG_OUTPUT_STMT", OUTPUT_SUBSTATEMENTS);
+            put("YANG_OUTPUT_STMT_1_1", OUTPUT_SUBSTATEMENTS_1_1);
             put("YANG_ACTION_STMT", ACTION_SUBSTATEMENTS);
             put("YANG_DEVIATE_STMT", DEVIATE_SUBSTATEMENTS);
             put("YANG_RANGE_STMT", RANGE_SUBSTATEMENTS);
@@ -499,5 +621,41 @@ public final class YangCompletionContributorDataUtil {
             parent = parent.getParent();
         }
         return parent;
+    }
+
+    public static String getVersion(PsiElement position) {
+        String version = "";
+        PsiElement moduleParent = PsiTreeUtil.getParentOfType(position, YangModuleStmt.class);
+        if (moduleParent == null) {
+            moduleParent = PsiTreeUtil.getParentOfType(position, YangSubmoduleStmt.class);
+        }
+        if (moduleParent == null) {
+            return version;
+        }
+        for (PsiElement child : moduleParent.getChildren()) {
+            if (child instanceof YangModuleHeaderStmts || child instanceof YangSubmoduleHeaderStmts) {
+                for (PsiElement ch : child.getChildren()) {
+                    if (ch instanceof YangYangVersionStmt) {
+                        YangYangVersionArgStr argStr = ((YangYangVersionStmt) ch).getYangVersionArgStr();
+                        YangYangVersionArg arg = argStr == null ? null : argStr.getYangVersionArg();
+                        version = arg == null ? "" :
+                                arg.getText() == null ? "" : arg.getText();
+                        break;
+                    }
+                }
+            }
+        }
+        return version;
+    }
+
+    public static List<String> getResults(PsiElement position, PsiElement contextParent) {
+        String version = getVersion(position);
+        String parent = contextParent.getNode().getElementType().toString();
+        if (version.equals("1.1")) {
+            if (MAP_OF_SUBSTATEMENTS.containsKey(parent.concat("_1_1"))) {
+                parent = parent.concat("_1_1");
+            }
+        }
+        return MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList());
     }
 }
