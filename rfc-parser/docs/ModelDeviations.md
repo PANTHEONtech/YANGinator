@@ -85,6 +85,15 @@ correctly.
 
 * `changeInputOutputCardinality(result);`[link](#Change-input-and-output-data-def-stmt-cardinality)
 
+* `addSingleQuotePossibility(result);` [link](#added-single-quote-possibility)
+
+* `rewriteAugment(result);` [link](#rewrite-augment-stmt)
+
+* `result = changeOrderOfTypeBodyStmt(result);` [link](#changed-order-of-type-body-stmt)
+
+* `result = changeListCardinality(result);` [link](#change-list-stmt-cardinality)
+
+
 
 ### Rewrite Zero Integer Value
 
@@ -735,7 +744,7 @@ after:
 
 ![linkage_stmts_after_ref.png](doc-images%2Flinkage_stmts_after_ref.png)
 
-### Added single quote possibility 
+### Added single quote possibility
 Added single quote possibility for **identifier-ref-arg** and **identifier-ref-arg-str** statements
 
 Before:  
@@ -745,7 +754,7 @@ After:
 ![](doc-images/identifier-ref-arg_SQOTE_after.png)
 
 
-### Rewrite Augment Stmt  
+### Rewrite Augment Stmt
 
 Changed Augment-Stmt according to rfc6020.
 
@@ -853,7 +862,6 @@ Block comment recognition is realised by ***blockComment*** method in External r
 
 **COMCHAR** contains all characters except asterisk "\*"
 
-
 ![](doc-images/Block_Comment.png)
 
 ### Changed order of type-body-stmt
@@ -868,6 +876,43 @@ Before:
 After:  
 ![](doc-images/Type_body_stmts_after.png)
 
+### Change list-stmt cardinality
+Changed list-stmt according to cardinality in rfc
+
+                 7.8.1.  The list's Substatements (RFC6020)
+                 +--------------+---------+-------------+
+                 | substatement | section | cardinality |
+                 +--------------+---------+-------------+
+                 | anyxml       | 7.10    | 0..n        |
+                 | choice       | 7.9     | 0..n        |
+                 | config       | 7.19.1  | 0..1        |
+                 | container    | 7.5     | 0..n        |
+                 | description  | 7.19.3  | 0..1        |
+                 | grouping     | 7.11    | 0..n        |
+                 | if-feature   | 7.18.2  | 0..n        |
+                 | key          | 7.8.2   | 0..1        |
+                 | leaf         | 7.6     | 0..n        |
+                 | leaf-list    | 7.7     | 0..n        |
+                 | list         | 7.8     | 0..n        |
+                 | max-elements | 7.7.4   | 0..1        |
+                 | min-elements | 7.7.3   | 0..1        |
+                 | must         | 7.5.3   | 0..n        |
+                 | ordered-by   | 7.7.5   | 0..1        |
+                 | reference    | 7.19.4  | 0..1        |
+                 | status       | 7.19.2  | 0..1        |
+                 | typedef      | 7.3     | 0..n        |
+                 | unique       | 7.8.3   | 0..n        |
+                 | uses         | 7.12    | 0..n        |
+                 | when         | 7.19.5  | 0..1        |
+                 +--------------+---------+-------------+
+
+Before:
+
+![img_1.png](doc-images/List-stmt_before.png)
+
+After:
+
+![img.png](doc-images/List-stmt_after.png)
 
 ---
 
