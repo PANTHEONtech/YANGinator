@@ -1104,7 +1104,7 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
-     * Changes cardinality of data-def-stmt for input and output statements based on the RFC statements description table.
+     * Changed list-stmt according to cardinality in rfc
      *
      * @param lines list of strings
      * @return list of strings
