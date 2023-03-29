@@ -43,5 +43,13 @@ public class YangListStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
         minOne.checkMany(element, holder, ElementCheckUtils.getDataDefStatements());
+        for (PsiElement child : element.getChildren()) {
+            if (child instanceof YangConfigStmt && ((YangConfigStmt) child).getConfigArgStr() != null) {
+                String configArg = ((YangConfigStmt) child).getConfigArgStr().getText().replaceAll("\"", "");
+                if (configArg.equals("true")) {
+                    minOne.check(element, holder, YangKeyStmt.class);
+                }
+            }
+        }
     }
 }
