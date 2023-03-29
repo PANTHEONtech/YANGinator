@@ -906,12 +906,10 @@ Changed list-stmt according to cardinality in rfc
                  | when         | 7.19.5  | 0..1        |
                  +--------------+---------+-------------+
 
-Before:
-
+Before:  
 ![img_1.png](doc-images/List-stmt_before.png)
 
-After:
-
+After:  
 ![img.png](doc-images/List-stmt_after.png)
 
 ---
