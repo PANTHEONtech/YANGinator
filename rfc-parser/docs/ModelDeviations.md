@@ -89,9 +89,9 @@ correctly.
 
 * `rewriteAugment(result);` [link](#rewrite-augment-stmt)
 
-* `result = changeOrderOfTypeBodyStmt(result);` [link](#changed-order-of-type-body-stmt)
+* `changeOrderOfTypeBodyStmt(result);` [link](#changed-order-of-type-body-stmt)
 
-* `result = changeListCardinality(result);` [link](#change-list-stmt-cardinality)
+* `changeListCardinality(result);` [link](#change-list-stmt-cardinality)
 
 
 
