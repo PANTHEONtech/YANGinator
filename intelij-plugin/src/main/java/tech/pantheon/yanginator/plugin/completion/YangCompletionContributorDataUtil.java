@@ -658,4 +658,14 @@ public final class YangCompletionContributorDataUtil {
         }
         return MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList());
     }
+
+    public static List<String> getResults(PsiElement position, String parent) {
+        String version = getVersion(position);
+        if (version.equals("1.1")) {
+            if (MAP_OF_SUBSTATEMENTS.containsKey(parent.concat("_1_1"))) {
+                parent = parent.concat("_1_1");
+            }
+        }
+        return MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList());
+    }
 }

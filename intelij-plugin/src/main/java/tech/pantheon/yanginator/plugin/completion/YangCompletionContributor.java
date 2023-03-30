@@ -229,10 +229,10 @@ public class YangCompletionContributor extends CompletionContributor {
         } else {
             String parentType = contextParent.getNode().getElementType().toString();
             if (moduleStmtsContinuation.contains(parentType)) {
-                findPossibleResultsForGroup(result, true);
+                findPossibleResultsForGroup(result, true,position);
                 return;
             } else if (submoduleStmtsContinuation.contains(parentType)) {
-                findPossibleResultsForGroup(result, false);
+                findPossibleResultsForGroup(result, false,position);
                 return;
             } else {
                 List<String> results = YangCompletionContributorDataUtil.getResults(position, contextParent);
@@ -272,7 +272,7 @@ public class YangCompletionContributor extends CompletionContributor {
      * @param result   CompletionResult in which the possible completion results should be added
      * @param isModule true if the yang is a module or false if the yang is a submodule
      */
-    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result, boolean isModule) {
+    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result, boolean isModule ,PsiElement position) {
         boolean start = false;
         //loops in possible stmts groups and finds in which group results should start and end
         // i = module group iteration
@@ -290,7 +290,7 @@ public class YangCompletionContributor extends CompletionContributor {
                 }
             }
             if (start) {
-                List<String> possibleResults = MAP_OF_SUBSTATEMENTS.get(moduleStmt);
+                List<String> possibleResults = YangCompletionContributorDataUtil.getResults(position,moduleStmt);
                 String finalType = getCompletionDescription(moduleStmt);
                 possibleResults.forEach(s ->
                         result.addElement(LookupElementBuilder.create(s).withTypeText(finalType))
