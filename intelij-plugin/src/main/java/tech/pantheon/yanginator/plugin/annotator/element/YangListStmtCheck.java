@@ -42,6 +42,5 @@ public class YangListStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangStatusStmt.class);
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
-        minOne.checkMany(element, holder, ElementCheckUtils.getDataDefStatements());
     }
 }
