@@ -51,5 +51,6 @@ public class YangListStmtCheck extends AbstractYangStmtCheck {
                 }
             }
         }
+
     }
 }
