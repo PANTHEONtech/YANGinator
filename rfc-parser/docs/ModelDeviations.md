@@ -849,12 +849,10 @@ After:
 Removed block comment functionality from lexer 
 and added into bnf and ExternalRules.
 
-Block comment recognition is realised by ***blockComment*** method in External rules
-
-**COMCHAR** contains all characters except asterisk "\*"
-
+Block comment parsing is realised by ***blockComment*** method in External rules
 
 ![](doc-images/Block_Comment.png)
+
 
 ### Changed order of type-body-stmt
 

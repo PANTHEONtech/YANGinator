@@ -51,7 +51,6 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangCaseKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangCaseStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangChoiceKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangChoiceStmtImpl;
-import tech.pantheon.yanginator.plugin.psi.impl.YangComcharImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangCommentImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangConfigArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangConfigArgStrImpl;
@@ -392,7 +391,6 @@ public interface YangTypes {
     IElementType YANG_CASE_STMT = new YangElementType("YANG_CASE_STMT");
     IElementType YANG_CHOICE_KEYWORD = new YangElementType("YANG_CHOICE_KEYWORD");
     IElementType YANG_CHOICE_STMT = new YangElementType("YANG_CHOICE_STMT");
-    IElementType YANG_COMCHAR = new YangElementType("YANG_COMCHAR");
     IElementType YANG_COMMENT = new YangElementType("YANG_COMMENT");
     IElementType YANG_CONFIG_ARG = new YangElementType("YANG_CONFIG_ARG");
     IElementType YANG_CONFIG_ARG_STR = new YangElementType("YANG_CONFIG_ARG_STR");
@@ -836,8 +834,6 @@ public interface YangTypes {
                 return new YangChoiceKeywordImpl(node);
             } else if (type == YANG_CHOICE_STMT) {
                 return new YangChoiceStmtImpl(node);
-            } else if (type == YANG_COMCHAR) {
-                return new YangComcharImpl(node);
             } else if (type == YANG_COMMENT) {
                 return new YangCommentImpl(node);
             } else if (type == YANG_CONFIG_ARG) {
