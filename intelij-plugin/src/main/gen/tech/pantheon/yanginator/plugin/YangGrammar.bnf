@@ -694,7 +694,7 @@ list-stmt ::= list-keyword sep identifier-arg-str optsep
   [description-stmt]
   [reference-stmt]
   (typedef-stmt | grouping-stmt)*
-  data-def-stmt+
+  data-def-stmt*
   action-stmt*
   notification-stmt*>>
   RIGHT_BRACE stmtsep

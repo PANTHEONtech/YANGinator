@@ -57,6 +57,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = rewriteAugment(result);
         result = changeInputOutputCardinality(result);
         result = changeOrderOfTypeBodyStmt(result);
+        result = changeListCardinality(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1094,6 +1095,28 @@ public class GrammarKitRFCUncomplaintUtils {
             } else if (found && line.contains("decimal64-specification")) {
                 found = false;
                 line = "  numerical-restrictions |";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Changed list-stmt according to cardinality in rfc
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> changeListCardinality(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("list-stmt ::=")) {
+                found = true;
+            }
+            if (found && line.contains("data-def-stmt+")) {
+                line = "  data-def-stmt*";
+                found = false;
             }
             result.add(line);
         }
