@@ -105,7 +105,8 @@ public class YangCompletionContributor extends CompletionContributor {
         isAfterKeyword = false;
         ASTNode prevSibling = current.getTreePrev();
         ASTNode parent = current.getTreeParent();
-        if (parent != null && parent.getElementType().toString().matches(".*STMTS")) {
+        if (parent != null && (moduleStmtsContinuation.contains(parent.getElementType().toString())
+            || submoduleStmtsContinuation.contains(parent.getElementType().toString()))) {
             getStmtSituation(current);
             return parent;
         }
