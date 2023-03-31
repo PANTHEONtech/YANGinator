@@ -110,55 +110,6 @@ public final class YangCompletionContributorDataUtil {
             "union"
     );
 
-    private static final List<String> BASE_MODULE_SUBSTATEMENTS = List.of(
-
-            "anyxml",
-            "augment",
-            "choice",
-            "contact",
-            "container",
-            "description",
-            "deviation",
-            "extension",
-            "feature",
-            "grouping",
-            "identity",
-            "import",
-            "include",
-            "leaf",
-            "leaf-list",
-            "list",
-            "notification",
-            "organization",
-            "reference",
-            "revision",
-            "rpc",
-            "typedef",
-            "uses",
-            "yang-version"
-    );
-    private static final List<String> MODULE_SUBSTATEMENTS = new ArrayList<>() {
-        {
-            add("namespace");
-            add("prefix");
-            addAll(BASE_MODULE_SUBSTATEMENTS);
-
-        }
-    };
-
-    private static final List<String> MODULE_SUBSTATEMENTS_1_1 = new ArrayList<>() {
-        {
-            addAll(MODULE_SUBSTATEMENTS);
-            add("anydata");
-        }
-    };
-
-    private static final List<String> SUBMODULE_SUBSTATEMENTS = new ArrayList<>() {
-        {
-            add("belongs-to");
-            addAll(BASE_MODULE_SUBSTATEMENTS);
-        }
-    };
     private static final List<String> IMPORT_SUBSTATEMENTS = List.of(
             "prefix",
             "revision-date"
@@ -537,8 +488,7 @@ public final class YangCompletionContributorDataUtil {
     public static final Map<String, List<String>> MAP_OF_SUBSTATEMENTS = new HashMap<>() {
         {
             put("FILE", List.of("module", "submodule"));
-            put("YANG_MODULE_STMT", MODULE_SUBSTATEMENTS);
-            put("YANG_MODULE_STMT_1_1", MODULE_SUBSTATEMENTS_1_1);
+            put("YANG_MODULE_STMT", MODULE_HEADER_STMTS);
             put("YANG_MODULE_HEADER_STMTS", MODULE_HEADER_STMTS);
             put("YANG_SUBMODULE_STMT", SUBMODULE_HEADER_STMTS);
             put("YANG_SUBMODULE_HEADER_STMTS", SUBMODULE_HEADER_STMTS);
@@ -648,24 +598,14 @@ public final class YangCompletionContributorDataUtil {
         return version;
     }
 
-    public static List<String> getResults(PsiElement position, PsiElement contextParent) {
-        String version = getVersion(position);
-        String parent = contextParent.getNode().getElementType().toString();
+    public static List<String> getResults(String version, String parent) {
         if (version.equals("1.1")) {
             if (MAP_OF_SUBSTATEMENTS.containsKey(parent.concat("_1_1"))) {
                 parent = parent.concat("_1_1");
             }
         }
-        return MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList());
-    }
-
-    public static List<String> getResults(PsiElement position, String parent) {
-        String version = getVersion(position);
-        if (version.equals("1.1")) {
-            if (MAP_OF_SUBSTATEMENTS.containsKey(parent.concat("_1_1"))) {
-                parent = parent.concat("_1_1");
-            }
-        }
-        return MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList());
+        return MAP_OF_SUBSTATEMENTS.containsKey(parent) ?
+                MAP_OF_SUBSTATEMENTS.get(parent).stream().sorted().distinct().collect(Collectors.toList()) :
+                null;
     }
 }

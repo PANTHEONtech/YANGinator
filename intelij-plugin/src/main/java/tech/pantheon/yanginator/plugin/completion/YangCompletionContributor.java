@@ -25,6 +25,7 @@ import tech.pantheon.yanginator.plugin.psi.YangTypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_SUBSTATEMENTS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.getFirstParentAfterSkip;
 
@@ -39,6 +40,7 @@ public class YangCompletionContributor extends CompletionContributor {
     private boolean isFirstStmtInGroup = false;
     private boolean isLastStmtInGroup = false;
     private int caretOffset;
+    private String version = "";
 
     private static final List<String> anymoduleStmtsContinuation = List.of(
             "YANG_LINKAGE_STMTS",
@@ -79,14 +81,27 @@ public class YangCompletionContributor extends CompletionContributor {
             searchStartElement = file.findElementAt(caretOffset - prevSibling.getTextLength() - 1);
         }
         if (searchStartElement == null) return;
-
         ASTNode realParent = findContextParentOfCurrentNode(searchStartElement.getNode());
         contextParent = realParent != null ? realParent.getPsi() : null;
-        contextParentNextSibling =
-                contextParent != null ? contextParent.getNextSibling() != null ?
-                        contextParent.getNextSibling().getChildren().length > 0 ?
-                                contextParent.getNextSibling() : null
-                        : null : null;
+        contextParentNextSibling = findNextSibling();
+    }
+
+    private PsiElement findNextSibling() {
+        PsiElement sibling = null;
+        if (contextParent != null) {
+            sibling = contextParent.getNextSibling();
+            while(sibling != null) {
+                if(sibling.getChildren().length > 0) {
+                    break;
+                }
+                if(sibling.getNextSibling() != null) {
+                    sibling = sibling.getNextSibling();
+                } else {
+                    return null;
+                }
+            }
+        }
+        return sibling;
     }
 
     /**
@@ -106,7 +121,7 @@ public class YangCompletionContributor extends CompletionContributor {
         ASTNode prevSibling = current.getTreePrev();
         ASTNode parent = current.getTreeParent();
         if (parent != null && (moduleStmtsContinuation.contains(parent.getElementType().toString())
-            || submoduleStmtsContinuation.contains(parent.getElementType().toString()))) {
+                || submoduleStmtsContinuation.contains(parent.getElementType().toString()))) {
             getStmtSituation(current);
             return parent;
         }
@@ -213,6 +228,7 @@ public class YangCompletionContributor extends CompletionContributor {
     public void fillCompletionVariants(@NotNull CompletionParameters parameters, @NotNull CompletionResultSet result) {
         super.fillCompletionVariants(parameters, result);
         PsiElement position = parameters.getPosition();
+        version = YangCompletionContributorDataUtil.getVersion(position);
 
         // base case -> when the file is empty (or only having whitespaces and comments)
         if (getFirstParentAfterSkip(position).getNode().getElementType().toString().equals("FILE")) {
@@ -221,21 +237,21 @@ public class YangCompletionContributor extends CompletionContributor {
             return;
         }
         if (contextParent == null) return;
-        ArrayList<String> possibleResults = null;
+        List<String> possibleResults = null;
         String typeText;
+        String parentType = contextParent.getNode().getElementType().toString();
         if (isAfterKeyword) {
-            possibleResults = (ArrayList<String>) YangCompletionContributorDataUtil.getResults(position, contextParent);
+            possibleResults = MAP_OF_IDENTIFIER_KEYWORDS.getOrDefault(parentType, null);
             typeText = "built-in-type";
         } else {
-            String parentType = contextParent.getNode().getElementType().toString();
             if (moduleStmtsContinuation.contains(parentType)) {
-                findPossibleResultsForGroup(result, true,position);
+                findPossibleResultsForGroup(result, true);
                 return;
             } else if (submoduleStmtsContinuation.contains(parentType)) {
-                findPossibleResultsForGroup(result, false,position);
+                findPossibleResultsForGroup(result, false);
                 return;
             } else {
-                List<String> results = YangCompletionContributorDataUtil.getResults(position, contextParent);
+                List<String> results = YangCompletionContributorDataUtil.getResults(version, parentType);
                 if (results != null) {
                     possibleResults = new ArrayList<>(results);
                 }
@@ -272,7 +288,7 @@ public class YangCompletionContributor extends CompletionContributor {
      * @param result   CompletionResult in which the possible completion results should be added
      * @param isModule true if the yang is a module or false if the yang is a submodule
      */
-    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result, boolean isModule ,PsiElement position) {
+    private void findPossibleResultsForGroup(@NotNull CompletionResultSet result, boolean isModule) {
         boolean start = false;
         //loops in possible stmts groups and finds in which group results should start and end
         // i = module group iteration
@@ -290,7 +306,7 @@ public class YangCompletionContributor extends CompletionContributor {
                 }
             }
             if (start) {
-                List<String> possibleResults = YangCompletionContributorDataUtil.getResults(position,moduleStmt);
+                List<String> possibleResults = YangCompletionContributorDataUtil.getResults(version, moduleStmt);
                 String finalType = getCompletionDescription(moduleStmt);
                 possibleResults.forEach(s ->
                         result.addElement(LookupElementBuilder.create(s).withTypeText(finalType))
