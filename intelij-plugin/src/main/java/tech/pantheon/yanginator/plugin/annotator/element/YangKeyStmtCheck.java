@@ -67,10 +67,12 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
                         }
                 }
             }
-            if (keys.stream().noneMatch(leafs :: contains)){
-                holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.",key))
-                        .range(element)
-                        .create();
+            for (String k : keys){
+                if (!leafs.contains(k)){
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.",k))
+                            .range(element)
+                            .create();
+                }
             }
         }
     }
