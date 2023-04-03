@@ -34,8 +34,10 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
         String key = "";
         String config = "";
         List<String> keys = new ArrayList<>();
+        List<String> leafs = new ArrayList<>();
         if (((YangKeyStmt)element).getKeyArgStr()!= null){
             key = ((YangKeyStmt)element).getKeyArgStr().getText().replaceAll("\"", "");
+            keys = List.of(key.split(" "));
         }
         if (element.getParent() instanceof YangListStmt){
             for (PsiElement sibling : element.getParent().getChildren()){
@@ -44,14 +46,14 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
                 }
                 if (sibling instanceof YangLeafStmt && ((YangLeafStmt) sibling).getIdentifierArgStr()!=null){
                         String leafKey = ((YangLeafStmt) sibling).getIdentifierArgStr().getText().replaceAll("\"", "");
-                        if (keys.contains(leafKey)){
+                        if (leafs.contains(leafKey)){
                             holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s leafs.",key))
                                     .range(element)
                                     .create();
                         }else {
-                            keys.add(leafKey);
+                            leafs.add(leafKey);
                         }
-                        if (leafKey.equals(key)){
+                        if (keys.contains(leafKey)){
                             for (PsiElement child : sibling.getChildren()){
                                 if (child instanceof YangConfigStmt && ((YangConfigStmt)child).getConfigArgStr()!=null){
                                     String leafConfig = ((YangConfigStmt)child).getConfigArgStr().getText().replaceAll("\"", "");
@@ -65,7 +67,7 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
                         }
                 }
             }
-            if (!keys.contains(key)){
+            if (keys.stream().noneMatch(leafs :: contains)){
                 holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.",key))
                         .range(element)
                         .create();
