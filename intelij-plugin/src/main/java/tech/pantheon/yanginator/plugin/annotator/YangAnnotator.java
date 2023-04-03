@@ -35,6 +35,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.YangGroupingStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangIdentityStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangImportStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangIncludeStmtCheck;
+import tech.pantheon.yanginator.plugin.annotator.element.YangKeyStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangLeafListStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangLeafStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangLeafrefSpecificationCheck;
@@ -100,6 +101,7 @@ public class YangAnnotator implements Annotator {
             new YangPatternStmtCheck(),
             new YangEnumStmtChange(),
             new YangBitStmtCheck(),
+            new YangKeyStmtCheck(),
             new YangMustStmtChange(),
             new YangGroupingStmtCheck(),
             new YangContainerStmtCheck(),
