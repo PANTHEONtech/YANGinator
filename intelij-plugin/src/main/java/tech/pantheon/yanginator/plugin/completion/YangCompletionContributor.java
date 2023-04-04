@@ -360,6 +360,13 @@ public class YangCompletionContributor extends CompletionContributor {
         );
     }
 
+    /**
+     * add completion after keyword(for now only uses keyword)
+     * getClassType() is used to find required class of results
+     * containing file is searched for instances of required class and names of found elements are returned as list of strings
+     *
+     * @return List of completion results
+     */
     private List<String> afterKeywordCompletion() {
         Class<PsiElement> element = getClassType(contextParent);
         if (element.equals(YangTypedefStmt.class)) {
