@@ -22,7 +22,6 @@ import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
-import tech.pantheon.yanginator.plugin.reference.YangUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -337,7 +336,7 @@ public class YangCompletionContributor extends CompletionContributor {
         String typeText;
         String parentType = contextParent.getNode().getElementType().toString();
         if (isAfterKeyword) {
-            possibleResults = afterKeyworCompletition();
+            possibleResults = afterKeywordCompletion();
             typeText = "built-in-type";
         } else {
             if (moduleStmtsContinuation.contains(parentType)) {
@@ -361,7 +360,7 @@ public class YangCompletionContributor extends CompletionContributor {
         );
     }
 
-    private List<String> afterKeyworCompletition() {
+    private List<String> afterKeywordCompletion() {
         Class<PsiElement> element = getClassType(contextParent);
         if (element.equals(YangTypedefStmt.class)) {
             return MAP_OF_IDENTIFIER_KEYWORDS.getOrDefault(contextParent.getNode().getElementType().toString(), null);
