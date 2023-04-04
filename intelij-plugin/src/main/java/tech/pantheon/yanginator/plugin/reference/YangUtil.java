@@ -30,6 +30,7 @@ import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUsesKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
 import java.nio.file.Path;
@@ -122,11 +123,11 @@ public class YangUtil {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends PsiElement> Class<T> getClassType(Object genericElement) {
+    public static <T extends PsiElement> Class<T> getClassType(Object genericElement) {
         var classType = (Class<T>) YangTypedefStmt.class;
         if (genericElement instanceof YangBaseStmt) {
             classType = (Class<T>) YangIdentityStmt.class;
-        } else if (genericElement instanceof YangUsesStmt) {
+        } else if (genericElement instanceof YangUsesStmt || genericElement instanceof YangUsesKeyword) {
             classType = (Class<T>) YangGroupingStmt.class;
         } else if (genericElement instanceof YangImportStmt) {
             classType = (Class<T>) YangModuleStmt.class;
