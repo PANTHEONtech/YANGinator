@@ -11,20 +11,16 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public interface YangPathArgStr extends YangNamedElement {
+import java.util.List;
 
-    @Nullable
-    YangQuotedXpathFunction getQuotedXpathFunction();
+public interface YangFunctionBodyString extends YangNamedElement {
 
-    @Nullable
-    YangXPathFunction getXPathFunction();
+    @NotNull
+    YangQuotedString getQuotedString();
 
-    @Nullable
-    YangPathArg getPathArg();
-
-    @Nullable
-    YangQuotedPathArg getQuotedPathArg();
+    @NotNull
+    List<YangStringSplitter> getStringSplitterList();
 
 }

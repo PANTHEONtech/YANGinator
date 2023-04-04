@@ -19,8 +19,14 @@ import java.util.List;
 
 public interface YangMustStmt extends YangYangStmt {
 
+    @Nullable
+    YangQuotedXpathFunction getQuotedXpathFunction();
+
     @NotNull
     List<YangWsp> getWspList();
+
+    @Nullable
+    YangXPathFunction getXPathFunction();
 
     @NotNull
     List<YangComment> getCommentList();

@@ -93,6 +93,8 @@ correctly.
 
 * `changeListCardinality(result);` [link](#change-list-stmt-cardinality)
 
+* `addXpath(result);` [link](#add-Xpath)
+
 
 
 ### Rewrite Zero Integer Value
@@ -428,6 +430,7 @@ After
 ### Quoted path
 
 Path can be quoted according to validators.
+Added Xpath possibility.
 
 **Example**
 
@@ -437,7 +440,7 @@ Before
 
 After
 
-![quoted path after](doc-images/quoted_path_after.png)
+![path-arg-str-after.png](doc-images/path-arg-str-after.png)
 
 ### Quoted string splitter
 
@@ -560,6 +563,13 @@ After
 ### Allow stmts to be Quoted
 
 quoteStmts(lines)
+
+Add possibility for statements to have a quoted string.
+Added Xpath possibility for when and must statements.
+
+![when-stmt-after.png](doc-images/when-stmt-after.png)
+
+![must-stmt-after.png](doc-images/must-stmt-after.png)
 
 ### Swap decimal with integer in range boundary def
 
@@ -910,6 +920,15 @@ Before:
 
 After:  
 ![img.png](doc-images/List-stmt_after.png)
+
+### add Xpath
+Added Xpath function definitions
+
+![function-definitions.png](doc-images/function-definitions.png)
+
+![xpath-function-definitions.png](doc-images/xpath-function-definitions.png)
+
+![xpath-function.png](doc-images/xpath-function.png)
 
 ---
 
