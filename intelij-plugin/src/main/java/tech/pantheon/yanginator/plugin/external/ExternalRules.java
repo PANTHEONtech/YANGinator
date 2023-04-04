@@ -170,33 +170,27 @@ public class ExternalRules {
     }
 
     /**
-     * parser parse everything except asterisk
-     * If parser stops at asterisk in comment, next char is checked,
-     * if next char is slash (end of block comment) parsing is stopped,
-     * otherwise "*" is consumed and parsing continue
+     * Method is called after start of block comment is found,
+     * in while loop next token is checked, and if end of block comment is found, loop ends
+     * otherwise token is consumed and loop continues with next token
      *
      * @param psiBuilder Psi builder
      * @param level      Level of element
-     * @param parser     contains everything except asterisk
      * @return return true if end of block comment is found
      */
-    public static boolean blockComment(PsiBuilder psiBuilder, int level, Parser parser) {
+    public static boolean blockComment(PsiBuilder psiBuilder, int level) {
         if (!recursion_guard_(psiBuilder, level, "rule")) return false;
-        boolean result = false;
-        boolean parsing = true;
         PsiBuilder.Marker marker = enter_section_(psiBuilder);
-
-        while (parsing) {
-            parsing = false;
-            result = parser.parse(psiBuilder, level + 1);
-            if (Objects.equals(psiBuilder.getTokenText(), "*") &&
-                    psiBuilder.getOriginalText().charAt(psiBuilder.getCurrentOffset() + 1) != '/') {
-
-                consumeToken(psiBuilder, "*");
-                parsing = true;
+        while (true) {
+            String token = psiBuilder.getTokenText();
+            if (Objects.equals(token, "*") &&
+                    psiBuilder.getOriginalText().charAt(psiBuilder.getCurrentOffset() + 1) == '/' ||
+                    token == null) {
+                break;
             }
+            consumeToken(psiBuilder, token);
         }
-        exit_section_(psiBuilder, marker, null, result);
-        return result;
+        exit_section_(psiBuilder, marker, null, true);
+        return true;
     }
 }

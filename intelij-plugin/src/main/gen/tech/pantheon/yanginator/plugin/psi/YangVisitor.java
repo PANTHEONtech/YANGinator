@@ -37,10 +37,6 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
-    public void visitComchar(@NotNull YangComchar o) {
-        visitNamedElement(o);
-    }
-
     public void visitCr(@NotNull YangCr o) {
         visitNamedElement(o);
     }

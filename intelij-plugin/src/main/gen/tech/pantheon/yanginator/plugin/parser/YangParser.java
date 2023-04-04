@@ -88,7 +88,6 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CHOICE_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CIRCUMFLEX_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CLOSED_BRACKET;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMCHAR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMMA;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COMMENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_CONFIG_ARG;
@@ -511,25 +510,14 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // <<blockComment COMCHAR*>>
+    // <<blockComment>>
     public static boolean BLOCK_COMMENT_BODY(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "BLOCK_COMMENT_BODY")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_BLOCK_COMMENT_BODY, "<block comment body>");
-        r = blockComment(b, l + 1, YangParser::BLOCK_COMMENT_BODY_0_0);
+        r = blockComment(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
-    }
-
-    // COMCHAR*
-    private static boolean BLOCK_COMMENT_BODY_0_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "BLOCK_COMMENT_BODY_0_0")) return false;
-        while (true) {
-            int c = current_position_(b);
-            if (!COMCHAR(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "BLOCK_COMMENT_BODY_0_0", c)) break;
-        }
-        return true;
     }
 
     /* ********************************************************** */
@@ -553,88 +541,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b);
         r = consumeTokens(b, 0, YANG_FORWARD_SLASH, YANG_ASTERISK);
         exit_section_(b, m, YANG_BLOCK_COMMENT_START, r);
-        return r;
-    }
-
-    /* ********************************************************** */
-    // SINGLE_QUOTE | DOUBLE_QUOTE | CARRIAGE_RETURN | BACK_SLASH | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER
-    public static boolean COMCHAR(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "COMCHAR")) return false;
-        boolean r;
-        Marker m = enter_section_(b, l, _NONE_, YANG_COMCHAR, "<comchar>");
-        r = consumeToken(b, YANG_SINGLE_QUOTE);
-        if (!r) r = consumeToken(b, YANG_DOUBLE_QUOTE);
-        if (!r) r = consumeToken(b, YANG_CARRIAGE_RETURN);
-        if (!r) r = consumeToken(b, YANG_BACK_SLASH);
-        if (!r) r = consumeToken(b, YANG_ESCAPES);
-        if (!r) r = consumeToken(b, YANG_SPACE);
-        if (!r) r = consumeToken(b, YANG_SEMICOLON);
-        if (!r) r = consumeToken(b, YANG_LEFT_BRACE);
-        if (!r) r = consumeToken(b, YANG_RIGHT_BRACE);
-        if (!r) r = consumeToken(b, YANG_TAB);
-        if (!r) r = COMCHAR_10(b, l + 1);
-        if (!r) r = consumeToken(b, YANG_LINEFEED);
-        if (!r) r = consumeToken(b, YANG_DATE);
-        if (!r) r = consumeToken(b, YANG_FRACTIONS);
-        if (!r) r = consumeToken(b, YANG_ZEROS);
-        if (!r) r = consumeToken(b, YANG_ALPHANUMERICAL_ALPHA_FIRST);
-        if (!r) r = consumeToken(b, YANG_ALPHANUMERICAL_DIGIT_FIRST);
-        if (!r) r = consumeToken(b, YANG_IPV4);
-        if (!r) r = consumeToken(b, YANG_DIGITS);
-        if (!r) r = consumeToken(b, YANG_CHARS);
-        if (!r) r = consumeToken(b, YANG_APOSTROPHE);
-        if (!r) r = consumeToken(b, YANG_EXCLAMATION_MARK);
-        if (!r) r = consumeToken(b, YANG_HASH);
-        if (!r) r = consumeToken(b, YANG_DOLLAR_SIGN);
-        if (!r) r = consumeToken(b, YANG_PERCENT_SIGN);
-        if (!r) r = consumeToken(b, YANG_AMPERSAND);
-        if (!r) r = consumeToken(b, YANG_LEFT_PARENTHESIS);
-        if (!r) r = consumeToken(b, YANG_RIGHT_PARENTHESIS);
-        if (!r) r = consumeToken(b, YANG_PLUS_SIGN);
-        if (!r) r = consumeToken(b, YANG_COMMA);
-        if (!r) r = consumeToken(b, YANG_DASH);
-        if (!r) r = consumeToken(b, YANG_DOT);
-        if (!r) r = consumeToken(b, YANG_FORWARD_SLASH);
-        if (!r) r = DOUBLE_FORWARD_SLASH(b, l + 1);
-        if (!r) r = consumeToken(b, YANG_ZERO);
-        if (!r) r = consumeToken(b, YANG_ONE);
-        if (!r) r = consumeToken(b, YANG_TWO);
-        if (!r) r = consumeToken(b, YANG_THREE);
-        if (!r) r = consumeToken(b, YANG_FOUR);
-        if (!r) r = consumeToken(b, YANG_FIVE);
-        if (!r) r = consumeToken(b, YANG_SIX);
-        if (!r) r = consumeToken(b, YANG_SEVEN);
-        if (!r) r = consumeToken(b, YANG_EIGHT);
-        if (!r) r = consumeToken(b, YANG_NINE);
-        if (!r) r = consumeToken(b, YANG_COLON);
-        if (!r) r = consumeToken(b, YANG_LESS_THAN_SIGN);
-        if (!r) r = consumeToken(b, YANG_EQUALS);
-        if (!r) r = consumeToken(b, YANG_GREATER_THAN_SIGN);
-        if (!r) r = consumeToken(b, YANG_QUESTION_MARK);
-        if (!r) r = consumeToken(b, YANG_AT_SIGN);
-        if (!r) r = consumeToken(b, YANG_ALPHA);
-        if (!r) r = consumeToken(b, YANG_OPEN_BRACKET);
-        if (!r) r = consumeToken(b, YANG_CLOSED_BRACKET);
-        if (!r) r = consumeToken(b, YANG_CIRCUMFLEX_ACCENT);
-        if (!r) r = consumeToken(b, YANG_UNDERSCORE);
-        if (!r) r = consumeToken(b, YANG_GRAVE_ACCENT);
-        if (!r) r = consumeToken(b, YANG_PIPE);
-        if (!r) r = consumeToken(b, YANG_TILDE);
-        if (!r) r = consumeToken(b, YANG_DOUBLE_DOT);
-        if (!r) r = consumeToken(b, YANG_DOUBLE_COLON);
-        if (!r) r = consumeToken(b, YANG_PARENT_FOLDER);
-        exit_section_(b, l, m, r, false, null);
-        return r;
-    }
-
-    // LINEFEED sep
-    private static boolean COMCHAR_10(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "COMCHAR_10")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_LINEFEED);
-        r = r && sep(b, l + 1);
-        exit_section_(b, m, null, r);
         return r;
     }
 
