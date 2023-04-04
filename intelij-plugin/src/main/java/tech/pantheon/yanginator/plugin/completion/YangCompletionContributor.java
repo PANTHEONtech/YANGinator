@@ -20,16 +20,20 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiErrorElement;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypes;
 import tech.pantheon.yanginator.plugin.reference.YangUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_IDENTIFIER_KEYWORDS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.MAP_OF_SUBSTATEMENTS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.SKIP_TOKENS;
 import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorDataUtil.getFirstParentAfterSkip;
+import static tech.pantheon.yanginator.plugin.reference.YangUtil.findAllChildrenOfTypeAsList;
+import static tech.pantheon.yanginator.plugin.reference.YangUtil.getClassType;
 
 public class YangCompletionContributor extends CompletionContributor {
 
@@ -89,7 +93,7 @@ public class YangCompletionContributor extends CompletionContributor {
         PsiElement searchStartElement = caretElement;
         PsiElement prevSibling = caretElement.getPrevSibling();
 
-        List<PsiErrorElement> listOfErrorElements = YangUtil.findAllChildrenOfTypeAsList(caretElement.getContainingFile(),
+        List<PsiErrorElement> listOfErrorElements = findAllChildrenOfTypeAsList(caretElement.getContainingFile(),
                 PsiErrorElement.class, -100);
         if (listOfErrorElements.size() > 0) {
             withErrors = true;
@@ -333,7 +337,7 @@ public class YangCompletionContributor extends CompletionContributor {
         String typeText;
         String parentType = contextParent.getNode().getElementType().toString();
         if (isAfterKeyword) {
-            possibleResults = MAP_OF_IDENTIFIER_KEYWORDS.getOrDefault(parentType, null);
+            possibleResults = afterKeyworCompletition();
             typeText = "built-in-type";
         } else {
             if (moduleStmtsContinuation.contains(parentType)) {
@@ -355,6 +359,15 @@ public class YangCompletionContributor extends CompletionContributor {
         possibleResults.forEach(s ->
                 result.addElement(LookupElementBuilder.create(s).withTypeText(typeText.isEmpty() ? s : typeText))
         );
+    }
+
+    private List<String> afterKeyworCompletition() {
+        Class<PsiElement> element = getClassType(contextParent);
+        if (element.equals(YangTypedefStmt.class)) {
+            return MAP_OF_IDENTIFIER_KEYWORDS.getOrDefault(contextParent.getNode().getElementType().toString(), null);
+        } else
+            return findAllChildrenOfTypeAsList(contextParent.getContainingFile(), element, 0)
+                    .stream().map(psiElement -> psiElement.getChildren()[2].getText()).collect(Collectors.toList());
     }
 
     /**
