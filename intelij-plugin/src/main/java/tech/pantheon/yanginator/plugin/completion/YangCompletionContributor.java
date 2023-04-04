@@ -89,8 +89,9 @@ public class YangCompletionContributor extends CompletionContributor {
         PsiElement searchStartElement = caretElement;
         PsiElement prevSibling = caretElement.getPrevSibling();
 
-        List<PsiErrorElement> zoznam = YangUtil.findAllChildrenOfTypeAsList(caretElement.getContainingFile(), PsiErrorElement.class, -100);
-        if (zoznam.size() > 0) {
+        List<PsiErrorElement> listOfErrorElements = YangUtil.findAllChildrenOfTypeAsList(caretElement.getContainingFile(),
+                PsiErrorElement.class, -100);
+        if (listOfErrorElements.size() > 0) {
             withErrors = true;
         }
         if (prevSibling != null && prevSibling.getNode().getElementType() == YangTypes.YANG_ALPHA) {
