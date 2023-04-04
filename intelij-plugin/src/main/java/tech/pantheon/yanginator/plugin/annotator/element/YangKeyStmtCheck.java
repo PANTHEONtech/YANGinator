@@ -34,10 +34,20 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
         String key = "";
         String config = "";
         List<String> keys = new ArrayList<>();
+        List<String> allKeys;
         List<String> leafs = new ArrayList<>();
         if (((YangKeyStmt)element).getKeyArgStr()!= null){
-            key = ((YangKeyStmt)element).getKeyArgStr().getText().replaceAll("\"", "");
-            keys = List.of(key.split(" "));
+            key = ((YangKeyStmt)element).getKeyArgStr().getText().replaceAll("\\s+"," ").replaceAll("\"", "");
+            allKeys = List.of(key.split(" "));
+            for (String k : allKeys){
+                if (!keys.contains(k)){
+                    keys.add(k);
+                }else {
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s args.",k))
+                            .range(element)
+                            .create();
+                }
+            }
         }
         if (element.getParent() instanceof YangListStmt){
             for (PsiElement sibling : element.getParent().getChildren()){
