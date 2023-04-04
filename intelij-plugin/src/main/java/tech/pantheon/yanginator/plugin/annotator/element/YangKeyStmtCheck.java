@@ -58,7 +58,7 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
                                 if (child instanceof YangConfigStmt && ((YangConfigStmt)child).getConfigArgStr()!=null){
                                     String leafConfig = ((YangConfigStmt)child).getConfigArgStr().getText().replaceAll("\"", "");
                                     if (!leafConfig.equals(config)){
-                                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.",key))
+                                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.",leafKey))
                                                 .range(element)
                                                 .create();
                                     }
