@@ -161,33 +161,39 @@ public class YangUtil {
         }
 
         //imported
-        String[] imports = Arrays.stream(YangUtil.findAllChildrenOfType(actualFile, YangImportStmt.class)).filter(
-                importStmt -> {
-                    return Arrays.stream(YangUtil.findAllChildrenOfType(importStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
-                        if (prefixStmt.getPrefixArgStr() != null) {
-                            return prefixStmt.getPrefixArgStr().getText().equals(prefix);
-                        }
-                        return false;
-                    });
-                }
-        ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
-        if (imports.length == 1) {
-            return imports[0] + ".yang";
+        YangImportStmt[] importStmts = YangUtil.findAllChildrenOfType(actualFile, YangImportStmt.class);
+        if(importStmts != null) {
+            String[] imports = Arrays.stream(importStmts).filter(
+                    importStmt -> {
+                        return Arrays.stream(YangUtil.findAllChildrenOfType(importStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
+                            if (prefixStmt.getPrefixArgStr() != null) {
+                                return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                            }
+                            return false;
+                        });
+                    }
+            ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
+            if (imports.length == 1) {
+                return imports[0] + ".yang";
+            }
         }
 
         //included
-        String[] includes = Arrays.stream(YangUtil.findAllChildrenOfType(actualFile, YangIncludeStmt.class)).filter(
-                includeStmt -> {
-                    return Arrays.stream(YangUtil.findAllChildrenOfType(includeStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
-                        if (prefixStmt.getPrefixArgStr() != null) {
-                            return prefixStmt.getPrefixArgStr().getText().equals(prefix);
-                        }
-                        return false;
-                    });
-                }
-        ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
-        if (includes.length == 1) {
-            return includes[0] + ".yang";
+        YangIncludeStmt[] includeStmts = findAllChildrenOfType(actualFile, YangIncludeStmt.class);
+        if(includeStmts != null) {
+            String[] includes = Arrays.stream(includeStmts).filter(
+                    includeStmt -> {
+                        return Arrays.stream(YangUtil.findAllChildrenOfType(includeStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
+                            if (prefixStmt.getPrefixArgStr() != null) {
+                                return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                            }
+                            return false;
+                        });
+                    }
+            ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
+            if (includes.length == 1) {
+                return includes[0] + ".yang";
+            }
         }
         return null;
     }
