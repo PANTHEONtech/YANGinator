@@ -28,12 +28,14 @@ import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
+import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -121,6 +123,10 @@ public class YangUtil {
         return Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
     }
 
+    private static String getStmtRefArgText(YangReferencedStatement referencedStatement) {
+        return Objects.requireNonNull(referencedStatement.getIdentifierRefArgStr().getIdentifierRefArg()).getText();
+    }
+
     @SuppressWarnings("unchecked")
     private static <T extends PsiElement> Class<T> getClassType(Object genericElement) {
         var classType = (Class<T>) YangTypedefStmt.class;
@@ -145,4 +151,44 @@ public class YangUtil {
         return result.isEmpty() ? null : ArrayUtil.toObjectArray(result, aClass);
     }
 
+    public static String getLinkedFileName(String prefix, PsiElement element) {
+        PsiFile actualFile = element.getContainingFile();
+        //same file prefix?
+        if (YangUtil.findAllChildrenOfTypeAsList(actualFile, YangPrefixStmt.class, 1).stream().anyMatch(prefixStmt -> {
+            return (prefixStmt.getPrefixArgStr() != null && prefixStmt.getPrefixArgStr().getText().equals(prefix));
+        })) {
+            return actualFile.getName();
+        }
+
+        //imported
+        String[] imports = Arrays.stream(YangUtil.findAllChildrenOfType(actualFile, YangImportStmt.class)).filter(
+                importStmt -> {
+                    return Arrays.stream(YangUtil.findAllChildrenOfType(importStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
+                        if (prefixStmt.getPrefixArgStr() != null) {
+                            return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                        }
+                        return false;
+                    });
+                }
+        ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
+        if (imports.length == 1) {
+            return imports[0] + ".yang";
+        }
+
+        //included
+        String[] includes = Arrays.stream(YangUtil.findAllChildrenOfType(actualFile, YangIncludeStmt.class)).filter(
+                includeStmt -> {
+                    return Arrays.stream(YangUtil.findAllChildrenOfType(includeStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
+                        if (prefixStmt.getPrefixArgStr() != null) {
+                            return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                        }
+                        return false;
+                    });
+                }
+        ).map(YangUtil::getStmtRefArgText).toArray(String[]::new);
+        if (includes.length == 1) {
+            return includes[0] + ".yang";
+        }
+        return null;
+    }
 }

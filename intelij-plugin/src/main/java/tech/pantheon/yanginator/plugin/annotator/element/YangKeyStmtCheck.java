@@ -14,16 +14,23 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.annotator.check.ElementCheckUtils;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
+import tech.pantheon.yanginator.plugin.psi.YangDataDefStmt;
+import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
+import tech.pantheon.yanginator.plugin.psi.YangIdentifierRef;
 import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
 import tech.pantheon.yanginator.plugin.psi.YangLeafStmt;
 import tech.pantheon.yanginator.plugin.psi.YangListStmt;
+import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
+import tech.pantheon.yanginator.plugin.reference.YangUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class YangKeyStmtCheck extends AbstractYangStmtCheck{
+import static tech.pantheon.yanginator.plugin.reference.YangUtil.getLinkedFileName;
+
+public class YangKeyStmtCheck extends AbstractYangStmtCheck {
     @Override
     public boolean isApplicable(@NotNull PsiElement element) {
         return element instanceof YangKeyStmt;
@@ -34,52 +41,81 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck{
         String key = "";
         String config = "";
         List<String> keys = new ArrayList<>();
-        List<String> allKeys;
         List<String> leafs = new ArrayList<>();
-        if (((YangKeyStmt)element).getKeyArgStr()!= null){
-            key = ((YangKeyStmt)element).getKeyArgStr().getText().replaceAll("\\s+"," ").replaceAll("\"", "");
-            allKeys = List.of(key.split(" "));
-            for (String k : allKeys){
-                if (!keys.contains(k)){
+        if (((YangKeyStmt) element).getKeyArgStr() != null) {
+            key = ((YangKeyStmt) element).getKeyArgStr().getText().replaceAll("\\s+", " ").replaceAll("\"", "");
+            String[] allKeys = key.split(" ");
+            for (String k : allKeys) {
+                if (!keys.contains(k)) {
                     keys.add(k);
-                }else {
-                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s args.",k))
+                } else {
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s args.", k))
                             .range(element)
                             .create();
                 }
             }
         }
-        if (element.getParent() instanceof YangListStmt){
-            for (PsiElement sibling : element.getParent().getChildren()){
-                if (sibling instanceof YangConfigStmt && ((YangConfigStmt)sibling).getConfigArgStr() != null){
-                    config = ((YangConfigStmt)sibling).getConfigArgStr().getText().replaceAll("\"", "");
+        if (element.getParent() instanceof YangListStmt) {
+            for (PsiElement sibling : element.getParent().getChildren()) {
+                if (sibling instanceof YangConfigStmt && ((YangConfigStmt) sibling).getConfigArgStr() != null) {
+                    config = ((YangConfigStmt) sibling).getConfigArgStr().getText().replaceAll("\"", "");
                 }
-                if (sibling instanceof YangLeafStmt && ((YangLeafStmt) sibling).getIdentifierArgStr()!=null){
-                        String leafKey = ((YangLeafStmt) sibling).getIdentifierArgStr().getText().replaceAll("\"", "");
-                        if (leafs.contains(leafKey)){
-                            holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s leafs.",key))
-                                    .range(element)
-                                    .create();
-                        }else {
-                            leafs.add(leafKey);
-                        }
-                        if (keys.contains(leafKey)){
-                            for (PsiElement child : sibling.getChildren()){
-                                if (child instanceof YangConfigStmt && ((YangConfigStmt)child).getConfigArgStr()!=null){
-                                    String leafConfig = ((YangConfigStmt)child).getConfigArgStr().getText().replaceAll("\"", "");
-                                    if (!leafConfig.equals(config)){
-                                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.",leafKey))
-                                                .range(element)
-                                                .create();
-                                    }
+                if (sibling instanceof YangLeafStmt && ((YangLeafStmt) sibling).getIdentifierArgStr() != null) {
+                    String leafKey = ((YangLeafStmt) sibling).getIdentifierArgStr().getText().replaceAll("\"", "");
+                    if (leafs.contains(leafKey)) {
+                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s leafs.", key))
+                                .range(element)
+                                .create();
+                    } else {
+                        leafs.add(leafKey);
+                    }
+                    if (keys.contains(leafKey)) {
+                        for (PsiElement child : sibling.getChildren()) {
+                            if (child instanceof YangConfigStmt && ((YangConfigStmt) child).getConfigArgStr() != null) {
+                                String leafConfig = ((YangConfigStmt) child).getConfigArgStr().getText().replaceAll("\"", "");
+                                if (!leafConfig.equals(config)) {
+                                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.", leafKey))
+                                            .range(element)
+                                            .create();
                                 }
                             }
                         }
+                    }
+                }
+                if (sibling instanceof YangDataDefStmt) {
+                    YangUsesStmt[] usesStmts = YangUtil.findAllChildrenOfType(sibling, YangUsesStmt.class);
+                    for (YangUsesStmt usesStmt : usesStmts) {
+                        if (usesStmt.getIdentifierRefArgStr() != null) {
+                            YangIdentifierRef identifierRef = usesStmt.getIdentifierRefArgStr().getIdentifierRefArg().getIdentifierRef();
+                            List<YangGroupingStmt> groupings = new ArrayList<>();
+                            if (identifierRef.getPrefix() == null) {
+                                //search only in this file
+                                groupings.addAll(YangUtil.findIdentifierLiterals(usesStmt.getProject(), identifierRef.getIdentifier().getText(), usesStmt, List.of(usesStmt.getContainingFile().getName())));
+                            } else {
+                                //get file and search for its groupings
+                                String name = getLinkedFileName(identifierRef.getPrefix().getText(), element);
+                                if (name != null) {
+                                    groupings.addAll(YangUtil.findIdentifierLiterals(usesStmt.getProject(), identifierRef.getIdentifier().getText(), usesStmt, List.of(name)));
+                                }
+                            }
+                            for (PsiElement grouping : groupings) {
+                                leafs.addAll(YangUtil.findAllChildrenOfTypeAsList(grouping, YangLeafStmt.class, 0).stream().map(
+                                        leaf -> {
+                                            if (leaf.getIdentifierArgStr() != null) {
+                                                return (leaf.getIdentifierArgStr().getText().replaceAll("\"", ""));
+                                            } else {
+                                                return null;
+                                            }
+                                        }
+                                ).collect(Collectors.toList()));
+                            }
+                        }
+                    }
                 }
             }
-            for (String k : keys){
-                if (!leafs.contains(k)){
-                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.",k))
+            for (String k : keys) {
+                if (!leafs.contains(k)) {
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
                             .range(element)
                             .create();
                 }
