@@ -5493,7 +5493,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // ((string-splitter (or-keyword | and-keyword | not-keyword))? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     public static boolean identifier(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier")) return false;
         boolean r;
@@ -5514,7 +5514,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // (string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+    // ((string-splitter (or-keyword | and-keyword | not-keyword))? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
     private static boolean identifier_1(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1")) return false;
         while (true) {
@@ -5525,35 +5525,38 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
+    // (string-splitter (or-keyword | and-keyword | not-keyword))? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT)
     private static boolean identifier_1_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = identifier_1_0_0(b, l + 1);
         r = r && identifier_1_0_1(b, l + 1);
-        r = r && identifier_1_0_2(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
-    // string-splitter?
+    // (string-splitter (or-keyword | and-keyword | not-keyword))?
     private static boolean identifier_1_0_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "identifier_1_0_0")) return false;
-        string_splitter(b, l + 1);
+        identifier_1_0_0_0(b, l + 1);
         return true;
     }
 
-    // (or-keyword | and-keyword | not-keyword)?
-    private static boolean identifier_1_0_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
-        identifier_1_0_1_0(b, l + 1);
-        return true;
+    // string-splitter (or-keyword | and-keyword | not-keyword)
+    private static boolean identifier_1_0_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_0_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = string_splitter(b, l + 1);
+        r = r && identifier_1_0_0_0_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
     }
 
     // or-keyword | and-keyword | not-keyword
-    private static boolean identifier_1_0_1_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "identifier_1_0_1_0")) return false;
+    private static boolean identifier_1_0_0_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_0_0_1")) return false;
         boolean r;
         r = or_keyword(b, l + 1);
         if (!r) r = and_keyword(b, l + 1);
@@ -5562,8 +5565,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT
-    private static boolean identifier_1_0_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "identifier_1_0_2")) return false;
+    private static boolean identifier_1_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "identifier_1_0_1")) return false;
         boolean r;
         r = consumeToken(b, YANG_ALPHA);
         if (!r) r = consumeToken(b, YANG_ZEROS);

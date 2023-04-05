@@ -1309,7 +1309,7 @@ identifier-arg-str ::= identifier-arg | DQUOTE identifier-arg DQUOTE | SQUOTE id
 identifier-arg ::= identifier
 
 identifier ::= (ALPHA | UNDERSCORE | ALPHANUMERICAL_ALPHA_FIRST)
-(string-splitter? (or-keyword | and-keyword | not-keyword)? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
+((string-splitter (or-keyword | and-keyword | not-keyword))? (ALPHA | ZEROS | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | UNDERSCORE | DASH | DOT))*
 
 identifier-ref-arg-str ::= identifier-ref-arg | DQUOTE identifier-ref-arg DQUOTE | SQUOTE identifier-ref-arg SQUOTE
 
@@ -1321,7 +1321,7 @@ string ::= yang-string  // an unquoted string as returned by the scanner, that m
 
 yang-string ::= yang-char*
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
-// return, and line feed but excluding the other C0 control
+// return, and line feed but excluding the other C0 controlS
 // characters, the surrogate blocks, and the noncharacters
 yang-char ::=VCHAR // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
 //  // exclude surrogate blocks %xD800-DFFF
