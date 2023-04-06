@@ -548,7 +548,7 @@ ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
 
 ordered-by-arg ::= user-keyword | system-keyword
 
-must-stmt ::= must-keyword sep ( quoted-string | string ) optsep
+must-stmt ::= must-keyword sep ( XPath-function | Quoted_xpath_function | quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -877,7 +877,7 @@ augment-arg-str ::= augment-arg | (DQUOTE augment-arg DQUOTE) | (SQUOTE augment-
 
 augment-arg ::= absolute-schema-nodeid
 
-when-stmt ::= when-keyword sep ( quoted-string | string ) optsep
+when-stmt ::= when-keyword sep ( XPath-function | Quoted_xpath_function | quoted-string | string ) optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -1181,7 +1181,7 @@ pos ::= OPEN_BRACKET WSP* positive-integer-value WSP* CLOSED_BRACKET
 quoted-string ::= (DQUOTE double-quoted-vchar (string-splitter double-quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)
 // leafref path
 
-path-arg-str ::= path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
+path-arg-str ::= XPath-function | Quoted_xpath_function | path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
 
 path-arg ::= absolute-path | relative-path
 
@@ -1484,6 +1484,49 @@ reserved ::= gen-delims | sub-delims
 gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
   | ASTERISK | PLUS_SIGN | COMMA | EQUALS
+// Xpath functions
+function-body-start ::= string-splitter? LEFT_PARENTHESIS
+function-body-end ::= RIGHT_PARENTHESIS
+function-body-node ::= string-splitter? (path-arg | DOT | schema-nodeid) string-splitter?
+function-body-identity ::= string-splitter? identifier-arg-str string-splitter?
+function-body-string ::= string-splitter? quoted-string string-splitter?
+function-body-node-identity ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-identity function-body-end
+function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end
+function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end
+deref-keyword ::= "deref"
+deref-function ::= deref-keyword function-body-start function-body-node function-body-end
+                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+    deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
+    deref-keyword function-body-start function-body-node function-body-end
+
+rematch-keyword ::= "re-match"
+rematch-function ::= rematch-keyword function-body-string-string
+
+derived-from-keyword ::= "derived-from"
+derived-from-function ::= derived-from-keyword function-body-node-identity
+
+derived-from-or-self-keyword ::= "derived-from-or-self"
+derived-from-or-self-function ::= derived-from-or-self-keyword function-body-node-identity
+
+enum-value-keyword ::= "enum-value"
+enum-value-function ::= enum-value-keyword function-body-start function-body-node function-body-end
+
+bit-is-set-keyword ::= "bit-is-set"
+bit-is-set-function ::= bit-is-set-keyword function-body-node-string
+
+function ::= (deref-function |
+    rematch-function |
+    derived-from-or-self-function |
+    derived-from-function |
+    enum-value-function |
+    bit-is-set-function)+
+
+XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
+                   LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
+    WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
+    function string-splitter?
+
+Quoted_xpath_function ::= DQUOTE XPath-function+ DQUOTE | SQUOTE XPath-function+ SQUOTE
 
 string-splitter ::= (WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*) | (WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*)
 

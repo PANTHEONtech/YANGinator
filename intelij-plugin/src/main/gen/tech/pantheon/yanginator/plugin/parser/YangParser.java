@@ -72,6 +72,8 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BELONGS_TO_KEYW
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BELONGS_TO_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BINARY_SPECIFICATION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BITS_SPECIFICATION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_IS_SET_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_IS_SET_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BIT_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_BLOCK_COMMENT;
@@ -115,6 +117,12 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEFAULT_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DELETE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DELETE_KEYWORD_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEPRECATED_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEREF_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DEREF_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DERIVED_FROM_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DERIVED_FROM_KEYWORD;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DERIVED_FROM_OR_SELF_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DERIVED_FROM_OR_SELF_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCENDANT_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCENDANT_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DESCRIPTION_KEYWORD;
@@ -144,6 +152,8 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EIGHT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_SPECIFICATION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_VALUE_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ENUM_VALUE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EQUALS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_APP_TAG_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ERROR_APP_TAG_STMT;
@@ -165,6 +175,15 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRACTION_DIGITS_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FRAGMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_END;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_IDENTITY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_NODE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_NODE_IDENTITY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_NODE_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_START;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_STRING;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FUNCTION_BODY_STRING_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GEN_DELIMS;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GRAVE_ACCENT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_GREATER_THAN_SIGN;
@@ -326,6 +345,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUESTION_MARK;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUOTED_PATH_ARG;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUOTED_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUOTED_VCHAR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_QUOTED_XPATH_FUNCTION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_ARG;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_ARG_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RANGE_BOUNDARY;
@@ -343,6 +363,8 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_PART;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RELATIVE_REF;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REL_PATH_KEYEXPR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REMATCH_FUNCTION;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REMATCH_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REPLACE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REPLACE_KEYWORD_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_REQUIRE_INSTANCE_ARG;
@@ -424,6 +446,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_VERSION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WSP;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_X_PATH_FUNCTION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_CHAR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STRING;
@@ -1621,6 +1644,73 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
+    // DQUOTE XPath-function+ DQUOTE | SQUOTE XPath-function+ SQUOTE
+    public static boolean Quoted_xpath_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "Quoted_xpath_function")) return false;
+        if (!nextTokenIs(b, "<quoted xpath function>", YANG_DOUBLE_QUOTE, YANG_SINGLE_QUOTE)) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_QUOTED_XPATH_FUNCTION, "<quoted xpath function>");
+        r = Quoted_xpath_function_0(b, l + 1);
+        if (!r) r = Quoted_xpath_function_1(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // DQUOTE XPath-function+ DQUOTE
+    private static boolean Quoted_xpath_function_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "Quoted_xpath_function_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = DQUOTE(b, l + 1);
+        r = r && Quoted_xpath_function_0_1(b, l + 1);
+        r = r && DQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // XPath-function+
+    private static boolean Quoted_xpath_function_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "Quoted_xpath_function_0_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = XPath_function(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!XPath_function(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "Quoted_xpath_function_0_1", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // SQUOTE XPath-function+ SQUOTE
+    private static boolean Quoted_xpath_function_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "Quoted_xpath_function_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SQUOTE(b, l + 1);
+        r = r && Quoted_xpath_function_1_1(b, l + 1);
+        r = r && SQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // XPath-function+
+    private static boolean Quoted_xpath_function_1_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "Quoted_xpath_function_1_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = XPath_function(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!XPath_function(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "Quoted_xpath_function_1_1", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
     // SPACE
     public static boolean SP(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "SP")) return false;
@@ -1779,6 +1869,179 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = HTAB(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
+    }
+
+    /* ********************************************************** */
+    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
+    //     WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
+    //     function string-splitter?
+    public static boolean XPath_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_X_PATH_FUNCTION, "<x path function>");
+        r = XPath_function_0(b, l + 1);
+        if (!r) r = XPath_function_1(b, l + 1);
+        if (!r) r = XPath_function_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter?
+    private static boolean XPath_function_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = XPath_function_0_0(b, l + 1);
+        r = r && XPath_function_0_1(b, l + 1);
+        r = r && XPath_function_0_2(b, l + 1);
+        r = r && XPath_function_0_3(b, l + 1);
+        r = r && consumeToken(b, YANG_LEFT_PARENTHESIS);
+        r = r && XPath_function_0_5(b, l + 1);
+        r = r && function(b, l + 1);
+        r = r && XPath_function_0_7(b, l + 1);
+        r = r && consumeToken(b, YANG_RIGHT_PARENTHESIS);
+        r = r && XPath_function_0_9(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // WSP*
+    private static boolean XPath_function_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_0")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "XPath_function_0_0", c)) break;
+        }
+        return true;
+    }
+
+    // and-keyword | not-keyword | or-keyword
+    private static boolean XPath_function_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_1")) return false;
+        boolean r;
+        r = and_keyword(b, l + 1);
+        if (!r) r = not_keyword(b, l + 1);
+        if (!r) r = or_keyword(b, l + 1);
+        return r;
+    }
+
+    // WSP*
+    private static boolean XPath_function_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "XPath_function_0_2", c)) break;
+        }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_0_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_3")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_0_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_5")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_0_7(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_7")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_0_9(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_0_9")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter?
+    private static boolean XPath_function_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = XPath_function_1_0(b, l + 1);
+        r = r && XPath_function_1_1(b, l + 1);
+        r = r && XPath_function_1_2(b, l + 1);
+        r = r && XPath_function_1_3(b, l + 1);
+        r = r && function(b, l + 1);
+        r = r && XPath_function_1_5(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // WSP*
+    private static boolean XPath_function_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1_0")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "XPath_function_1_0", c)) break;
+        }
+        return true;
+    }
+
+    // and-keyword | not-keyword | or-keyword
+    private static boolean XPath_function_1_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1_1")) return false;
+        boolean r;
+        r = and_keyword(b, l + 1);
+        if (!r) r = not_keyword(b, l + 1);
+        if (!r) r = or_keyword(b, l + 1);
+        return r;
+    }
+
+    // WSP*
+    private static boolean XPath_function_1_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "XPath_function_1_2", c)) break;
+        }
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_1_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1_3")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_1_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_1_5")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // function string-splitter?
+    private static boolean XPath_function_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = function(b, l + 1);
+        r = r && XPath_function_2_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean XPath_function_2_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "XPath_function_2_1")) return false;
+        string_splitter(b, l + 1);
+        return true;
     }
 
     /* ********************************************************** */
@@ -2759,6 +3022,29 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_BINARY_SPECIFICATION, "<binary specification>");
         r = length_stmt(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // bit-is-set-keyword function-body-node-string
+    public static boolean bit_is_set_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "bit_is_set_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_BIT_IS_SET_FUNCTION, "<bit is set function>");
+        r = bit_is_set_keyword(b, l + 1);
+        r = r && function_body_node_string(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "bit-is-set"
+    public static boolean bit_is_set_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "bit_is_set_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_BIT_IS_SET_KEYWORD, "<bit is set keyword>");
+        r = consumeToken(b, "bit-is-set");
         exit_section_(b, l, m, r, false, null);
         return r;
     }
@@ -3986,6 +4272,212 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
+    // deref-keyword function-body-start function-body-node function-body-end  (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+    //     deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
+    //     deref-keyword function-body-start function-body-node function-body-end
+    public static boolean deref_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DEREF_FUNCTION, "<deref function>");
+        r = deref_function_0(b, l + 1);
+        if (!r) r = deref_function_1(b, l + 1);
+        if (!r) r = deref_function_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // deref-keyword function-body-start function-body-node function-body-end  (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword)
+    private static boolean deref_function_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = deref_keyword(b, l + 1);
+        r = r && function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        r = r && deref_function_0_4(b, l + 1);
+        r = r && deref_function_0_5(b, l + 1);
+        r = r && consumeToken(b, YANG_EQUALS);
+        r = r && deref_function_0_7(b, l + 1);
+        r = r && deref_function_0_8(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // schema-nodeid | FORWARD_SLASH? path-arg
+    private static boolean deref_function_0_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_4")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = schema_nodeid(b, l + 1);
+        if (!r) r = deref_function_0_4_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // FORWARD_SLASH? path-arg
+    private static boolean deref_function_0_4_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_4_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = deref_function_0_4_1_0(b, l + 1);
+        r = r && path_arg(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // FORWARD_SLASH?
+    private static boolean deref_function_0_4_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_4_1_0")) return false;
+        consumeToken(b, YANG_FORWARD_SLASH);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean deref_function_0_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_5")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean deref_function_0_7(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_7")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // true-keyword | false-keyword
+    private static boolean deref_function_0_8(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_0_8")) return false;
+        boolean r;
+        r = true_keyword(b, l + 1);
+        if (!r) r = false_keyword(b, l + 1);
+        return r;
+    }
+
+    // deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter?
+    private static boolean deref_function_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = deref_keyword(b, l + 1);
+        r = r && function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        r = r && deref_function_1_4(b, l + 1);
+        r = r && deref_function_1_5(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // schema-nodeid | FORWARD_SLASH? path-arg
+    private static boolean deref_function_1_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_1_4")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = schema_nodeid(b, l + 1);
+        if (!r) r = deref_function_1_4_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // FORWARD_SLASH? path-arg
+    private static boolean deref_function_1_4_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_1_4_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = deref_function_1_4_1_0(b, l + 1);
+        r = r && path_arg(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // FORWARD_SLASH?
+    private static boolean deref_function_1_4_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_1_4_1_0")) return false;
+        consumeToken(b, YANG_FORWARD_SLASH);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean deref_function_1_5(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_1_5")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // deref-keyword function-body-start function-body-node function-body-end
+    private static boolean deref_function_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_function_2")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = deref_keyword(b, l + 1);
+        r = r && function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "deref"
+    public static boolean deref_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "deref_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DEREF_KEYWORD, "<deref keyword>");
+        r = consumeToken(b, "deref");
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // derived-from-keyword function-body-node-identity
+    public static boolean derived_from_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "derived_from_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DERIVED_FROM_FUNCTION, "<derived from function>");
+        r = derived_from_keyword(b, l + 1);
+        r = r && function_body_node_identity(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "derived-from"
+    public static boolean derived_from_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "derived_from_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DERIVED_FROM_KEYWORD, "<derived from keyword>");
+        r = consumeToken(b, "derived-from");
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // derived-from-or-self-keyword function-body-node-identity
+    public static boolean derived_from_or_self_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "derived_from_or_self_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DERIVED_FROM_OR_SELF_FUNCTION, "<derived from or self function>");
+        r = derived_from_or_self_keyword(b, l + 1);
+        r = r && function_body_node_identity(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "derived-from-or-self"
+    public static boolean derived_from_or_self_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "derived_from_or_self_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_DERIVED_FROM_OR_SELF_KEYWORD, "<derived from or self keyword>");
+        r = consumeToken(b, "derived-from-or-self");
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
     // node-identifier string-splitter?
     //   [path-predicate* absolute-path]
     public static boolean descendant_path(PsiBuilder b, int l) {
@@ -4796,6 +5288,31 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
+    // enum-value-keyword function-body-start function-body-node function-body-end
+    public static boolean enum_value_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "enum_value_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_ENUM_VALUE_FUNCTION, "<enum value function>");
+        r = enum_value_keyword(b, l + 1);
+        r = r && function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "enum-value"
+    public static boolean enum_value_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "enum_value_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_ENUM_VALUE_KEYWORD, "<enum value keyword>");
+        r = consumeToken(b, "enum-value");
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
     // "error-app-tag"
     public static boolean error_app_tag_keyword(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "error_app_tag_keyword")) return false;
@@ -5177,6 +5694,284 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = consumeToken(b, YANG_FORWARD_SLASH);
         if (!r) r = consumeToken(b, YANG_QUESTION_MARK);
         return r;
+    }
+
+    /* ********************************************************** */
+    // (deref-function |
+    //  rematch-function |
+    //  derived-from-or-self-function |
+    //  derived-from-function |
+    //  enum-value-function |
+    //  bit-is-set-function)+
+    public static boolean function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION, "<function>");
+        r = function_0(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!function_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function", c)) break;
+        }
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // deref-function |
+    //  rematch-function |
+    //  derived-from-or-self-function |
+    //  derived-from-function |
+    //  enum-value-function |
+    //  bit-is-set-function
+    private static boolean function_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_0")) return false;
+        boolean r;
+        r = deref_function(b, l + 1);
+        if (!r) r = rematch_function(b, l + 1);
+        if (!r) r = derived_from_or_self_function(b, l + 1);
+        if (!r) r = derived_from_function(b, l + 1);
+        if (!r) r = enum_value_function(b, l + 1);
+        if (!r) r = bit_is_set_function(b, l + 1);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // RIGHT_PARENTHESIS
+    public static boolean function_body_end(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_end")) return false;
+        if (!nextTokenIs(b, YANG_RIGHT_PARENTHESIS)) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_RIGHT_PARENTHESIS);
+        exit_section_(b, m, YANG_FUNCTION_BODY_END, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // string-splitter? identifier-arg-str string-splitter?
+    public static boolean function_body_identity(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_identity")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_IDENTITY, "<function body identity>");
+        r = function_body_identity_0(b, l + 1);
+        r = r && identifier_arg_str(b, l + 1);
+        r = r && function_body_identity_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean function_body_identity_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_identity_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean function_body_identity_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_identity_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // string-splitter? (path-arg | DOT | schema-nodeid) string-splitter?
+    public static boolean function_body_node(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_NODE, "<function body node>");
+        r = function_body_node_0(b, l + 1);
+        r = r && function_body_node_1(b, l + 1);
+        r = r && function_body_node_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean function_body_node_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // path-arg | DOT | schema-nodeid
+    private static boolean function_body_node_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_1")) return false;
+        boolean r;
+        r = path_arg(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_DOT);
+        if (!r) r = schema_nodeid(b, l + 1);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean function_body_node_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // function-body-start function-body-node WSP* COMMA WSP* function-body-identity function-body-end
+    public static boolean function_body_node_identity(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_identity")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_NODE_IDENTITY, "<function body node identity>");
+        r = function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_node_identity_2(b, l + 1);
+        r = r && consumeToken(b, YANG_COMMA);
+        r = r && function_body_node_identity_4(b, l + 1);
+        r = r && function_body_identity(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // WSP*
+    private static boolean function_body_node_identity_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_identity_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_node_identity_2", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean function_body_node_identity_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_identity_4")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_node_identity_4", c)) break;
+        }
+        return true;
+    }
+
+    /* ********************************************************** */
+    // function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end
+    public static boolean function_body_node_string(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_string")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_NODE_STRING, "<function body node string>");
+        r = function_body_start(b, l + 1);
+        r = r && function_body_node(b, l + 1);
+        r = r && function_body_node_string_2(b, l + 1);
+        r = r && consumeToken(b, YANG_COMMA);
+        r = r && function_body_node_string_4(b, l + 1);
+        r = r && function_body_string(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // WSP*
+    private static boolean function_body_node_string_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_string_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_node_string_2", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean function_body_node_string_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_node_string_4")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_node_string_4", c)) break;
+        }
+        return true;
+    }
+
+    /* ********************************************************** */
+    // string-splitter? LEFT_PARENTHESIS
+    public static boolean function_body_start(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_start")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_START, "<function body start>");
+        r = function_body_start_0(b, l + 1);
+        r = r && consumeToken(b, YANG_LEFT_PARENTHESIS);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean function_body_start_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_start_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // string-splitter? quoted-string string-splitter?
+    public static boolean function_body_string(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_STRING, "<function body string>");
+        r = function_body_string_0(b, l + 1);
+        r = r && quoted_string(b, l + 1);
+        r = r && function_body_string_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean function_body_string_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean function_body_string_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end
+    public static boolean function_body_string_string(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string_string")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FUNCTION_BODY_STRING_STRING, "<function body string string>");
+        r = function_body_start(b, l + 1);
+        r = r && function_body_string(b, l + 1);
+        r = r && function_body_string_string_2(b, l + 1);
+        r = r && consumeToken(b, YANG_COMMA);
+        r = r && function_body_string_string_4(b, l + 1);
+        r = r && function_body_string(b, l + 1);
+        r = r && function_body_end(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // WSP*
+    private static boolean function_body_string_string_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string_string_2")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_string_string_2", c)) break;
+        }
+        return true;
+    }
+
+    // WSP*
+    private static boolean function_body_string_string_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "function_body_string_string_4")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!WSP(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "function_body_string_string_4", c)) break;
+        }
+        return true;
     }
 
     /* ********************************************************** */
@@ -7993,7 +8788,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // must-keyword sep ( quoted-string | string ) optsep
+    // must-keyword sep ( XPath-function | Quoted_xpath_function | quoted-string | string ) optsep
     //   (SEMICOLON |
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
@@ -8017,11 +8812,13 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r || p;
     }
 
-    // quoted-string | string
+    // XPath-function | Quoted_xpath_function | quoted-string | string
     private static boolean must_stmt_2(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "must_stmt_2")) return false;
         boolean r;
-        r = quoted_string(b, l + 1);
+        r = XPath_function(b, l + 1);
+        if (!r) r = Quoted_xpath_function(b, l + 1);
+        if (!r) r = quoted_string(b, l + 1);
         if (!r) r = string(b, l + 1);
         return r;
     }
@@ -8714,27 +9511,16 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
+    // XPath-function | Quoted_xpath_function | path-arg | quoted-path-arg
     public static boolean path_arg_str(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "path_arg_str")) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_PATH_ARG_STR, "<path arg str>");
-        r = path_arg(b, l + 1);
-        if (!r) r = path_arg_str_1(b, l + 1);
+        r = XPath_function(b, l + 1);
+        if (!r) r = Quoted_xpath_function(b, l + 1);
+        if (!r) r = path_arg(b, l + 1);
         if (!r) r = quoted_path_arg(b, l + 1);
         exit_section_(b, l, m, r, false, null);
-        return r;
-    }
-
-    // DOUBLE_QUOTE path-arg DOUBLE_QUOTE
-    private static boolean path_arg_str_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "path_arg_str_1")) return false;
-        boolean r;
-        Marker m = enter_section_(b);
-        r = consumeToken(b, YANG_DOUBLE_QUOTE);
-        r = r && path_arg(b, l + 1);
-        r = r && consumeToken(b, YANG_DOUBLE_QUOTE);
-        exit_section_(b, m, null, r);
         return r;
     }
 
@@ -10428,6 +11214,29 @@ public class YangParser implements PsiParser, LightPsiParser {
         r = consumeToken(b, YANG_HASH);
         r = r && fragment(b, l + 1);
         exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // rematch-keyword function-body-string-string
+    public static boolean rematch_function(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rematch_function")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_REMATCH_FUNCTION, "<rematch function>");
+        r = rematch_keyword(b, l + 1);
+        r = r && function_body_string_string(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // "re-match"
+    public static boolean rematch_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "rematch_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_REMATCH_KEYWORD, "<rematch keyword>");
+        r = consumeToken(b, "re-match");
+        exit_section_(b, l, m, r, false, null);
         return r;
     }
 
@@ -12349,7 +13158,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // when-keyword sep ( quoted-string | string ) optsep
+    // when-keyword sep ( XPath-function | Quoted_xpath_function | quoted-string | string ) optsep
     //   (SEMICOLON |
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
@@ -12371,11 +13180,13 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r || p;
     }
 
-    // quoted-string | string
+    // XPath-function | Quoted_xpath_function | quoted-string | string
     private static boolean when_stmt_2(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "when_stmt_2")) return false;
         boolean r;
-        r = quoted_string(b, l + 1);
+        r = XPath_function(b, l + 1);
+        if (!r) r = Quoted_xpath_function(b, l + 1);
+        if (!r) r = quoted_string(b, l + 1);
         if (!r) r = string(b, l + 1);
         return r;
     }

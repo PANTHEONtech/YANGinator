@@ -17,42 +17,39 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangWhenStmt extends YangYangStmt {
-
-    @Nullable
-    YangQuotedXpathFunction getQuotedXpathFunction();
+public interface YangDerefFunction extends YangNamedElement {
 
     @NotNull
-    List<YangWsp> getWspList();
+    YangDerefKeyword getDerefKeyword();
 
     @Nullable
-    YangXPathFunction getXPathFunction();
+    YangFalseKeyword getFalseKeyword();
 
     @NotNull
-    List<YangComment> getCommentList();
+    YangFunctionBodyEnd getFunctionBodyEnd();
 
     @NotNull
-    List<YangLineBreak> getLineBreakList();
-
-    @Nullable
-    YangQuotedString getQuotedString();
-
-    @Nullable
-    YangString getString();
+    YangFunctionBodyNode getFunctionBodyNode();
 
     @NotNull
-    List<YangUnknownStatement> getUnknownStatementList();
+    YangFunctionBodyStart getFunctionBodyStart();
+
+    @Nullable
+    YangPathArg getPathArg();
+
+    @Nullable
+    YangSchemaNodeid getSchemaNodeid();
 
     @NotNull
-    YangWhenKeyword getWhenKeyword();
+    List<YangStringSplitter> getStringSplitterList();
 
     @Nullable
-    PsiElement getLeftBrace();
+    YangTrueKeyword getTrueKeyword();
 
     @Nullable
-    PsiElement getRightBrace();
+    PsiElement getEquals();
 
     @Nullable
-    PsiElement getSemicolon();
+    PsiElement getForwardSlash();
 
 }

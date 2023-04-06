@@ -13,23 +13,24 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangPathArg;
-import tech.pantheon.yanginator.plugin.psi.YangPathArgStr;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedPathArg;
+import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedXpathFunction;
+import tech.pantheon.yanginator.plugin.psi.YangSquote;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangXPathFunction;
 
-public class YangPathArgStrImpl extends YangNamedElementImpl implements YangPathArgStr {
+import java.util.List;
 
-    public YangPathArgStrImpl(@NotNull ASTNode node) {
+public class YangQuotedXpathFunctionImpl extends YangNamedElementImpl implements YangQuotedXpathFunction {
+
+    public YangQuotedXpathFunctionImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitPathArgStr(this);
+        visitor.visitQuotedXpathFunction(this);
     }
 
     @Override
@@ -39,27 +40,21 @@ public class YangPathArgStrImpl extends YangNamedElementImpl implements YangPath
     }
 
     @Override
-    @Nullable
-    public YangQuotedXpathFunction getQuotedXpathFunction() {
-        return findChildByClass(YangQuotedXpathFunction.class);
+    @NotNull
+    public List<YangDquote> getDquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
     }
 
     @Override
-    @Nullable
-    public YangXPathFunction getXPathFunction() {
-        return findChildByClass(YangXPathFunction.class);
+    @NotNull
+    public List<YangSquote> getSquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
     }
 
     @Override
-    @Nullable
-    public YangPathArg getPathArg() {
-        return findChildByClass(YangPathArg.class);
-    }
-
-    @Override
-    @Nullable
-    public YangQuotedPathArg getQuotedPathArg() {
-        return findChildByClass(YangQuotedPathArg.class);
+    @NotNull
+    public List<YangXPathFunction> getXPathFunctionList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangXPathFunction.class);
     }
 
 }
