@@ -47,6 +47,7 @@ import tech.pantheon.yanginator.plugin.annotator.element.YangModuleStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangMustStmtChange;
 import tech.pantheon.yanginator.plugin.annotator.element.YangNotificationStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangPatternStmtCheck;
+import tech.pantheon.yanginator.plugin.annotator.element.YangPrefixStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangRangeStmtChange;
 import tech.pantheon.yanginator.plugin.annotator.element.YangRefineStmtCheck;
 import tech.pantheon.yanginator.plugin.annotator.element.YangRevisionStmtCheck;
@@ -132,7 +133,8 @@ public class YangAnnotator implements Annotator {
             new YangActionStmtCheck(),
             new YangDeviateAddStmtCheck(),
             new YangDeviateDeleteStmtCheck(),
-            new YangDeviateReplaceStmtCheck()
+            new YangDeviateReplaceStmtCheck(),
+            new YangPrefixStmtCheck()
     );
     private String version = "";
     private static final List<AbstractYangStmtCheck> STMT_CHECKS_1_1 = List.of(new YangDoubleQuotedStringCheck_v1_1(),
