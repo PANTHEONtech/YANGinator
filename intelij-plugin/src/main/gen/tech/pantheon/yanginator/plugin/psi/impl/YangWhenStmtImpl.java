@@ -20,12 +20,14 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
+import tech.pantheon.yanginator.plugin.psi.YangQuotedXpathFunction;
 import tech.pantheon.yanginator.plugin.psi.YangString;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWhenKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangWhenStmt;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
+import tech.pantheon.yanginator.plugin.psi.YangXPathFunction;
 
 import java.util.List;
 
@@ -51,9 +53,21 @@ public class YangWhenStmtImpl extends YangYangStmtImpl implements YangWhenStmt {
     }
 
     @Override
+    @Nullable
+    public YangQuotedXpathFunction getQuotedXpathFunction() {
+        return findChildByClass(YangQuotedXpathFunction.class);
+    }
+
+    @Override
     @NotNull
     public List<YangWsp> getWspList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangWsp.class);
+    }
+
+    @Override
+    @Nullable
+    public YangXPathFunction getXPathFunction() {
+        return findChildByClass(YangXPathFunction.class);
     }
 
     @Override

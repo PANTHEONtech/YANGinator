@@ -20,6 +20,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = splitDeviationStmt(result);
         result = removeOptional(result);
         result = subDelimsAdjustment(result);
+        addXpath(result);
         additionalRules(result);
         result = quotedAugmentArg(result);
         result = quotedPath(result);
@@ -61,6 +62,52 @@ public class GrammarKitRFCUncomplaintUtils {
         return makeSeparatorRulesPrivate(result);
     }
 
+    private static void addXpath(List<String> lines) {
+        lines.add("// Xpath functions\n" +
+                "function-body-start ::= string-splitter? LEFT_PARENTHESIS\n" +
+                "function-body-end ::= RIGHT_PARENTHESIS\n" +
+                "function-body-node ::= string-splitter? (path-arg | DOT | schema-nodeid) string-splitter?\n" +
+                "function-body-identity ::= string-splitter? identifier-arg-str string-splitter?\n" +
+                "function-body-string ::= string-splitter? quoted-string string-splitter?\n" +
+                "function-body-node-identity ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-identity function-body-end\n" +
+                "function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end\n" +
+                "function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end\n" +
+                "deref-keyword ::= \"deref\"\n" +
+                "deref-function ::= deref-keyword function-body-start function-body-node function-body-end  \n" +
+                "                   (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |\n" +
+                "    deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |\n" +
+                "    deref-keyword function-body-start function-body-node function-body-end\n" +
+                "\n" +
+                "rematch-keyword ::= \"re-match\"\n" +
+                "rematch-function ::= rematch-keyword function-body-string-string\n" +
+                "\n" +
+                "derived-from-keyword ::= \"derived-from\"\n" +
+                "derived-from-function ::= derived-from-keyword function-body-node-identity\n" +
+                "\n" +
+                "derived-from-or-self-keyword ::= \"derived-from-or-self\"\n" +
+                "derived-from-or-self-function ::= derived-from-or-self-keyword function-body-node-identity\n" +
+                "\n" +
+                "enum-value-keyword ::= \"enum-value\"\n" +
+                "enum-value-function ::= enum-value-keyword function-body-start function-body-node function-body-end\n" +
+                "\n" +
+                "bit-is-set-keyword ::= \"bit-is-set\"\n" +
+                "bit-is-set-function ::= bit-is-set-keyword function-body-node-string\n" +
+                "\n" +
+                "function ::= (deref-function |\n" +
+                "    rematch-function |\n" +
+                "    derived-from-or-self-function |\n" +
+                "    derived-from-function |\n" +
+                "    enum-value-function |\n" +
+                "    bit-is-set-function)+\n" +
+                "\n" +
+                "XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?  \n" +
+                "                   LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |\n" +
+                "    WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |\n" +
+                "    function string-splitter?\n" +
+                "\n" +
+                "Quoted_xpath_function ::= DQUOTE XPath-function+ DQUOTE | SQUOTE XPath-function+ SQUOTE");
+    }
+
     /**
      * Allows stmts to be quoted. It's not explicitly defined in rfc
      * but according to multiple validators it's allowed.
@@ -76,7 +123,12 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             for (String stmt : stmts) {
                 if (line.contains(stmt)) {
-                    line = line.replace("string", "( quoted-string | string )");
+                    if(stmt.equals("when-stmt ::=") || stmt.equals("must-stmt ::=")) {
+                        line = line.replace("string", "( XPath-function | Quoted_xpath_function | quoted-string | string )");
+                    }
+                    else {
+                        line = line.replace("string", "( quoted-string | string )");
+                    }
                 }
                 if (line.contains("quoted-string ::=")) {
                     line = line.replace(" string", " quoted-vchar");
@@ -204,6 +256,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Path can be quoted according to validators.
+     * Added Xpath possibility.
      *
      * @param lines list of strings
      * @return list of strings
@@ -212,6 +265,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("path-arg-str ::=")) {
+                line = line.replaceAll("::= ", "::= XPath-function | Quoted_xpath_function | ");
                 line = line + " | quoted-path-arg";
             }
             result.add(line);

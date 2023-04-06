@@ -11,20 +11,6 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.Nullable;
-
-public interface YangPathArgStr extends YangNamedElement {
-
-    @Nullable
-    YangQuotedXpathFunction getQuotedXpathFunction();
-
-    @Nullable
-    YangXPathFunction getXPathFunction();
-
-    @Nullable
-    YangPathArg getPathArg();
-
-    @Nullable
-    YangQuotedPathArg getQuotedPathArg();
+public interface YangDerivedFromOrSelfKeyword extends YangNamedElement {
 
 }

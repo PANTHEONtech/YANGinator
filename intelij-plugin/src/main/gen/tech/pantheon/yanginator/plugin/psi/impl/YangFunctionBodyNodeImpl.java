@@ -12,24 +12,29 @@
 package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangFunctionBodyNode;
 import tech.pantheon.yanginator.plugin.psi.YangPathArg;
-import tech.pantheon.yanginator.plugin.psi.YangPathArgStr;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedPathArg;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedXpathFunction;
+import tech.pantheon.yanginator.plugin.psi.YangSchemaNodeid;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
-import tech.pantheon.yanginator.plugin.psi.YangXPathFunction;
 
-public class YangPathArgStrImpl extends YangNamedElementImpl implements YangPathArgStr {
+import java.util.List;
 
-    public YangPathArgStrImpl(@NotNull ASTNode node) {
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_DOT;
+
+public class YangFunctionBodyNodeImpl extends YangNamedElementImpl implements YangFunctionBodyNode {
+
+    public YangFunctionBodyNodeImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitPathArgStr(this);
+        visitor.visitFunctionBodyNode(this);
     }
 
     @Override
@@ -40,26 +45,26 @@ public class YangPathArgStrImpl extends YangNamedElementImpl implements YangPath
 
     @Override
     @Nullable
-    public YangQuotedXpathFunction getQuotedXpathFunction() {
-        return findChildByClass(YangQuotedXpathFunction.class);
-    }
-
-    @Override
-    @Nullable
-    public YangXPathFunction getXPathFunction() {
-        return findChildByClass(YangXPathFunction.class);
-    }
-
-    @Override
-    @Nullable
     public YangPathArg getPathArg() {
         return findChildByClass(YangPathArg.class);
     }
 
     @Override
     @Nullable
-    public YangQuotedPathArg getQuotedPathArg() {
-        return findChildByClass(YangQuotedPathArg.class);
+    public YangSchemaNodeid getSchemaNodeid() {
+        return findChildByClass(YangSchemaNodeid.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangStringSplitter> getStringSplitterList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangStringSplitter.class);
+    }
+
+    @Override
+    @Nullable
+    public PsiElement getDot() {
+        return findChildByType(YANG_DOT);
     }
 
 }

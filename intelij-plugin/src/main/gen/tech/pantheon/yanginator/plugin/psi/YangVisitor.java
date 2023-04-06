@@ -85,6 +85,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
+    public void visitQuotedXpathFunction(@NotNull YangQuotedXpathFunction o) {
+        visitNamedElement(o);
+    }
+
     public void visitSp(@NotNull YangSp o) {
         visitNamedElement(o);
     }
@@ -106,6 +110,10 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitWsp(@NotNull YangWsp o) {
+        visitNamedElement(o);
+    }
+
+    public void visitXPathFunction(@NotNull YangXPathFunction o) {
         visitNamedElement(o);
     }
 
@@ -202,6 +210,14 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitBinarySpecification(@NotNull YangBinarySpecification o) {
+        visitNamedElement(o);
+    }
+
+    public void visitBitIsSetFunction(@NotNull YangBitIsSetFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitBitIsSetKeyword(@NotNull YangBitIsSetKeyword o) {
         visitNamedElement(o);
     }
 
@@ -325,6 +341,30 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
+    public void visitDerefFunction(@NotNull YangDerefFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDerefKeyword(@NotNull YangDerefKeyword o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDerivedFromFunction(@NotNull YangDerivedFromFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDerivedFromKeyword(@NotNull YangDerivedFromKeyword o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDerivedFromOrSelfFunction(@NotNull YangDerivedFromOrSelfFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitDerivedFromOrSelfKeyword(@NotNull YangDerivedFromOrSelfKeyword o) {
+        visitNamedElement(o);
+    }
+
     public void visitDescendantPath(@NotNull YangDescendantPath o) {
         visitNamedElement(o);
     }
@@ -397,6 +437,14 @@ public class YangVisitor extends PsiElementVisitor {
         visitYangStmt(o);
     }
 
+    public void visitEnumValueFunction(@NotNull YangEnumValueFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitEnumValueKeyword(@NotNull YangEnumValueKeyword o) {
+        visitNamedElement(o);
+    }
+
     public void visitErrorAppTagKeyword(@NotNull YangErrorAppTagKeyword o) {
         visitNamedElement(o);
     }
@@ -450,6 +498,42 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitFragment(@NotNull YangFragment o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunction(@NotNull YangFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyEnd(@NotNull YangFunctionBodyEnd o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyIdentity(@NotNull YangFunctionBodyIdentity o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyNode(@NotNull YangFunctionBodyNode o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyNodeIdentity(@NotNull YangFunctionBodyNodeIdentity o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyNodeString(@NotNull YangFunctionBodyNodeString o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyStart(@NotNull YangFunctionBodyStart o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyString(@NotNull YangFunctionBodyString o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionBodyStringString(@NotNull YangFunctionBodyStringString o) {
         visitNamedElement(o);
     }
 
@@ -1070,6 +1154,14 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitRelativeRef(@NotNull YangRelativeRef o) {
+        visitNamedElement(o);
+    }
+
+    public void visitRematchFunction(@NotNull YangRematchFunction o) {
+        visitNamedElement(o);
+    }
+
+    public void visitRematchKeyword(@NotNull YangRematchKeyword o) {
         visitNamedElement(o);
     }
 
