@@ -34,8 +34,12 @@ public class YangPrefixStmtCheck extends AbstractYangStmtCheck {
     public void performCheck(@NotNull final PsiElement element, @NotNull final AnnotationHolder holder) {
         List<String> prefixes = findAllChildrenOfTypeAsList(element.getContainingFile(), YangPrefixStmt.class, 0)
                 .stream().map(prefix -> findAllChildrenOfTypeAsList(prefix, YangPrefixArg.class, 0).get(0).getText()).collect(Collectors.toList());
-        if (!prefixes.contains(element.getText())) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Prefix \"" + element.getText() + "\" is not declared.")
+        String elementText = element.getText();
+        if (elementText.contains("+")) {     //remove string splitter
+            elementText = elementText.replaceAll("\"[ +\\n]*\"", "");
+        }
+        if (!prefixes.contains(elementText)) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Prefix \"" + elementText + "\" is not declared.")
                     .range(element)
                     .create();
         }
