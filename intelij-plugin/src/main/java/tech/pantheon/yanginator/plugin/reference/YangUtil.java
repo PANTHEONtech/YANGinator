@@ -12,6 +12,7 @@ package tech.pantheon.yanginator.plugin.reference;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.YangFileType;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
+import tech.pantheon.yanginator.plugin.psi.YangFile;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
@@ -76,22 +78,7 @@ public class YangUtil {
     public static <T extends PsiElement> List<T> findIdentifierLiterals(Project project, String identifierKeyword,
                                                                         PsiElement genericElement, List<String> fileNames) {
         List<T> result = null;
-        String path = getPathOfYang(genericElement.getContainingFile().getVirtualFile().getPath());
-        Collection<VirtualFile> virtualFiles =
-                FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
-        Collection<VirtualFile> temp = virtualFiles.stream()
-                .filter(file -> file.getPath().contains(path))
-                .filter(file -> fileNames.contains(file.getName()))
-                .collect(Collectors.toList());
-        //in case the referenced yang files are not in the same directory
-        if (temp.size() < 1) {
-            virtualFiles =
-                    FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
-            temp = virtualFiles.stream()
-                    .filter(file -> fileNames.contains(file.getName()))
-                    .collect(Collectors.toList());
-        }
-        virtualFiles = temp;
+        Collection<VirtualFile> virtualFiles = getVirtualFiles(project, genericElement, fileNames);
         for (VirtualFile virtualFile : virtualFiles) {
             PsiFile yangFile = PsiManager.getInstance(project).findFile(virtualFile);
             if (yangFile != null) {
@@ -115,16 +102,34 @@ public class YangUtil {
         return result != null ? result : Collections.emptyList();
     }
 
+    @NotNull
+    private static Collection<VirtualFile> getVirtualFiles(Project project, PsiElement genericElement, List<String> fileNames) {
+        String path = getPathOfYang(genericElement.getContainingFile().getVirtualFile().getPath());
+        Collection<VirtualFile> virtualFiles =
+                FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        Collection<VirtualFile> temp = virtualFiles.stream()
+                .filter(file -> file.getPath().contains(path))
+                .filter(file -> fileNames.contains(file.getName()))
+                .collect(Collectors.toList());
+        //in case the referenced yang files are not in the same directory
+        if (temp.size() < 1) {
+            temp = virtualFiles.stream()
+                    .filter(file -> fileNames.contains(file.getName()))
+                    .collect(Collectors.toList());
+        }
+        return temp;
+    }
+
     private static String getPathOfYang(String file) {
         Path path = Path.of(file);
         return path.getParent().toString();
     }
 
-    private static String getStmtArgText(YangReferencedStatement referencedStatement) {
+    public static String getStmtArgText(YangReferencedStatement referencedStatement) {
         return Objects.requireNonNull(referencedStatement.getIdentifierArgStr().getIdentifierArg()).getText();
     }
 
-    private static String getStmtRefArgText(YangReferencedStatement referencedStatement) {
+    public static String getStmtRefArgText(YangReferencedStatement referencedStatement) {
         return Objects.requireNonNull(referencedStatement.getIdentifierRefArgStr().getIdentifierRefArg()).getText();
     }
 
@@ -163,7 +168,7 @@ public class YangUtil {
 
         //imported
         YangImportStmt[] importStmts = YangUtil.findAllChildrenOfType(actualFile, YangImportStmt.class);
-        if(importStmts != null) {
+        if (importStmts != null) {
             String[] imports = Arrays.stream(importStmts).filter(
                     importStmt -> {
                         return Arrays.stream(YangUtil.findAllChildrenOfType(importStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
@@ -181,7 +186,7 @@ public class YangUtil {
 
         //included
         YangIncludeStmt[] includeStmts = findAllChildrenOfType(actualFile, YangIncludeStmt.class);
-        if(includeStmts != null) {
+        if (includeStmts != null) {
             String[] includes = Arrays.stream(includeStmts).filter(
                     includeStmt -> {
                         return Arrays.stream(YangUtil.findAllChildrenOfType(includeStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
@@ -198,4 +203,35 @@ public class YangUtil {
         }
         return null;
     }
+
+    public static String[] getIncludedSubmoduleNames(PsiElement element) {
+        String[] fileNames = null;
+        YangIncludeStmt[] includeStmts = findAllChildrenOfType(element, YangIncludeStmt.class);
+        if (includeStmts != null) {
+            fileNames = Arrays.stream(includeStmts).map(YangUtil::getStmtRefArgText)
+                    .map(identifier -> {
+                        return identifier + ".yang";
+                    }).toArray(String[]::new);
+        }
+        return fileNames;
+    }
+
+    //TODO delete, if not used
+    public static PsiFile[] getIncludedSubmoduleFiles(PsiElement element) {
+        List<PsiFile> files = new ArrayList<>();
+        String[] fileNames = getIncludedSubmoduleNames(element);
+        if (fileNames != null) {
+            Collection<VirtualFile> virtualFiles = getVirtualFiles(element.getProject(), element, List.of(fileNames));
+            int iterator = 0;
+            for (VirtualFile virtualFile : virtualFiles) {
+                PsiFile yangFile = PsiManager.getInstance(element.getProject()).findFile(virtualFile);
+                if (yangFile != null) {
+                    files.add(yangFile);
+                }
+            }
+        }
+        return files.toArray(PsiFile[]::new);
+    }
+
+
 }
