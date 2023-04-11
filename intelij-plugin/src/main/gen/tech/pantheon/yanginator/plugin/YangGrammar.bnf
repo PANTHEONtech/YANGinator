@@ -1321,7 +1321,7 @@ string ::= yang-string  // an unquoted string as returned by the scanner, that m
 
 yang-string ::= yang-char*
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
-// return, and line feed but excluding the other C0 controlS
+// return, and line feed but excluding the other C0 control
 // characters, the surrogate blocks, and the noncharacters
 yang-char ::=VCHAR // TAB | LINEFEED | CARRIAGE_RETURN | SPACE-D7FF |
 //  // exclude surrogate blocks %xD800-DFFF
