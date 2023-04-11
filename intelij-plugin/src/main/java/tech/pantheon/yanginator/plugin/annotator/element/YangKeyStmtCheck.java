@@ -28,6 +28,7 @@ import java.util.List;
 
 public class YangKeyStmtCheck extends AbstractYangStmtCheck {
     private static boolean recursionLimited = false;
+
     @Override
     public boolean isApplicable(@NotNull PsiElement element) {
         return element instanceof YangKeyStmt;
@@ -35,11 +36,9 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
 
     @Override
     public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-
-        String key = "";
+        String key;
         String config = "";
         List<String> keys = new ArrayList<>();
-        List<String> leafs = new ArrayList<>();
         //add each key argument leaf to a list and check for duplicity
         if (((YangKeyStmt) element).getKeyArgStr() != null) {
             key = ((YangKeyStmt) element).getKeyArgStr().getText().replaceAll("\\s+", " ").replaceAll("\"", "");
@@ -48,7 +47,7 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                 if (!keys.contains(k)) {
                     keys.add(k);
                 } else {
-                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Too many %s args.", k))
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("More than one %s leaf in key argument.", k))
                             .range(element)
                             .create();
                 }
@@ -67,13 +66,14 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
             for (YangLeafStmt leafStmt : parentLeafStmts) {
                 if (leafStmt.getIdentifierArgStr() != null) {
                     String leafArg = leafStmt.getIdentifierArgStr().getText().replaceAll("\"", "");
-                    leafs.add(leafArg);
                     configCheck(element, holder, config, keys, leafStmt, leafArg);
+
                 }
             }
         }
-        int limitRecursion = 0;
-        IncludeLeafFromUses(element.getParent(), holder, config, keys, leafs, limitRecursion);
+        if (!keys.isEmpty()) {
+            int limitRecursion = 0;
+            IncludeLeafFromUses(element.getParent(), holder, config, keys, limitRecursion);
             /*
         }
 
@@ -141,25 +141,23 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                 }
             }
 */
-
-        for (String k : keys) {
-            if (!leafs.contains(k)) {
-                if(recursionLimited) {
-                    holder.newAnnotation(HighlightSeverity.WARNING, String.format("Missing %s leaf, searching through linked yang files is limited.", k))
-                            .range(element)
-                            .create();
-                } else {
-                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
-                            .range(element)
-                            .create();
+            if (!keys.isEmpty()) {
+                for (String k : keys) {
+                    if (recursionLimited) {
+                        holder.newAnnotation(HighlightSeverity.WARNING, String.format("Missing %s leaf, searching through linked yang files is limited.", k))
+                                .range(element)
+                                .create();
+                    } else {
+                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
+                                .range(element)
+                                .create();
+                    }
                 }
             }
-
         }
-
     }
 
-    private static void IncludeLeafFromUses(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, List<String> leafs, int limitRecursion) {
+    private static void IncludeLeafFromUses(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, int limitRecursion) {
         YangUsesStmt[] usesStmts = YangUtil.findAllChildrenOfType(element, YangUsesStmt.class);
         if (usesStmts != null) {
             List<String> fileNames = new ArrayList<>();
@@ -192,15 +190,18 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                                 for (YangLeafStmt leafStmt : leafStmts) {
                                     if (leafStmt.getIdentifierArgStr() != null) {
                                         String leafArg = leafStmt.getIdentifierArgStr().getText().replaceAll("\"", "");
-                                        leafs.add(leafArg);
                                         configCheck(element, holder, config, keys, leafStmt, leafArg);
                                     }
                                 }
                             }
-                            if(++limitRecursion <= 3) {
-                                IncludeLeafFromUses(groupingStmt, holder, config, keys, leafs, limitRecursion);
+                            if (!keys.isEmpty()) {
+                                if (++limitRecursion <= 3) {
+                                    IncludeLeafFromUses(groupingStmt, holder, config, keys, limitRecursion);
+                                } else {
+                                    recursionLimited = true;
+                                }
                             } else {
-                                recursionLimited = true;
+                                break;
                             }
                         }
                     }
@@ -210,15 +211,18 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
     }
 
     private static void configCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, YangLeafStmt leafStmt, String leafArg) {
-        if (keys.contains(leafArg) && !config.isEmpty()) {
-            YangConfigStmt[] leafConfig = YangUtil.findAllChildrenOfType(leafStmt, YangConfigStmt.class);
-            if (leafConfig != null && leafConfig.length == 1) {
-                if (leafConfig[0].getConfigArgStr() != null) {
-                    String leafConfigArg = leafConfig[0].getConfigArgStr().getText().replaceAll("\"", "");
-                    if (!leafConfigArg.equals(config)) {
-                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.", leafArg))
-                                .range(element)
-                                .create();
+        if (keys.contains(leafArg)) {
+            keys.remove(leafArg);
+            if (!config.isEmpty()) {
+                YangConfigStmt[] leafConfig = YangUtil.findAllChildrenOfType(leafStmt, YangConfigStmt.class);
+                if (leafConfig != null && leafConfig.length == 1) {
+                    if (leafConfig[0].getConfigArgStr() != null) {
+                        String leafConfigArg = leafConfig[0].getConfigArgStr().getText().replaceAll("\"", "");
+                        if (!leafConfigArg.equals(config)) {
+                            holder.newAnnotation(HighlightSeverity.ERROR, String.format("Bad config in %s leaf.", leafArg))
+                                    .range(element)
+                                    .create();
+                        }
                     }
                 }
             }
