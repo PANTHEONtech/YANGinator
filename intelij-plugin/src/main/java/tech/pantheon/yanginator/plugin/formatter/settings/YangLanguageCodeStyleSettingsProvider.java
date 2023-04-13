@@ -30,6 +30,10 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
     private static final String SPACES_BEFORE_LEFT_BRACE_TITLE = "Space before left brace";
     private static final String SPACES_BEFORE_LEFT_BRACE_GROUP_NAME = "Custom spacing";
 
+    private static final String LIMIT_RECURSION_SEARCH_KEY_STATEMENT_OPTION_NAME = "limitRecursionKeyLeafSearch";
+    private static final String LIMIT_RECURSION_SEARCH_KEY_STATEMENT_TITLE = "Limit recursion for key leaf search";
+    private static final String LIMIT_RECURSION_SEARCH_KEY_STATEMENT_GROUP_NAME = "Custom analysis";
+
     private static @NotNull String readCodeSample() {
         return CodeStyleAbstractPanel.readFromFile(YangLanguageCodeStyleSettingsProvider.class, "preview.yang");
     }
@@ -40,6 +44,7 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
         if (settingsType == SettingsType.SPACING_SETTINGS) {
             consumer.showStandardOptions(SPACE_AROUND_ADDITIVE_OPERATORS_OPTION_NAME);
             consumer.showCustomOption(YangCodeStyleSettings.class, SPACES_BEFORE_LEFT_BRACE_OPTION_NAME, SPACES_BEFORE_LEFT_BRACE_TITLE, SPACES_BEFORE_LEFT_BRACE_GROUP_NAME);
+            consumer.showCustomOption(YangCodeStyleSettings.class, LIMIT_RECURSION_SEARCH_KEY_STATEMENT_OPTION_NAME, LIMIT_RECURSION_SEARCH_KEY_STATEMENT_TITLE, LIMIT_RECURSION_SEARCH_KEY_STATEMENT_GROUP_NAME);
         } else if (settingsType == SettingsType.BLANK_LINES_SETTINGS) {
             consumer.showStandardOptions(INDENT_SIZE_OPTION_NAME);
             consumer.showStandardOptions(TAB_SIZE_OPTION_NAME);
