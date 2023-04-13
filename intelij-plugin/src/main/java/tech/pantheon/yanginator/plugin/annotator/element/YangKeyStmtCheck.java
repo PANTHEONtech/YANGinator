@@ -70,12 +70,10 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
             }
         }
         if (!keys.isEmpty()) {
-            int recursionCount = 0;
 
             //recursive search for leaf through uses statements
-            IncludeLeafFromUses(element.getParent(), holder, config, keys, recursionCount, element);
+            IncludeLeafFromUses(element.getParent(), holder, config, keys, element);
 
-            //Check if there are any undefined key leaf arguments, if there is a limit to recursion, give a warning, otherwise error
             if (!keys.isEmpty()) {
                 for (String k : keys) {
                     holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
@@ -94,10 +92,9 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
      * @param holder         AnnotationHolder used for throwing warnings/errors.
      * @param config         Config definition of list statement. If undefined = Empty
      * @param keys           List of names defined as key leaf arguments
-     * @param recursionCount Counter for recursion. It is used if the recursion is limited.
      * @param keyStmt        Used to get proper text range for annotator errors and warnings.
      */
-    private static void IncludeLeafFromUses(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, int recursionCount, PsiElement keyStmt) {
+    private static void IncludeLeafFromUses(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, PsiElement keyStmt) {
         YangUsesStmt[] usesStmts = YangUtil.findAllChildrenOfType(element, YangUsesStmt.class);
         if (usesStmts != null) {
             List<String> fileNames = new ArrayList<>();
@@ -131,7 +128,7 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                                 }
                             }
                             if (!keys.isEmpty()) {
-                                IncludeLeafFromUses(groupingStmt, holder, config, keys, recursionCount, keyStmt);
+                                IncludeLeafFromUses(groupingStmt, holder, config, keys, keyStmt);
                             } else {
                                 break;
                             }
