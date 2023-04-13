@@ -14,7 +14,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.formatter.settings.YangCodeStyleSettings;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
 import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangKeyStmt;
@@ -28,9 +27,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class YangKeyStmtCheck extends AbstractYangStmtCheck {
-    private static boolean recursionLimited = false;
-    private static final int RECURSION_LIMIT = 1;
-
     @Override
     public boolean isApplicable(@NotNull PsiElement element) {
         return element instanceof YangKeyStmt;
@@ -38,7 +34,6 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
 
     @Override
     public void performCheck(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-        recursionLimited = false;
         String key;
         String config = "";
         List<String> keys = new ArrayList<>();
@@ -83,15 +78,9 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
             //Check if there are any undefined key leaf arguments, if there is a limit to recursion, give a warning, otherwise error
             if (!keys.isEmpty()) {
                 for (String k : keys) {
-                    if (recursionLimited) {
-                        holder.newAnnotation(HighlightSeverity.WARNING, String.format("Can't find %s leaf. Searching through linked yang files is limited in code style settings.", k))
-                                .range(element)
-                                .create();
-                    } else {
-                        holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
-                                .range(element)
-                                .create();
-                    }
+                    holder.newAnnotation(HighlightSeverity.ERROR, String.format("Missing %s leaf.", k))
+                            .range(element)
+                            .create();
                 }
             }
         }
@@ -142,11 +131,7 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                                 }
                             }
                             if (!keys.isEmpty()) {
-                                if (YangCodeStyleSettings.limitRecursionKeyLeafSearch && ++recursionCount >= RECURSION_LIMIT) {
-                                    recursionLimited = true;
-                                } else {
-                                    IncludeLeafFromUses(groupingStmt, holder, config, keys, recursionCount, keyStmt);
-                                }
+                                IncludeLeafFromUses(groupingStmt, holder, config, keys, recursionCount, keyStmt);
                             } else {
                                 break;
                             }

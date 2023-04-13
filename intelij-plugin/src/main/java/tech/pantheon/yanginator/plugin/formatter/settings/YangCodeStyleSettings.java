@@ -18,7 +18,6 @@ import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 public class YangCodeStyleSettings extends CustomCodeStyleSettings {
     // This initializes custom code style option
     public static boolean spacesBeforeLeftBrace = true;
-    public static boolean limitRecursionKeyLeafSearch = false;
 
     public YangCodeStyleSettings(final CodeStyleSettings settings) {
         super("YangCodeStyleSettings", settings);
