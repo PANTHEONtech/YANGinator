@@ -262,8 +262,7 @@ public final class YangFormatterUtils {
     );
 
     private static final TokenSet EXTRA_INDENT_SET = TokenSet.create(
-            YangTypes.YANG_INDENTABLE_STRING,
-            YangTypes.YANG_LINKAGE_STMTS
+            YangTypes.YANG_INDENTABLE_STRING
     );
 
     private YangFormatterUtils() {

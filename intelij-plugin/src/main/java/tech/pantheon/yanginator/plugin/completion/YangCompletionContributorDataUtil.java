@@ -83,10 +83,16 @@ public final class YangCompletionContributorDataUtil {
             "leaf-list",
             "list",
             "choice",
-            "anydata",
             "anyxml",
             "uses"
     );
+
+    private static final List<String> BODY_STMTS_1_1 = new ArrayList<>() {
+        {
+            addAll(BODY_STMTS);
+            add("anydata");
+        }
+    };
 
     private static final List<String> BUILT_IN_TYPES = ImmutableList.of(
             "binary",
@@ -496,6 +502,7 @@ public final class YangCompletionContributorDataUtil {
             put("YANG_LINKAGE_STMTS", LINKAGE_STMTS);
             put("YANG_REVISION_STMTS", REVISION_STMTS);
             put("YANG_BODY_STMTS", BODY_STMTS);
+            put("YANG_BODY_STMTS_1_1", BODY_STMTS_1_1);
             put("YANG_IMPORT_STMT", IMPORT_SUBSTATEMENTS);
             put("YANG_IMPORT_STMT_1_1", IMPORT_SUBSTATEMENTS_1_1);
             put("YANG_INCLUDE_STMT", INCLUDE_SUBSTATEMENTS);

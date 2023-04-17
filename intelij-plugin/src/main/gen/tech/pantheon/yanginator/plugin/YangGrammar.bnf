@@ -4,6 +4,7 @@
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement"
   ]
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
@@ -1124,6 +1125,78 @@ yang-stmt ::= action-stmt |
 pin(".*") = 1
 }
 
+yang-keyword ::= action-keyword |
+  anydata-keyword |
+  anyxml-keyword |
+  argument-keyword |
+  augment-keyword |
+  base-keyword |
+  belongs-to-keyword |
+  bit-keyword |
+  case-keyword |
+  choice-keyword |
+  config-keyword |
+  contact-keyword |
+  container-keyword |
+  default-keyword |
+  description-keyword |
+  deviation-keyword |
+  enum-keyword |
+  error-app-tag-keyword |
+  error-message-keyword |
+  extension-keyword |
+  feature-keyword |
+  fraction-digits-keyword |
+  grouping-keyword |
+  identity-keyword |
+  if-feature-keyword |
+  import-keyword |
+  include-keyword |
+  input-keyword |
+  key-keyword |
+  leaf-list-keyword |
+  leaf-keyword |
+  length-keyword |
+  list-keyword |
+  mandatory-keyword |
+  max-elements-keyword |
+  min-elements-keyword |
+  modifier-keyword |
+  module-keyword |
+  must-keyword |
+  namespace-keyword |
+  notification-keyword |
+  ordered-by-keyword |
+  organization-keyword |
+  output-keyword |
+  path-keyword |
+  pattern-keyword |
+  position-keyword |
+  prefix-keyword |
+  presence-keyword |
+  range-keyword |
+  reference-keyword |
+  refine-keyword |
+  require-instance-keyword |
+  revision-date-keyword |
+  revision-keyword |
+  rpc-keyword |
+  status-keyword |
+  submodule-keyword |
+  typedef-keyword |
+  type-keyword |
+  unique-keyword |
+  units-keyword |
+  uses-keyword |
+  value-keyword |
+  when-keyword |
+  yang-version-keyword |
+  yin-element-keyword
+// Ranges
+{
+pin(".*") = 1
+}
+
 range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
 
 range-arg ::= range-part (optsep PIPE optsep range-part)*
@@ -1360,7 +1433,7 @@ private sep ::= (WSP | line-break | comment)+
 
 private optsep ::= (WSP | line-break | comment)*
 
-private stmtsep ::= (WSP | line-break | unknown-statement | comment)*
+private stmtsep ::= (WSP | line-break | unknown-statement | comment | <<dummyElement>>)*
 
 line-break ::= CRLF | LF
 

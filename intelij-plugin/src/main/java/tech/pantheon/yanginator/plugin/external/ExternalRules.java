@@ -21,6 +21,8 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
+import static tech.pantheon.yanginator.plugin.parser.YangParser.yang_keyword;
+import static tech.pantheon.yanginator.plugin.parser.YangParser.yang_stmt;
 
 
 public class ExternalRules {
@@ -192,5 +194,41 @@ public class ExternalRules {
         }
         exit_section_(psiBuilder, marker, null, true);
         return true;
+    }
+
+    /**
+     * This method is used to find out if the element is an incomplete keyword.
+     * <p>
+     *     It calls yang_keyword parser method to find out if the string should be
+     *     counted as complete keyword. If it is, this method returns false and
+     *     does not consume this string.
+     * </p>
+     * <p>
+     *     If the string is not a completed keyword, this method consumes this string,
+     *     creates an error message at the end of the string and returns true.
+     * </p>
+     * @param psiBuilder Psi builder
+     * @param level Level of element
+     * @return true if the element is an incomplete keyword
+     *         false if the element is a complete keyword
+     */
+    public static boolean dummyElement(PsiBuilder psiBuilder, int level) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
+        String token = psiBuilder.getTokenText();
+        String errorMessage = "Incomplete yang statement.";
+        boolean result = false;
+        if (yang_keyword(psiBuilder, level)) {
+            exit_section_(psiBuilder, marker, null, false);
+            return false;
+        }
+
+        if (token != null && token.matches("\\s?+[a-zA-Z]+\\s?+")) {
+            consumeToken(psiBuilder, token);
+            result = true;
+            psiBuilder.error(errorMessage);
+        }
+        exit_section_(psiBuilder, marker, null, result);
+        return result;
     }
 }
