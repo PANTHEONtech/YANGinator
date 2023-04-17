@@ -115,5 +115,9 @@
             <name>stmt ::=</name>
             <pin>(".*") = 1</pin>
         </statement>
+        <statement>
+            <name>yang-keyword ::=</name>
+            <pin>(".*") = 1</pin>
+        </statement>
     </statements>
 </configuration>

@@ -1125,78 +1125,6 @@ yang-stmt ::= action-stmt |
 pin(".*") = 1
 }
 
-yang-keyword ::= action-keyword |
-  anydata-keyword |
-  anyxml-keyword |
-  argument-keyword |
-  augment-keyword |
-  base-keyword |
-  belongs-to-keyword |
-  bit-keyword |
-  case-keyword |
-  choice-keyword |
-  config-keyword |
-  contact-keyword |
-  container-keyword |
-  default-keyword |
-  description-keyword |
-  deviation-keyword |
-  enum-keyword |
-  error-app-tag-keyword |
-  error-message-keyword |
-  extension-keyword |
-  feature-keyword |
-  fraction-digits-keyword |
-  grouping-keyword |
-  identity-keyword |
-  if-feature-keyword |
-  import-keyword |
-  include-keyword |
-  input-keyword |
-  key-keyword |
-  leaf-list-keyword |
-  leaf-keyword |
-  length-keyword |
-  list-keyword |
-  mandatory-keyword |
-  max-elements-keyword |
-  min-elements-keyword |
-  modifier-keyword |
-  module-keyword |
-  must-keyword |
-  namespace-keyword |
-  notification-keyword |
-  ordered-by-keyword |
-  organization-keyword |
-  output-keyword |
-  path-keyword |
-  pattern-keyword |
-  position-keyword |
-  prefix-keyword |
-  presence-keyword |
-  range-keyword |
-  reference-keyword |
-  refine-keyword |
-  require-instance-keyword |
-  revision-date-keyword |
-  revision-keyword |
-  rpc-keyword |
-  status-keyword |
-  submodule-keyword |
-  typedef-keyword |
-  type-keyword |
-  unique-keyword |
-  units-keyword |
-  uses-keyword |
-  value-keyword |
-  when-keyword |
-  yang-version-keyword |
-  yin-element-keyword
-// Ranges
-{
-pin(".*") = 1
-}
-
 range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
 
 range-arg ::= range-part (optsep PIPE optsep range-part)*
@@ -1610,6 +1538,79 @@ double-quoted-vchar ::= (SINGLE_QUOTE | BACK_SLASH | ESCAPES | VCHAR | SPACE | S
 quoted-vchar ::= (VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLON | LEFT_BRACE | RIGHT_BRACE | TAB | LINEFEED sep | LINEFEED | CARRIAGE_RETURN)*
 
 VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
+
+yang-keyword ::= action-keyword |
+anydata-keyword |
+anyxml-keyword |
+argument-keyword |
+augment-keyword |
+base-keyword |
+belongs-to-keyword |
+bit-keyword |
+case-keyword |
+bit-keyword |
+choice-keyword |
+config-keyword |
+contact-keyword |
+container-keyword |
+default-keyword |
+description-keyword |
+deviation-keyword |
+enum-keyword |
+error-app-tag-keyword |
+error-message-keyword |
+extension-keyword |
+feature-keyword |
+fraction-digits-keyword |
+grouping-keyword |
+identity-keyword |
+if-feature-keyword |
+import-keyword |
+include-keyword |
+input-keyword |
+key-keyword |
+leaf-list-keyword |
+leaf-keyword |
+length-keyword |
+list-keyword |
+mandatory-keyword |
+max-elements-keyword |
+min-elements-keyword |
+modifier-keyword |
+module-keyword |
+must-keyword |
+namespace-keyword |
+notification-keyword |
+ordered-by-keyword |
+organization-keyword |
+output-keyword |
+path-keyword |
+pattern-keyword |
+position-keyword |
+prefix-keyword |
+presence-keyword |
+range-keyword |
+reference-keyword |
+refine-keyword |
+require-instance-keyword |
+revision-date-keyword |
+revision-keyword |
+rpc-keyword |
+status-keyword |
+submodule-keyword |
+typedef-keyword |
+type-keyword |
+unique-keyword |
+units-keyword |
+uses-keyword |
+value-keyword |
+when-keyword |
+yang-version-keyword |
+yin-element-keyword
+{
+pin(".*") = 1
+}
+
 
 DOUBLE_FORWARD_SLASH ::= FORWARD_SLASH FORWARD_SLASH
 BLOCK_COMMENT_START::= FORWARD_SLASH ASTERISK

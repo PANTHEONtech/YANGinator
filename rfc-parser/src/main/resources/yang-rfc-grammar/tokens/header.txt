@@ -4,6 +4,7 @@
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement"
   ]
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"

@@ -96,6 +96,9 @@ correctly.
 * `addXpath(result);` [link](#add-Xpath)
 
 
+* `addYangKeywords(result);` [link](#add-Yang-Keywords)
+
+
 
 ### Rewrite Zero Integer Value
 
@@ -929,6 +932,26 @@ Added Xpath function definitions
 ![xpath-function-definitions.png](doc-images/xpath-function-definitions.png)
 
 ![xpath-function.png](doc-images/xpath-function.png)
+
+### add Yang Keywords
+Added yang keywords to grammar, in order for the completion to work.
+Added external rule, that checks if a string is a not completed keyword for stmtsep.
+
+StmtSep before:
+
+![dummyElementBefore.png](doc-images/dummyElementBefore.png)
+
+StmtSep after:
+
+![dummyElementAfter.png](doc-images/dummyElementAfter.png)
+
+Yang-keywords:
+
+![YangKeyword0.png](doc-images/YangKeyword0.png)
+
+![YangKeyword1.png](doc-images/YangKeyword1.png)
+
+![YangKeyword2.png](doc-images/YangKeyword2.png)
 
 ---
 

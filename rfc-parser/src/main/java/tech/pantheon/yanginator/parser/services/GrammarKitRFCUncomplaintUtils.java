@@ -74,8 +74,8 @@ public class GrammarKitRFCUncomplaintUtils {
                 "function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end\n" +
                 "function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end\n" +
                 "deref-keyword ::= \"deref\"\n" +
-                "deref-function ::= deref-keyword function-body-start function-body-node function-body-end  \n" +
-                "                   (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |\n" +
+                "deref-function ::= deref-keyword function-body-start function-body-node function-body-end\n" +
+                "                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |\n" +
                 "    deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |\n" +
                 "    deref-keyword function-body-start function-body-node function-body-end\n" +
                 "\n" +
@@ -101,7 +101,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 "    enum-value-function |\n" +
                 "    bit-is-set-function)+\n" +
                 "\n" +
-                "XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?  \n" +
+                "XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?\n" +
                 "                   LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |\n" +
                 "    WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |\n" +
                 "    function string-splitter?\n" +
@@ -271,8 +271,8 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("config-keyword |");
         lines.add("contact-keyword |");
         lines.add("container-keyword |");
-        lines.add("default -keyword |");
-        lines.add(" description-keyword |");
+        lines.add("default-keyword |");
+        lines.add("description-keyword |");
         lines.add("deviation-keyword |");
         lines.add("enum-keyword |");
         lines.add("error-app-tag-keyword |");
@@ -995,6 +995,9 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
+            }
+            if(line.contains("stmtsep ::=")) {
+                line = line.replace("comment", "comment | <<dummyElement>>");
             }
             result.add(line);
         }
