@@ -229,7 +229,6 @@ public final class YangFormatterUtils {
             YangTypes.YANG_REFINE_STMT,
             YangTypes.YANG_USES_AUGMENT_STMT,
             YangTypes.YANG_AUGMENT_STMT,
-            YangTypes.YANG_UNKNOWN_STATEMENT,
             YangTypes.YANG_WHEN_STMT,
             YangTypes.YANG_RPC_STMT,
             YangTypes.YANG_INPUT_STMT,
@@ -262,15 +261,14 @@ public final class YangFormatterUtils {
     );
 
     private static final TokenSet EXTRA_INDENT_SET = TokenSet.create(
-            YangTypes.YANG_INDENTABLE_STRING,
-            YangTypes.YANG_LINKAGE_STMTS
+            YangTypes.YANG_INDENTABLE_STRING
     );
 
     private YangFormatterUtils() {
     }
 
     static Indent getIndentForType(final IElementType type) {
-        if (STATEMENT_SET.contains(type) || EXTRA_INDENT_SET.contains(type)) {
+        if (STATEMENT_SET.contains(type) || EXTRA_INDENT_SET.contains(type) || TO_INDENT_STATEMENTS_SET.contains(type)) {
             return Indent.getNormalIndent();
         }
         return Indent.getNoneIndent();

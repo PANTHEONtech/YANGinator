@@ -53,7 +53,7 @@ public class YangBlock extends AbstractBlock {
             child = buildBeforeModule(blocks, child);
         }
         Alignment alignment = myAlignment;
-        if(myNode.getElementType().equals(YangTypes.YANG_PATH_ARG_STR)) {
+        if (myNode.getElementType().equals(YangTypes.YANG_PATH_ARG_STR)) {
             alignment = Alignment.createAlignment();
         }
         while (child != null) {
@@ -85,6 +85,26 @@ public class YangBlock extends AbstractBlock {
 
     @NotNull
     private Block buildBlock(final ASTNode child, Alignment alignment) {
+        if (myNode.getElementType() == YangTypes.YANG_STMTEND) {
+            return new YangBlock(child, null, alignment,
+                    spacingBuilder, Indent.getNoneIndent());
+        }
+        if (child.getElementType() == YangTypes.YANG_UNKNOWN_STATEMENT) {
+            ASTNode prev = child.getTreePrev();
+            while (YangFormatterUtils.WHITESPACE_SET.contains(prev.getElementType())) {
+                if (prev.getTreePrev() == null) {
+                    break;
+                }
+                prev = prev.getTreePrev();
+            }
+            if (prev.getElementType() == YangTypes.YANG_SEMICOLON ||
+                    prev.getElementType() == YangTypes.YANG_RIGHT_BRACE) {
+                return new YangBlock(child, null, alignment,
+                        spacingBuilder, Indent.getNoneIndent());
+            }
+            return new YangBlock(child, null, alignment,
+                    spacingBuilder, Indent.getNormalIndent());
+        }
         return new YangBlock(child, null, alignment,
                 spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
     }

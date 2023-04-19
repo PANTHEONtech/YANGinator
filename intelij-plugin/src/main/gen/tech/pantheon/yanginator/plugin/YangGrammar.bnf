@@ -36,8 +36,8 @@ module-stmt ::= optsep module-keyword sep identifier-arg-str
   module-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  revision-stmts
-  body-stmts
+  [revision-stmts]
+  [body-stmts]
   RIGHT_BRACE optsep
 {
 pin= 2
@@ -51,7 +51,7 @@ submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
   submodule-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  revision-stmts
+  [revision-stmts]
   body-stmts
   RIGHT_BRACE optsep
 {
@@ -91,12 +91,12 @@ private meta-body ::=(organization-stmt |
         description-stmt |
         reference-stmt )
 
-linkage-stmts ::= (import-stmt | include-stmt)*
+linkage-stmts ::= (import-stmt | include-stmt)+
 {
 pin(".*") = 1 recoverWhile=linkage-recover
 }
 
-revision-stmts ::= revision-stmt*
+revision-stmts ::= revision-stmt+
 
 body-stmts ::= body-sub-stmt*
 
@@ -1319,7 +1319,7 @@ identifier-ref ::= [prefix COLON] identifier
 
 string ::= yang-string  // an unquoted string as returned by the scanner, that matches the rule < yang-string
 
-yang-string ::= yang-char*
+yang-string ::= yang-char+
 // any Unicode or ISO|IEC 10646 character, including tab, carriage
 // return, and line feed but excluding the other C0 control
 // characters, the surrogate blocks, and the noncharacters
@@ -1494,8 +1494,8 @@ function-body-node-identity ::=  function-body-start function-body-node WSP* COM
 function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end
 function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end
 deref-keyword ::= "deref"
-deref-function ::= deref-keyword function-body-start function-body-node function-body-end
-                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+deref-function ::= deref-keyword function-body-start function-body-node function-body-end  
+                   (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
     deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
     deref-keyword function-body-start function-body-node function-body-end
 
@@ -1521,7 +1521,7 @@ function ::= (deref-function |
     enum-value-function |
     bit-is-set-function)+
 
-XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
+XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?  
                    LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
     WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
     function string-splitter?
@@ -1559,18 +1559,18 @@ private header-recover ::= !( module-header-stmts |
   submodule-header-stmts |
   linkage-stmts |
   meta-stmts |
-  revision-stmt |
+  revision-stmts |
   body-stmts |
   (RIGHT_BRACE stmtsep <<eof>>))
 
 private meta-recover ::= !(meta-stmts |
-  revision-stmt |
+  revision-stmts |
   body-stmts |
   (RIGHT_BRACE stmtsep <<eof>>))
 
 private linkage-recover ::= !(linkage-stmts |
  meta-stmts |
- revision-stmt |
+ revision-stmts |
  body-stmts |
  (RIGHT_BRACE stmtsep <<eof>>))
 
