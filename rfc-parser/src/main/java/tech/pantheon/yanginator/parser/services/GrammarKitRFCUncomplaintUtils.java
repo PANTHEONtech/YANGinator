@@ -274,6 +274,7 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("default-keyword |");
         lines.add("description-keyword |");
         lines.add("deviation-keyword |");
+        lines.add("deviate-keyword |");
         lines.add("enum-keyword |");
         lines.add("error-app-tag-keyword |");
         lines.add("error-message-keyword |");
