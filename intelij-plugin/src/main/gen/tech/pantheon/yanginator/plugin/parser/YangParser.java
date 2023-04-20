@@ -13302,72 +13302,74 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // action-keyword |
-    //   anydata-keyword |
-    //   anyxml-keyword |
-    //   argument-keyword |
-    //   augment-keyword |
-    //   base-keyword |
-    //   belongs-to-keyword |
-    //   bit-keyword |
-    //   case-keyword |
-    //   choice-keyword |
-    //   config-keyword |
-    //   contact-keyword |
-    //   container-keyword |
-    //   default-keyword |
-    //   description-keyword |
-    //   deviation-keyword |
-    //   enum-keyword |
-    //   error-app-tag-keyword |
-    //   error-message-keyword |
-    //   extension-keyword |
-    //   feature-keyword |
-    //   fraction-digits-keyword |
-    //   grouping-keyword |
-    //   identity-keyword |
-    //   if-feature-keyword |
-    //   import-keyword |
-    //   include-keyword |
-    //   input-keyword |
-    //   key-keyword |
-    //   leaf-list-keyword |
-    //   leaf-keyword |
-    //   length-keyword |
-    //   list-keyword |
-    //   mandatory-keyword |
-    //   max-elements-keyword |
-    //   min-elements-keyword |
-    //   modifier-keyword |
-    //   module-keyword |
-    //   must-keyword |
-    //   namespace-keyword |
-    //   notification-keyword |
-    //   ordered-by-keyword |
-    //   organization-keyword |
-    //   output-keyword |
-    //   path-keyword |
-    //   pattern-keyword |
-    //   position-keyword |
-    //   prefix-keyword |
-    //   presence-keyword |
-    //   range-keyword |
-    //   reference-keyword |
-    //   refine-keyword |
-    //   require-instance-keyword |
-    //   revision-date-keyword |
-    //   revision-keyword |
-    //   rpc-keyword |
-    //   status-keyword |
-    //   submodule-keyword |
-    //   typedef-keyword |
-    //   type-keyword |
-    //   unique-keyword |
-    //   units-keyword |
-    //   uses-keyword |
-    //   value-keyword |
-    //   when-keyword |
-    //   yang-version-keyword |
-    //   yin-element-keyword
+    // anydata-keyword |
+    // anyxml-keyword |
+    // argument-keyword |
+    // augment-keyword |
+    // base-keyword |
+    // belongs-to-keyword |
+    // bit-keyword |
+    // case-keyword |
+    // bit-keyword |
+    // choice-keyword |
+    // config-keyword |
+    // contact-keyword |
+    // container-keyword |
+    // default-keyword |
+    // description-keyword |
+    // deviation-keyword |
+    // deviate-keyword |
+    // enum-keyword |
+    // error-app-tag-keyword |
+    // error-message-keyword |
+    // extension-keyword |
+    // feature-keyword |
+    // fraction-digits-keyword |
+    // grouping-keyword |
+    // identity-keyword |
+    // if-feature-keyword |
+    // import-keyword |
+    // include-keyword |
+    // input-keyword |
+    // key-keyword |
+    // leaf-list-keyword |
+    // leaf-keyword |
+    // length-keyword |
+    // list-keyword |
+    // mandatory-keyword |
+    // max-elements-keyword |
+    // min-elements-keyword |
+    // modifier-keyword |
+    // module-keyword |
+    // must-keyword |
+    // namespace-keyword |
+    // notification-keyword |
+    // ordered-by-keyword |
+    // organization-keyword |
+    // output-keyword |
+    // path-keyword |
+    // pattern-keyword |
+    // position-keyword |
+    // prefix-keyword |
+    // presence-keyword |
+    // range-keyword |
+    // reference-keyword |
+    // refine-keyword |
+    // require-instance-keyword |
+    // revision-date-keyword |
+    // revision-keyword |
+    // rpc-keyword |
+    // status-keyword |
+    // submodule-keyword |
+    // typedef-keyword |
+    // type-keyword |
+    // unique-keyword |
+    // units-keyword |
+    // uses-keyword |
+    // value-keyword |
+    // when-keyword |
+    // yang-version-keyword |
+    // yin-element-keyword
     public static boolean yang_keyword(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "yang_keyword")) return false;
         boolean r;
@@ -13381,6 +13383,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = belongs_to_keyword(b, l + 1);
         if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = case_keyword(b, l + 1);
+        if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = choice_keyword(b, l + 1);
         if (!r) r = config_keyword(b, l + 1);
         if (!r) r = contact_keyword(b, l + 1);
@@ -13388,6 +13391,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = default_keyword(b, l + 1);
         if (!r) r = description_keyword(b, l + 1);
         if (!r) r = deviation_keyword(b, l + 1);
+        if (!r) r = deviate_keyword(b, l + 1);
         if (!r) r = enum_keyword(b, l + 1);
         if (!r) r = error_app_tag_keyword(b, l + 1);
         if (!r) r = error_message_keyword(b, l + 1);

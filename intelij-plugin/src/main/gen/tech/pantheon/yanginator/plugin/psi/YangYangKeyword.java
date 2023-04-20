@@ -61,6 +61,9 @@ public interface YangYangKeyword extends YangNamedElement {
     YangDescriptionKeyword getDescriptionKeyword();
 
     @Nullable
+    YangDeviateKeyword getDeviateKeyword();
+
+    @Nullable
     YangDeviationKeyword getDeviationKeyword();
 
     @Nullable

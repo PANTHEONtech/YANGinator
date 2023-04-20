@@ -1556,6 +1556,7 @@ container-keyword |
 default-keyword |
 description-keyword |
 deviation-keyword |
+deviate-keyword |
 enum-keyword |
 error-app-tag-keyword |
 error-message-keyword |

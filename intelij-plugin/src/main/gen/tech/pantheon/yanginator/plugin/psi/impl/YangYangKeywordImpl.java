@@ -30,6 +30,7 @@ import tech.pantheon.yanginator.plugin.psi.YangContactKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangContainerKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDefaultKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionKeyword;
+import tech.pantheon.yanginator.plugin.psi.YangDeviateKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangDeviationKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangEnumKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangErrorAppTagKeyword;
@@ -189,6 +190,12 @@ public class YangYangKeywordImpl extends YangNamedElementImpl implements YangYan
     @Nullable
     public YangDescriptionKeyword getDescriptionKeyword() {
         return findChildByClass(YangDescriptionKeyword.class);
+    }
+
+    @Override
+    @Nullable
+    public YangDeviateKeyword getDeviateKeyword() {
+        return findChildByClass(YangDeviateKeyword.class);
     }
 
     @Override
