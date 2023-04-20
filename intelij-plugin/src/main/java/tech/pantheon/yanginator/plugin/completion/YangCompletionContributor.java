@@ -17,7 +17,6 @@ import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
@@ -47,10 +46,6 @@ public class YangCompletionContributor extends CompletionContributor {
     private boolean isLastStmtInGroup = false;
     private int caretOffset;
     private String version = "";
-    private boolean withErrors = false;
-    private int countBraces;
-    private int countDQuotes;
-    private int countSQuotes;
 
     private static final List<String> anymoduleStmtsContinuation = List.of(
             "YANG_LINKAGE_STMTS",
@@ -81,10 +76,6 @@ public class YangCompletionContributor extends CompletionContributor {
         isKeywordCheck = false;
         isFirstStmtInGroup = false;
         isLastStmtInGroup = false;
-        withErrors = false;
-        countBraces = 0;
-        countDQuotes = 0;
-        countSQuotes = 0;
         caretOffset = context.getCaret().getOffset();
         PsiFile file = context.getFile();
         PsiElement caretElement = file.findElementAt(caretOffset);
@@ -92,11 +83,6 @@ public class YangCompletionContributor extends CompletionContributor {
         PsiElement searchStartElement = caretElement;
         PsiElement prevSibling = caretElement.getPrevSibling();
 
-        List<PsiErrorElement> listOfErrorElements = findAllChildrenOfTypeAsList(caretElement.getContainingFile(),
-                PsiErrorElement.class, -100);
-        if (listOfErrorElements.size() > 0) {
-            withErrors = true;
-        }
         if (prevSibling != null && prevSibling.getNode().getElementType() == YangTypes.YANG_ALPHA) {
             searchStartElement = file.findElementAt(caretOffset - prevSibling.getTextLength() - 1);
         }
@@ -157,67 +143,40 @@ public class YangCompletionContributor extends CompletionContributor {
         }
         ASTNode prevSibling = current.getTreePrev();
         ASTNode parent = current.getTreeParent();
-        if (!withErrors) {
-            if (parent != null && (moduleStmtsContinuation.contains(parent.getElementType().toString())
-                    || submoduleStmtsContinuation.contains(parent.getElementType().toString()))) {
-                getStmtSituation(current);
-                return parent;
-            }
-            if (prevSibling == null) {
-                // some logic to prevent crashes
-                return findContextParentOfCurrentNode(parent);
-            }
-            // if there is a semicolon, a whole statement needs to be skipped
-            if (prevSibling.getElementType() == YangTypes.YANG_SEMICOLON) {
-                /* sometimes the ';' is within YANG_STMTEND, if so, skip that too
-                 *  it is still the same statement, just the semicolon (';') has extra parent => YANG_STMTEND
-                 */
-                if (prevSibling.getTreeParent().getElementType() == YangTypes.YANG_STMTEND) {
-                    return findContextParentOfCurrentNode(prevSibling.getTreeParent().getTreeParent());
-                }
-                return findContextParentOfCurrentNode(prevSibling.getTreeParent());
-            }
-            // if the caret is situated after a keyword, the user wants us to suggest an identifier (built-in-types or other keywords)
-            if (prevSibling.getElementType().toString().contains("_KEYWORD")) {
-                isAfterKeyword = true;
-                return prevSibling;
-            }
-            // if the prevSibling is '}' -> means that we need to skip the whole statement enclosed in '{..}'
-            if (prevSibling.getElementType() == YangTypes.YANG_RIGHT_BRACE) {
-                return findContextParentOfCurrentNode(prevSibling.getTreeParent());
-            }
-            // the left brace (relevant to our scope) was found -> return its parent
-            if (prevSibling.getElementType() == YangTypes.YANG_LEFT_BRACE) {
-                return prevSibling.getTreeParent();
-            }
-            // in other cases, keep searching for sibling left_brace
-            return findContextParentOfCurrentNode(prevSibling);
-        } else {
-
-            // if there are PsiErrorElements, the psi tree is broken and the context parent needs to be found
-            // by going through all elements.
-            if (current.getElementType() == YangTypes.YANG_DQUOTE) {
-                countDQuotes++;
-            }
-
-            if (current.getElementType() == YangTypes.YANG_SQUOTE) {
-                countSQuotes++;
-            }
-
-            if (countSQuotes % 2 == 0 && countDQuotes % 2 == 0) {
-                if (current.getElementType() == YangTypes.YANG_RIGHT_BRACE) {
-                    countBraces++;
-                }
-
-                if (current.getElementType() == YangTypes.YANG_LEFT_BRACE) {
-                    if (countBraces < 1) {
-                        return current.getTreeParent();
-                    }
-                    countBraces--;
-                }
-            }
-            return findContextParentOfCurrentNode(findPreviousElement(current));
+        if (parent != null && (moduleStmtsContinuation.contains(parent.getElementType().toString())
+                || submoduleStmtsContinuation.contains(parent.getElementType().toString()))) {
+            getStmtSituation(current);
+            return parent;
         }
+        if (prevSibling == null) {
+            // some logic to prevent crashes
+            return findContextParentOfCurrentNode(parent);
+        }
+        // if there is a semicolon, a whole statement needs to be skipped
+        if (prevSibling.getElementType() == YangTypes.YANG_SEMICOLON) {
+            /* sometimes the ';' is within YANG_STMTEND, if so, skip that too
+             *  it is still the same statement, just the semicolon (';') has extra parent => YANG_STMTEND
+             */
+            if (prevSibling.getTreeParent().getElementType() == YangTypes.YANG_STMTEND) {
+                return findContextParentOfCurrentNode(prevSibling.getTreeParent().getTreeParent());
+            }
+            return findContextParentOfCurrentNode(prevSibling.getTreeParent());
+        }
+        // if the caret is situated after a keyword, the user wants us to suggest an identifier (built-in-types or other keywords)
+        if (prevSibling.getElementType().toString().contains("_KEYWORD")) {
+            isAfterKeyword = true;
+            return prevSibling;
+        }
+        // if the prevSibling is '}' -> means that we need to skip the whole statement enclosed in '{..}'
+        if (prevSibling.getElementType() == YangTypes.YANG_RIGHT_BRACE) {
+            return findContextParentOfCurrentNode(prevSibling.getTreeParent());
+        }
+        // the left brace (relevant to our scope) was found -> return its parent
+        if (prevSibling.getElementType() == YangTypes.YANG_LEFT_BRACE) {
+            return prevSibling.getTreeParent();
+        }
+        // in other cases, keep searching for sibling left_brace
+        return findContextParentOfCurrentNode(prevSibling);
     }
 
     /**
@@ -250,8 +209,17 @@ public class YangCompletionContributor extends CompletionContributor {
             while (prevSibling.getLastChildNode() != null) {
                 prevSibling = prevSibling.getLastChildNode();
             }
+            if (SKIP_TOKENS.contains(prevSibling.getElementType())) {
+                return findPreviousElement(prevSibling);
+            }
             return prevSibling;
-        } else return parent;
+        } else {
+            if (parent != null && SKIP_TOKENS.contains(parent.getElementType())) {
+                return findPreviousElement(parent);
+            }
+            return parent;
+        }
+
     }
 
     /**

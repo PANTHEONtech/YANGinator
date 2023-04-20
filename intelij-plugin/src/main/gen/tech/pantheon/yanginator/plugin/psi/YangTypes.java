@@ -363,6 +363,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangWhenStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangWspImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangXPathFunctionImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangCharImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangYangKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangYangVersionArgImpl;
@@ -727,6 +728,7 @@ public interface YangTypes {
     IElementType YANG_WSP = new YangElementType("YANG_WSP");
     IElementType YANG_X_PATH_FUNCTION = new YangElementType("YANG_X_PATH_FUNCTION");
     IElementType YANG_YANG_CHAR = new YangElementType("YANG_YANG_CHAR");
+    IElementType YANG_YANG_KEYWORD = new YangElementType("YANG_YANG_KEYWORD");
     IElementType YANG_YANG_STMT = new YangElementType("YANG_YANG_STMT");
     IElementType YANG_YANG_STRING = new YangElementType("YANG_YANG_STRING");
     IElementType YANG_YANG_VERSION_ARG = new YangElementType("YANG_YANG_VERSION_ARG");
@@ -1504,6 +1506,8 @@ public interface YangTypes {
                 return new YangXPathFunctionImpl(node);
             } else if (type == YANG_YANG_CHAR) {
                 return new YangYangCharImpl(node);
+            } else if (type == YANG_YANG_KEYWORD) {
+                return new YangYangKeywordImpl(node);
             } else if (type == YANG_YANG_STMT) {
                 return new YangYangStmtImpl(node);
             } else if (type == YANG_YANG_STRING) {
