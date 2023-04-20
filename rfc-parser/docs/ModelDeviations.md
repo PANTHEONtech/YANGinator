@@ -95,6 +95,8 @@ correctly.
 
 * `addXpath(result);` [link](#add-Xpath)
 
+* `changeYangString(result);` [link](#change-yang-string)
+
 
 
 ### Rewrite Zero Integer Value
@@ -929,6 +931,18 @@ Added Xpath function definitions
 ![xpath-function-definitions.png](doc-images/xpath-function-definitions.png)
 
 ![xpath-function.png](doc-images/xpath-function.png)
+
+### change yang string
+Changed yang string definition based on RFC.
+This change makes empty string not possible.
+
+before:
+
+![yang_string_before.png](doc-images/yang_string_before.png)
+
+after:
+
+![yang_string_after.png](doc-images/yang_string_after.png)
 
 ---
 
