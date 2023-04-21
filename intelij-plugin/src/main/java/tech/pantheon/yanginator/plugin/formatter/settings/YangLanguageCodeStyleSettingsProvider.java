@@ -12,6 +12,7 @@ package tech.pantheon.yanginator.plugin.formatter.settings;
 
 import com.intellij.application.options.CodeStyleAbstractPanel;
 import com.intellij.application.options.IndentOptionsEditor;
+import com.intellij.application.options.SmartIndentOptionsEditor;
 import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
@@ -47,7 +48,13 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
     @Override
     public @Nullable String getCodeSample(@NotNull final SettingsType settingsType) {
-        return readCodeSample();
+        String codeSample = "";
+        if(settingsType == SettingsType.INDENT_SETTINGS) {
+            codeSample += "/*\nMake continuation indent size the same as the indent size\n" +
+                    "to not have an extra indent on enter press.\n*/\n";
+        }
+        codeSample += readCodeSample();
+        return codeSample;
     }
 
     @Override
@@ -57,14 +64,14 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
     @Override
     public IndentOptionsEditor getIndentOptionsEditor() {
-        return new IndentOptionsEditor();
+        return new SmartIndentOptionsEditor();
     }
 
     @Override
     protected void customizeDefaults(@NotNull final CommonCodeStyleSettings commonSettings,
                                      @NotNull final CommonCodeStyleSettings.IndentOptions indentOptions) {
-        indentOptions.INDENT_SIZE = 4;
-        indentOptions.CONTINUATION_INDENT_SIZE = 4;
-        indentOptions.TAB_SIZE = 4;
+        indentOptions.INDENT_SIZE = commonSettings.initIndentOptions().INDENT_SIZE;
+        indentOptions.CONTINUATION_INDENT_SIZE = commonSettings.initIndentOptions().CONTINUATION_INDENT_SIZE;
+        indentOptions.TAB_SIZE = commonSettings.initIndentOptions().TAB_SIZE;
     }
 }
