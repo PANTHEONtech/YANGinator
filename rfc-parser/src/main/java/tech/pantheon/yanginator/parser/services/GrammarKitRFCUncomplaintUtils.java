@@ -22,6 +22,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = subDelimsAdjustment(result);
         addXpath(result);
         additionalRules(result);
+        addYangKeywords(result);
         result = quotedAugmentArg(result);
         result = quotedPath(result);
         result = quotedStringSplitter(result);
@@ -74,8 +75,8 @@ public class GrammarKitRFCUncomplaintUtils {
                 "function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end\n" +
                 "function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end\n" +
                 "deref-keyword ::= \"deref\"\n" +
-                "deref-function ::= deref-keyword function-body-start function-body-node function-body-end  \n" +
-                "                   (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |\n" +
+                "deref-function ::= deref-keyword function-body-start function-body-node function-body-end\n" +
+                "                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |\n" +
                 "    deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |\n" +
                 "    deref-keyword function-body-start function-body-node function-body-end\n" +
                 "\n" +
@@ -101,7 +102,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 "    enum-value-function |\n" +
                 "    bit-is-set-function)+\n" +
                 "\n" +
-                "XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?  \n" +
+                "XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?\n" +
                 "                   LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |\n" +
                 "    WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |\n" +
                 "    function string-splitter?\n" +
@@ -124,10 +125,9 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             for (String stmt : stmts) {
                 if (line.contains(stmt)) {
-                    if(stmt.equals("when-stmt ::=") || stmt.equals("must-stmt ::=")) {
+                    if (stmt.equals("when-stmt ::=") || stmt.equals("must-stmt ::=")) {
                         line = line.replace("string", "( XPath-function | Quoted_xpath_function | quoted-string | string )");
-                    }
-                    else {
+                    } else {
                         line = line.replace("string", "( quoted-string | string )");
                     }
                 }
@@ -254,6 +254,82 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("");
         lines.add("VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )");
     }
+
+
+    private static void addYangKeywords(List<String> lines) {
+        lines.add("");
+        lines.add("yang-keyword ::= action-keyword |");
+        lines.add("anydata-keyword |");
+        lines.add("anyxml-keyword |");
+        lines.add("argument-keyword |");
+        lines.add("augment-keyword |");
+        lines.add("base-keyword |");
+        lines.add("belongs-to-keyword |");
+        lines.add("bit-keyword |");
+        lines.add("case-keyword |");
+        lines.add("bit-keyword |");
+        lines.add("choice-keyword |");
+        lines.add("config-keyword |");
+        lines.add("contact-keyword |");
+        lines.add("container-keyword |");
+        lines.add("default-keyword |");
+        lines.add("description-keyword |");
+        lines.add("deviation-keyword |");
+        lines.add("deviate-keyword |");
+        lines.add("enum-keyword |");
+        lines.add("error-app-tag-keyword |");
+        lines.add("error-message-keyword |");
+        lines.add("extension-keyword |");
+        lines.add("feature-keyword |");
+        lines.add("fraction-digits-keyword |");
+        lines.add("grouping-keyword |");
+        lines.add("identity-keyword |");
+        lines.add("if-feature-keyword |");
+        lines.add("import-keyword |");
+        lines.add("include-keyword |");
+        lines.add("input-keyword |");
+        lines.add("key-keyword |");
+        lines.add("leaf-list-keyword |");
+        lines.add("leaf-keyword |");
+        lines.add("length-keyword |");
+        lines.add("list-keyword |");
+        lines.add("mandatory-keyword |");
+        lines.add("max-elements-keyword |");
+        lines.add("min-elements-keyword |");
+        lines.add("modifier-keyword |");
+        lines.add("module-keyword |");
+        lines.add("must-keyword |");
+        lines.add("namespace-keyword |");
+        lines.add("notification-keyword |");
+        lines.add("ordered-by-keyword |");
+        lines.add("organization-keyword |");
+        lines.add("output-keyword |");
+        lines.add("path-keyword |");
+        lines.add("pattern-keyword |");
+        lines.add("position-keyword |");
+        lines.add("prefix-keyword |");
+        lines.add("presence-keyword |");
+        lines.add("range-keyword |");
+        lines.add("reference-keyword |");
+        lines.add("refine-keyword |");
+        lines.add("require-instance-keyword |");
+        lines.add("revision-date-keyword |");
+        lines.add("revision-keyword |");
+        lines.add("rpc-keyword |");
+        lines.add("status-keyword |");
+        lines.add("submodule-keyword |");
+        lines.add("typedef-keyword |");
+        lines.add("type-keyword |");
+        lines.add("unique-keyword |");
+        lines.add("units-keyword |");
+        lines.add("uses-keyword |");
+        lines.add("value-keyword |");
+        lines.add("when-keyword |");
+        lines.add("yang-version-keyword |");
+        lines.add("yin-element-keyword");
+        lines.add("");
+    }
+
 
     /**
      * Path can be quoted according to validators.
@@ -697,7 +773,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("data-def-stmt ::=")||line.contains("short-case-stmt")) {
+            if (line.contains("data-def-stmt ::=") || line.contains("short-case-stmt")) {
                 found = true;
             }
             if (found && line.contains("  leaf-stmt |")) {
@@ -863,18 +939,18 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Overwrite UsesAugmentStmt according to rfc.
-     *
-     +--------------+---------+-------------+
-     | substatement | section | cardinality |
-     +--------------+---------+-------------+
-     | augment      | 7.15    | 0..1        |
-     | description  | 7.19.3  | 0..1        |
-     | if-feature   | 7.18.2  | 0..n        |
-     | refine       | 7.12.2  | 0..1        |
-     | reference    | 7.19.4  | 0..1        |
-     | status       | 7.19.2  | 0..1        |
-     | when         | 7.19.5  | 0..1        |
-     +--------------+---------+-------------+
+     * <p>
+     * +--------------+---------+-------------+
+     * | substatement | section | cardinality |
+     * +--------------+---------+-------------+
+     * | augment      | 7.15    | 0..1        |
+     * | description  | 7.19.3  | 0..1        |
+     * | if-feature   | 7.18.2  | 0..n        |
+     * | refine       | 7.12.2  | 0..1        |
+     * | reference    | 7.19.4  | 0..1        |
+     * | status       | 7.19.2  | 0..1        |
+     * | when         | 7.19.5  | 0..1        |
+     * +--------------+---------+-------------+
      *
      * @param lines list of strings
      * @return list of strings
@@ -883,7 +959,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
-            if (line.contains("uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep")){
+            if (line.contains("uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep")) {
                 result.add(line);
                 result.add("  LEFT_BRACE stmtsep");
                 result.add("  // these stmts can appear in any order");
@@ -922,6 +998,9 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
             }
+            if(line.contains("stmtsep ::=")) {
+                line = line.replace("comment", "comment | <<dummyElement>>");
+            }
             result.add(line);
         }
         return result;
@@ -952,22 +1031,22 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("path-predicate ::=")) {
                 line = "path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET string-splitter?";
             }
-            if(line.contains("path-equality-expr ::=")) {
+            if (line.contains("path-equality-expr ::=")) {
                 line = "path-equality-expr ::= node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr";
             }
-            if(line.contains("path-key-expr ::=")) {
+            if (line.contains("path-key-expr ::=")) {
                 line = "path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*";
             }
-            if(line.contains("rel-path-keyexpr ::=")) {
+            if (line.contains("rel-path-keyexpr ::=")) {
                 line = "rel-path-keyexpr ::= (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+";
             }
-            if(line.contains("(node-identifier WSP* FORWARD_SLASH WSP*)*")) {
+            if (line.contains("(node-identifier WSP* FORWARD_SLASH WSP*)*")) {
                 line = "  (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*";
             }
-            if (line.contains("segment ::=" )|| line.contains("segment-nz ::=")) {
+            if (line.contains("segment ::=") || line.contains("segment-nz ::=")) {
                 line = line.replace("pchar", "(string-splitter? pchar string-splitter?)");
             }
-            if(line.contains("segment-nz-nc ::=")) {
+            if (line.contains("segment-nz-nc ::=")) {
                 line = "segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+";
             }
             result.add(line);
@@ -1025,24 +1104,29 @@ public class GrammarKitRFCUncomplaintUtils {
         for (String line : lines) {
             if (line.contains("[sep or-keyword sep if-feature-expr]")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
-            } if (line.contains("[sep and-keyword sep if-feature-term]")) {
+            }
+            if (line.contains("[sep and-keyword sep if-feature-term]")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
-            }if (line.contains("if-feature-factor ::=")) {
+            }
+            if (line.contains("if-feature-factor ::=")) {
                 line = line.replaceAll("sep", "(string-splitter|sep)");
                 line = line.replace("not-keyword", "string-splitter? not-keyword");
-            }if (line.contains("LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |")) {
+            }
+            if (line.contains("LEFT_PARENTHESIS optsep if-feature-expr optsep RIGHT_PARENTHESIS |")) {
                 line = line.replace("LEFT_PARENTHESIS", "string-splitter? LEFT_PARENTHESIS");
                 line = line.replace("if-feature-expr", "string-splitter? if-feature-expr string-splitter?");
-            } if (line.equals("  identifier-ref-arg")) {
+            }
+            if (line.equals("  identifier-ref-arg")) {
                 line = line.replace("identifier-ref-arg", "string-splitter? identifier-ref-arg");
-                 }
+            }
             result.add(line);
         }
         return result;
     }
 
-     /**
+    /**
      * Changes import and include string arguments, so they can be referenced.
+     *
      * @param lines list of strings
      * @return list of strings
      */
@@ -1079,6 +1163,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Changes quantifiers of augment's substatments according to cardinality in table in rfc6020 - 7.15.1.
+     *
      * @param lines list of strings
      * @return list of strings
      */

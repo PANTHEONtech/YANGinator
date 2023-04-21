@@ -12,14 +12,12 @@ package tech.pantheon.yanginator.plugin.formatter.settings;
 
 import com.intellij.application.options.CodeStyleAbstractConfigurable;
 import com.intellij.application.options.CodeStyleAbstractPanel;
-import com.intellij.application.options.TabbedLanguageCodeStylePanel;
 import com.intellij.psi.codeStyle.CodeStyleConfigurable;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
 import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.YangLanguage;
 
 
 public class YangCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
@@ -44,11 +42,5 @@ public class YangCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
                 return new YangCodeStyleMainPanel(getCurrentSettings(), settings);
             }
         };
-    }
-
-    private static class YangCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
-        public YangCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
-            super(YangLanguage.INSTANCE, currentSettings, settings);
-        }
     }
 }

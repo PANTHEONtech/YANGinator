@@ -38,6 +38,7 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment;
+import static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
@@ -448,6 +449,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WHEN_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_WSP;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_X_PATH_FUNCTION;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_CHAR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_YANG_VERSION_ARG;
@@ -1855,7 +1857,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
+    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
+    //                    LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
     //     WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
     //     function string-splitter?
     public static boolean XPath_function(PsiBuilder b, int l) {
@@ -1869,7 +1872,8 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter?
+    // WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
+    //                    LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter?
     private static boolean XPath_function_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "XPath_function_0")) return false;
         boolean r;
@@ -4255,7 +4259,8 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // deref-keyword function-body-start function-body-node function-body-end  (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+    // deref-keyword function-body-start function-body-node function-body-end
+    //                     (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
     //     deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
     //     deref-keyword function-body-start function-body-node function-body-end
     public static boolean deref_function(PsiBuilder b, int l) {
@@ -4269,7 +4274,8 @@ public class YangParser implements PsiParser, LightPsiParser {
         return r;
     }
 
-    // deref-keyword function-body-start function-body-node function-body-end  (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword)
+    // deref-keyword function-body-start function-body-node function-body-end
+    //                     (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword)
     private static boolean deref_function_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "deref_function_0")) return false;
         boolean r;
@@ -5681,11 +5687,11 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // (deref-function |
-    //  rematch-function |
-    //  derived-from-or-self-function |
-    //  derived-from-function |
-    //  enum-value-function |
-    //  bit-is-set-function)+
+    //     rematch-function |
+    //     derived-from-or-self-function |
+    //     derived-from-function |
+    //     enum-value-function |
+    //     bit-is-set-function)+
     public static boolean function(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "function")) return false;
         boolean r;
@@ -5701,11 +5707,11 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // deref-function |
-    //  rematch-function |
-    //  derived-from-or-self-function |
-    //  derived-from-function |
-    //  enum-value-function |
-    //  bit-is-set-function
+    //     rematch-function |
+    //     derived-from-or-self-function |
+    //     derived-from-function |
+    //     enum-value-function |
+    //     bit-is-set-function
     private static boolean function_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "function_0")) return false;
         boolean r;
@@ -12036,7 +12042,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // (WSP | line-break | unknown-statement | comment)*
+    // (WSP | line-break | unknown-statement | comment | <<dummyElement>>)*
     static boolean stmtsep(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "stmtsep")) return false;
         while (true) {
@@ -12047,14 +12053,17 @@ public class YangParser implements PsiParser, LightPsiParser {
         return true;
     }
 
-    // WSP | line-break | unknown-statement | comment
+    // WSP | line-break | unknown-statement | comment | <<dummyElement>>
     private static boolean stmtsep_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "stmtsep_0")) return false;
         boolean r;
+        Marker m = enter_section_(b);
         r = WSP(b, l + 1);
         if (!r) r = line_break(b, l + 1);
         if (!r) r = unknown_statement(b, l + 1);
         if (!r) r = comment(b, l + 1);
+        if (!r) r = dummyElement(b, l + 1);
+        exit_section_(b, m, null, r);
         return r;
     }
 
@@ -13312,6 +13321,153 @@ public class YangParser implements PsiParser, LightPsiParser {
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_YANG_CHAR, "<yang char>");
         r = VCHAR(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // action-keyword |
+    // anydata-keyword |
+    // anyxml-keyword |
+    // argument-keyword |
+    // augment-keyword |
+    // base-keyword |
+    // belongs-to-keyword |
+    // bit-keyword |
+    // case-keyword |
+    // bit-keyword |
+    // choice-keyword |
+    // config-keyword |
+    // contact-keyword |
+    // container-keyword |
+    // default-keyword |
+    // description-keyword |
+    // deviation-keyword |
+    // deviate-keyword |
+    // enum-keyword |
+    // error-app-tag-keyword |
+    // error-message-keyword |
+    // extension-keyword |
+    // feature-keyword |
+    // fraction-digits-keyword |
+    // grouping-keyword |
+    // identity-keyword |
+    // if-feature-keyword |
+    // import-keyword |
+    // include-keyword |
+    // input-keyword |
+    // key-keyword |
+    // leaf-list-keyword |
+    // leaf-keyword |
+    // length-keyword |
+    // list-keyword |
+    // mandatory-keyword |
+    // max-elements-keyword |
+    // min-elements-keyword |
+    // modifier-keyword |
+    // module-keyword |
+    // must-keyword |
+    // namespace-keyword |
+    // notification-keyword |
+    // ordered-by-keyword |
+    // organization-keyword |
+    // output-keyword |
+    // path-keyword |
+    // pattern-keyword |
+    // position-keyword |
+    // prefix-keyword |
+    // presence-keyword |
+    // range-keyword |
+    // reference-keyword |
+    // refine-keyword |
+    // require-instance-keyword |
+    // revision-date-keyword |
+    // revision-keyword |
+    // rpc-keyword |
+    // status-keyword |
+    // submodule-keyword |
+    // typedef-keyword |
+    // type-keyword |
+    // unique-keyword |
+    // units-keyword |
+    // uses-keyword |
+    // value-keyword |
+    // when-keyword |
+    // yang-version-keyword |
+    // yin-element-keyword
+    public static boolean yang_keyword(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "yang_keyword")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_YANG_KEYWORD, "<yang keyword>");
+        r = action_keyword(b, l + 1);
+        if (!r) r = anydata_keyword(b, l + 1);
+        if (!r) r = anyxml_keyword(b, l + 1);
+        if (!r) r = argument_keyword(b, l + 1);
+        if (!r) r = augment_keyword(b, l + 1);
+        if (!r) r = base_keyword(b, l + 1);
+        if (!r) r = belongs_to_keyword(b, l + 1);
+        if (!r) r = bit_keyword(b, l + 1);
+        if (!r) r = case_keyword(b, l + 1);
+        if (!r) r = bit_keyword(b, l + 1);
+        if (!r) r = choice_keyword(b, l + 1);
+        if (!r) r = config_keyword(b, l + 1);
+        if (!r) r = contact_keyword(b, l + 1);
+        if (!r) r = container_keyword(b, l + 1);
+        if (!r) r = default_keyword(b, l + 1);
+        if (!r) r = description_keyword(b, l + 1);
+        if (!r) r = deviation_keyword(b, l + 1);
+        if (!r) r = deviate_keyword(b, l + 1);
+        if (!r) r = enum_keyword(b, l + 1);
+        if (!r) r = error_app_tag_keyword(b, l + 1);
+        if (!r) r = error_message_keyword(b, l + 1);
+        if (!r) r = extension_keyword(b, l + 1);
+        if (!r) r = feature_keyword(b, l + 1);
+        if (!r) r = fraction_digits_keyword(b, l + 1);
+        if (!r) r = grouping_keyword(b, l + 1);
+        if (!r) r = identity_keyword(b, l + 1);
+        if (!r) r = if_feature_keyword(b, l + 1);
+        if (!r) r = import_keyword(b, l + 1);
+        if (!r) r = include_keyword(b, l + 1);
+        if (!r) r = input_keyword(b, l + 1);
+        if (!r) r = key_keyword(b, l + 1);
+        if (!r) r = leaf_list_keyword(b, l + 1);
+        if (!r) r = leaf_keyword(b, l + 1);
+        if (!r) r = length_keyword(b, l + 1);
+        if (!r) r = list_keyword(b, l + 1);
+        if (!r) r = mandatory_keyword(b, l + 1);
+        if (!r) r = max_elements_keyword(b, l + 1);
+        if (!r) r = min_elements_keyword(b, l + 1);
+        if (!r) r = modifier_keyword(b, l + 1);
+        if (!r) r = module_keyword(b, l + 1);
+        if (!r) r = must_keyword(b, l + 1);
+        if (!r) r = namespace_keyword(b, l + 1);
+        if (!r) r = notification_keyword(b, l + 1);
+        if (!r) r = ordered_by_keyword(b, l + 1);
+        if (!r) r = organization_keyword(b, l + 1);
+        if (!r) r = output_keyword(b, l + 1);
+        if (!r) r = path_keyword(b, l + 1);
+        if (!r) r = pattern_keyword(b, l + 1);
+        if (!r) r = position_keyword(b, l + 1);
+        if (!r) r = prefix_keyword(b, l + 1);
+        if (!r) r = presence_keyword(b, l + 1);
+        if (!r) r = range_keyword(b, l + 1);
+        if (!r) r = reference_keyword(b, l + 1);
+        if (!r) r = refine_keyword(b, l + 1);
+        if (!r) r = require_instance_keyword(b, l + 1);
+        if (!r) r = revision_date_keyword(b, l + 1);
+        if (!r) r = revision_keyword(b, l + 1);
+        if (!r) r = rpc_keyword(b, l + 1);
+        if (!r) r = status_keyword(b, l + 1);
+        if (!r) r = submodule_keyword(b, l + 1);
+        if (!r) r = typedef_keyword(b, l + 1);
+        if (!r) r = type_keyword(b, l + 1);
+        if (!r) r = unique_keyword(b, l + 1);
+        if (!r) r = units_keyword(b, l + 1);
+        if (!r) r = uses_keyword(b, l + 1);
+        if (!r) r = value_keyword(b, l + 1);
+        if (!r) r = when_keyword(b, l + 1);
+        if (!r) r = yang_version_keyword(b, l + 1);
+        if (!r) r = yin_element_keyword(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }

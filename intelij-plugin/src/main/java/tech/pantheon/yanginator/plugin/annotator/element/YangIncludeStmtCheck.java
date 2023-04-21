@@ -11,12 +11,15 @@
 package tech.pantheon.yanginator.plugin.annotator.element;
 
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangDescriptionStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
 import tech.pantheon.yanginator.plugin.psi.YangReferenceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangRevisionDateStmt;
+
+import static tech.pantheon.yanginator.plugin.annotator.check.ImportIncludeCheck.checkImpInc;
 
 
 public class YangIncludeStmtCheck extends AbstractYangStmtCheck {
@@ -30,5 +33,11 @@ public class YangIncludeStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangRevisionDateStmt.class);
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
+
+        if (!checkImpInc(element)) {
+            holder.newAnnotation(HighlightSeverity.WARNING, "Submodule \"" + element.getChildren()[2].getText() + "\" not found.")
+                    .range(element.getChildren()[2])
+                    .create();
+        }
     }
 }
