@@ -10,7 +10,6 @@
 
 package tech.pantheon.yanginator.plugin.reference;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
@@ -19,10 +18,8 @@ import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.formatter.YangFormatterUtils;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
-import tech.pantheon.yanginator.plugin.psi.YangTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,6 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
         } else {
             fileNames = resolveImports();
         }
-        fileNames.add(myElement.getContainingFile().getName());
         final List<PsiElement> declarations
                 = YangUtil.findIdentifierLiterals(this.myElement.getProject(), this.identifierKeyword, myElement, fileNames);
         final List<ResolveResult> results = new ArrayList<>();
@@ -79,31 +75,16 @@ public class YangReference extends PsiReferenceBase<PsiElement> implements PsiPo
     @NotNull
     private ArrayList<String> resolveImports() {
         ArrayList<String> fileNames = new ArrayList<>();
-        ASTNode linkageElements = Objects
-                .requireNonNull(myElement.getContainingFile().getNode().findChildByType(YangFormatterUtils.BEFORE_MODULE_SET))
-                .findChildByType(YangTypes.YANG_LINKAGE_STMTS);
-        if (linkageElements != null) {
-            for (ASTNode link : linkageElements.getChildren(null)) {
-                String fileName = "";
-                if (link.getElementType().equals(YangTypes.YANG_IMPORT_STMT)) {
-                    if (!prefix.isEmpty()) {
-                        String importPrefix = Objects.requireNonNull(Objects.requireNonNull(link.findChildByType(YangTypes.YANG_PREFIX_STMT))
-                                        .findChildByType(YangTypes.YANG_PREFIX_ARG_STR))
-                                .getText();
-                        if (importPrefix.length() >= 2 && importPrefix.charAt(0) == '\"' && importPrefix.charAt(importPrefix.length() - 1) == '\"') {
-                            importPrefix = importPrefix.substring(1, importPrefix.length() - 1);
-                        }
-                        if (prefix.equals(importPrefix)) {
-                            fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
-                        }
-                    } else {
-                        fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
-                    }
-                } else if (link.getElementType().equals(YangTypes.YANG_INCLUDE_STMT)) {
-                    fileName = Objects.requireNonNull(link.findChildByType(YangTypes.YANG_IDENTIFIER_REF_ARG_STR)).getText();
-                }
-                if (!fileName.isEmpty())
-                    fileNames.add(fileName + ".yang");
+        if (prefix.isEmpty()) {
+            String[] includedSubmoduleNames = YangUtil.getIncludedSubmoduleNames(myElement.getContainingFile());
+            if (includedSubmoduleNames != null) {
+                fileNames.addAll(List.of(includedSubmoduleNames));
+            }
+            fileNames.add(myElement.getContainingFile().getName());
+        } else {
+            String fileName = YangUtil.getLinkedFileName(prefix, myElement);
+            if (fileName != null) {
+                fileNames.add(fileName);
             }
         }
         return fileNames;
