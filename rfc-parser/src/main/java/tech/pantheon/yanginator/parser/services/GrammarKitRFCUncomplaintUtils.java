@@ -23,6 +23,7 @@ public class GrammarKitRFCUncomplaintUtils {
         addXpath(result);
         additionalRules(result);
         addYangKeywords(result);
+        addFileReference(result);
         result = quotedAugmentArg(result);
         result = quotedPath(result);
         result = quotedStringSplitter(result);
@@ -266,7 +267,6 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("belongs-to-keyword |");
         lines.add("bit-keyword |");
         lines.add("case-keyword |");
-        lines.add("bit-keyword |");
         lines.add("choice-keyword |");
         lines.add("config-keyword |");
         lines.add("contact-keyword |");
@@ -329,6 +329,9 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("");
     }
 
+    private static void addFileReference(List<String> lines) {
+        lines.add("file-reference ::= <<fileReference>>");
+    }
 
     /**
      * Path can be quoted according to validators.
@@ -642,7 +645,7 @@ public class GrammarKitRFCUncomplaintUtils {
     private static List<String> orderTokensForLexer(List<String> lines) {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            if (line.contains("yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)")) {
+            if (line.contains("yang ::=  (module-stmt | submodule-stmt | file-reference | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)")) {
                 result.add(line);
                 result.add("");
                 result.add("private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |");
@@ -1085,7 +1088,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("yang ::=  (module-stmt | submodule-stmt)")) {
-                line = "yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
+                line = "yang ::=  (module-stmt | submodule-stmt | file-reference | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)";
             }
             result.add(line);
         }

@@ -4,6 +4,7 @@
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.fileReference"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement"
   ]
 
@@ -25,7 +26,7 @@
   generateTokenAccessors=true
 }
 
-yang ::=  (module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)
+yang ::=  (module-stmt | submodule-stmt | file-reference | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)
 
 private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
  EIGHT | NINE | DATE | FRACTIONS | ZEROS | ESCAPES // do not change the order of tokens !
@@ -1611,6 +1612,7 @@ yin-element-keyword
 pin(".*") = 1
 }
 
+file-reference ::= <<fileReference>>
 
 DOUBLE_FORWARD_SLASH ::= FORWARD_SLASH FORWARD_SLASH
 BLOCK_COMMENT_START::= FORWARD_SLASH ASTERISK

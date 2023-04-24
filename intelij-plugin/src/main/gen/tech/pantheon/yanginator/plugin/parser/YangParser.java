@@ -39,6 +39,7 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment;
 import static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement;
+import static tech.pantheon.yanginator.plugin.external.ExternalRules.fileReference;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_PATH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_SCHEMA_NODEID;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ABSOLUTE_URI;
@@ -167,6 +168,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_EXTENSION_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FALSE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FEATURE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FEATURE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FILE_REFERENCE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FIVE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FOUR;
@@ -468,6 +470,27 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_ZERO_LENGTH_STR
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class YangParser implements PsiParser, LightPsiParser {
 
+    public ASTNode parse(IElementType t, PsiBuilder b) {
+        parseLight(t, b);
+        return b.getTreeBuilt();
+    }
+
+    public void parseLight(IElementType t, PsiBuilder b) {
+        boolean r;
+        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
+        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
+        r = parse_root_(t, b);
+        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
+    }
+
+    protected boolean parse_root_(IElementType t, PsiBuilder b) {
+        return parse_root_(t, b, 0);
+    }
+
+    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
+        return yang(b, l + 1);
+    }
+
     public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[]{
             create_token_set_(YANG_ACTION_STMT, YANG_ANYDATA_STMT, YANG_ANYXML_STMT, YANG_ARGUMENT_STMT,
                     YANG_AUGMENT_STMT, YANG_BELONGS_TO_STMT, YANG_BIT_STMT, YANG_CASE_STMT,
@@ -487,10 +510,6 @@ public class YangParser implements PsiParser, LightPsiParser {
                     YANG_VALUE_STMT, YANG_WHEN_STMT, YANG_YANG_STMT, YANG_YANG_VERSION_STMT,
                     YANG_YIN_ELEMENT_STMT),
     };
-
-    static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-        return yang(b, l + 1);
-    }
 
     /* ********************************************************** */
     // '\"'
@@ -5588,6 +5607,17 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!recursion_guard_(b, l, "feature_stmt_4_1_2_3")) return false;
         reference_stmt(b, l + 1);
         return true;
+    }
+
+    /* ********************************************************** */
+    // <<fileReference>>
+    public static boolean file_reference(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "file_reference")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_FILE_REFERENCE, "<file reference>");
+        r = fileReference(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
     }
 
     /* ********************************************************** */
@@ -13255,32 +13285,33 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // module-stmt | submodule-stmt | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*
+    // module-stmt | submodule-stmt | file-reference | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*
     static boolean yang(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "yang")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = module_stmt(b, l + 1);
         if (!r) r = submodule_stmt(b, l + 1);
-        if (!r) r = yang_2(b, l + 1);
+        if (!r) r = file_reference(b, l + 1);
+        if (!r) r = yang_3(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }
 
     // ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*
-    private static boolean yang_2(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "yang_2")) return false;
+    private static boolean yang_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "yang_3")) return false;
         while (true) {
             int c = current_position_(b);
-            if (!yang_2_0(b, l + 1)) break;
-            if (!empty_element_parsed_guard_(b, "yang_2", c)) break;
+            if (!yang_3_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "yang_3", c)) break;
         }
         return true;
     }
 
     // WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN
-    private static boolean yang_2_0(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "yang_2_0")) return false;
+    private static boolean yang_3_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "yang_3_0")) return false;
         boolean r;
         r = WSP(b, l + 1);
         if (!r) r = consumeToken(b, YANG_ZERO_LENGTH_STRING);
@@ -13310,7 +13341,6 @@ public class YangParser implements PsiParser, LightPsiParser {
     // belongs-to-keyword |
     // bit-keyword |
     // case-keyword |
-    // bit-keyword |
     // choice-keyword |
     // config-keyword |
     // contact-keyword |
@@ -13383,7 +13413,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = belongs_to_keyword(b, l + 1);
         if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = case_keyword(b, l + 1);
-        if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = choice_keyword(b, l + 1);
         if (!r) r = config_keyword(b, l + 1);
         if (!r) r = contact_keyword(b, l + 1);
@@ -13776,23 +13805,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         }
         exit_section_(b, m, null, r);
         return r;
-    }
-
-    public ASTNode parse(IElementType t, PsiBuilder b) {
-        parseLight(t, b);
-        return b.getTreeBuilt();
-    }
-
-    public void parseLight(IElementType t, PsiBuilder b) {
-        boolean r;
-        b = adapt_builder_(t, b, this, EXTENDS_SETS_);
-        Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-        r = parse_root_(t, b);
-        exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
-    }
-
-    protected boolean parse_root_(IElementType t, PsiBuilder b) {
-        return parse_root_(t, b, 0);
     }
 
 }
