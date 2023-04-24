@@ -1,16 +1,15 @@
-/* The preview may not display changes correctly, but it works correctly. */
+/* Changes to the preview model makes the preview unreadable, but they work. */
 module acme-foo {
-  namespace "http://acme.example.com/foo";
-  prefix "acfoo";
-
-  //aaa
-  import my-extensions{
-    prefix "myext";
-  }
-  list interface {
-    key "name";
-    leaf name {
-      type string;
-    }
-  }
+namespace "http://acme.example.com/foo";
+prefix "acfoo";
+//aaa
+import my-extensions {
+prefix "myext";
+}
+list interface {
+key "name";
+leaf name {
+type string;
+}
+}
 }
