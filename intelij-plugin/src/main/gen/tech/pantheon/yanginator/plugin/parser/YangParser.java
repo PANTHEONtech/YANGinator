@@ -215,6 +215,7 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_IMPORT_STMT;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INCLUDE_STMT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INDENTABLE_QUOTED_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INDENTABLE_STRING;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_KEYWORD;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_INPUT_STMT;
@@ -4260,7 +4261,7 @@ public class YangParser implements PsiParser, LightPsiParser {
 
     /* ********************************************************** */
     // deref-keyword function-body-start function-body-node function-body-end
-    //                     (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+    //                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
     //     deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
     //     deref-keyword function-body-start function-body-node function-body-end
     public static boolean deref_function(PsiBuilder b, int l) {
@@ -4275,7 +4276,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     // deref-keyword function-body-start function-body-node function-body-end
-    //                     (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword)
+    //                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword)
     private static boolean deref_function_0(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "deref_function_0")) return false;
         boolean r;
@@ -7037,6 +7038,18 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!recursion_guard_(b, l, "include_stmt_4_1_2_2")) return false;
         reference_stmt(b, l + 1);
         return true;
+    }
+
+    /* ********************************************************** */
+    // quoted-string
+    public static boolean indentable_quoted_string(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "indentable_quoted_string")) return false;
+        if (!nextTokenIs(b, "<indentable quoted string>", YANG_DOUBLE_QUOTE, YANG_SINGLE_QUOTE)) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_INDENTABLE_QUOTED_STRING, "<indentable quoted string>");
+        r = quoted_string(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
     }
 
     /* ********************************************************** */
@@ -9804,7 +9817,7 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // quoted-string optsep
+    // indentable-quoted-string optsep
     //   (SEMICOLON |
     //   LEFT_BRACE stmtsep
     //   // these stmts can appear in any order
@@ -9819,7 +9832,7 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!nextTokenIs(b, "<pattern body>", YANG_DOUBLE_QUOTE, YANG_SINGLE_QUOTE)) return false;
         boolean r, p;
         Marker m = enter_section_(b, l, _NONE_, YANG_PATTERN_BODY, "<pattern body>");
-        r = quoted_string(b, l + 1);
+        r = indentable_quoted_string(b, l + 1);
         p = r; // pin = 1
         r = r && report_error_(b, optsep(b, l + 1));
         r = p && report_error_(b, pattern_body_2(b, l + 1)) && r;
@@ -13335,7 +13348,6 @@ public class YangParser implements PsiParser, LightPsiParser {
     // belongs-to-keyword |
     // bit-keyword |
     // case-keyword |
-    // bit-keyword |
     // choice-keyword |
     // config-keyword |
     // contact-keyword |
@@ -13408,7 +13420,6 @@ public class YangParser implements PsiParser, LightPsiParser {
         if (!r) r = belongs_to_keyword(b, l + 1);
         if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = case_keyword(b, l + 1);
-        if (!r) r = bit_keyword(b, l + 1);
         if (!r) r = choice_keyword(b, l + 1);
         if (!r) r = config_keyword(b, l + 1);
         if (!r) r = contact_keyword(b, l + 1);

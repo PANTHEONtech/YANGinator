@@ -12,25 +12,10 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost;
 
-import java.util.List;
-
-public interface YangQuotedString extends YangLanguageInjectionHost {
+public interface YangIndentableQuotedString extends YangNamedElement {
 
     @NotNull
-    List<YangDquote> getDquoteList();
-
-    @NotNull
-    List<YangSquote> getSquoteList();
-
-    @NotNull
-    List<YangDoubleQuotedVchar> getDoubleQuotedVcharList();
-
-    @NotNull
-    List<YangQuotedVchar> getQuotedVcharList();
-
-    @NotNull
-    List<YangStringSplitter> getStringSplitterList();
+    YangQuotedString getQuotedString();
 
 }

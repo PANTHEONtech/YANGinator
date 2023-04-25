@@ -72,9 +72,9 @@
                                      "tech.pantheon.yanginator.plugin.foldingManager.YangCommentFoldingManager"/>
 
         <!-- Annotator -->
-        //TODO uncomment me when new .bnf is used
-        <!-- annotator is commented because it shows error on yang "openconfig-interfaces-ext.yang"
-        and "openconfig-ospfv2.yang" this is because of anyorder external rule is still in development -->
         <annotator language="yang-pantheon" implementationClass="tech.pantheon.yanginator.plugin.annotator.YangAnnotator"/>
+
+        <!-- Injection -->
+        <multiHostInjector implementation="tech.pantheon.yanginator.plugin.injection.RegExpToYangInjector"/>
     </extensions>
 </idea-plugin>

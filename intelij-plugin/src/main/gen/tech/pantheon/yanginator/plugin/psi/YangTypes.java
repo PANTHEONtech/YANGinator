@@ -160,6 +160,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangImportKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangImportStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIncludeKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIncludeStmtImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangIndentableQuotedStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangIndentableStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangInputKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangInputStmtImpl;
@@ -520,6 +521,7 @@ public interface YangTypes {
     IElementType YANG_IMPORT_STMT = new YangElementType("YANG_IMPORT_STMT");
     IElementType YANG_INCLUDE_KEYWORD = new YangElementType("YANG_INCLUDE_KEYWORD");
     IElementType YANG_INCLUDE_STMT = new YangElementType("YANG_INCLUDE_STMT");
+    IElementType YANG_INDENTABLE_QUOTED_STRING = new YangElementType("YANG_INDENTABLE_QUOTED_STRING");
     IElementType YANG_INDENTABLE_STRING = new YangElementType("YANG_INDENTABLE_STRING");
     IElementType YANG_INPUT_KEYWORD = new YangElementType("YANG_INPUT_KEYWORD");
     IElementType YANG_INPUT_STMT = new YangElementType("YANG_INPUT_STMT");
@@ -1092,6 +1094,8 @@ public interface YangTypes {
                 return new YangIncludeKeywordImpl(node);
             } else if (type == YANG_INCLUDE_STMT) {
                 return new YangIncludeStmtImpl(node);
+            } else if (type == YANG_INDENTABLE_QUOTED_STRING) {
+                return new YangIndentableQuotedStringImpl(node);
             } else if (type == YANG_INDENTABLE_STRING) {
                 return new YangIndentableStringImpl(node);
             } else if (type == YANG_INPUT_KEYWORD) {

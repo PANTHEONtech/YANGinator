@@ -61,6 +61,8 @@ public class GrammarKitRFCUncomplaintUtils {
         result = changeOrderOfTypeBodyStmt(result);
         result = changeListCardinality(result);
         result = changeYangString(result);
+        result = changePatternBody(result);
+        result = addIndentableQuotedString(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -267,7 +269,6 @@ public class GrammarKitRFCUncomplaintUtils {
         lines.add("belongs-to-keyword |");
         lines.add("bit-keyword |");
         lines.add("case-keyword |");
-        lines.add("bit-keyword |");
         lines.add("choice-keyword |");
         lines.add("config-keyword |");
         lines.add("contact-keyword |");
@@ -1270,13 +1271,40 @@ public class GrammarKitRFCUncomplaintUtils {
      */
     private static List<String> changeYangString(List<String> lines) {
         List<String> result = new ArrayList<>();
-        boolean found = false;
         for (String line : lines) {
             if (line.contains("yang-string ::=")) {
                 line = line.replace("yang-char*", "yang-char+");
             }
             result.add(line);
         }
+        return result;
+    }
+    /**
+     * Changed pattern body string, so it can be indented
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> changePatternBody(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("pattern-body ::=")) {
+                line = line.replace("quoted-string", "indentable-quoted-string");
+            }
+            result.add(line);
+        }
+        return result;
+    }
+    /**
+     * Changed pattern body string, so it can be indented
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> addIndentableQuotedString(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        result.addAll(lines);
+        result.add("indentable-quoted-string ::= quoted-string");
         return result;
     }
 }

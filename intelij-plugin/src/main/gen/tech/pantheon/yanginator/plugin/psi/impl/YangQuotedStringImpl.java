@@ -15,6 +15,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.injection.impl.YangLanguageInjectionHostImpl;
 import tech.pantheon.yanginator.plugin.psi.YangDoubleQuotedVchar;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
@@ -25,7 +26,7 @@ import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
 
-public class YangQuotedStringImpl extends YangNamedElementImpl implements YangQuotedString {
+public class YangQuotedStringImpl extends YangLanguageInjectionHostImpl implements YangQuotedString {
 
     public YangQuotedStringImpl(@NotNull ASTNode node) {
         super(node);
