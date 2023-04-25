@@ -60,6 +60,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = changeInputOutputCardinality(result);
         result = changeOrderOfTypeBodyStmt(result);
         result = changeListCardinality(result);
+        result = changeYangString(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1256,6 +1257,23 @@ public class GrammarKitRFCUncomplaintUtils {
             if (found && line.contains("data-def-stmt+")) {
                 line = "  data-def-stmt*";
                 found = false;
+            }
+            result.add(line);
+        }
+        return result;
+    }
+    /**
+     * Changed yang-char cardinality in yang-string to correspond RFC
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> changeYangString(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        boolean found = false;
+        for (String line : lines) {
+            if (line.contains("yang-string ::=")) {
+                line = line.replace("yang-char*", "yang-char+");
             }
             result.add(line);
         }

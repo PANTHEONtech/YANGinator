@@ -17,6 +17,7 @@ import tech.pantheon.yanginator.plugin.psi.YangArgumentStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBelongsToStmt;
 import tech.pantheon.yanginator.plugin.psi.YangBitStmt;
+import tech.pantheon.yanginator.plugin.psi.YangBodyStmts;
 import tech.pantheon.yanginator.plugin.psi.YangCaseStmt;
 import tech.pantheon.yanginator.plugin.psi.YangChoiceStmt;
 import tech.pantheon.yanginator.plugin.psi.YangConfigStmt;
@@ -128,7 +129,8 @@ public class ElementCheckUtils {
             Map.entry(YangBitStmt.class, "bit statement"),
             Map.entry(YangModifierStmt.class, "modifier statement"),
             Map.entry(YangMustStmt.class, "must statement"),
-            Map.entry(YangNotificationStmt.class, "notification statement")
+            Map.entry(YangNotificationStmt.class, "notification statement"),
+            Map.entry(YangBodyStmts.class, "body statements")
     );
 
     private static final List<Class<?>> DATA_DEF_STATEMENTS = List.of(YangContainerStmt.class,

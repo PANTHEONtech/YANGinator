@@ -48,7 +48,13 @@ public class YangLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
     @Override
     public @Nullable String getCodeSample(@NotNull final SettingsType settingsType) {
-        return readCodeSample();
+        String codeSample = "";
+        if(settingsType == SettingsType.INDENT_SETTINGS) {
+            codeSample += "/*\nMake continuation indent size the same as the indent size\n" +
+                    "to not have an extra indent on enter press.\n*/\n";
+        }
+        codeSample += readCodeSample();
+        return codeSample;
     }
 
     @Override
