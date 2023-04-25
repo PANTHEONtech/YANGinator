@@ -34,7 +34,7 @@ public class YangIncludeStmtCheck extends AbstractYangStmtCheck {
         maxOne.check(element, holder, YangDescriptionStmt.class);
         maxOne.check(element, holder, YangReferenceStmt.class);
 
-        if (!checkImpInc(element)) {
+        if (!checkImpInc(element,element.getChildren()[2].getText()+".yang")) {
             holder.newAnnotation(HighlightSeverity.WARNING, "Submodule \"" + element.getChildren()[2].getText() + "\" not found.")
                     .range(element.getChildren()[2])
                     .create();
