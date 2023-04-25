@@ -33,6 +33,7 @@ import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFileReferenceImpl;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -59,14 +60,13 @@ public class YangUtil {
                     result = new SmartList<>();
                 }
                 result.add(aClass.cast(child));
-            } else {
-                List<T> subResult = findAllChildrenOfTypeAsList(child, aClass, depth + 1);
-                if (!subResult.isEmpty()) {
-                    if (result == null) {
-                        result = new SmartList<>();
-                    }
-                    result.addAll(subResult);
+            }
+            List<T> subResult = findAllChildrenOfTypeAsList(child, aClass, depth + 1);
+            if (!subResult.isEmpty()) {
+                if (result == null) {
+                    result = new SmartList<>();
                 }
+                result.addAll(subResult);
             }
             child = child.getNextSibling();
         }
@@ -93,6 +93,8 @@ public class YangUtil {
                             result.add(literal);
                         }
                     }
+                } else if (yangFile.getFirstChild() instanceof YangFileReferenceImpl) {
+                    result = findIdentifierLiterals(project, identifierKeyword, genericElement, Collections.singletonList(yangFile.getFirstChild().getText()));
                 }
             }
         }
