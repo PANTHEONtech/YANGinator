@@ -15,7 +15,7 @@ import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
-import org.intellij.lang.regexp.RegExpLanguage;
+import com.intellij.psi.impl.source.resolve.reference.impl.providers.XsdRegExpParserDefinition;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
@@ -28,7 +28,7 @@ public class RegExpToYangInjector implements MultiHostInjector {
         if (context instanceof YangQuotedString &&
                 context.getParent() != null &&
                 context.getParent().getParent() instanceof YangPatternBody) {
-            registrar.startInjecting(RegExpLanguage.INSTANCE)
+            registrar.startInjecting(XsdRegExpParserDefinition.LANGUAGE)
                     .addPlace(null, null, (PsiLanguageInjectionHost) context, new TextRange(context.getStartOffsetInParent() + 1, context.getStartOffsetInParent() + context.getTextLength() - 1))
                     .doneInjecting();
         }
