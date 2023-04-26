@@ -331,6 +331,8 @@ public class GrammarKitRFCUncomplaintUtils {
 
     private static void addFileReference(List<String> lines) {
         lines.add("file-reference ::= <<fileReference>>");
+        lines.add("{implements=\"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType\"");
+        lines.add(" extends=\"tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl\"}");
     }
 
     /**
@@ -1000,7 +1002,7 @@ public class GrammarKitRFCUncomplaintUtils {
             if (line.contains("sep ::=") || line.contains("optsep ::=") || line.contains("stmtsep ::=")) {
                 line = "private " + line;
             }
-            if(line.contains("stmtsep ::=")) {
+            if (line.contains("stmtsep ::=")) {
                 line = line.replace("comment", "comment | <<dummyElement>>");
             }
             result.add(line);

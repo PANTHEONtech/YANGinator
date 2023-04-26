@@ -1613,6 +1613,8 @@ pin(".*") = 1
 }
 
 file-reference ::= <<fileReference>>
+{implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+ extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"}
 
 DOUBLE_FORWARD_SLASH ::= FORWARD_SLASH FORWARD_SLASH
 BLOCK_COMMENT_START::= FORWARD_SLASH ASTERISK

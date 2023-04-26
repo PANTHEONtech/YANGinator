@@ -11,6 +11,8 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-public interface YangFileReference extends YangNamedElement {
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
+
+public interface YangFileReference extends YangGeneratedReferenceType {
 
 }

@@ -482,7 +482,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitFileReference(@NotNull YangFileReference o) {
-        visitNamedElement(o);
+        visitGeneratedReferenceType(o);
     }
 
     public void visitFractionDigitsArg(@NotNull YangFractionDigitsArg o) {

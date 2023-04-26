@@ -16,8 +16,9 @@ import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangFileReference;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
+import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl;
 
-public class YangFileReferenceImpl extends YangNamedElementImpl implements YangFileReference {
+public class YangFileReferenceImpl extends YangGeneratedReferenceTypeImpl implements YangFileReference {
 
     public YangFileReferenceImpl(@NotNull ASTNode node) {
         super(node);
