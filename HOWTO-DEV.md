@@ -97,3 +97,10 @@ and then performs checks based on the yang-version. These checks consist of maxO
 Elements surrounded in [ ] have to be checked with maxOne check. Elements with + have to be checked by minOne check.
 Elements that aren't defined in version 1.0, but were added in 1.1 have to be checked by maxZero check if the file
 uses yang-version 1.0.
+
+## Injection
+Injection of external languages is performed in injection package. 
+* First step is to extend and implement YangLanguageInjectionHost on the element in YangGrammar (e.g. quotedString).
+* Second step is to register this element in RegExpToYangInjector class (which could be renamed) inside elementsToInjectIn() 
+and the context in which it should be injected in getLanguagesToInject().
+* The last step, if the class was renamed, is to register this injection class in plugin.xml.
