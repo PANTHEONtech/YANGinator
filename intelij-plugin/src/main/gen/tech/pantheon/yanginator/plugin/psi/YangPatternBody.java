@@ -26,10 +26,10 @@ public interface YangPatternBody extends YangNamedElement {
     List<YangComment> getCommentList();
 
     @NotNull
-    List<YangLineBreak> getLineBreakList();
+    YangIndentableQuotedString getIndentableQuotedString();
 
     @NotNull
-    YangQuotedString getQuotedString();
+    List<YangLineBreak> getLineBreakList();
 
     @NotNull
     List<YangUnknownStatement> getUnknownStatementList();

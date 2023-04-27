@@ -34,7 +34,7 @@ public class YangFormattingModelBuilder implements FormattingModelBuilder {
                 .before(SEMICOLON_SET)
                 .spacing(0, 0, 0, true, 1)
                 .around(YangTypes.YANG_LEFT_BRACE)
-                .spacing(1, 1, 0, true, 1)
+                .spacing(0, 1, 0, true, 1)
                 .around(YangTypes.YANG_RIGHT_BRACE)
                 .spacing(0, 1, 0, true, 1)
                 .beforeInside(YangTypes.YANG_VCHAR, YangTypes.YANG_QUOTED_STRING)

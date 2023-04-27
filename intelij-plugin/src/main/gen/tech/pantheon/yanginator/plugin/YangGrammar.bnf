@@ -38,8 +38,8 @@ module-stmt ::= optsep module-keyword sep identifier-arg-str
   module-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  [revision-stmts]
-  [body-stmts]
+  revision-stmts
+  body-stmts
   RIGHT_BRACE optsep
 {
 pin= 2
@@ -53,7 +53,7 @@ submodule-stmt ::= optsep submodule-keyword sep identifier-arg-str
   submodule-header-stmts
   [linkage-stmts]
   [meta-stmts]
-  [revision-stmts]
+  revision-stmts
   body-stmts
   RIGHT_BRACE optsep
 {
@@ -93,12 +93,12 @@ private meta-body ::=(organization-stmt |
         description-stmt |
         reference-stmt )
 
-linkage-stmts ::= (import-stmt | include-stmt)+
+linkage-stmts ::= (import-stmt | include-stmt)*
 {
 pin(".*") = 1 recoverWhile=linkage-recover
 }
 
-revision-stmts ::= revision-stmt+
+revision-stmts ::= revision-stmt*
 
 body-stmts ::= body-sub-stmt*
 
@@ -404,7 +404,7 @@ pin(".*") = 1
 }
 
 pattern-stmt ::= pattern-keyword sep pattern-body
-pattern-body ::= quoted-string optsep
+pattern-body ::= indentable-quoted-string optsep
   (SEMICOLON |
   LEFT_BRACE stmtsep
   // these stmts can appear in any order
@@ -1182,6 +1182,10 @@ pos ::= OPEN_BRACKET WSP* positive-integer-value WSP* CLOSED_BRACKET
 
 quoted-string ::= (DQUOTE double-quoted-vchar (string-splitter double-quoted-vchar)* DQUOTE) | (SQUOTE quoted-vchar (string-splitter quoted-vchar)* SQUOTE)
 // leafref path
+{
+implements="tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost"
+extends="tech.pantheon.yanginator.plugin.injection.impl.YangLanguageInjectionHostImpl"
+}
 
 path-arg-str ::= XPath-function | Quoted_xpath_function | path-arg | DOUBLE_QUOTE path-arg DOUBLE_QUOTE | quoted-path-arg
 
@@ -1496,8 +1500,8 @@ function-body-node-identity ::=  function-body-start function-body-node WSP* COM
 function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end
 function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end
 deref-keyword ::= "deref"
-deref-function ::= deref-keyword function-body-start function-body-node function-body-end  
-                   (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+deref-function ::= deref-keyword function-body-start function-body-node function-body-end
+                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
     deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
     deref-keyword function-body-start function-body-node function-body-end
 
@@ -1523,7 +1527,7 @@ function ::= (deref-function |
     enum-value-function |
     bit-is-set-function)+
 
-XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?  
+XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
                    LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
     WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
     function string-splitter?
@@ -1628,6 +1632,7 @@ DOUBLE_BACKSLASH ::= '\\'
 BACKSLASH_QUOTE ::= '\"'
 
 indentable-string ::= ( quoted-string | string )
+indentable-quoted-string ::= quoted-string
 
 private revision-recover ::= !(revision-stmt |
  body-stmts |
@@ -1637,18 +1642,18 @@ private header-recover ::= !( module-header-stmts |
   submodule-header-stmts |
   linkage-stmts |
   meta-stmts |
-  revision-stmts |
+  revision-stmt |
   body-stmts |
   (RIGHT_BRACE stmtsep <<eof>>))
 
 private meta-recover ::= !(meta-stmts |
-  revision-stmts |
+  revision-stmt |
   body-stmts |
   (RIGHT_BRACE stmtsep <<eof>>))
 
 private linkage-recover ::= !(linkage-stmts |
  meta-stmts |
- revision-stmts |
+ revision-stmt |
  body-stmts |
  (RIGHT_BRACE stmtsep <<eof>>))
 

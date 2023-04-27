@@ -18,9 +18,9 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangComment;
+import tech.pantheon.yanginator.plugin.psi.YangIndentableQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangLineBreak;
 import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangUnknownStatement;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
@@ -61,14 +61,14 @@ public class YangPatternBodyImpl extends YangNamedElementImpl implements YangPat
 
     @Override
     @NotNull
-    public List<YangLineBreak> getLineBreakList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
+    public YangIndentableQuotedString getIndentableQuotedString() {
+        return findNotNullChildByClass(YangIndentableQuotedString.class);
     }
 
     @Override
     @NotNull
-    public YangQuotedString getQuotedString() {
-        return findNotNullChildByClass(YangQuotedString.class);
+    public List<YangLineBreak> getLineBreakList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangLineBreak.class);
     }
 
     @Override

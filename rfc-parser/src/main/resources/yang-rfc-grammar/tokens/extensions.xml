@@ -119,5 +119,10 @@
             <name>yang-keyword ::=</name>
             <pin>(".*") = 1</pin>
         </statement>
+        <statement>
+            <name>quoted-string ::= (</name>
+            <implements>"tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.injection.impl.YangLanguageInjectionHostImpl"</extends>
+        </statement>
     </statements>
 </configuration>

@@ -99,6 +99,10 @@ correctly.
 
 * `addYangKeywords(result);` [link](#add-Yang-Keywords)
 
+* `changePatternBody(result);` [link](#change-pattern-body)
+
+* `addIndentableQuotedString(result);` [link](#add-indentable-quoted-string)
+
 
 
 ### Rewrite Zero Integer Value
@@ -965,6 +969,25 @@ Yang-keywords:
 ![YangKeyword1.png](doc-images/YangKeyword1.png)
 
 ![YangKeyword2.png](doc-images/YangKeyword2.png)
+
+### change pattern body
+Pattern body quoted string changed to indentable quoted string.
+Thanks to this it is possible to have indent for the whole block when the string uses multiple lines.
+
+before:
+
+![pattern_body_before.png](doc-images/pattern_body_before.png)
+
+after:
+
+![pattern_body_after.png](doc-images/pattern_body_after.png)
+
+### add indentable quoted string
+Added indentable quoted string definition in order to have easy solution for quoted strings that should have
+indents on multiple lines.
+
+![indentable_quoted_string.png](doc-images/indentable_quoted_string.png)
+
 
 ---
 

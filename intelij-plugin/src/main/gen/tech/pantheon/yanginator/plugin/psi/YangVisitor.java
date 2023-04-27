@@ -13,6 +13,7 @@ package tech.pantheon.yanginator.plugin.psi;
 
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost;
 import tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType;
 
 public class YangVisitor extends PsiElementVisitor {
@@ -641,6 +642,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitGeneratedReferenceType(o);
     }
 
+    public void visitIndentableQuotedString(@NotNull YangIndentableQuotedString o) {
+        visitNamedElement(o);
+    }
+
     public void visitIndentableString(@NotNull YangIndentableString o) {
         visitNamedElement(o);
     }
@@ -1086,7 +1091,7 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitQuotedString(@NotNull YangQuotedString o) {
-        visitNamedElement(o);
+        visitLanguageInjectionHost(o);
     }
 
     public void visitQuotedVchar(@NotNull YangQuotedVchar o) {
@@ -1466,6 +1471,10 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitZeroIntegerValue(@NotNull YangZeroIntegerValue o) {
+        visitNamedElement(o);
+    }
+
+    public void visitLanguageInjectionHost(@NotNull YangLanguageInjectionHost o) {
         visitNamedElement(o);
     }
 
