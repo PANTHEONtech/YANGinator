@@ -116,6 +116,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangExtensionStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFalseKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFeatureKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFeatureStmtImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFileReferenceImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsKeywordImpl;
@@ -480,6 +481,7 @@ public interface YangTypes {
     IElementType YANG_FALSE_KEYWORD = new YangElementType("YANG_FALSE_KEYWORD");
     IElementType YANG_FEATURE_KEYWORD = new YangElementType("YANG_FEATURE_KEYWORD");
     IElementType YANG_FEATURE_STMT = new YangElementType("YANG_FEATURE_STMT");
+    IElementType YANG_FILE_REFERENCE = new YangElementType("YANG_FILE_REFERENCE");
     IElementType YANG_FRACTION_DIGITS_ARG = new YangElementType("YANG_FRACTION_DIGITS_ARG");
     IElementType YANG_FRACTION_DIGITS_ARG_STR = new YangElementType("YANG_FRACTION_DIGITS_ARG_STR");
     IElementType YANG_FRACTION_DIGITS_KEYWORD = new YangElementType("YANG_FRACTION_DIGITS_KEYWORD");
@@ -1012,6 +1014,8 @@ public interface YangTypes {
                 return new YangFeatureKeywordImpl(node);
             } else if (type == YANG_FEATURE_STMT) {
                 return new YangFeatureStmtImpl(node);
+            } else if (type == YANG_FILE_REFERENCE) {
+                return new YangFileReferenceImpl(node);
             } else if (type == YANG_FRACTION_DIGITS_ARG) {
                 return new YangFractionDigitsArgImpl(node);
             } else if (type == YANG_FRACTION_DIGITS_ARG_STR) {

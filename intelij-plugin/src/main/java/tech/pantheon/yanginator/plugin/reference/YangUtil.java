@@ -27,12 +27,14 @@ import tech.pantheon.yanginator.plugin.psi.YangGroupingStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIdentityStmt;
 import tech.pantheon.yanginator.plugin.psi.YangImportStmt;
 import tech.pantheon.yanginator.plugin.psi.YangIncludeStmt;
+import tech.pantheon.yanginator.plugin.psi.YangModuleHeaderStmts;
 import tech.pantheon.yanginator.plugin.psi.YangModuleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangPrefixStmt;
 import tech.pantheon.yanginator.plugin.psi.YangSubmoduleStmt;
 import tech.pantheon.yanginator.plugin.psi.YangTypedefStmt;
 import tech.pantheon.yanginator.plugin.psi.YangUsesKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFileReferenceImpl;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -59,14 +61,13 @@ public class YangUtil {
                     result = new SmartList<>();
                 }
                 result.add(aClass.cast(child));
-            } else {
-                List<T> subResult = findAllChildrenOfTypeAsList(child, aClass, depth + 1);
-                if (!subResult.isEmpty()) {
-                    if (result == null) {
-                        result = new SmartList<>();
-                    }
-                    result.addAll(subResult);
+            }
+            List<T> subResult = findAllChildrenOfTypeAsList(child, aClass, depth + 1);
+            if (!subResult.isEmpty()) {
+                if (result == null) {
+                    result = new SmartList<>();
                 }
+                result.addAll(subResult);
             }
             child = child.getNextSibling();
         }
@@ -93,6 +94,8 @@ public class YangUtil {
                             result.add(literal);
                         }
                     }
+                } else if (yangFile.getFirstChild() instanceof YangFileReferenceImpl) {
+                    result = findIdentifierLiterals(project, identifierKeyword, genericElement, Collections.singletonList(yangFile.getFirstChild().getText()));
                 }
             }
         }
@@ -101,7 +104,7 @@ public class YangUtil {
     }
 
     @NotNull
-    private static Collection<VirtualFile> getVirtualFiles(Project project, PsiElement genericElement, List<String> fileNames) {
+    static Collection<VirtualFile> getVirtualFiles(Project project, PsiElement genericElement, List<String> fileNames) {
         String path = getPathOfYang(genericElement.getContainingFile().getVirtualFile().getPath());
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
@@ -159,7 +162,10 @@ public class YangUtil {
         PsiFile actualFile = element.getContainingFile();
         //same file prefix?
         if (YangUtil.findAllChildrenOfTypeAsList(actualFile, YangPrefixStmt.class, 1).stream().anyMatch(prefixStmt -> {
-            return (prefixStmt.getPrefixArgStr() != null && prefixStmt.getPrefixArgStr().getText().equals(prefix));
+            if (prefixStmt.getParent() instanceof YangModuleHeaderStmts) {
+                return (prefixStmt.getPrefixArgStr() != null && prefixStmt.getPrefixArgStr().getText().replace("\"", "").equals(prefix));
+            }
+            return false;
         })) {
             return actualFile.getName();
         }
@@ -171,7 +177,7 @@ public class YangUtil {
                     importStmt -> {
                         return Arrays.stream(YangUtil.findAllChildrenOfType(importStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
                             if (prefixStmt.getPrefixArgStr() != null) {
-                                return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                                return prefixStmt.getPrefixArgStr().getText().replace("\"", "").equals(prefix);
                             }
                             return false;
                         });
@@ -189,7 +195,7 @@ public class YangUtil {
                     includeStmt -> {
                         return Arrays.stream(YangUtil.findAllChildrenOfType(includeStmt, YangPrefixStmt.class)).anyMatch(prefixStmt -> {
                             if (prefixStmt.getPrefixArgStr() != null) {
-                                return prefixStmt.getPrefixArgStr().getText().equals(prefix);
+                                return prefixStmt.getPrefixArgStr().getText().replace("\"", "").equals(prefix);
                             }
                             return false;
                         });

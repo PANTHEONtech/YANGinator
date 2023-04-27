@@ -20,6 +20,7 @@ import com.intellij.psi.PsiReferenceRegistrar;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangBaseStmt;
+import tech.pantheon.yanginator.plugin.psi.YangFileReference;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRef;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArg;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifierRefArgStr;
@@ -63,6 +64,9 @@ public class YangReferenceContributor extends PsiReferenceContributor {
                             final YangIncludeStmt includeStmt = (YangIncludeStmt) element;
                             final String value = YangReferenceContributor.this.getIdentifierOf(includeStmt);
                             return YangReferenceContributor.this.getYangReference(element, includeStmt, value);
+                        } else if (element instanceof YangFileReference) {
+                            final YangFileReference includeStmt = (YangFileReference) element;
+                            return getYangReference(element, includeStmt, element.getText());
                         }
                         return PsiReference.EMPTY_ARRAY;
                     }

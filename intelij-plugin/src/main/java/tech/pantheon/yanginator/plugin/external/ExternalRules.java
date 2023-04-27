@@ -14,6 +14,7 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.parser.GeneratedParserUtilBase.Parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,6 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
 import static tech.pantheon.yanginator.plugin.parser.YangParser.yang_keyword;
-import static tech.pantheon.yanginator.plugin.parser.YangParser.yang_stmt;
 
 
 public class ExternalRules {
@@ -191,6 +191,23 @@ public class ExternalRules {
                 break;
             }
             consumeToken(psiBuilder, token);
+        }
+        exit_section_(psiBuilder, marker, null, true);
+        return true;
+    }
+
+    public static boolean fileReference(PsiBuilder psiBuilder, int level) {
+        if (!recursion_guard_(psiBuilder, level, "rule")) return false;
+        String[] forbiddenChars = {"\n", "/", "\t"};
+        PsiBuilder.Marker marker = enter_section_(psiBuilder);
+        String fileContent = psiBuilder.getOriginalText().toString();
+
+        if (fileContent.endsWith(".yang") && Arrays.stream(forbiddenChars).noneMatch(fileContent::contains)) {
+            String token = psiBuilder.getTokenText();
+            while (token != null) {
+                consumeToken(psiBuilder, token);
+                token = psiBuilder.getTokenText();
+            }
         }
         exit_section_(psiBuilder, marker, null, true);
         return true;
