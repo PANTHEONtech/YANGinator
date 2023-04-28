@@ -16,6 +16,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
+import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.SmartList;
@@ -36,7 +37,6 @@ import tech.pantheon.yanginator.plugin.psi.YangUsesKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFileReferenceImpl;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -99,31 +99,25 @@ public class YangUtil {
                 }
             }
         }
-
         return result != null ? result : Collections.emptyList();
     }
 
     @NotNull
     static Collection<VirtualFile> getVirtualFiles(Project project, PsiElement genericElement, List<String> fileNames) {
-        String path = getPathOfYang(genericElement.getContainingFile().getVirtualFile().getPath());
-        Collection<VirtualFile> virtualFiles =
-                FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project));
-        Collection<VirtualFile> temp = virtualFiles.stream()
-                .filter(file -> file.getPath().contains(path))
-                .filter(file -> fileNames.contains(file.getName()))
-                .collect(Collectors.toList());
-        //in case the referenced yang files are not in the same directory
-        if (temp.size() < 1) {
-            temp = virtualFiles.stream()
+        String path = genericElement.getContainingFile().getVirtualFile().getParent().getPath();
+        Collection<VirtualFile> foundFilesByName = null;
+        Collection<VirtualFile> foundFilesByPath = null;
+        if (fileNames.size() == 1) {
+            foundFilesByName = FilenameIndex.getVirtualFilesByName(fileNames.get(0), GlobalSearchScope.allScope(project));
+        } else {
+            foundFilesByName = FileTypeIndex.getFiles(YangFileType.INSTANCE, GlobalSearchScope.allScope(project)).stream()
                     .filter(file -> fileNames.contains(file.getName()))
                     .collect(Collectors.toList());
         }
-        return temp;
-    }
-
-    private static String getPathOfYang(String file) {
-        Path path = Path.of(file);
-        return path.getParent().toString();
+        foundFilesByPath = foundFilesByName.stream()
+                .filter(file -> file.getPath().contains(path))
+                .collect(Collectors.toList());
+        return foundFilesByPath.size() > 0 ? foundFilesByPath : foundFilesByName;
     }
 
     public static String getStmtArgText(YangReferencedStatement referencedStatement) {

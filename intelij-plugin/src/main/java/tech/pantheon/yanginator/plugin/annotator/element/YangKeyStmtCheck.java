@@ -23,7 +23,6 @@ import tech.pantheon.yanginator.plugin.psi.YangUsesStmt;
 import tech.pantheon.yanginator.plugin.reference.YangUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class YangKeyStmtCheck extends AbstractYangStmtCheck {
@@ -70,7 +69,6 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
             }
         }
         if (!keys.isEmpty()) {
-
             //recursive search for leaf through uses statements
             IncludeLeafFromUses(element.getParent(), holder, config, keys, element);
 
@@ -88,11 +86,11 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
      * This method finds leaf statements that are imported/included by uses statements inside passed element.
      * Stops when there are no more undefined key leaf arguments.
      *
-     * @param element        PsiElement which should be searched.
-     * @param holder         AnnotationHolder used for throwing warnings/errors.
-     * @param config         Config definition of list statement. If undefined = Empty
-     * @param keys           List of names defined as key leaf arguments
-     * @param keyStmt        Used to get proper text range for annotator errors and warnings.
+     * @param element PsiElement which should be searched.
+     * @param holder  AnnotationHolder used for throwing warnings/errors.
+     * @param config  Config definition of list statement. If undefined = Empty
+     * @param keys    List of names defined as key leaf arguments
+     * @param keyStmt Used to get proper text range for annotator errors and warnings.
      */
     private static void IncludeLeafFromUses(@NotNull PsiElement element, @NotNull AnnotationHolder holder, String config, List<String> keys, PsiElement keyStmt) {
         YangUsesStmt[] usesStmts = YangUtil.findAllChildrenOfType(element, YangUsesStmt.class);
@@ -101,12 +99,12 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
             for (YangUsesStmt usesStmt : usesStmts) {
                 if (usesStmt.getIdentifierRefArgStr() != null) {
                     YangPrefix prefix = usesStmt.getIdentifierRefArgStr().getIdentifierRefArg().getIdentifierRef().getPrefix();
-                    String groupingName = usesStmt.getIdentifierRefArgStr().getIdentifierRefArg().getIdentifierRef().getIdentifier().getText();
-                    List<YangGroupingStmt> groupings = null;
+                    String groupingName = usesStmt.getIdentifierRefArgStr().getIdentifierRefArg().getText();
+                    List<YangGroupingStmt> groupings = new ArrayList<>();
                     if (prefix != null) {
                         String fileName = YangUtil.getLinkedFileName(prefix.getText(), usesStmt);
                         if (fileName != null) {
-                            groupings = YangUtil.findIdentifierLiterals(element.getProject(), groupingName, usesStmt, Collections.singletonList(fileName));
+                            fileNames.add(fileName);
                         }
                     } else {
                         fileNames.add(element.getContainingFile().getName());
@@ -114,9 +112,11 @@ public class YangKeyStmtCheck extends AbstractYangStmtCheck {
                         if (includedYangNames != null) {
                             fileNames.addAll(List.of(includedYangNames));
                         }
+                    }
+                    if (!fileNames.isEmpty()) {
                         groupings = YangUtil.findIdentifierLiterals(element.getProject(), groupingName, usesStmt, fileNames);
                     }
-                    if (groupings != null && !groupings.isEmpty()) {
+                    if (!groupings.isEmpty()) {
                         for (YangGroupingStmt groupingStmt : groupings) {
                             YangLeafStmt[] leafStmts = YangUtil.findAllChildrenOfType(groupingStmt, YangLeafStmt.class);
                             if (leafStmts != null) {
