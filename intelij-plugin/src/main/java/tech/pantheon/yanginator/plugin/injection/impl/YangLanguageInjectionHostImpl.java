@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost;
 import tech.pantheon.yanginator.plugin.psi.impl.YangNamedElementImpl;
 
-public abstract class YangLanguageInjectionHostImpl  extends YangNamedElementImpl implements YangLanguageInjectionHost {
+public abstract class YangLanguageInjectionHostImpl extends YangNamedElementImpl implements YangLanguageInjectionHost {
 
     public YangLanguageInjectionHostImpl(@NotNull ASTNode node) {
         super(node);
