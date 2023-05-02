@@ -31,13 +31,11 @@ public abstract class YangGeneratedReferenceTypeImpl extends YangNamedElementImp
     }
 
     @Override
-    @NotNull
     public YangIdentifierArgStr getIdentifierArgStr() {
         return null;
     }
 
     @Override
-    @NotNull
     public YangIdentifierRefArgStr getIdentifierRefArgStr() {
         return null;
     }

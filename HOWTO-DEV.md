@@ -81,7 +81,7 @@ It can be found here:
 
 ## Pins
 Pins are used when parsing. They describe the number of elements required for the statement to be considered
-as parsable? The best example for this are deviation statements : each one of them require a deviation keyword
+as parsed. The best example for this are deviation statements : each one of them require a deviation keyword
 at the start, then a separator and finally a corresponding keyword representing the statement(add delete ...).
 The pin for these statements is 3 because it is required to know what kind of deviation is to be parsed and 
 checked for errors. Otherwise, it would be stuck at the first defined deviation statement in the grammar.
@@ -97,3 +97,41 @@ and then performs checks based on the yang-version. These checks consist of maxO
 Elements surrounded in [ ] have to be checked with maxOne check. Elements with + have to be checked by minOne check.
 Elements that aren't defined in version 1.0, but were added in 1.1 have to be checked by maxZero check if the file
 uses yang-version 1.0.
+
+After creating a new check class, it needs to be added to a list of checks in YangAnnotator class.
+
+## Referencing
+Registering a referencable element:
+* In order for the element to be referencable it needs to extend YangGeneratedReferenceType. 
+* It needs to be registered in YangReferenceContributor.
+* It needs to have its referenced counterpart returned from getClassType() in YangUtil.
+
+When reference is called, it gets the prefix and identifier of the referencing element.
+Based on the prefix it gets all file names associated with the element (opened file and its included submodules if 
+the prefix is not defined or only the file defined with prefix). Then it uses findIdentifierLiterals() from YangUtil 
+to find the referenced element or elements and returns them as an array of ResolveResults.
+
+
+## Completion contributor
+Completion is performed in completion package, inside YangCompletionContributor class.
+* When the completion starts the first method called is beforeCompletion() in which all the prerequisites for the 
+completion are defined.
+* The context parent is figured out inside findContextParentOfCurrentNode(), which is a recursive method. 
+It goes through all elements from the current element upwards the psiTree. The context parent can be a statement,
+keyword or group of statements(linkage, meta, revision, body statements).
+* After the beforeCompletion is done, the next method called is fillCompletionVariants().
+* It fills the result set with possible completions based on the context parent. The values and getter of possible 
+completions are defined in YangCompletionContributorDataUtil.
+
+To add or change the completion results for an element it needs to be added in MAP_OF_SUBSTATEMENTS inside
+YangCompletionContributorDataUtil.java or have its own way to return its completion results (e.g. afterKeywordCompletion())
+
+
+## Injection
+Injection of external languages is performed in injection package and it uses MultiHostInjector. 
+* First step is to extend and implement YangLanguageInjectionHost on the element in YangGrammar (e.g. quotedString).
+* Second step is to register this element in RegExpToYangInjector class (which could be renamed) inside elementsToInjectIn() 
+and the context in which it should be injected in getLanguagesToInject().
+* The last step, if the class was renamed, is to register this injection extension in plugin.xml.
+
+[**Injections by IntelliJ**](https://plugins.jetbrains.com/docs/intellij/language-injection.html) 
