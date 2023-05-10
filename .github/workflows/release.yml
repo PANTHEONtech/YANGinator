@@ -17,13 +17,15 @@ jobs:
 
       # Setup Java 11 environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 11
+          distribution: 'adopt'
+          cache: gradle
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
           ref: ${{ github.head_ref }}
