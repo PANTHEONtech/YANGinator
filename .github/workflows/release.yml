@@ -14,6 +14,12 @@ jobs:
     if: "!github.event.release.prerelease"
     runs-on: ubuntu-latest
     steps:
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.RELEASE_ACTION_TOKEN }}
+          ref: ${{ github.head_ref }}
 
       # Setup Java 11 environment for the next steps
       - name: Setup Java
@@ -22,13 +28,6 @@ jobs:
           java-version: 11
           distribution: 'adopt'
           cache: gradle
-
-      # Check out current repository
-      - name: Fetch Sources
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.RELEASE_ACTION_TOKEN }}
-          ref: ${{ github.head_ref }}
 
       # Create release version
       - name: Create release version
