@@ -54,7 +54,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-final MAX_VERIFIER_NUMBER = 2
+final MAX_VERIFIER_NUMBER = 1
 def counter = 0
 ext.ideaVersions = new ArrayList<String>()
 
