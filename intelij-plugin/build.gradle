@@ -54,7 +54,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-final MAX_VERIFIER_NUMBER = 1
+final MAX_VERIFIER_NUMBER = 2
 def counter = 0
 ext.ideaVersions = new ArrayList<String>()
 
@@ -69,6 +69,7 @@ def makeCommand() {
     }
     commandBuilder.append("\n")
     commandBuilder.append("rm -rf /home/runner/.pluginVerifier\n")
+    commandBuilder.append("rm -rf /home/runner/.cache\n")
     return commandBuilder
 }
 
