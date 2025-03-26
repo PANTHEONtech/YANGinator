@@ -3,6 +3,9 @@
   parserImports=[
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.anyOrder"
   "static tech.pantheon.yanginator.plugin.external.ExternalRules.checkString"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.blockComment"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.fileReference"
+  "static tech.pantheon.yanginator.plugin.external.ExternalRules.dummyElement"
   ]
 
   implements="tech.pantheon.yanginator.plugin.psi.YangNamedElement"
@@ -23,7 +26,7 @@
   generateTokenAccessors=true
 }
 
-yang ::=  (module-stmt | submodule-stmt)
+yang ::=  (module-stmt | submodule-stmt | file-reference | ( WSP | ZERO_LENGTH_STRING | LINEFEED | CARRIAGE_RETURN )*)
 
 private tokens ::= BLOCK_COMMENT | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN |
  EIGHT | NINE | DATE | FRACTIONS | ZEROS | ESCAPES // do not change the order of tokens !
@@ -125,13 +128,13 @@ path-abempty ::= ( FORWARD_SLASH segment )*
 path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
 path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
 path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
-path-empty ::= ZERO_LENGHT_STRING// pchar deviation against original rfc 3986
-segment ::= pchar*
-segment-nz ::= pchar+
-segment-nz-nc ::= ( unreserved | pct-encoded | sub-delims | AT_SIGN )+
+path-empty ::= ZERO_LENGTH_STRING// pchar deviation against original rfc 3986
+segment ::= (string-splitter? pchar string-splitter?)*
+segment-nz ::= (string-splitter? pchar string-splitter?)+
+segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+
   // non-zero-length segment without any colon COLON
 
-pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN
+pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 
 query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
@@ -144,8 +147,51 @@ reserved ::= gen-delims | sub-delims
 gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
   | ASTERISK | PLUS_SIGN | COMMA | EQUALS
+// Xpath functions
+function-body-start ::= string-splitter? LEFT_PARENTHESIS
+function-body-end ::= RIGHT_PARENTHESIS
+function-body-node ::= string-splitter? (path-arg | DOT | schema-nodeid) string-splitter?
+function-body-identity ::= string-splitter? identifier-arg-str string-splitter?
+function-body-string ::= string-splitter? quoted-string string-splitter?
+function-body-node-identity ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-identity function-body-end
+function-body-node-string ::=  function-body-start function-body-node WSP* COMMA WSP* function-body-string function-body-end
+function-body-string-string ::= function-body-start function-body-string WSP* COMMA WSP* function-body-string function-body-end
+deref-keyword ::= "deref"
+deref-function ::= deref-keyword function-body-start function-body-node function-body-end
+                    (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? EQUALS string-splitter? (true-keyword | false-keyword) |
+    deref-keyword function-body-start function-body-node function-body-end (schema-nodeid | FORWARD_SLASH? path-arg) string-splitter? |
+    deref-keyword function-body-start function-body-node function-body-end
 
-string-splitter ::= (SQUOTE optsep PLUS_SIGN optsep SQUOTE) | (DQUOTE optsep PLUS_SIGN optsep DQUOTE)
+rematch-keyword ::= "re-match"
+rematch-function ::= rematch-keyword function-body-string-string
+
+derived-from-keyword ::= "derived-from"
+derived-from-function ::= derived-from-keyword function-body-node-identity
+
+derived-from-or-self-keyword ::= "derived-from-or-self"
+derived-from-or-self-function ::= derived-from-or-self-keyword function-body-node-identity
+
+enum-value-keyword ::= "enum-value"
+enum-value-function ::= enum-value-keyword function-body-start function-body-node function-body-end
+
+bit-is-set-keyword ::= "bit-is-set"
+bit-is-set-function ::= bit-is-set-keyword function-body-node-string
+
+function ::= (deref-function |
+    rematch-function |
+    derived-from-or-self-function |
+    derived-from-function |
+    enum-value-function |
+    bit-is-set-function)+
+
+XPath-function ::= WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter?
+                   LEFT_PARENTHESIS string-splitter? function string-splitter? RIGHT_PARENTHESIS string-splitter? |
+    WSP* (and-keyword | not-keyword | or-keyword) WSP* string-splitter? function string-splitter? |
+    function string-splitter?
+
+Quoted_xpath_function ::= DQUOTE XPath-function+ DQUOTE | SQUOTE XPath-function+ SQUOTE
+
+string-splitter ::= (WSP* SQUOTE optsep PLUS_SIGN optsep SQUOTE WSP*) | (WSP* DQUOTE optsep PLUS_SIGN optsep DQUOTE WSP*)
 
 quoted-path-arg ::= (DQUOTE path-arg (string-splitter path-arg)* DQUOTE) | (SQUOTE path-arg (string-splitter path-arg)* SQUOTE)
 
@@ -155,7 +201,95 @@ quoted-vchar ::= (VCHAR | BACK_SLASH | DOUBLE_QUOTE | ESCAPES | SPACE | SEMICOLO
 
 VCHAR ::= (DATE | FRACTIONS | ZEROS | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | IPV4 | DIGITS | CHARS | APOSTROPHE | EXCLAMATION_MARK | HASH | DOLLAR_SIGN | PERCENT_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | DASH | DOT | FORWARD_SLASH | DOUBLE_FORWARD_SLASH | ZERO | ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | COLON |  LESS_THAN_SIGN | EQUALS | GREATER_THAN_SIGN | QUESTION_MARK | AT_SIGN | ALPHA | OPEN_BRACKET | CLOSED_BRACKET | CIRCUMFLEX_ACCENT | UNDERSCORE | GRAVE_ACCENT | PIPE | TILDE | DOUBLE_DOT | DOUBLE_COLON | PARENT_FOLDER )
 
-comment ::= BLOCK_COMMENT | (DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB)+ )
+yang-keyword ::= action-keyword |
+anydata-keyword |
+anyxml-keyword |
+argument-keyword |
+augment-keyword |
+base-keyword |
+belongs-to-keyword |
+bit-keyword |
+case-keyword |
+choice-keyword |
+config-keyword |
+contact-keyword |
+container-keyword |
+default-keyword |
+description-keyword |
+deviation-keyword |
+deviate-keyword |
+enum-keyword |
+error-app-tag-keyword |
+error-message-keyword |
+extension-keyword |
+feature-keyword |
+fraction-digits-keyword |
+grouping-keyword |
+identity-keyword |
+if-feature-keyword |
+import-keyword |
+include-keyword |
+input-keyword |
+key-keyword |
+leaf-list-keyword |
+leaf-keyword |
+length-keyword |
+list-keyword |
+mandatory-keyword |
+max-elements-keyword |
+min-elements-keyword |
+modifier-keyword |
+module-keyword |
+must-keyword |
+namespace-keyword |
+notification-keyword |
+ordered-by-keyword |
+organization-keyword |
+output-keyword |
+path-keyword |
+pattern-keyword |
+position-keyword |
+prefix-keyword |
+presence-keyword |
+range-keyword |
+reference-keyword |
+refine-keyword |
+require-instance-keyword |
+revision-date-keyword |
+revision-keyword |
+rpc-keyword |
+status-keyword |
+submodule-keyword |
+typedef-keyword |
+type-keyword |
+unique-keyword |
+units-keyword |
+uses-keyword |
+value-keyword |
+when-keyword |
+yang-version-keyword |
+yin-element-keyword
+{
+pin(".*") = 1
+}
+
+file-reference ::= <<fileReference>>
+{implements="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceType"
+ extends="tech.pantheon.yanginator.plugin.reference.YangGeneratedReferenceTypeImpl"}
+
+DOUBLE_FORWARD_SLASH ::= FORWARD_SLASH FORWARD_SLASH
+BLOCK_COMMENT_START::= FORWARD_SLASH ASTERISK
+BLOCK_COMMENT_END ::= ASTERISK FORWARD_SLASH
+
+BLOCK_COMMENT_BODY ::= <<blockComment>>
+BLOCK_COMMENT ::= BLOCK_COMMENT_START BLOCK_COMMENT_BODY BLOCK_COMMENT_END
+
+comment ::= BLOCK_COMMENT |(DOUBLE_FORWARD_SLASH (DQUOTE | LEFT_BRACE | DOUBLE_BACKSLASH | BACKSLASH_QUOTE | RIGHT_BRACE | SEMICOLON | VCHAR | SPACE | TAB | BACK_SLASH | SINGLE_QUOTE | CARRIAGE_RETURN )+ ) | DOUBLE_FORWARD_SLASH
+DOUBLE_BACKSLASH ::= '\\'
+BACKSLASH_QUOTE ::= '\"'
+
+indentable-string ::= ( quoted-string | string )
+indentable-quoted-string ::= quoted-string
 
 private revision-recover ::= !(revision-stmt |
  body-stmts |

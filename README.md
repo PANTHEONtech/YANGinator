@@ -59,7 +59,7 @@ The YANGinator plugin will be enabled after restart.
 
 - Open the *Register New File Type Association* window.
 
-- The easiest way to do so is, by using the *Search Everywhere* window.
+  - The easiest way to do so is, by using the *Search Everywhere* window.
 
 Search for *Associate with file type..*
 

@@ -31,19 +31,43 @@ selection setting and save the changes.
 ![img.png](docs/images/howto-dev/ReformatCode.png)
 
 ***
+
+## Configuration
+
+### CompatibilityCheck
+
+To configure versions of various IntelliJ platforms for compatibility, check modify ... a section in ... [build.gradle](intelij-plugin/build.gradle).
+Note: Do not remove recommended() as it always tests a latest stable version of IntelliJ Idea!
+
+Running the compatibility check,
+You can run compability check in the terminal using the following command:
+```shell
+  gradle verifyPlugin
+```
+<p style="color:red;">Warning</p>It will download at least 20G worth of data or more, depending on the size of installation files. 
+
+### Problems with JFlex Generator
+
+If you experience errors, when you run JFlex generator. For example, duplicate code 
+or missing variables. We recommend to delete jflex-*.jar and idea-flex.skeleton from project
+root folder. Then start the build from scratch. The Program will ask where to save
+these jflex files, where you should select project root folder.
+
+
 ### Copyright
 
 * In IntelliJ IDEA go to ***Settings/Editor/Copyright/Copyright Profiles***  
 * At top of the page on left side click on import button 
 ![img.png](docs/images/howto-dev/ImportIcon.png), 
-select **YANGinator-Copyright.xml** file located in ***config*** folder
+select **[config/YANGinator-Copyright.xml](config/YANGinator-Copyright.xml)** file located in ***config*** folder
 
-* Make sure that correct copyright profile is selected in ***File/Settings/Editor/Copyright*** setting tab  
+* Make sure that the correct copyright profile is selected in ***File/Settings/Editor/Copyright*** setting tab  
 ![img.png](docs/images/howto-dev/Copyright.png)
 * To apply copyright to generated files, select files or folders and from context menu choose **update Copyright**
   * **\_YangLexer.java**
   * **psi** folder
   * **YangParser.java** or **parser** folder
+  * **highlighter** folder
 
 If you create new files, also apply copyright on them
 

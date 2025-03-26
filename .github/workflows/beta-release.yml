@@ -21,11 +21,11 @@ jobs:
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
           ref: ${{ github.head_ref }}
 
-      # Setup Java 11 environment for the next steps
+      # Setup Java 17 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'adopt'
           cache: gradle
 

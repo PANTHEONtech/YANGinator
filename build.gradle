@@ -8,7 +8,7 @@ checkstyle {
 }
 
 checkstyleMain {
-    //source has to be pointed at src/main/java, thats why it is a List
+    //source has to be pointed at src/main/java, that's why it is a List
     source = List.of('intelij-plugin/src/main/java', 'rfc-parser/src/main/java', 'intelij-plugin/src/main/resources')
 }
 
@@ -21,14 +21,11 @@ version '2.2-SNAPSHOT'
 
 allprojects {
     apply plugin: 'java'
-
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
-
     repositories {
         mavenCentral()
     }
-
 }
 
 subprojects {
@@ -42,7 +39,7 @@ tasks {
     }
 }
 
-task createReleaseVersion {
+tasks.register('createReleaseVersion') {
     doLast {
         def snapshotVersion = buildFile.getText().find(version)
         String tmp = snapshotVersion.toString()
@@ -56,7 +53,7 @@ task createReleaseVersion {
     }
 }
 
-task createNextSnapshotVersion {
+tasks.register('createNextSnapshotVersion') {
     doLast {
         def releaseVersion = buildFile.getText().find(version)
         String currentMinor = version.substring(releaseVersion.lastIndexOf('.') + 1)
@@ -67,7 +64,7 @@ task createNextSnapshotVersion {
         buildFile.setText(newBuildFile)
     }
 }
-task createBetaVersion {
+tasks.register('createBetaVersion') {
     doLast {
         def currentVersion = buildFile.getText().find(version)
         currentVersion = currentVersion.replace("-SNAPSHOT", "")
@@ -80,7 +77,7 @@ task createBetaVersion {
     }
 }
 
-task createBetaSnapshotVersion {
+tasks.register('createBetaSnapshotVersion') {
     doLast {
         def currentVersion = buildFile.getText().find(version)
         currentVersion = currentVersion.replace("-SNAPSHOT", "")
