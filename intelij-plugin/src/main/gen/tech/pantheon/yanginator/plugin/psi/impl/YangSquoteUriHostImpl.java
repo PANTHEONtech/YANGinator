@@ -13,26 +13,22 @@ package tech.pantheon.yanginator.plugin.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.pantheon.yanginator.plugin.psi.YangDquote;
-import tech.pantheon.yanginator.plugin.psi.YangSquote;
-import tech.pantheon.yanginator.plugin.psi.YangSquoteUri;
-import tech.pantheon.yanginator.plugin.psi.YangUri;
-import tech.pantheon.yanginator.plugin.psi.YangUriStr;
+import tech.pantheon.yanginator.plugin.psi.YangIPv4Address;
+import tech.pantheon.yanginator.plugin.psi.YangSquoteUriHost;
+import tech.pantheon.yanginator.plugin.psi.YangSquoteUriIPLiteral;
+import tech.pantheon.yanginator.plugin.psi.YangSquoteUriRegName;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-import java.util.List;
+public class YangSquoteUriHostImpl extends YangNamedElementImpl implements YangSquoteUriHost {
 
-public class YangUriStrImpl extends YangNamedElementImpl implements YangUriStr {
-
-    public YangUriStrImpl(@NotNull ASTNode node) {
+    public YangSquoteUriHostImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitUriStr(this);
+        visitor.visitSquoteUriHost(this);
     }
 
     @Override
@@ -42,27 +38,21 @@ public class YangUriStrImpl extends YangNamedElementImpl implements YangUriStr {
     }
 
     @Override
-    @NotNull
-    public List<YangDquote> getDquoteList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
-    }
-
-    @Override
-    @NotNull
-    public List<YangSquote> getSquoteList() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
+    @Nullable
+    public YangIPv4Address getIPv4Address() {
+        return findChildByClass(YangIPv4Address.class);
     }
 
     @Override
     @Nullable
-    public YangSquoteUri getSquoteUri() {
-        return findChildByClass(YangSquoteUri.class);
+    public YangSquoteUriIPLiteral getSquoteUriIPLiteral() {
+        return findChildByClass(YangSquoteUriIPLiteral.class);
     }
 
     @Override
     @Nullable
-    public YangUri getUri() {
-        return findChildByClass(YangUri.class);
+    public YangSquoteUriRegName getSquoteUriRegName() {
+        return findChildByClass(YangSquoteUriRegName.class);
     }
 
 }

@@ -318,6 +318,23 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentNzImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSegmentNzNcImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSpImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriAuthorityImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriHierPartImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriHostImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriIPLiteralImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriIPvFutureImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriPathAbemptyImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriPathAbsoluteImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriPathRootlessImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriPcharImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriQueryImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriRegNameImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriSegmentImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriSegmentNzImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriSubDelimsImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUriUserinfoImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangSquoteUrifragmentImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusArgImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangStatusKeywordImpl;
@@ -685,6 +702,23 @@ public interface YangTypes {
     IElementType YANG_SHORT_CASE_STMT = new YangElementType("YANG_SHORT_CASE_STMT");
     IElementType YANG_SP = new YangElementType("YANG_SP");
     IElementType YANG_SQUOTE = new YangElementType("YANG_SQUOTE");
+    IElementType YANG_SQUOTE_URI = new YangElementType("YANG_SQUOTE_URI");
+    IElementType YANG_SQUOTE_URIFRAGMENT = new YangElementType("YANG_SQUOTE_URIFRAGMENT");
+    IElementType YANG_SQUOTE_URI_AUTHORITY = new YangElementType("YANG_SQUOTE_URI_AUTHORITY");
+    IElementType YANG_SQUOTE_URI_HIER_PART = new YangElementType("YANG_SQUOTE_URI_HIER_PART");
+    IElementType YANG_SQUOTE_URI_HOST = new YangElementType("YANG_SQUOTE_URI_HOST");
+    IElementType YANG_SQUOTE_URI_IP_LITERAL = new YangElementType("YANG_SQUOTE_URI_IP_LITERAL");
+    IElementType YANG_SQUOTE_URI_I_PV_FUTURE = new YangElementType("YANG_SQUOTE_URI_I_PV_FUTURE");
+    IElementType YANG_SQUOTE_URI_PATH_ABEMPTY = new YangElementType("YANG_SQUOTE_URI_PATH_ABEMPTY");
+    IElementType YANG_SQUOTE_URI_PATH_ABSOLUTE = new YangElementType("YANG_SQUOTE_URI_PATH_ABSOLUTE");
+    IElementType YANG_SQUOTE_URI_PATH_ROOTLESS = new YangElementType("YANG_SQUOTE_URI_PATH_ROOTLESS");
+    IElementType YANG_SQUOTE_URI_PCHAR = new YangElementType("YANG_SQUOTE_URI_PCHAR");
+    IElementType YANG_SQUOTE_URI_QUERY = new YangElementType("YANG_SQUOTE_URI_QUERY");
+    IElementType YANG_SQUOTE_URI_REG_NAME = new YangElementType("YANG_SQUOTE_URI_REG_NAME");
+    IElementType YANG_SQUOTE_URI_SEGMENT = new YangElementType("YANG_SQUOTE_URI_SEGMENT");
+    IElementType YANG_SQUOTE_URI_SEGMENT_NZ = new YangElementType("YANG_SQUOTE_URI_SEGMENT_NZ");
+    IElementType YANG_SQUOTE_URI_SUB_DELIMS = new YangElementType("YANG_SQUOTE_URI_SUB_DELIMS");
+    IElementType YANG_SQUOTE_URI_USERINFO = new YangElementType("YANG_SQUOTE_URI_USERINFO");
     IElementType YANG_STATUS_ARG = new YangElementType("YANG_STATUS_ARG");
     IElementType YANG_STATUS_ARG_STR = new YangElementType("YANG_STATUS_ARG_STR");
     IElementType YANG_STATUS_KEYWORD = new YangElementType("YANG_STATUS_KEYWORD");
@@ -1420,6 +1454,40 @@ public interface YangTypes {
                 return new YangSpImpl(node);
             } else if (type == YANG_SQUOTE) {
                 return new YangSquoteImpl(node);
+            } else if (type == YANG_SQUOTE_URI) {
+                return new YangSquoteUriImpl(node);
+            } else if (type == YANG_SQUOTE_URIFRAGMENT) {
+                return new YangSquoteUrifragmentImpl(node);
+            } else if (type == YANG_SQUOTE_URI_AUTHORITY) {
+                return new YangSquoteUriAuthorityImpl(node);
+            } else if (type == YANG_SQUOTE_URI_HIER_PART) {
+                return new YangSquoteUriHierPartImpl(node);
+            } else if (type == YANG_SQUOTE_URI_HOST) {
+                return new YangSquoteUriHostImpl(node);
+            } else if (type == YANG_SQUOTE_URI_IP_LITERAL) {
+                return new YangSquoteUriIPLiteralImpl(node);
+            } else if (type == YANG_SQUOTE_URI_I_PV_FUTURE) {
+                return new YangSquoteUriIPvFutureImpl(node);
+            } else if (type == YANG_SQUOTE_URI_PATH_ABEMPTY) {
+                return new YangSquoteUriPathAbemptyImpl(node);
+            } else if (type == YANG_SQUOTE_URI_PATH_ABSOLUTE) {
+                return new YangSquoteUriPathAbsoluteImpl(node);
+            } else if (type == YANG_SQUOTE_URI_PATH_ROOTLESS) {
+                return new YangSquoteUriPathRootlessImpl(node);
+            } else if (type == YANG_SQUOTE_URI_PCHAR) {
+                return new YangSquoteUriPcharImpl(node);
+            } else if (type == YANG_SQUOTE_URI_QUERY) {
+                return new YangSquoteUriQueryImpl(node);
+            } else if (type == YANG_SQUOTE_URI_REG_NAME) {
+                return new YangSquoteUriRegNameImpl(node);
+            } else if (type == YANG_SQUOTE_URI_SEGMENT) {
+                return new YangSquoteUriSegmentImpl(node);
+            } else if (type == YANG_SQUOTE_URI_SEGMENT_NZ) {
+                return new YangSquoteUriSegmentNzImpl(node);
+            } else if (type == YANG_SQUOTE_URI_SUB_DELIMS) {
+                return new YangSquoteUriSubDelimsImpl(node);
+            } else if (type == YANG_SQUOTE_URI_USERINFO) {
+                return new YangSquoteUriUserinfoImpl(node);
             } else if (type == YANG_STATUS_ARG) {
                 return new YangStatusArgImpl(node);
             } else if (type == YANG_STATUS_ARG_STR) {

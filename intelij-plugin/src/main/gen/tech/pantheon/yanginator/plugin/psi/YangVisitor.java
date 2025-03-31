@@ -98,6 +98,74 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
+    public void visitSquoteUri(@NotNull YangSquoteUri o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriIPLiteral(@NotNull YangSquoteUriIPLiteral o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriIPvFuture(@NotNull YangSquoteUriIPvFuture o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriAuthority(@NotNull YangSquoteUriAuthority o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriHierPart(@NotNull YangSquoteUriHierPart o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriHost(@NotNull YangSquoteUriHost o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriPathAbempty(@NotNull YangSquoteUriPathAbempty o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriPathAbsolute(@NotNull YangSquoteUriPathAbsolute o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriPathRootless(@NotNull YangSquoteUriPathRootless o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriQuery(@NotNull YangSquoteUriQuery o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriRegName(@NotNull YangSquoteUriRegName o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriSegment(@NotNull YangSquoteUriSegment o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriSegmentNz(@NotNull YangSquoteUriSegmentNz o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriSubDelims(@NotNull YangSquoteUriSubDelims o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriUserinfo(@NotNull YangSquoteUriUserinfo o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUriPchar(@NotNull YangSquoteUriPchar o) {
+        visitNamedElement(o);
+    }
+
+    public void visitSquoteUrifragment(@NotNull YangSquoteUrifragment o) {
+        visitNamedElement(o);
+    }
+
     public void visitUri(@NotNull YangUri o) {
         visitNamedElement(o);
     }

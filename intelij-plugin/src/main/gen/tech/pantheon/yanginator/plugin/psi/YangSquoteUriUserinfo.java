@@ -12,22 +12,18 @@
 package tech.pantheon.yanginator.plugin.psi;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangUriStr extends YangNamedElement {
+public interface YangSquoteUriUserinfo extends YangNamedElement {
 
     @NotNull
-    List<YangDquote> getDquoteList();
+    List<YangSquoteUriSubDelims> getSquoteUriSubDelimsList();
 
     @NotNull
-    List<YangSquote> getSquoteList();
+    List<YangPctEncoded> getPctEncodedList();
 
-    @Nullable
-    YangSquoteUri getSquoteUri();
-
-    @Nullable
-    YangUri getUri();
+    @NotNull
+    List<YangUnreserved> getUnreservedList();
 
 }

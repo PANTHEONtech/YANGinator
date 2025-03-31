@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2025 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -57,6 +57,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = addStringSplittersForIfFeatures(result);
         result = allowReferenceLinkage(result);
         result = addSingleQuotePossibility(result);
+        result = addSingleQuotePossibilityToUri(result);
         result = rewriteAugment(result);
         result = changeInputOutputCardinality(result);
         result = changeOrderOfTypeBodyStmt(result);
@@ -64,6 +65,23 @@ public class GrammarKitRFCUncomplaintUtils {
         result = changeYangString(result);
         result = changePatternBody(result);
         result = addIndentableQuotedString(result);
+        result = createCopyOfUriForSquoteUri(result);
+        result = createCopyOfFragmentForSquoteUriLogic(result);
+        result = createCopyOfPcharForSquoteUriLogic(result);
+        result = createCopyOfsubDelmisForSquoteUriLogic(result);
+        result = createCopyOfQuerryForSquoteUriLogic(result);
+        result = createCopyOfHierPartForSquoteUriLogic(result);
+        result = createCopyOfAuthorityPartForSquoteUriLogic(result);
+        result = createCopyOfUserinfoForSquoteUriLogic(result);
+        result = createCopyOfHostForSquoteUriLogic(result);
+        result = createCopyOfIPLiteralForUriLogic(result);
+        result = createCopyOfIPvFutureForUriLogic(result);
+        result = createCopyOfRegNameForUriLogic(result);
+        result = createCopyOfPathAbemptyForUriLogic(result);
+        result = createCopyOfSegmentForUriLogic(result);
+        result = createCopyOfPathAbsoluteForUriLogic(result);
+        result = createCopyOfSegmentNzForUriLogic(result);
+        result = createCopyOfPathRootlessForUriLogic(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1169,6 +1187,364 @@ public class GrammarKitRFCUncomplaintUtils {
     }
 
     /**
+     * This adds single quote support for uri, for example, in namespace
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> addSingleQuotePossibilityToUri(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("uri-str ::= URI | ( DQUOTE URI DQUOTE )")) {
+                line = "uri-str ::= ( DQUOTE URI DQUOTE ) | ( SQUOTE SQUOTE-URI SQUOTE ) | URI // a string that matches the rule  < URI in RFC 3986";
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of Uri to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfUriForSquoteUri(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("URI ::= scheme COLON hier-part [ QUESTION_MARK query ] [ HASH fragment ]")) {
+                new_line = "SQUOTE-URI ::= scheme COLON SquoteUri-hier-part [ QUESTION_MARK SquoteUri-query ] [ HASH SquoteUrifragment ]";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of fragment to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfFragmentForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("fragment ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*")) {
+                new_line = "SquoteUrifragment ::= ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of pchar to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfPcharForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON")) {
+                new_line = "SquoteUri_pchar ::= unreserved | pct-encoded | SquoteUri-sub-delims | COLON | AT_SIGN | DOUBLE_COLON";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of sub-delims to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfsubDelmisForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS")) {
+                new_line = "SquoteUri-sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | EQUALS";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of a query to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfQuerryForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*")) {
+                new_line = "SquoteUri-query ::= ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of hier-part to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfHierPartForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("hier-part ::= DOUBLE_FORWARD_SLASH authority path-abempty")) {
+                new_line = "SquoteUri-hier-part ::= DOUBLE_FORWARD_SLASH SquoteUri-authority SquoteUri-path-abempty | SquoteUri-path-absolute | SquoteUri-path-rootless | path-empty";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of authority to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfAuthorityPartForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("authority ::= [ userinfo AT_SIGN ] host [ COLON port ]")) {
+                new_line = "SquoteUri-authority ::= [ SquoteUri-userinfo AT_SIGN ] SquoteUri-host [ COLON port ]";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of userinfo to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfUserinfoForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("userinfo ::= ( unreserved | pct-encoded | sub-delims | COLON )*")) {
+                new_line = "SquoteUri-userinfo ::= ( unreserved | pct-encoded | SquoteUri-sub-delims | COLON )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of host to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfHostForSquoteUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("host ::= IP-literal | IPv4address | reg-name")) {
+                new_line = "SquoteUri-host ::= SquoteUri-IP-literal | IPv4address | SquoteUri-reg-name";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of IP-literals to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfIPLiteralForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("IP-literal ::= OPEN_BRACKET ( IPv6address | IPvFuture ) CLOSED_BRACKET")) {
+                new_line = "SquoteUri-IP-literal ::= OPEN_BRACKET ( IPv6address | SquoteUri-IPvFuture ) CLOSED_BRACKET";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of IPvFuture to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfIPvFutureForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | sub-delims | COLON )+")) {
+                new_line = "SquoteUri-IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | SquoteUri-sub-delims | COLON )+";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of reg-name to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfRegNameForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("reg-name ::= ( unreserved | pct-encoded | sub-delims )*")) {
+                new_line = "SquoteUri-reg-name ::= ( unreserved | pct-encoded | SquoteUri-sub-delims )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of path-abempty to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfPathAbemptyForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("path-abempty ::= ( FORWARD_SLASH segment )*")) {
+                new_line = "SquoteUri-path-abempty ::= ( FORWARD_SLASH SquoteUri-segment )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of a segment to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfSegmentForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("segment ::= (string-splitter? pchar string-splitter?)*")) {
+                new_line = "SquoteUri-segment ::= (string-splitter? SquoteUri_pchar string-splitter?)*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of path-absolute to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfPathAbsoluteForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]")) {
+                new_line = "SquoteUri-path-absolute ::= FORWARD_SLASH [ SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )* ]";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of segment-nz to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfSegmentNzForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("segment-nz ::= (string-splitter? pchar string-splitter?)+")) {
+                new_line = "SquoteUri-segment-nz ::= (string-splitter? SquoteUri_pchar string-splitter?)+";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * This adds a customized copy of path-rootless to support logic in method addSingleQuotePossibilityToUri
+     *
+     * @param lines list of strings
+     * @return list of strings
+     */
+
+    private static List<String> createCopyOfPathRootlessForUriLogic(List<String> lines) {
+        List<String> result = new ArrayList<>();
+        String new_line;
+        for (String line : lines) {
+            if (line.contains("path-rootless ::= segment-nz ( FORWARD_SLASH segment )*")) {
+                new_line = "SquoteUri-path-rootless ::= SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )*";
+                result.add(new_line);
+            }
+            result.add(line);
+        }
+        return result;
+    }
+
+    /**
      * Changes quantifiers of augment's substatments according to cardinality in table in rfc6020 - 7.15.1.
      *
      * @param lines list of strings
@@ -1269,6 +1645,7 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
+
     /**
      * Changed yang-char cardinality in yang-string to correspond RFC
      *
@@ -1285,6 +1662,7 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
+
     /**
      * Changed pattern body string, so it can be indented
      *
@@ -1301,6 +1679,7 @@ public class GrammarKitRFCUncomplaintUtils {
         }
         return result;
     }
+
     /**
      * Changed pattern body string, so it can be indented
      *
@@ -1314,3 +1693,4 @@ public class GrammarKitRFCUncomplaintUtils {
         return result;
     }
 }
+
