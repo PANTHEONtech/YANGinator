@@ -183,7 +183,7 @@ namespace-stmt ::= namespace-keyword sep uri-str stmtend
 pin(".*") = 1
 }
 
-uri-str ::= URI | ( DQUOTE URI DQUOTE ) // a string that matches the rule  < URI in RFC 3986
+uri-str ::= ( DQUOTE URI DQUOTE ) | ( SQUOTE SQUOTE-URI SQUOTE ) | URI // a string that matches the rule  < URI in RFC 3986
 
 prefix-stmt ::= prefix-keyword sep prefix-arg-str stmtend
 {
@@ -1420,8 +1420,10 @@ WSP ::= SP | HTAB
 //
 //////////////////////////////
 
+SQUOTE-URI ::= scheme COLON SquoteUri-hier-part [ QUESTION_MARK SquoteUri-query ] [ HASH SquoteUrifragment ]
 URI ::= scheme COLON hier-part [ QUESTION_MARK query ] [ HASH fragment ]
 
+SquoteUri-hier-part ::= DOUBLE_FORWARD_SLASH SquoteUri-authority SquoteUri-path-abempty | SquoteUri-path-absolute | SquoteUri-path-rootless | path-empty
 hier-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
   | path-absolute
   | path-rootless
@@ -1440,13 +1442,18 @@ relative-part ::= DOUBLE_FORWARD_SLASH authority path-abempty
 
 scheme ::= ALPHA ( ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | PLUS_SIGN | DASH | DOT )*
 
+SquoteUri-authority ::= [ SquoteUri-userinfo AT_SIGN ] SquoteUri-host [ COLON port ]
 authority ::= [ userinfo AT_SIGN ] host [ COLON port ]
+SquoteUri-userinfo ::= ( unreserved | pct-encoded | SquoteUri-sub-delims | COLON )*
 userinfo ::= ( unreserved | pct-encoded | sub-delims | COLON )*
+SquoteUri-host ::= SquoteUri-IP-literal | IPv4address | SquoteUri-reg-name
 host ::= IP-literal | IPv4address | reg-name
 port ::= DIGIT* | DIGITS | FRACTIONS | ZEROS
 
+SquoteUri-IP-literal ::= OPEN_BRACKET ( IPv6address | SquoteUri-IPvFuture ) CLOSED_BRACKET
 IP-literal ::= OPEN_BRACKET ( IPv6address | IPvFuture ) CLOSED_BRACKET
 
+SquoteUri-IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | SquoteUri-sub-delims | COLON )+
 IPvFuture ::= VERSION HEXDIG+ DOT ( unreserved | sub-delims | COLON )+
 
 IPv6address ::= ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ( h16 COLON ) ls32
@@ -1469,6 +1476,7 @@ dec-octet ::= DIGIT // 0-9
   | TWO ( ZERO | ONE | TWO | THREE | FOUR ) DIGIT  // 200-249
   | TWO FIVE ( ZERO | ONE | TWO | THREE | FOUR | FIVE )  // 250-255 deviation against original rfc 3986
 
+SquoteUri-reg-name ::= ( unreserved | pct-encoded | SquoteUri-sub-delims )*
 reg-name ::= ( unreserved | pct-encoded | sub-delims )*
 
 path ::= path-abempty // begins with FORWARD_SLASH or is empty
@@ -1477,20 +1485,28 @@ path ::= path-abempty // begins with FORWARD_SLASH or is empty
   | path-rootless  // begins with a segment
   | path-empty  // zero characters
 
+SquoteUri-path-abempty ::= ( FORWARD_SLASH SquoteUri-segment )*
 path-abempty ::= ( FORWARD_SLASH segment )*
+SquoteUri-path-absolute ::= FORWARD_SLASH [ SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )* ]
 path-absolute ::= FORWARD_SLASH [ segment-nz ( FORWARD_SLASH segment )* ]
 path-noscheme ::= segment-nz-nc ( FORWARD_SLASH segment )*
+SquoteUri-path-rootless ::= SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )*
 path-rootless ::= segment-nz ( FORWARD_SLASH segment )*
 path-empty ::= ZERO_LENGTH_STRING// pchar deviation against original rfc 3986
+SquoteUri-segment ::= (string-splitter? SquoteUri_pchar string-splitter?)*
 segment ::= (string-splitter? pchar string-splitter?)*
+SquoteUri-segment-nz ::= (string-splitter? SquoteUri_pchar string-splitter?)+
 segment-nz ::= (string-splitter? pchar string-splitter?)+
 segment-nz-nc ::= (string-splitter? ( unreserved | pct-encoded | sub-delims | AT_SIGN ) string-splitter?)+
   // non-zero-length segment without any colon COLON
 
+SquoteUri_pchar ::= unreserved | pct-encoded | SquoteUri-sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 pchar ::= unreserved | pct-encoded | sub-delims | COLON | AT_SIGN | DOUBLE_COLON
 
+SquoteUri-query ::= ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*
 query ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
+SquoteUrifragment ::= ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*
 fragment ::= ( pchar | FORWARD_SLASH | QUESTION_MARK )*
 
 pct-encoded ::= PERCENT_SIGN HEXDIG HEXDIG
@@ -1498,6 +1514,7 @@ pct-encoded ::= PERCENT_SIGN HEXDIG HEXDIG
 unreserved ::= ALPHA | DIGIT | DATE | ALPHANUMERICAL_ALPHA_FIRST | ALPHANUMERICAL_DIGIT_FIRST | FRACTIONS | DIGITS | DASH | DOT | UNDERSCORE | TILDE
 reserved ::= gen-delims | sub-delims
 gen-delims ::= COLON | FORWARD_SLASH | QUESTION_MARK | HASH | OPEN_BRACKET | CLOSED_BRACKET | AT_SIGN
+SquoteUri-sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | EQUALS
 sub-delims ::= EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | SINGLE_QUOTE | LEFT_PARENTHESIS | RIGHT_PARENTHESIS
   | ASTERISK | PLUS_SIGN | COMMA | EQUALS
 // Xpath functions

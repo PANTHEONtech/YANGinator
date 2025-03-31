@@ -399,6 +399,23 @@ import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SIX;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SP;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SPACE;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URIFRAGMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_AUTHORITY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_HIER_PART;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_HOST;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_IP_LITERAL;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_I_PV_FUTURE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_PATH_ABEMPTY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_PATH_ABSOLUTE;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_PATH_ROOTLESS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_PCHAR;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_QUERY;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_REG_NAME;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_SEGMENT;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_SEGMENT_NZ;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_SUB_DELIMS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_SQUOTE_URI_USERINFO;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_ARG;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_ARG_STR;
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_STATUS_KEYWORD;
@@ -1719,6 +1736,550 @@ public class YangParser implements PsiParser, LightPsiParser {
         Marker m = enter_section_(b);
         r = consumeToken(b, YANG_SINGLE_QUOTE);
         exit_section_(b, m, YANG_SQUOTE, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // scheme COLON SquoteUri-hier-part [ QUESTION_MARK SquoteUri-query ] [ HASH SquoteUrifragment ]
+    public static boolean SQUOTE_URI(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SQUOTE_URI")) return false;
+        if (!nextTokenIs(b, YANG_ALPHA)) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = scheme(b, l + 1);
+        r = r && consumeToken(b, YANG_COLON);
+        r = r && SquoteUri_hier_part(b, l + 1);
+        r = r && SQUOTE_URI_3(b, l + 1);
+        r = r && SQUOTE_URI_4(b, l + 1);
+        exit_section_(b, m, YANG_SQUOTE_URI, r);
+        return r;
+    }
+
+    // [ QUESTION_MARK SquoteUri-query ]
+    private static boolean SQUOTE_URI_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SQUOTE_URI_3")) return false;
+        SQUOTE_URI_3_0(b, l + 1);
+        return true;
+    }
+
+    // QUESTION_MARK SquoteUri-query
+    private static boolean SQUOTE_URI_3_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SQUOTE_URI_3_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_QUESTION_MARK);
+        r = r && SquoteUri_query(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // [ HASH SquoteUrifragment ]
+    private static boolean SQUOTE_URI_4(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SQUOTE_URI_4")) return false;
+        SQUOTE_URI_4_0(b, l + 1);
+        return true;
+    }
+
+    // HASH SquoteUrifragment
+    private static boolean SQUOTE_URI_4_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SQUOTE_URI_4_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_HASH);
+        r = r && SquoteUrifragment(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // OPEN_BRACKET ( IPv6address | SquoteUri-IPvFuture ) CLOSED_BRACKET
+    public static boolean SquoteUri_IP_literal(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IP_literal")) return false;
+        if (!nextTokenIs(b, YANG_OPEN_BRACKET)) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_OPEN_BRACKET);
+        r = r && SquoteUri_IP_literal_1(b, l + 1);
+        r = r && consumeToken(b, YANG_CLOSED_BRACKET);
+        exit_section_(b, m, YANG_SQUOTE_URI_IP_LITERAL, r);
+        return r;
+    }
+
+    // IPv6address | SquoteUri-IPvFuture
+    private static boolean SquoteUri_IP_literal_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IP_literal_1")) return false;
+        boolean r;
+        r = IPv6address(b, l + 1);
+        if (!r) r = SquoteUri_IPvFuture(b, l + 1);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // VERSION HEXDIG+ DOT ( unreserved | SquoteUri-sub-delims | COLON )+
+    public static boolean SquoteUri_IPvFuture(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IPvFuture")) return false;
+        if (!nextTokenIs(b, YANG_VERSION)) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_VERSION);
+        r = r && SquoteUri_IPvFuture_1(b, l + 1);
+        r = r && consumeToken(b, YANG_DOT);
+        r = r && SquoteUri_IPvFuture_3(b, l + 1);
+        exit_section_(b, m, YANG_SQUOTE_URI_I_PV_FUTURE, r);
+        return r;
+    }
+
+    // HEXDIG+
+    private static boolean SquoteUri_IPvFuture_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IPvFuture_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_HEXDIG);
+        while (r) {
+            int c = current_position_(b);
+            if (!consumeToken(b, YANG_HEXDIG)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_IPvFuture_1", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // ( unreserved | SquoteUri-sub-delims | COLON )+
+    private static boolean SquoteUri_IPvFuture_3(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IPvFuture_3")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SquoteUri_IPvFuture_3_0(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!SquoteUri_IPvFuture_3_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_IPvFuture_3", c)) break;
+        }
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // unreserved | SquoteUri-sub-delims | COLON
+    private static boolean SquoteUri_IPvFuture_3_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_IPvFuture_3_0")) return false;
+        boolean r;
+        r = unreserved(b, l + 1);
+        if (!r) r = SquoteUri_sub_delims(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_COLON);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // [ SquoteUri-userinfo AT_SIGN ] SquoteUri-host [ COLON port ]
+    public static boolean SquoteUri_authority(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_authority")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_AUTHORITY, "<squote uri authority>");
+        r = SquoteUri_authority_0(b, l + 1);
+        r = r && SquoteUri_host(b, l + 1);
+        r = r && SquoteUri_authority_2(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // [ SquoteUri-userinfo AT_SIGN ]
+    private static boolean SquoteUri_authority_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_authority_0")) return false;
+        SquoteUri_authority_0_0(b, l + 1);
+        return true;
+    }
+
+    // SquoteUri-userinfo AT_SIGN
+    private static boolean SquoteUri_authority_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_authority_0_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SquoteUri_userinfo(b, l + 1);
+        r = r && consumeToken(b, YANG_AT_SIGN);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // [ COLON port ]
+    private static boolean SquoteUri_authority_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_authority_2")) return false;
+        SquoteUri_authority_2_0(b, l + 1);
+        return true;
+    }
+
+    // COLON port
+    private static boolean SquoteUri_authority_2_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_authority_2_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_COLON);
+        r = r && port(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // DOUBLE_FORWARD_SLASH SquoteUri-authority SquoteUri-path-abempty | SquoteUri-path-absolute | SquoteUri-path-rootless | path-empty
+    public static boolean SquoteUri_hier_part(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_hier_part")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_HIER_PART, "<squote uri hier part>");
+        r = SquoteUri_hier_part_0(b, l + 1);
+        if (!r) r = SquoteUri_path_absolute(b, l + 1);
+        if (!r) r = SquoteUri_path_rootless(b, l + 1);
+        if (!r) r = path_empty(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // DOUBLE_FORWARD_SLASH SquoteUri-authority SquoteUri-path-abempty
+    private static boolean SquoteUri_hier_part_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_hier_part_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = DOUBLE_FORWARD_SLASH(b, l + 1);
+        r = r && SquoteUri_authority(b, l + 1);
+        r = r && SquoteUri_path_abempty(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // SquoteUri-IP-literal | IPv4address | SquoteUri-reg-name
+    public static boolean SquoteUri_host(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_host")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_HOST, "<squote uri host>");
+        r = SquoteUri_IP_literal(b, l + 1);
+        if (!r) r = IPv4address(b, l + 1);
+        if (!r) r = SquoteUri_reg_name(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // ( FORWARD_SLASH SquoteUri-segment )*
+    public static boolean SquoteUri_path_abempty(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_abempty")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_PATH_ABEMPTY, "<squote uri path abempty>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_path_abempty_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_path_abempty", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // FORWARD_SLASH SquoteUri-segment
+    private static boolean SquoteUri_path_abempty_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_abempty_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && SquoteUri_segment(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // FORWARD_SLASH [ SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )* ]
+    public static boolean SquoteUri_path_absolute(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_absolute")) return false;
+        if (!nextTokenIs(b, YANG_FORWARD_SLASH)) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && SquoteUri_path_absolute_1(b, l + 1);
+        exit_section_(b, m, YANG_SQUOTE_URI_PATH_ABSOLUTE, r);
+        return r;
+    }
+
+    // [ SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )* ]
+    private static boolean SquoteUri_path_absolute_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_absolute_1")) return false;
+        SquoteUri_path_absolute_1_0(b, l + 1);
+        return true;
+    }
+
+    // SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )*
+    private static boolean SquoteUri_path_absolute_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_absolute_1_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SquoteUri_segment_nz(b, l + 1);
+        r = r && SquoteUri_path_absolute_1_0_1(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // ( FORWARD_SLASH SquoteUri-segment )*
+    private static boolean SquoteUri_path_absolute_1_0_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_absolute_1_0_1")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_path_absolute_1_0_1_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_path_absolute_1_0_1", c)) break;
+        }
+        return true;
+    }
+
+    // FORWARD_SLASH SquoteUri-segment
+    private static boolean SquoteUri_path_absolute_1_0_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_absolute_1_0_1_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && SquoteUri_segment(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // SquoteUri-segment-nz ( FORWARD_SLASH SquoteUri-segment )*
+    public static boolean SquoteUri_path_rootless(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_rootless")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_PATH_ROOTLESS, "<squote uri path rootless>");
+        r = SquoteUri_segment_nz(b, l + 1);
+        r = r && SquoteUri_path_rootless_1(b, l + 1);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // ( FORWARD_SLASH SquoteUri-segment )*
+    private static boolean SquoteUri_path_rootless_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_rootless_1")) return false;
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_path_rootless_1_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_path_rootless_1", c)) break;
+        }
+        return true;
+    }
+
+    // FORWARD_SLASH SquoteUri-segment
+    private static boolean SquoteUri_path_rootless_1_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_path_rootless_1_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = consumeToken(b, YANG_FORWARD_SLASH);
+        r = r && SquoteUri_segment(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*
+    public static boolean SquoteUri_query(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_query")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_QUERY, "<squote uri query>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_query_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_query", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK
+    private static boolean SquoteUri_query_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_query_0")) return false;
+        boolean r;
+        r = SquoteUri_pchar(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_FORWARD_SLASH);
+        if (!r) r = consumeToken(b, YANG_QUESTION_MARK);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // ( unreserved | pct-encoded | SquoteUri-sub-delims )*
+    public static boolean SquoteUri_reg_name(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_reg_name")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_REG_NAME, "<squote uri reg name>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_reg_name_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_reg_name", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // unreserved | pct-encoded | SquoteUri-sub-delims
+    private static boolean SquoteUri_reg_name_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_reg_name_0")) return false;
+        boolean r;
+        r = unreserved(b, l + 1);
+        if (!r) r = pct_encoded(b, l + 1);
+        if (!r) r = SquoteUri_sub_delims(b, l + 1);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // (string-splitter? SquoteUri_pchar string-splitter?)*
+    public static boolean SquoteUri_segment(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_SEGMENT, "<squote uri segment>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_segment_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_segment", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // string-splitter? SquoteUri_pchar string-splitter?
+    private static boolean SquoteUri_segment_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SquoteUri_segment_0_0(b, l + 1);
+        r = r && SquoteUri_pchar(b, l + 1);
+        r = r && SquoteUri_segment_0_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean SquoteUri_segment_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean SquoteUri_segment_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_0_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // (string-splitter? SquoteUri_pchar string-splitter?)+
+    public static boolean SquoteUri_segment_nz(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_nz")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_SEGMENT_NZ, "<squote uri segment nz>");
+        r = SquoteUri_segment_nz_0(b, l + 1);
+        while (r) {
+            int c = current_position_(b);
+            if (!SquoteUri_segment_nz_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_segment_nz", c)) break;
+        }
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    // string-splitter? SquoteUri_pchar string-splitter?
+    private static boolean SquoteUri_segment_nz_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_nz_0")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SquoteUri_segment_nz_0_0(b, l + 1);
+        r = r && SquoteUri_pchar(b, l + 1);
+        r = r && SquoteUri_segment_nz_0_2(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // string-splitter?
+    private static boolean SquoteUri_segment_nz_0_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_nz_0_0")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    // string-splitter?
+    private static boolean SquoteUri_segment_nz_0_2(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_segment_nz_0_2")) return false;
+        string_splitter(b, l + 1);
+        return true;
+    }
+
+    /* ********************************************************** */
+    // EXCLAMATION_MARK | DOLLAR_SIGN | AMPERSAND | LEFT_PARENTHESIS | RIGHT_PARENTHESIS | ASTERISK | PLUS_SIGN | COMMA | EQUALS
+    public static boolean SquoteUri_sub_delims(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_sub_delims")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_SUB_DELIMS, "<squote uri sub delims>");
+        r = consumeToken(b, YANG_EXCLAMATION_MARK);
+        if (!r) r = consumeToken(b, YANG_DOLLAR_SIGN);
+        if (!r) r = consumeToken(b, YANG_AMPERSAND);
+        if (!r) r = consumeToken(b, YANG_LEFT_PARENTHESIS);
+        if (!r) r = consumeToken(b, YANG_RIGHT_PARENTHESIS);
+        if (!r) r = consumeToken(b, YANG_ASTERISK);
+        if (!r) r = consumeToken(b, YANG_PLUS_SIGN);
+        if (!r) r = consumeToken(b, YANG_COMMA);
+        if (!r) r = consumeToken(b, YANG_EQUALS);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // ( unreserved | pct-encoded | SquoteUri-sub-delims | COLON )*
+    public static boolean SquoteUri_userinfo(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_userinfo")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_USERINFO, "<squote uri userinfo>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUri_userinfo_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUri_userinfo", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // unreserved | pct-encoded | SquoteUri-sub-delims | COLON
+    private static boolean SquoteUri_userinfo_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_userinfo_0")) return false;
+        boolean r;
+        r = unreserved(b, l + 1);
+        if (!r) r = pct_encoded(b, l + 1);
+        if (!r) r = SquoteUri_sub_delims(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_COLON);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // unreserved | pct-encoded | SquoteUri-sub-delims | COLON | AT_SIGN | DOUBLE_COLON
+    public static boolean SquoteUri_pchar(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUri_pchar")) return false;
+        boolean r;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URI_PCHAR, "<squote uri pchar>");
+        r = unreserved(b, l + 1);
+        if (!r) r = pct_encoded(b, l + 1);
+        if (!r) r = SquoteUri_sub_delims(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_COLON);
+        if (!r) r = consumeToken(b, YANG_AT_SIGN);
+        if (!r) r = consumeToken(b, YANG_DOUBLE_COLON);
+        exit_section_(b, l, m, r, false, null);
+        return r;
+    }
+
+    /* ********************************************************** */
+    // ( SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK )*
+    public static boolean SquoteUrifragment(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUrifragment")) return false;
+        Marker m = enter_section_(b, l, _NONE_, YANG_SQUOTE_URIFRAGMENT, "<squote urifragment>");
+        while (true) {
+            int c = current_position_(b);
+            if (!SquoteUrifragment_0(b, l + 1)) break;
+            if (!empty_element_parsed_guard_(b, "SquoteUrifragment", c)) break;
+        }
+        exit_section_(b, l, m, true, false, null);
+        return true;
+    }
+
+    // SquoteUri_pchar | FORWARD_SLASH | QUESTION_MARK
+    private static boolean SquoteUrifragment_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "SquoteUrifragment_0")) return false;
+        boolean r;
+        r = SquoteUri_pchar(b, l + 1);
+        if (!r) r = consumeToken(b, YANG_FORWARD_SLASH);
+        if (!r) r = consumeToken(b, YANG_QUESTION_MARK);
         return r;
     }
 
@@ -12829,26 +13390,38 @@ public class YangParser implements PsiParser, LightPsiParser {
     }
 
     /* ********************************************************** */
-    // URI | ( DQUOTE URI DQUOTE )
+    // ( DQUOTE URI DQUOTE ) | ( SQUOTE SQUOTE-URI SQUOTE ) | URI
     public static boolean uri_str(PsiBuilder b, int l) {
         if (!recursion_guard_(b, l, "uri_str")) return false;
-        if (!nextTokenIs(b, "<uri str>", YANG_ALPHA, YANG_DOUBLE_QUOTE)) return false;
         boolean r;
         Marker m = enter_section_(b, l, _NONE_, YANG_URI_STR, "<uri str>");
-        r = URI(b, l + 1);
+        r = uri_str_0(b, l + 1);
         if (!r) r = uri_str_1(b, l + 1);
+        if (!r) r = URI(b, l + 1);
         exit_section_(b, l, m, r, false, null);
         return r;
     }
 
     // DQUOTE URI DQUOTE
-    private static boolean uri_str_1(PsiBuilder b, int l) {
-        if (!recursion_guard_(b, l, "uri_str_1")) return false;
+    private static boolean uri_str_0(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "uri_str_0")) return false;
         boolean r;
         Marker m = enter_section_(b);
         r = DQUOTE(b, l + 1);
         r = r && URI(b, l + 1);
         r = r && DQUOTE(b, l + 1);
+        exit_section_(b, m, null, r);
+        return r;
+    }
+
+    // SQUOTE SQUOTE-URI SQUOTE
+    private static boolean uri_str_1(PsiBuilder b, int l) {
+        if (!recursion_guard_(b, l, "uri_str_1")) return false;
+        boolean r;
+        Marker m = enter_section_(b);
+        r = SQUOTE(b, l + 1);
+        r = r && SQUOTE_URI(b, l + 1);
+        r = r && SQUOTE(b, l + 1);
         exit_section_(b, m, null, r);
         return r;
     }

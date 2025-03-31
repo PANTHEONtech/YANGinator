@@ -16,18 +16,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface YangUriStr extends YangNamedElement {
+public interface YangSquoteUriPathAbsolute extends YangNamedElement {
 
     @NotNull
-    List<YangDquote> getDquoteList();
-
-    @NotNull
-    List<YangSquote> getSquoteList();
+    List<YangSquoteUriSegment> getSquoteUriSegmentList();
 
     @Nullable
-    YangSquoteUri getSquoteUri();
-
-    @Nullable
-    YangUri getUri();
+    YangSquoteUriSegmentNz getSquoteUriSegmentNz();
 
 }

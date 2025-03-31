@@ -11,23 +11,27 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public interface YangUriStr extends YangNamedElement {
-
-    @NotNull
-    List<YangDquote> getDquoteList();
-
-    @NotNull
-    List<YangSquote> getSquoteList();
+public interface YangSquoteUriPchar extends YangNamedElement {
 
     @Nullable
-    YangSquoteUri getSquoteUri();
+    YangSquoteUriSubDelims getSquoteUriSubDelims();
 
     @Nullable
-    YangUri getUri();
+    YangPctEncoded getPctEncoded();
+
+    @Nullable
+    YangUnreserved getUnreserved();
+
+    @Nullable
+    PsiElement getAtSign();
+
+    @Nullable
+    PsiElement getColon();
+
+    @Nullable
+    PsiElement getDoubleColon();
 
 }
