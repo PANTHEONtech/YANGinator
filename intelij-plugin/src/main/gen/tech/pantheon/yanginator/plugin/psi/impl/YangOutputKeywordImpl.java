@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2025 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -29,8 +29,11 @@ public class YangOutputKeywordImpl extends YangNamedElementImpl implements YangO
 
     @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
+        if (visitor instanceof YangVisitor) {
+            accept((YangVisitor) visitor);
+        } else {
+            super.accept(visitor);
+        }
     }
 
 }

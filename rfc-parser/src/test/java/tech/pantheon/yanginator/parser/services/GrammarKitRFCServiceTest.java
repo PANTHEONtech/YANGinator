@@ -35,7 +35,7 @@ class GrammarKitRFCServiceTest {
         } catch (final IOException ignored) {
         }
         List<String> correct = createList("correctOutputFileV2.bnf");
-        assertEquals(result, correct);
+        assertEquals(correct, result);
 
     }
 
@@ -53,7 +53,7 @@ class GrammarKitRFCServiceTest {
         result = createList("outputFileV3.bnf");
         List<String> correct = createList("correctOutputFileV3.bnf");
 
-        assertEquals(result, correct);
+        assertEquals(correct, result);
 
     }
 
@@ -65,7 +65,7 @@ class GrammarKitRFCServiceTest {
         List<String> result = createList("outputLexer.txt");
         List<String> correct = createList("correctOutputLexer.txt");
 
-        assertEquals(result, correct);
+        assertEquals(correct, result);
 
     }
 

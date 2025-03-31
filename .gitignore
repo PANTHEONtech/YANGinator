@@ -19,3 +19,4 @@ intelij-plugin/compatibility-check.sh
 /native/
 /wrapper/
 /rfc-parser/src/test/gen/
+.intellijPlatform/

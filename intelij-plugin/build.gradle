@@ -1,15 +1,27 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+
 plugins {
-    id 'org.jetbrains.intellij' version "$intellijGradlePluginVersion"
+
+    id 'org.jetbrains.intellij.platform' version "$intellijGradlePluginVersion"
     id 'org.jetbrains.changelog' version "$changelogVersion"
 }
 
-apply plugin: 'org.jetbrains.changelog'
-
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    version = ideaVersion
-    plugins = ['com.intellij.java']
+intellijPlatform {
+    pluginVerification {
+        ides {
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2024.3.4.1")
+            ide(IntelliJPlatformType.IntellijIdeaUltimate, "2024.3.5")
+            ide (IntelliJPlatformType.PyCharmCommunity,"2024.3.5")
+            ide (IntelliJPlatformType.PyCharmProfessional,"2024.3.5")
+            ide (IntelliJPlatformType.CLion,"2024.3.5")
+            ide (IntelliJPlatformType.GoLand,"2024.3.5")
+            recommended()
+        }
+    }
 }
+
+apply plugin: 'org.jetbrains.changelog'
 
 changelog {
     path = "${project.parent.projectDir}/CHANGELOG.md"
@@ -24,7 +36,7 @@ changelog {
 tasks {
     patchPluginXml {
         sinceBuild = '213'
-        untilBuild = ''
+        untilBuild = '251.*'
         changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
 }
@@ -50,61 +62,20 @@ sourceSets {
     }
 }
 
+repositories {
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
+}
+
 dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
-}
-
-final MAX_VERIFIER_NUMBER = 5
-def counter = 0
-ext.ideaVersions = new ArrayList<String>()
-
-def makeCommand() {
-    def commandBuilder = new StringBuilder()
-    commandBuilder.append("gradle runPluginVerifier -PtestVersions=")
-    for (int i in 0..ideaVersions.size() - 1) {
-        commandBuilder.append(ideaVersions.get(i))
-        if (i != ideaVersions.size() - 1) {
-            commandBuilder.append(",")
-        }
+    intellijPlatform {
+        intellijIdeaCommunity ideaVersion
+        bundledPlugin ("com.intellij.java")
+        testFramework TestFrameworkType.Platform.INSTANCE
     }
-    commandBuilder.append("\n")
-    commandBuilder.append("rm -rf /home/runner/.pluginVerifier\n")
-    commandBuilder.append("rm -rf /home/runner/.cache\n")
-    return commandBuilder
-}
 
-task prepareCompatibilityCheck {
-    def runnerFileName = "${project.projectDir}/compatibility-check.sh"
-    File runFile = new File(runnerFileName)
-    File versionFile = new File("${project.parent.projectDir}/COMPATIBLE.version")
-    def commandBuilder = new StringBuilder()
-    commandBuilder.append("#!/usr/bin/bash\n\n")
-    def line
-    versionFile.withReader { reader ->
-        while ((line = reader.readLine()) != null) {
-            if (!line.isEmpty() && !line.contains('#')) {
-                ideaVersions.add(line)
-                counter++
-                if (counter % MAX_VERIFIER_NUMBER == 0) {
-                    commandBuilder.append(makeCommand())
-                    ideaVersions.clear()
-                }
-            }
-        }
-    }
-    if (ideaVersions.size() >= 1) {
-        commandBuilder.append(makeCommand())
-    }
-    commandBuilder.append("\nrm ").append(runnerFileName)
-    runFile.write(commandBuilder.toString())
-}
-
-// Runs the IntelliJ Plugin Verifier tool to check the binary compatibility with explicitly specified IntelliJ IDE builds in compatible.version file
-runPluginVerifier {
-    def testVersions = project.findProperty("testVersions")
-    println "Test versions from argument: " + testVersions
-    if (testVersions != null) {
-        println "Parsed versions from argument: " + Arrays.asList(testVersions.split(","))
-        ideVersions = Arrays.asList(testVersions.split(","))
-    }
+    testImplementation group: 'org.junit.jupiter',
+            name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }

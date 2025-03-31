@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (c) 2021-2023 PANTHEON.tech, s.r.o. All rights reserved.
+ *   Copyright (c) 2021-2025 PANTHEON.tech, s.r.o. All rights reserved.
  *
  *   This program and the accompanying materials are made available under the
  *   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -17,7 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangRequireInstanceKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
-public class YangRequireInstanceKeywordImpl extends YangNamedElementImpl implements YangRequireInstanceKeyword {
+public class YangRequireInstanceKeywordImpl extends YangNamedElementImpl implements
+        YangRequireInstanceKeyword {
 
     public YangRequireInstanceKeywordImpl(@NotNull ASTNode node) {
         super(node);
@@ -29,8 +30,11 @@ public class YangRequireInstanceKeywordImpl extends YangNamedElementImpl impleme
 
     @Override
     public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof YangVisitor) accept((YangVisitor) visitor);
-        else super.accept(visitor);
+        if (visitor instanceof YangVisitor) {
+            accept((YangVisitor) visitor);
+        } else {
+            super.accept(visitor);
+        }
     }
 
 }
