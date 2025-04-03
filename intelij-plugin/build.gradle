@@ -1,5 +1,5 @@
-import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
 
@@ -10,12 +10,8 @@ plugins {
 intellijPlatform {
     pluginVerification {
         ides {
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2024.3.4.1")
             ide(IntelliJPlatformType.IntellijIdeaUltimate, "2024.3.5")
-            ide (IntelliJPlatformType.PyCharmCommunity,"2024.3.5")
-            ide (IntelliJPlatformType.PyCharmProfessional,"2024.3.5")
-            ide (IntelliJPlatformType.CLion,"2024.3.5")
-            ide (IntelliJPlatformType.GoLand,"2024.3.5")
+            ide(IntelliJPlatformType.PyCharmProfessional, "2024.3.5")
             recommended()
         }
     }
@@ -35,7 +31,7 @@ changelog {
 
 tasks {
     patchPluginXml {
-        sinceBuild = '213'
+        sinceBuild = '243'
         untilBuild = '251.*'
         changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
@@ -72,7 +68,7 @@ repositories {
 dependencies {
     intellijPlatform {
         intellijIdeaCommunity ideaVersion
-        bundledPlugin ("com.intellij.java")
+        bundledPlugin("com.intellij.java")
         testFramework TestFrameworkType.Platform.INSTANCE
     }
 
