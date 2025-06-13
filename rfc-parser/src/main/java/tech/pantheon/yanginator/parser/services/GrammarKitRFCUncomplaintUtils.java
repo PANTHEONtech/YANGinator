@@ -82,6 +82,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = createCopyOfPathAbsoluteForUriLogic(result);
         result = createCopyOfSegmentNzForUriLogic(result);
         result = createCopyOfPathRootlessForUriLogic(result);
+        result = changePathKeyExpr(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1690,6 +1691,27 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         result.addAll(lines);
         result.add("indentable-quoted-string ::= quoted-string");
+        return result;
+    }
+
+    private static List<String> changePathKeyExpr(List<String> lines) {
+        final List<String> result = new ArrayList<>();
+        boolean skipNextLine = false;
+        for (String line : lines) {
+            if (line.contains("path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*")) {
+                skipNextLine = true; // next line = rel-path-keyexpr
+                result.add("path-key-expr ::= function-invocation string-splitter? WSP* FORWARD_SLASH WSP* rel-path-keyexpr");
+                result.add("function-name ::= (ALPHA | UNDERSCORE) (ALPHA | UNDERSCORE | (DASH ALPHA))*");
+                result.add("function-args ::= ((WSP* quoted-string WSP*) (WSP* COMMA WSP* quoted-string)*)");
+                result.add("function-invocation ::= function-name WSP* LEFT_PARENTHESIS WSP* function-args* WSP* RIGHT_PARENTHESIS");
+            } else {
+                if (skipNextLine) {
+                    skipNextLine = false;
+                } else {
+                    result.add(line);
+                }
+            }
+        }
         return result;
     }
 }
