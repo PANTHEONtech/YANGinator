@@ -103,6 +103,8 @@ correctly.
 
 * `addIndentableQuotedString(result);` [link](#add-indentable-quoted-string)
 
+* `changePathKeyExpr(result);` [link](#change-path-key-expr)
+
 
 
 ### Rewrite Zero Integer Value
@@ -988,6 +990,18 @@ indents on multiple lines.
 
 ![indentable_quoted_string.png](doc-images/indentable_quoted_string.png)
 
+### change path-key-expr
+bugfix https://github.com/PANTHEONtech/YANGinator/issues/302
+
+This modification allows to use different functions in path expression e.g. current(), last() and prevents formatter from making unwanted modifications. 
+
+before:
+
+![changePathKeyExpr_before.png](doc-images/changePathKeyExpr_before.png)
+
+after
+
+![changePathKeyExpr_after.png](doc-images/changePathKeyExpr_after.png)
 
 ---
 
