@@ -83,7 +83,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = createCopyOfSegmentNzForUriLogic(result);
         result = createCopyOfPathRootlessForUriLogic(result);
         result = changePathKeyExpr(result);
-        result = addStringSplitterToNodeIdentifier(reesult);
+        result = addStringSplitterToNodeIdentifier(result);
         return makeSeparatorRulesPrivate(result);
     }
 
