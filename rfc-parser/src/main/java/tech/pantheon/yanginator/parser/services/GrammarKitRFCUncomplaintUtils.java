@@ -1694,6 +1694,12 @@ public class GrammarKitRFCUncomplaintUtils {
         return result;
     }
 
+    /**
+     * This changes path statement so that it accepts any function.
+     * Path argument is not formatted anymore.
+     * @param lines list of strings
+     * @return list of strings
+     */
     private static List<String> changePathKeyExpr(List<String> lines) {
         final List<String> result = new ArrayList<>();
         boolean skipNextLine = false;
