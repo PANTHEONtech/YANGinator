@@ -105,6 +105,8 @@ correctly.
 
 * `addSingleQuotesSupport(result);` [link](#add-single-quotes-support)
 
+* `changePathKeyExpr(result);` [link](#change-path-key-expr)
+
 
 
 ### Rewrite Zero Integer Value
@@ -1002,6 +1004,18 @@ after
 
 ![addSingleQuotesSupport_after.png](doc-images/addSingleQuotesSupport_after.png)
 
+### change path-key-expr
+bugfix https://github.com/PANTHEONtech/YANGinator/issues/302
+
+This modification allows to use different functions in path expression e.g. current(), last() and prevents formatter from making unwanted modifications. 
+
+before:
+
+![changePathKeyExpr_before.png](doc-images/changePathKeyExpr_before.png)
+
+after
+
+![changePathKeyExpr_after.png](doc-images/changePathKeyExpr_after.png)
 
 ---
 
