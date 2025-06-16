@@ -1696,6 +1696,12 @@ public class GrammarKitRFCUncomplaintUtils {
         return result;
     }
 
+
+    /**
+     * Adds support for single quoted strings.
+     * @param lines list of strings
+     * @return list of strings
+     */
     private static List<String> addSingleQuotesSupport(List<String> lines) {
         final List<String> result = new ArrayList<>();
         final Pattern pattern = Pattern.compile("^([\\w-]+)-arg-str ::= \\1-arg \\| DOUBLE_QUOTE \\1-arg DOUBLE_QUOTE$");
