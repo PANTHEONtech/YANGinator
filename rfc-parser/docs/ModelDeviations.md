@@ -105,6 +105,8 @@ correctly.
 
 * `changePathKeyExpr(result);` [link](#change-path-key-expr)
 
+* `addStringSplitterToNodeIdentifier(result);` [link](#add-string-splitter-to-node-identifier)
+
 
 
 ### Rewrite Zero Integer Value
@@ -1002,6 +1004,19 @@ before:
 after
 
 ![changePathKeyExpr_after.png](doc-images/changePathKeyExpr_after.png)
+
+### add string splitter to node identifier
+bugfix https://github.com/PANTHEONtech/YANGinator/issues/306
+
+This allows a string to end with a colon.
+
+before:
+
+![NodeIdentifier_before.png](doc-images/NodeIdentifier_before.png)
+
+after:
+
+![NodeIdentifier_after.png](doc-images/NodeIdentifier_after.png)
 
 ---
 

@@ -83,6 +83,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = createCopyOfSegmentNzForUriLogic(result);
         result = createCopyOfPathRootlessForUriLogic(result);
         result = changePathKeyExpr(result);
+        result = addStringSplitterToNodeIdentifier(reesult);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1717,6 +1718,22 @@ public class GrammarKitRFCUncomplaintUtils {
                     result.add(line);
                 }
             }
+        }
+        return result;
+    }
+
+    /**
+     * Adds string-splitter to node-identifier so that string can end with colon.
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> addStringSplitterToNodeIdentifier(List<String> lines) {
+        final List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("node-identifier ::= [prefix COLON] identifier")) {
+                line = "node-identifier ::= [prefix COLON] string-splitter? identifier";
+            }
+            result.add(line);
         }
         return result;
     }
