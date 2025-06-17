@@ -12,6 +12,8 @@ package tech.pantheon.yanginator.parser.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GrammarKitRFCUncomplaintUtils {
     public static List<String> additionalAdjustments(List<String> lines) {
@@ -82,6 +84,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = createCopyOfPathAbsoluteForUriLogic(result);
         result = createCopyOfSegmentNzForUriLogic(result);
         result = createCopyOfPathRootlessForUriLogic(result);
+        result = addSingleQuotesSupport(result);
         result = changePathKeyExpr(result);
         result = addStringSplitterToNodeIdentifier(result);
         return makeSeparatorRulesPrivate(result);
@@ -1692,6 +1695,33 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         result.addAll(lines);
         result.add("indentable-quoted-string ::= quoted-string");
+        return result;
+    }
+
+
+    /**
+     * Adds support for single quoted strings.
+     * @param lines list of strings
+     * @return list of strings
+     */
+    private static List<String> addSingleQuotesSupport(List<String> lines) {
+        final List<String> result = new ArrayList<>();
+        final Pattern pattern = Pattern.compile("^([\\w-]+)-arg-str ::= \\1-arg \\| DOUBLE_QUOTE \\1-arg DOUBLE_QUOTE$");
+        final Pattern pattern2 = Pattern.compile("^([\\w-]+)-str ::= \\1 \\| \\( DQUOTE \\1 DQUOTE \\) (//.*)$");
+        for (String line : lines) {
+            Matcher matcher = pattern.matcher(line);
+            Matcher matcher2 = pattern2.matcher(line);
+            if (matcher.matches()) {
+                final String keyword = matcher.group(1);
+                line += String.format(" | SINGLE_QUOTE %s-arg SINGLE_QUOTE", keyword);
+            } else if (matcher2.matches()) {
+                final String keyword = matcher2.group(1);
+                final String comment = matcher2.group(2);
+                line = line.substring(0, line.indexOf("/")); // remove comment
+                line += String.format("| ( SQUOTE %s SQUOTE ) %s", keyword, comment);
+            }
+            result.add(line);
+        }
         return result;
     }
 

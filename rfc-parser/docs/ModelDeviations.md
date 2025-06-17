@@ -103,6 +103,8 @@ correctly.
 
 * `addIndentableQuotedString(result);` [link](#add-indentable-quoted-string)
 
+* `addSingleQuotesSupport(result);` [link](#add-single-quotes-support)
+
 * `changePathKeyExpr(result);` [link](#change-path-key-expr)
 
 * `addStringSplitterToNodeIdentifier(result);` [link](#add-string-splitter-to-node-identifier)
@@ -991,6 +993,18 @@ Added indentable quoted string definition in order to have easy solution for quo
 indents on multiple lines.
 
 ![indentable_quoted_string.png](doc-images/indentable_quoted_string.png)
+
+### add single quotes support
+
+Added single quote support for many statements.
+
+before 
+
+![addSingleQuotesSupport_before.png](doc-images/addSingleQuotesSupport_before.png)
+
+after
+
+![addSingleQuotesSupport_after.png](doc-images/addSingleQuotesSupport_after.png)
 
 ### change path-key-expr
 bugfix https://github.com/PANTHEONtech/YANGinator/issues/302
