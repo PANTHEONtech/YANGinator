@@ -17,9 +17,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.XsdRegExpParserDefinition;
 import org.jetbrains.annotations.NotNull;
-import tech.pantheon.yanginator.plugin.psi.YangIndentableQuotedString;
-import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
-import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
+import tech.pantheon.yanginator.plugin.psi.YangDoubleQuotedRegex;
+import tech.pantheon.yanginator.plugin.psi.YangSingleQuotedRegex;
 
 import java.util.List;
 
