@@ -26,17 +26,15 @@ import java.util.List;
 public class RegExpToYangInjector implements MultiHostInjector {
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-        if (context instanceof YangQuotedString &&
-                context.getParent() instanceof YangIndentableQuotedString &&
-                context.getParent().getParent() instanceof YangPatternBody) {
+        if (context instanceof YangDoubleQuotedRegex || context instanceof YangSingleQuotedRegex) {
             registrar.startInjecting(XsdRegExpParserDefinition.LANGUAGE)
-                    .addPlace(null, null, (PsiLanguageInjectionHost) context, new TextRange(context.getStartOffsetInParent() + 1, context.getStartOffsetInParent() + context.getTextLength() - 1))
+                    .addPlace(null, null, (PsiLanguageInjectionHost) context, new TextRange(context.getStartOffsetInParent(), context.getStartOffsetInParent() + context.getTextLength()))
                     .doneInjecting();
         }
     }
 
     @Override
     public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-        return List.of(YangQuotedString.class);
+        return List.of(YangDoubleQuotedRegex.class, YangSingleQuotedRegex.class);
     }
 }

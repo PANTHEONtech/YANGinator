@@ -87,6 +87,7 @@ public class GrammarKitRFCUncomplaintUtils {
         result = addSingleQuotesSupport(result);
         result = changePathKeyExpr(result);
         result = addStringSplitterToNodeIdentifier(result);
+        result = changeIndentableQuotedString(result);
         return makeSeparatorRulesPrivate(result);
     }
 
@@ -1764,6 +1765,29 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "node-identifier ::= [prefix COLON] string-splitter? identifier";
             }
             result.add(line);
+        }
+        return result;
+    }
+
+    /**
+     * Changes indentable-quoted-string so that if regex pattern is split into multiple strings separated by a plus sign
+     * each string is processed separately by RegExpToYangInjector.
+     * @param lines list of strings
+     * @return list of string
+     */
+    private static List<String> changeIndentableQuotedString(List<String> lines) {
+        final List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains("indentable-quoted-string ::= quoted-string")) {
+                result.add("indentable-quoted-string ::= quoted-regex");
+                result.add("quoted-regex ::= (DQUOTE double-quoted-regex-wrapper (string-splitter double-quoted-regex-wrapper)* DQUOTE) | (SQUOTE single-quoted-regex-wrapper (string-splitter single-quoted-regex-wrapper)* SQUOTE)");
+                result.add("double-quoted-regex-wrapper ::= double-quoted-regex");
+                result.add("double-quoted-regex ::= double-quoted-vchar");
+                result.add("single-quoted-regex-wrapper ::= single-quoted-regex");
+                result.add("single-quoted-regex ::= quoted-vchar");
+            } else {
+                result.add(line);
+            }
         }
         return result;
     }
