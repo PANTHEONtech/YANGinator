@@ -1783,8 +1783,10 @@ public class GrammarKitRFCUncomplaintUtils {
                 result.add("quoted-regex ::= (DQUOTE double-quoted-regex-wrapper (string-splitter double-quoted-regex-wrapper)* DQUOTE) | (SQUOTE single-quoted-regex-wrapper (string-splitter single-quoted-regex-wrapper)* SQUOTE)");
                 result.add("double-quoted-regex-wrapper ::= double-quoted-regex");
                 result.add("double-quoted-regex ::= double-quoted-vchar");
+                result.add(""); // this is necessary see GrammarKitRFCUtils.linkReferenceStmts
                 result.add("single-quoted-regex-wrapper ::= single-quoted-regex");
                 result.add("single-quoted-regex ::= quoted-vchar");
+                result.add(""); // this is necessary see GrammarKitRFCUtils.linkReferenceStmts
             } else {
                 result.add(line);
             }
