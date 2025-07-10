@@ -10,7 +10,9 @@ plugins {
 intellijPlatform {
     pluginVerification {
         ides {
-            recommended()
+            "ideaIC" { // IntelliJ IDEA Community Edition
+                version("2025.1.2")
+            }
         }
     }
 }
