@@ -10,9 +10,7 @@ plugins {
 intellijPlatform {
     pluginVerification {
         ides {
-            "ideaIC" { // IntelliJ IDEA Community Edition
-                version("2025.1.2")
-            }
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.1")
         }
     }
 }
