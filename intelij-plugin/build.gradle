@@ -30,7 +30,7 @@ changelog {
 tasks {
     patchPluginXml {
         sinceBuild = '243'
-        untilBuild = '251.*'
+        untilBuild = '252.*'
         changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
 }
