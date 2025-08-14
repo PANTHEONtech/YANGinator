@@ -21,6 +21,9 @@ public interface YangReplaceKeywordStr extends YangNamedElement {
     List<YangDquote> getDquoteList();
 
     @NotNull
+    List<YangSquote> getSquoteList();
+
+    @NotNull
     YangReplaceKeyword getReplaceKeyword();
 
 }

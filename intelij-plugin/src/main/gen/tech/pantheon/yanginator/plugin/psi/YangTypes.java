@@ -122,6 +122,7 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsArgStrImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFractionDigitsStmtImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFragmentImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionArgsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyEndImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyIdentityImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyNodeIdentityImpl;
@@ -131,6 +132,8 @@ import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyStartImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionBodyStringStringImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionInvocationImpl;
+import tech.pantheon.yanginator.plugin.psi.impl.YangFunctionNameImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangGenDelimsImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangGroupingKeywordImpl;
 import tech.pantheon.yanginator.plugin.psi.impl.YangGroupingStmtImpl;
@@ -506,6 +509,7 @@ public interface YangTypes {
     IElementType YANG_FRACTION_DIGITS_STMT = new YangElementType("YANG_FRACTION_DIGITS_STMT");
     IElementType YANG_FRAGMENT = new YangElementType("YANG_FRAGMENT");
     IElementType YANG_FUNCTION = new YangElementType("YANG_FUNCTION");
+    IElementType YANG_FUNCTION_ARGS = new YangElementType("YANG_FUNCTION_ARGS");
     IElementType YANG_FUNCTION_BODY_END = new YangElementType("YANG_FUNCTION_BODY_END");
     IElementType YANG_FUNCTION_BODY_IDENTITY = new YangElementType("YANG_FUNCTION_BODY_IDENTITY");
     IElementType YANG_FUNCTION_BODY_NODE = new YangElementType("YANG_FUNCTION_BODY_NODE");
@@ -514,6 +518,8 @@ public interface YangTypes {
     IElementType YANG_FUNCTION_BODY_START = new YangElementType("YANG_FUNCTION_BODY_START");
     IElementType YANG_FUNCTION_BODY_STRING = new YangElementType("YANG_FUNCTION_BODY_STRING");
     IElementType YANG_FUNCTION_BODY_STRING_STRING = new YangElementType("YANG_FUNCTION_BODY_STRING_STRING");
+    IElementType YANG_FUNCTION_INVOCATION = new YangElementType("YANG_FUNCTION_INVOCATION");
+    IElementType YANG_FUNCTION_NAME = new YangElementType("YANG_FUNCTION_NAME");
     IElementType YANG_GEN_DELIMS = new YangElementType("YANG_GEN_DELIMS");
     IElementType YANG_GROUPING_KEYWORD = new YangElementType("YANG_GROUPING_KEYWORD");
     IElementType YANG_GROUPING_STMT = new YangElementType("YANG_GROUPING_STMT");
@@ -1064,6 +1070,8 @@ public interface YangTypes {
                 return new YangFragmentImpl(node);
             } else if (type == YANG_FUNCTION) {
                 return new YangFunctionImpl(node);
+            } else if (type == YANG_FUNCTION_ARGS) {
+                return new YangFunctionArgsImpl(node);
             } else if (type == YANG_FUNCTION_BODY_END) {
                 return new YangFunctionBodyEndImpl(node);
             } else if (type == YANG_FUNCTION_BODY_IDENTITY) {
@@ -1080,6 +1088,10 @@ public interface YangTypes {
                 return new YangFunctionBodyStringImpl(node);
             } else if (type == YANG_FUNCTION_BODY_STRING_STRING) {
                 return new YangFunctionBodyStringStringImpl(node);
+            } else if (type == YANG_FUNCTION_INVOCATION) {
+                return new YangFunctionInvocationImpl(node);
+            } else if (type == YANG_FUNCTION_NAME) {
+                return new YangFunctionNameImpl(node);
             } else if (type == YANG_GEN_DELIMS) {
                 return new YangGenDelimsImpl(node);
             } else if (type == YANG_GROUPING_KEYWORD) {

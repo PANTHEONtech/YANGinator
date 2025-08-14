@@ -15,15 +15,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangIntegerValueStr extends YangNamedElement {
+public interface YangFunctionArgs extends YangNamedElement {
 
     @NotNull
-    List<YangDquote> getDquoteList();
+    List<YangWsp> getWspList();
 
     @NotNull
-    List<YangSquote> getSquoteList();
-
-    @NotNull
-    YangIntegerValue getIntegerValue();
+    List<YangQuotedString> getQuotedStringList();
 
 }

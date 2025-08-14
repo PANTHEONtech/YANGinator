@@ -578,6 +578,10 @@ public class YangVisitor extends PsiElementVisitor {
         visitNamedElement(o);
     }
 
+    public void visitFunctionArgs(@NotNull YangFunctionArgs o) {
+        visitNamedElement(o);
+    }
+
     public void visitFunctionBodyEnd(@NotNull YangFunctionBodyEnd o) {
         visitNamedElement(o);
     }
@@ -607,6 +611,14 @@ public class YangVisitor extends PsiElementVisitor {
     }
 
     public void visitFunctionBodyStringString(@NotNull YangFunctionBodyStringString o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionInvocation(@NotNull YangFunctionInvocation o) {
+        visitNamedElement(o);
+    }
+
+    public void visitFunctionName(@NotNull YangFunctionName o) {
         visitNamedElement(o);
     }
 

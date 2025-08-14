@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.psi.YangIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangNodeIdentifier;
 import tech.pantheon.yanginator.plugin.psi.YangPrefix;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_COLON;
@@ -49,6 +50,12 @@ public class YangNodeIdentifierImpl extends YangNamedElementImpl implements Yang
     @Nullable
     public YangPrefix getPrefix() {
         return findChildByClass(YangPrefix.class);
+    }
+
+    @Override
+    @Nullable
+    public YangStringSplitter getStringSplitter() {
+        return findChildByClass(YangStringSplitter.class);
     }
 
     @Override

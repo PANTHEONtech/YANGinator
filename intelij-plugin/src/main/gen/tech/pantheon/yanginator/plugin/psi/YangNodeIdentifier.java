@@ -24,6 +24,9 @@ public interface YangNodeIdentifier extends YangNamedElement {
     YangPrefix getPrefix();
 
     @Nullable
+    YangStringSplitter getStringSplitter();
+
+    @Nullable
     PsiElement getColon();
 
 }

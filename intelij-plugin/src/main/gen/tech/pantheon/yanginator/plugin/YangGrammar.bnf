@@ -146,7 +146,7 @@ yang-version-stmt ::= yang-version-keyword sep yang-version-arg-str
 pin(".*") = 1
 }
 
-yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE
+yang-version-arg-str ::= yang-version-arg | DOUBLE_QUOTE yang-version-arg DOUBLE_QUOTE | SINGLE_QUOTE yang-version-arg SINGLE_QUOTE
 
 yang-version-arg ::= ONE [DOT ONE]
 
@@ -270,7 +270,7 @@ yin-element-stmt ::= yin-element-keyword sep yin-element-arg-str
 pin(".*") = 1
 }
 
-yin-element-arg-str ::= yin-element-arg | DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE
+yin-element-arg-str ::= yin-element-arg | DOUBLE_QUOTE yin-element-arg DOUBLE_QUOTE | SINGLE_QUOTE yin-element-arg SINGLE_QUOTE
 
 yin-element-arg ::= true-keyword | false-keyword
 
@@ -317,7 +317,7 @@ if-feature-stmt ::= if-feature-keyword sep if-feature-expr-str
 pin(".*") = 1
 }
 
-if-feature-expr-str ::= if-feature-expr | ( DQUOTE if-feature-expr DQUOTE ) // a string that matches the rule  < if-feature-expr
+if-feature-expr-str ::= if-feature-expr | ( DQUOTE if-feature-expr DQUOTE ) | ( SQUOTE if-feature-expr SQUOTE ) // a string that matches the rule  < if-feature-expr
 
 if-feature-expr ::= if-feature-term
   [(string-splitter|sep) or-keyword (string-splitter|sep) if-feature-expr]
@@ -392,7 +392,7 @@ fraction-digits-stmt ::= fraction-digits-keyword sep
 pin(".*") = 1
 }
 
-fraction-digits-arg-str ::= fraction-digits-arg | DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE
+fraction-digits-arg-str ::= fraction-digits-arg | DOUBLE_QUOTE fraction-digits-arg DOUBLE_QUOTE | SINGLE_QUOTE fraction-digits-arg SINGLE_QUOTE
 
 fraction-digits-arg ::= ONE | TWO | THREE | FOUR | FIVE | SIX | SEVEN | EIGHT | NINE | FRACTIONS
 
@@ -433,7 +433,7 @@ modifier-stmt ::= modifier-keyword sep modifier-arg-str stmtend
 pin(".*") = 1
 }
 
-modifier-arg-str ::= modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE
+modifier-arg-str ::= modifier-arg | DOUBLE_QUOTE modifier-arg DOUBLE_QUOTE | SINGLE_QUOTE modifier-arg SINGLE_QUOTE
 
 modifier-arg ::= invert-match-keyword
 
@@ -474,7 +474,7 @@ require-instance-stmt ::= require-instance-keyword sep
 pin(".*") = 1
 }
 
-require-instance-arg-str ::= require-instance-arg | DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE
+require-instance-arg-str ::= require-instance-arg | DOUBLE_QUOTE require-instance-arg DOUBLE_QUOTE | SINGLE_QUOTE require-instance-arg SINGLE_QUOTE
 
 require-instance-arg ::= true-keyword | false-keyword
 
@@ -510,7 +510,7 @@ position-stmt ::= position-keyword sep
 pin(".*") = 1
 }
 
-position-value-arg-str ::= position-value-arg | DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE
+position-value-arg-str ::= position-value-arg | DOUBLE_QUOTE position-value-arg DOUBLE_QUOTE | SINGLE_QUOTE position-value-arg SINGLE_QUOTE
 
 position-value-arg ::= non-negative-integer-value
 
@@ -519,7 +519,7 @@ status-stmt ::= status-keyword sep status-arg-str stmtend
 pin(".*") = 1
 }
 
-status-arg-str ::= status-arg | DOUBLE_QUOTE status-arg DOUBLE_QUOTE
+status-arg-str ::= status-arg | DOUBLE_QUOTE status-arg DOUBLE_QUOTE | SINGLE_QUOTE status-arg SINGLE_QUOTE
 
 status-arg ::= current-keyword |
   obsolete-keyword |
@@ -531,7 +531,7 @@ config-stmt ::= config-keyword sep
 pin(".*") = 1
 }
 
-config-arg-str ::= config-arg | DOUBLE_QUOTE config-arg DOUBLE_QUOTE
+config-arg-str ::= config-arg | DOUBLE_QUOTE config-arg DOUBLE_QUOTE | SINGLE_QUOTE config-arg SINGLE_QUOTE
 
 config-arg ::= true-keyword | false-keyword
 
@@ -541,7 +541,7 @@ mandatory-stmt ::= mandatory-keyword sep
 pin(".*") = 1
 }
 
-mandatory-arg-str ::= mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE
+mandatory-arg-str ::= mandatory-arg | DOUBLE_QUOTE mandatory-arg DOUBLE_QUOTE | SINGLE_QUOTE mandatory-arg SINGLE_QUOTE
 
 mandatory-arg ::= true-keyword | false-keyword
 
@@ -556,7 +556,7 @@ ordered-by-stmt ::= ordered-by-keyword sep
 pin(".*") = 1
 }
 
-ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE
+ordered-by-arg-str ::= ordered-by-arg | DOUBLE_QUOTE ordered-by-arg DOUBLE_QUOTE | SINGLE_QUOTE ordered-by-arg SINGLE_QUOTE
 
 ordered-by-arg ::= user-keyword | system-keyword
 
@@ -589,7 +589,7 @@ min-elements-stmt ::= min-elements-keyword sep
 pin(".*") = 1
 }
 
-min-value-arg-str ::= min-value-arg | DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE
+min-value-arg-str ::= min-value-arg | DOUBLE_QUOTE min-value-arg DOUBLE_QUOTE | SINGLE_QUOTE min-value-arg SINGLE_QUOTE
 
 min-value-arg ::= non-negative-integer-value
 
@@ -599,7 +599,7 @@ max-elements-stmt ::= max-elements-keyword sep
 pin(".*") = 1
 }
 
-max-value-arg-str ::= max-value-arg | DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE
+max-value-arg-str ::= max-value-arg | DOUBLE_QUOTE max-value-arg DOUBLE_QUOTE | SINGLE_QUOTE max-value-arg SINGLE_QUOTE
 
 max-value-arg ::= unbounded-keyword |
   positive-integer-value
@@ -609,7 +609,7 @@ value-stmt ::= value-keyword sep integer-value-str stmtend
 pin(".*") = 1
 }
 
-integer-value-str ::= integer-value | ( DQUOTE integer-value DQUOTE ) // a string that matches the rule  < integer-value
+integer-value-str ::= integer-value | ( DQUOTE integer-value DQUOTE ) | ( SQUOTE integer-value SQUOTE ) // a string that matches the rule  < integer-value
 
 grouping-stmt ::= grouping-keyword sep identifier-arg-str optsep
   (SEMICOLON |
@@ -719,7 +719,7 @@ key-stmt ::= key-keyword sep key-arg-str stmtend
 pin(".*") = 1
 }
 
-key-arg-str ::= key-arg | DOUBLE_QUOTE key-arg DOUBLE_QUOTE
+key-arg-str ::= key-arg | DOUBLE_QUOTE key-arg DOUBLE_QUOTE | SINGLE_QUOTE key-arg SINGLE_QUOTE
 
 key-arg ::= node-identifier (sep node-identifier)*
 
@@ -728,7 +728,7 @@ unique-stmt ::= unique-keyword sep unique-arg-str stmtend
 pin(".*") = 1
 }
 
-unique-arg-str ::= unique-arg | DOUBLE_QUOTE unique-arg DOUBLE_QUOTE
+unique-arg-str ::= unique-arg | DOUBLE_QUOTE unique-arg DOUBLE_QUOTE | SINGLE_QUOTE unique-arg SINGLE_QUOTE
 
 unique-arg ::= descendant-schema-nodeid
   (sep descendant-schema-nodeid)*
@@ -847,7 +847,7 @@ refine-stmt ::= refine-keyword sep refine-arg-str optsep
 pin(".*") = 1
 }
 
-refine-arg-str ::= refine-arg | DOUBLE_QUOTE refine-arg DOUBLE_QUOTE
+refine-arg-str ::= refine-arg | DOUBLE_QUOTE refine-arg DOUBLE_QUOTE | SINGLE_QUOTE refine-arg SINGLE_QUOTE
 
 refine-arg ::= descendant-schema-nodeid
 
@@ -866,7 +866,7 @@ uses-augment-stmt ::= augment-keyword sep uses-augment-arg-str optsep
 pin(".*") = 1
 }
 
-uses-augment-arg-str ::= uses-augment-arg | DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE
+uses-augment-arg-str ::= uses-augment-arg | DOUBLE_QUOTE uses-augment-arg DOUBLE_QUOTE | SINGLE_QUOTE uses-augment-arg SINGLE_QUOTE
 
 uses-augment-arg ::= descendant-schema-nodeid
 
@@ -988,7 +988,7 @@ deviation-stmt ::= deviation-keyword sep
 pin(".*") = 1
 }
 
-deviation-arg-str ::= deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE
+deviation-arg-str ::= deviation-arg | DOUBLE_QUOTE deviation-arg DOUBLE_QUOTE | SINGLE_QUOTE deviation-arg SINGLE_QUOTE
 
 deviation-arg ::= absolute-schema-nodeid
 
@@ -1045,13 +1045,13 @@ deviate-replace-stmt ::= deviate-keyword sep replace-keyword-str optsep
 pin(".*") = 3
 }
 
-not-supported-keyword-str ::= not-supported-keyword | ( DQUOTE not-supported-keyword DQUOTE ) // a string that matches the rule  < not-supported-keyword
+not-supported-keyword-str ::= not-supported-keyword | ( DQUOTE not-supported-keyword DQUOTE ) | ( SQUOTE not-supported-keyword SQUOTE ) // a string that matches the rule  < not-supported-keyword
 
-add-keyword-str ::= add-keyword | ( DQUOTE add-keyword DQUOTE ) // a string that matches the rule  < add-keyword
+add-keyword-str ::= add-keyword | ( DQUOTE add-keyword DQUOTE ) | ( SQUOTE add-keyword SQUOTE ) // a string that matches the rule  < add-keyword
 
-delete-keyword-str ::= delete-keyword | ( DQUOTE delete-keyword DQUOTE ) // a string that matches the rule  < delete-keyword
+delete-keyword-str ::= delete-keyword | ( DQUOTE delete-keyword DQUOTE ) | ( SQUOTE delete-keyword SQUOTE ) // a string that matches the rule  < delete-keyword
 
-replace-keyword-str ::= replace-keyword | ( DQUOTE replace-keyword DQUOTE ) // a string that matches the rule  < replace-keyword
+replace-keyword-str ::= replace-keyword | ( DQUOTE replace-keyword DQUOTE ) | ( SQUOTE replace-keyword SQUOTE ) // a string that matches the rule  < replace-keyword
 // represents the usage of an extension
 unknown-statement ::= prefix COLON identifier ([sep] [quoted-string | string]) optsep
   (SEMICOLON |
@@ -1136,7 +1136,7 @@ yang-stmt ::= action-stmt |
 pin(".*") = 1
 }
 
-range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE
+range-arg-str ::= range-arg | DOUBLE_QUOTE range-arg DOUBLE_QUOTE | SINGLE_QUOTE range-arg SINGLE_QUOTE
 
 range-arg ::= range-part (optsep PIPE optsep range-part)*
 
@@ -1147,7 +1147,7 @@ range-boundary ::= min-keyword | max-keyword |
   decimal-value | integer-value
 // Lengths
 
-length-arg-str ::= length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE
+length-arg-str ::= length-arg | DOUBLE_QUOTE length-arg DOUBLE_QUOTE | SINGLE_QUOTE length-arg SINGLE_QUOTE
 
 length-arg ::= length-part (optsep PIPE optsep length-part)*
 
@@ -1158,7 +1158,7 @@ length-boundary ::= min-keyword | max-keyword |
   non-negative-integer-value
 // Date
 
-date-arg-str ::= date-arg | DOUBLE_QUOTE date-arg DOUBLE_QUOTE
+date-arg-str ::= date-arg | DOUBLE_QUOTE date-arg DOUBLE_QUOTE | SINGLE_QUOTE date-arg SINGLE_QUOTE
 
 date-arg ::= DATE
 // Schema Node Identifiers
@@ -1172,7 +1172,7 @@ descendant-schema-nodeid ::=
   node-identifier
   [absolute-schema-nodeid]
 
-node-identifier ::= [prefix COLON] identifier
+node-identifier ::= [prefix COLON] string-splitter? identifier
 // Instance Identifiers
 
 instance-identifier ::= (FORWARD_SLASH (node-identifier
@@ -1212,8 +1212,10 @@ path-predicate ::= OPEN_BRACKET WSP* path-equality-expr WSP* CLOSED_BRACKET stri
 
 path-equality-expr ::= node-identifier string-splitter? WSP* EQUALS WSP* string-splitter? path-key-expr
 
-path-key-expr ::= current-function-invocation string-splitter? WSP* FORWARD_SLASH WSP*
-  rel-path-keyexpr
+path-key-expr ::= function-invocation string-splitter? WSP* FORWARD_SLASH WSP* rel-path-keyexpr
+function-name ::= (ALPHA | UNDERSCORE) (ALPHA | UNDERSCORE | (DASH ALPHA))*
+function-args ::= ((WSP* quoted-string WSP*) (WSP* COMMA WSP* quoted-string)*)
+function-invocation ::= function-name WSP* LEFT_PARENTHESIS WSP* function-args* WSP* RIGHT_PARENTHESIS
 
 rel-path-keyexpr ::= (string-splitter? DOUBLE_DOT string-splitter? WSP* FORWARD_SLASH WSP* string-splitter? | string-splitter? PARENT_FOLDER string-splitter?)+
   (node-identifier string-splitter? WSP* FORWARD_SLASH WSP* string-splitter?)*
@@ -1314,7 +1316,7 @@ not-keyword ::= "not"
 current-function-invocation ::= current-keyword WSP* LEFT_PARENTHESIS WSP* RIGHT_PARENTHESIS
 //; Basic Rules
 
-prefix-arg-str ::= prefix-arg | DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE
+prefix-arg-str ::= prefix-arg | DOUBLE_QUOTE prefix-arg DOUBLE_QUOTE | SINGLE_QUOTE prefix-arg SINGLE_QUOTE
 
 prefix-arg ::= prefix
 

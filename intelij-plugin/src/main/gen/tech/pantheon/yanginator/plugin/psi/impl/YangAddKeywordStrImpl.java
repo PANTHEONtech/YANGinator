@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangAddKeyword;
 import tech.pantheon.yanginator.plugin.psi.YangAddKeywordStr;
 import tech.pantheon.yanginator.plugin.psi.YangDquote;
+import tech.pantheon.yanginator.plugin.psi.YangSquote;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 
 import java.util.List;
@@ -42,6 +43,12 @@ public class YangAddKeywordStrImpl extends YangNamedElementImpl implements YangA
     @NotNull
     public List<YangDquote> getDquoteList() {
         return PsiTreeUtil.getChildrenOfTypeAsList(this, YangDquote.class);
+    }
+
+    @Override
+    @NotNull
+    public List<YangSquote> getSquoteList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangSquote.class);
     }
 
     @Override

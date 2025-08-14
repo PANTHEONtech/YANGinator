@@ -16,13 +16,15 @@ checkstyleTest {
     source = List.of('intelij-plugin/src/test/java', 'rfc-parser/src/test/java')
 }
 
-group 'tech.pantheon.YANGinator'
-version '2.2-SNAPSHOT'
+group = 'tech.pantheon.YANGinator'
+version = '2.2-SNAPSHOT'
 
 allprojects {
     apply plugin: 'java'
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    java {
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
+    }
     repositories {
         mavenCentral()
     }

@@ -21,6 +21,9 @@ public interface YangDeleteKeywordStr extends YangNamedElement {
     List<YangDquote> getDquoteList();
 
     @NotNull
+    List<YangSquote> getSquoteList();
+
+    @NotNull
     YangDeleteKeyword getDeleteKeyword();
 
 }
