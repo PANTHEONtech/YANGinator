@@ -21,6 +21,9 @@ public interface YangAddKeywordStr extends YangNamedElement {
     List<YangDquote> getDquoteList();
 
     @NotNull
+    List<YangSquote> getSquoteList();
+
+    @NotNull
     YangAddKeyword getAddKeyword();
 
 }

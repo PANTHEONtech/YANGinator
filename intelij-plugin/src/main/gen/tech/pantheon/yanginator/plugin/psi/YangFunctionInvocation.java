@@ -11,19 +11,26 @@
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface YangIntegerValueStr extends YangNamedElement {
+public interface YangFunctionInvocation extends YangNamedElement {
 
     @NotNull
-    List<YangDquote> getDquoteList();
+    List<YangWsp> getWspList();
 
     @NotNull
-    List<YangSquote> getSquoteList();
+    List<YangFunctionArgs> getFunctionArgsList();
 
     @NotNull
-    YangIntegerValue getIntegerValue();
+    YangFunctionName getFunctionName();
+
+    @NotNull
+    PsiElement getLeftParenthesis();
+
+    @NotNull
+    PsiElement getRightParenthesis();
 
 }

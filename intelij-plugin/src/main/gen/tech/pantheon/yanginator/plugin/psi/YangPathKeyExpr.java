@@ -23,7 +23,7 @@ public interface YangPathKeyExpr extends YangNamedElement {
     List<YangWsp> getWspList();
 
     @NotNull
-    YangCurrentFunctionInvocation getCurrentFunctionInvocation();
+    YangFunctionInvocation getFunctionInvocation();
 
     @NotNull
     YangRelPathKeyexpr getRelPathKeyexpr();

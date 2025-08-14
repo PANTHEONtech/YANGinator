@@ -21,6 +21,9 @@ public interface YangIfFeatureExprStr extends YangNamedElement {
     List<YangDquote> getDquoteList();
 
     @NotNull
+    List<YangSquote> getSquoteList();
+
+    @NotNull
     YangIfFeatureExpr getIfFeatureExpr();
 
 }

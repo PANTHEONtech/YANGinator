@@ -2,8 +2,11 @@ dependencies {
     implementation group: 'org.jetbrains', name: 'annotations', version: annotationsVersion
     implementation group: 'commons-io', name: 'commons-io', version: commonsIoVersion
     implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jupiterApiVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jupiterEngineVersion
+
+    testImplementation platform("org.junit:junit-bom:" + jupiterEngineVersion)
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
 test {

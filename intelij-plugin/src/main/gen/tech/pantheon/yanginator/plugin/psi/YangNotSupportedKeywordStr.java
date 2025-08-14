@@ -21,6 +21,9 @@ public interface YangNotSupportedKeywordStr extends YangNamedElement {
     List<YangDquote> getDquoteList();
 
     @NotNull
+    List<YangSquote> getSquoteList();
+
+    @NotNull
     YangNotSupportedKeyword getNotSupportedKeyword();
 
 }

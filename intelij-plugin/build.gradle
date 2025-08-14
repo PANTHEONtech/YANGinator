@@ -10,7 +10,7 @@ plugins {
 intellijPlatform {
     pluginVerification {
         ides {
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.1")
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.2")
         }
     }
 }
@@ -30,7 +30,7 @@ changelog {
 tasks {
     patchPluginXml {
         sinceBuild = '243'
-        untilBuild = '251.*'
+        untilBuild = '252.*'
         changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
 }

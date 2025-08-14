@@ -16,26 +16,25 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import tech.pantheon.yanginator.plugin.psi.YangFunctionArgs;
 import tech.pantheon.yanginator.plugin.psi.YangFunctionInvocation;
-import tech.pantheon.yanginator.plugin.psi.YangPathKeyExpr;
-import tech.pantheon.yanginator.plugin.psi.YangRelPathKeyexpr;
-import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
+import tech.pantheon.yanginator.plugin.psi.YangFunctionName;
 import tech.pantheon.yanginator.plugin.psi.YangVisitor;
 import tech.pantheon.yanginator.plugin.psi.YangWsp;
 
 import java.util.List;
 
-import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_FORWARD_SLASH;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_LEFT_PARENTHESIS;
+import static tech.pantheon.yanginator.plugin.psi.YangTypes.YANG_RIGHT_PARENTHESIS;
 
-public class YangPathKeyExprImpl extends YangNamedElementImpl implements YangPathKeyExpr {
+public class YangFunctionInvocationImpl extends YangNamedElementImpl implements YangFunctionInvocation {
 
-    public YangPathKeyExprImpl(@NotNull ASTNode node) {
+    public YangFunctionInvocationImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     public void accept(@NotNull YangVisitor visitor) {
-        visitor.visitPathKeyExpr(this);
+        visitor.visitFunctionInvocation(this);
     }
 
     @Override
@@ -55,26 +54,26 @@ public class YangPathKeyExprImpl extends YangNamedElementImpl implements YangPat
 
     @Override
     @NotNull
-    public YangFunctionInvocation getFunctionInvocation() {
-        return findNotNullChildByClass(YangFunctionInvocation.class);
+    public List<YangFunctionArgs> getFunctionArgsList() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, YangFunctionArgs.class);
     }
 
     @Override
     @NotNull
-    public YangRelPathKeyexpr getRelPathKeyexpr() {
-        return findNotNullChildByClass(YangRelPathKeyexpr.class);
-    }
-
-    @Override
-    @Nullable
-    public YangStringSplitter getStringSplitter() {
-        return findChildByClass(YangStringSplitter.class);
+    public YangFunctionName getFunctionName() {
+        return findNotNullChildByClass(YangFunctionName.class);
     }
 
     @Override
     @NotNull
-    public PsiElement getForwardSlash() {
-        return findNotNullChildByType(YANG_FORWARD_SLASH);
+    public PsiElement getLeftParenthesis() {
+        return findNotNullChildByType(YANG_LEFT_PARENTHESIS);
+    }
+
+    @Override
+    @NotNull
+    public PsiElement getRightParenthesis() {
+        return findNotNullChildByType(YANG_RIGHT_PARENTHESIS);
     }
 
 }

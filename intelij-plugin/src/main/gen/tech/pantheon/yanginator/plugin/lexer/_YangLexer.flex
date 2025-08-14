@@ -121,6 +121,7 @@ EOL=\R
   {LEFT_BRACE}                     { return YANG_LEFT_BRACE; }
   {RIGHT_BRACE}                    { return YANG_RIGHT_BRACE; }
   {DOUBLE_QUOTE}                   { return YANG_DOUBLE_QUOTE; }
+  {SINGLE_QUOTE}                   { return YANG_SINGLE_QUOTE; }
   {DOT}                            { return YANG_DOT; }
   {SEMICOLON}                      { return YANG_SEMICOLON; }
   {LEFT_PARENTHESIS}               { return YANG_LEFT_PARENTHESIS; }
@@ -135,12 +136,12 @@ EOL=\R
   {PARENT_FOLDER}                  { return YANG_PARENT_FOLDER; }
   {ALPHA}                          { return YANG_ALPHA; }
   {UNDERSCORE}                     { return YANG_UNDERSCORE; }
+  {DASH}                           { return YANG_DASH; }
+  {COMMA}                          { return YANG_COMMA; }
   {ALPHANUMERICAL_ALPHA_FIRST}     { return YANG_ALPHANUMERICAL_ALPHA_FIRST; }
   {ALPHANUMERICAL_DIGIT_FIRST}     { return YANG_ALPHANUMERICAL_DIGIT_FIRST; }
   {DIGITS}                         { return YANG_DIGITS; }
-  {DASH}                           { return YANG_DASH; }
   {ZERO}                           { return YANG_ZERO; }
-  {SINGLE_QUOTE}                   { return YANG_SINGLE_QUOTE; }
   {TAB}                            { return YANG_TAB; }
   {SPACE}                          { return YANG_SPACE; }
   {QUESTION_MARK}                  { return YANG_QUESTION_MARK; }
@@ -157,7 +158,6 @@ EOL=\R
   {DOLLAR_SIGN}                    { return YANG_DOLLAR_SIGN; }
   {AMPERSAND}                      { return YANG_AMPERSAND; }
   {ASTERISK}                       { return YANG_ASTERISK; }
-  {COMMA}                          { return YANG_COMMA; }
   {BACK_SLASH}                     { return YANG_BACK_SLASH; }
   {CHARS}                          { return YANG_CHARS; }
   {APOSTROPHE}                     { return YANG_APOSTROPHE; }
