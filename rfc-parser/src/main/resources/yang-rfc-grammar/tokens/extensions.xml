@@ -120,7 +120,12 @@
             <pin>(".*") = 1</pin>
         </statement>
         <statement>
-            <name>quoted-string ::= (</name>
+            <name>double-quoted-regex ::= </name>
+            <implements>"tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost"</implements>
+            <extends>"tech.pantheon.yanginator.plugin.injection.impl.YangLanguageInjectionHostImpl"</extends>
+        </statement>
+        <statement>
+            <name>single-quoted-regex ::= </name>
             <implements>"tech.pantheon.yanginator.plugin.injection.YangLanguageInjectionHost"</implements>
             <extends>"tech.pantheon.yanginator.plugin.injection.impl.YangLanguageInjectionHostImpl"</extends>
         </statement>
