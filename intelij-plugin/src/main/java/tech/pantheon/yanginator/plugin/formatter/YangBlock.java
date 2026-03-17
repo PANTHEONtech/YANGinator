@@ -57,7 +57,7 @@ public class YangBlock extends AbstractBlock {
             alignment = Alignment.createAlignment();
         }
         while (child != null) {
-            if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
+            if (child.getTextLength() > 0 && YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
                 blocks.add(buildBlock(child, alignment));
             }
             child = child.getTreeNext();

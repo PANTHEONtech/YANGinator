@@ -88,10 +88,6 @@
             <pin>(".*") = 1 recoverWhile=linkage-recover</pin>
         </statement>
         <statement>
-            <name>body-sub-stmt ::=</name>
-            <pin>(".*") = 1 recoverWhile=body-recovery</pin>
-        </statement>
-        <statement>
             <name>revision-stmt ::=</name>
             <pin>(".*") = 1 recoverWhile=revision-recover</pin>
         </statement>
@@ -118,6 +114,10 @@
         <statement>
             <name>yang-keyword ::=</name>
             <pin>(".*") = 1</pin>
+        </statement>
+        <statement>
+            <name>unknown-statement ::=</name>
+            <pin>= 2</pin>
         </statement>
         <statement>
             <name>quoted-string ::= (</name>

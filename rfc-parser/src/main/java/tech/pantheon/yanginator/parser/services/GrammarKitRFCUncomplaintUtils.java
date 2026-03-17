@@ -747,7 +747,7 @@ public class GrammarKitRFCUncomplaintUtils {
                 line = "  namespace-stmt  |";
             }
             if (found && line.contains("prefix-stmt")) {
-                line = "  prefix-stmt)";
+                line = "  prefix-stmt | unknown-statement )";
             }
             if (found && line.contains(">>")) {
                 line = "";
@@ -845,7 +845,8 @@ public class GrammarKitRFCUncomplaintUtils {
                 result.add("    augment-stmt |");
                 result.add("    rpc-stmt |");
                 result.add("    notification-stmt |");
-                result.add("    deviation-stmt)");
+                result.add("    deviation-stmt |");
+                result.add("    unknown-statement)");
                 found = true;
             }
             if (found && line.equals("")) {
@@ -868,7 +869,7 @@ public class GrammarKitRFCUncomplaintUtils {
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("unknown-statement ::=")) {
-                line = "unknown-statement ::= prefix COLON identifier ([sep] [quoted-string | string]) optsep";
+                line = "unknown-statement ::= prefix COLON identifier [sep (quoted-string | string)] optsep";
             }
             result.add(line);
         }
@@ -1701,6 +1702,7 @@ public class GrammarKitRFCUncomplaintUtils {
 
     /**
      * Adds support for single quoted strings.
+     *
      * @param lines list of strings
      * @return list of strings
      */
@@ -1728,6 +1730,7 @@ public class GrammarKitRFCUncomplaintUtils {
     /**
      * This changes path statement so that it accepts any function.
      * Path argument is not formatted anymore.
+     *
      * @param lines list of strings
      * @return list of strings
      */
