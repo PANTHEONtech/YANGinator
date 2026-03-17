@@ -265,10 +265,18 @@ public final class YangFormatterUtils {
             YangTypes.YANG_INDENTABLE_QUOTED_STRING
     );
 
+    public static final TokenSet COMMENT_SET = TokenSet.create(
+        YangTypes.YANG_BLOCK_COMMENT,
+        YangTypes.YANG_COMMENT
+    );
+
     private YangFormatterUtils() {
     }
 
     static Indent getIndentForType(final IElementType type) {
+        if (COMMENT_SET.contains(type)) {
+            return Indent.getNoneIndent();
+        }
         if (STATEMENT_SET.contains(type) || EXTRA_INDENT_SET.contains(type) || TO_INDENT_STATEMENTS_SET.contains(type)) {
             return Indent.getNormalIndent();
         }

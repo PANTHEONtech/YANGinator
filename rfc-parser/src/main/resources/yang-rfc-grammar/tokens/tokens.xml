@@ -391,9 +391,4 @@
         <value>ESCAPES</value>
         <lexerOnly>true</lexerOnly>
     </token>
-    <token>
-        <key>[a-zA-Z_][a-zA-Z0-9_]*</key>
-        <value>IDENTIFIER</value>
-        <lexerOnly>false</lexerOnly>
-    </token>
 </class>
