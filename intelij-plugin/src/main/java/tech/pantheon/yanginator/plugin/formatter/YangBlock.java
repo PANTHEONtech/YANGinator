@@ -91,11 +91,6 @@ public class YangBlock extends AbstractBlock {
                     spacingBuilder, Indent.getNoneIndent());
         }
 
-        IElementType type = child.getElementType();
-        if (YangFormatterUtils.COMMENT_SET.contains(type)) {
-            return new YangBlock(child, null, alignment, spacingBuilder, Indent.getNoneIndent());
-        }
-
         if (child.getElementType() == YangTypes.YANG_UNKNOWN_STATEMENT) {
             ASTNode prev = child.getTreePrev();
             while (prev != null && (YangFormatterUtils.WHITESPACE_SET.contains(prev.getElementType())
