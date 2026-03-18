@@ -21,6 +21,7 @@ import com.intellij.formatting.Wrap;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.formatter.common.AbstractBlock;
+import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.pantheon.yanginator.plugin.YangLanguage;
@@ -57,7 +58,7 @@ public class YangBlock extends AbstractBlock {
             alignment = Alignment.createAlignment();
         }
         while (child != null) {
-            if (YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
+            if (child.getTextLength() > 0 && YangFormatterUtils.shouldBuildBlock(child.getElementType())) {
                 blocks.add(buildBlock(child, alignment));
             }
             child = child.getTreeNext();
@@ -89,21 +90,19 @@ public class YangBlock extends AbstractBlock {
             return new YangBlock(child, null, alignment,
                     spacingBuilder, Indent.getNoneIndent());
         }
+
         if (child.getElementType() == YangTypes.YANG_UNKNOWN_STATEMENT) {
             ASTNode prev = child.getTreePrev();
-            while (YangFormatterUtils.WHITESPACE_SET.contains(prev.getElementType())) {
-                if (prev.getTreePrev() == null) {
-                    break;
-                }
+            while (prev != null && (YangFormatterUtils.WHITESPACE_SET.contains(prev.getElementType())
+                || YangFormatterUtils.COMMENT_SET.contains(prev.getElementType()))) {
                 prev = prev.getTreePrev();
             }
-            if (prev.getElementType() == YangTypes.YANG_SEMICOLON ||
-                    prev.getElementType() == YangTypes.YANG_RIGHT_BRACE) {
-                return new YangBlock(child, null, alignment,
-                        spacingBuilder, Indent.getNoneIndent());
+            if (prev == null || prev.getElementType() == YangTypes.YANG_SEMICOLON ||
+                prev.getElementType() == YangTypes.YANG_RIGHT_BRACE ||
+                prev.getElementType() == YangTypes.YANG_LEFT_BRACE) {
+                return new YangBlock(child, null, alignment, spacingBuilder, Indent.getNoneIndent());
             }
-            return new YangBlock(child, null, alignment,
-                    spacingBuilder, Indent.getNormalIndent());
+            return new YangBlock(child, null, alignment, spacingBuilder, Indent.getNormalIndent());
         }
         return new YangBlock(child, null, alignment,
                 spacingBuilder, YangFormatterUtils.getIndentForType(child.getElementType()));
