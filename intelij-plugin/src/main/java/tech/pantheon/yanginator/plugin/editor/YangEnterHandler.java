@@ -45,7 +45,10 @@ public class YangEnterHandler extends EnterHandlerDelegateAdapter {
 
         WriteCommandAction.runWriteCommandAction(project, () -> {
             if (isInsidePattern) {
-                final String PATTERN_SPLIT_TEX = "\"\n+ \"";
+                String text = document.getText();
+                final char quoteChar = (offset > 0 && text.charAt(stringRange.getStartOffset()) == '\'') ? '\'' : '"';
+
+                final String PATTERN_SPLIT_TEX = quoteChar + "\n+ " + quoteChar;
                 document.insertString(offset, PATTERN_SPLIT_TEX);
                 PsiDocumentManager.getInstance(project).commitDocument(document);
 
@@ -54,9 +57,6 @@ public class YangEnterHandler extends EnterHandlerDelegateAdapter {
                 final int lineNumber = document.getLineNumber(offset) + 1;
                 final int lineStart = document.getLineStartOffset(lineNumber);
                 String lineContent = document.getText(new TextRange(lineStart, document.getLineEndOffset(lineNumber)));
-
-                String text = document.getText();
-                final char quoteChar = (offset > 0 && text.charAt(stringRange.getStartOffset()) == '\'') ? '\'' : '"';
 
                 int quoteIndex = lineContent.indexOf(quoteChar);
                 if (quoteIndex != -1) {
