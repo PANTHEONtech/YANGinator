@@ -47,12 +47,21 @@ public class YangEnterHandler extends EnterHandlerDelegateAdapter {
             if (isInsidePattern) {
                 final String splitText = "\"\n+ \"";
                 document.insertString(offset, splitText);
-
                 PsiDocumentManager.getInstance(project).commitDocument(document);
 
                 CodeStyleManager.getInstance(project).reformatText(file, offset, offset + splitText.length());
+                PsiDocumentManager.getInstance(project).commitDocument(document);
 
-                editor.getCaretModel().moveToOffset(offset + splitText.length());
+                final int lineNumber = document.getLineNumber(offset) + 1;
+                final int lineStart = document.getLineStartOffset(lineNumber);
+                String lineContent = document.getText(new TextRange(lineStart, document.getLineEndOffset(lineNumber)));
+
+                final int quoteIndex = lineContent.indexOf('"');
+                if (quoteIndex != -1) {
+                    final int finalCaretPos = lineStart + quoteIndex + 1;
+                    editor.getCaretModel().moveToOffset(finalCaretPos);
+                    caretOffset.set(finalCaretPos);
+                }
             } else {
                 document.insertString(offset, "\n");
                 PsiDocumentManager.getInstance(project).commitDocument(document);
