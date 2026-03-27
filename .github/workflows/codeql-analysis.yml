@@ -50,10 +50,13 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
     
-    - name: Set up JDK 17
+    - name: Get Java version
+      id: java_version
+      run: echo "version=$(grep -w javaVersion gradle.properties | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: ${{ steps.java_version.outputs.version }}
         distribution: 'adopt'
         cache: gradle
     - name: Build with Gradle

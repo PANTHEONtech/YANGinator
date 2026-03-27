@@ -43,4 +43,9 @@ public class YangCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
             }
         };
     }
+
+    @Override
+    public @NotNull String getConfigurableId() {
+        return "tech.pantheon.yanginator";
+    }
 }

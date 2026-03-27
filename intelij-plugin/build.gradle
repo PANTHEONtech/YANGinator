@@ -1,5 +1,8 @@
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
+import org.jetbrains.intellij.platform.gradle.tasks.BuildSearchableOptionsTask
+import org.jetbrains.intellij.platform.gradle.tasks.InstrumentCodeTask
 
 plugins {
 
@@ -7,13 +10,6 @@ plugins {
     id 'org.jetbrains.changelog' version "$changelogVersion"
 }
 
-intellijPlatform {
-    pluginVerification {
-        ides {
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.2")
-        }
-    }
-}
 
 apply plugin: 'org.jetbrains.changelog'
 
@@ -27,10 +23,11 @@ changelog {
     groups = []
 }
 
+
 tasks {
     patchPluginXml {
-        sinceBuild = '243'
-        untilBuild = '252.*'
+        sinceBuild = ideaBuildVersion
+        untilBuild = null
         changeNotes = changelog.getLatest().toHTML() + "<a href=\"https://github.com/PANTHEONtech/YANGinator/blob/master/CHANGELOG.md\">more...</a>"
     }
 }
@@ -60,16 +57,57 @@ repositories {
     mavenCentral()
     intellijPlatform {
         defaultRepositories()
+        intellijDependencies()
+
+        snapshots()
+        jetbrainsRuntime()
     }
 }
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity ideaVersion
+        create(IntelliJPlatformType.IntellijIdea, ideaVersion)
         bundledPlugin("com.intellij.java")
-        testFramework TestFrameworkType.Platform.INSTANCE
+        testFramework(TestFrameworkType.Platform.INSTANCE)
+
+        pluginVerifier()
+        javaCompiler()
     }
 
     testImplementation group: 'org.junit.jupiter',
             name: 'junit-jupiter-engine', version: jupiterEngineVersion
+}
+
+/**
+ * IntelliJ Platform Configuration
+ * * note: The 'recommended()' verification target downloads multiple IDE distributions
+ * (latest stable, EAP, and previous major versions). This ensures broad compatibility
+ * but requires significant disk space and network bandwidth.
+ * * maintenance: To optimize build performance and storage, keep 'sinceBuild' aligned
+ * with the target SDK version found in 'Help -> About' or the JetBrains Release Portal.
+ * * @see https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
+ */
+intellijPlatform {
+    buildSearchableOptions = false
+    instrumentCode = true
+
+    pluginConfiguration {
+        id = 'tech.pantheon.yanginator'
+        name = 'YANGinator'
+        ideaVersion {
+            sinceBuild = ideaBuildVersion
+            untilBuild = null
+        }
+    }
+
+    pluginVerification {
+        ides {
+            // recommended()
+            select {
+                it.types = [IntelliJPlatformType.IntellijIdea]
+                it.channels = [ProductRelease.Channel.RELEASE, ProductRelease.Channel.EAP]
+                it.sinceBuild = ideaBuildVersion
+            }
+        }
+    }
 }

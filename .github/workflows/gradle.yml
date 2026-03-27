@@ -15,10 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 17
+    - name: Get Java version
+      id: java_version
+      run: echo "version=$(grep -w javaVersion gradle.properties | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: ${{ steps.java_version.outputs.version }}
         distribution: 'adopt'
         cache: gradle
     - name: Build with Gradle

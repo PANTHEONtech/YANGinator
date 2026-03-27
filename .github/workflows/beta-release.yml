@@ -21,11 +21,16 @@ jobs:
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
           ref: ${{ github.head_ref }}
 
-      # Setup Java 17 environment for the next steps
+      # Read Java version from gradle.properties
+      - name: Get Java version
+        id: java_version
+        run: echo "version=$(grep -w javaVersion gradle.properties | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+
+      # Setup Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: ${{ steps.java_version.outputs.version }}
           distribution: 'adopt'
           cache: gradle
 
