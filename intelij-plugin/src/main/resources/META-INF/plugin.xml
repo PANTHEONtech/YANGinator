@@ -76,5 +76,11 @@
 
         <!-- Injection -->
         <multiHostInjector implementation="tech.pantheon.yanginator.plugin.injection.RegExpToYangInjector"/>
+
+        <!-- Editor -->
+        <enterHandlerDelegate
+                implementation="tech.pantheon.yanginator.plugin.editor.YangEnterHandler"
+                id="YangEnterHandler"
+                order="first"/>
     </extensions>
 </idea-plugin>

@@ -14,29 +14,38 @@ import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.XsdRegExpParserDefinition;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import tech.pantheon.yanginator.plugin.psi.YangIndentableQuotedString;
 import tech.pantheon.yanginator.plugin.psi.YangPatternBody;
 import tech.pantheon.yanginator.plugin.psi.YangQuotedString;
+import tech.pantheon.yanginator.plugin.psi.YangStringSplitter;
 
 import java.util.List;
 
 public class RegExpToYangInjector implements MultiHostInjector {
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-        if (context instanceof YangQuotedString &&
-                context.getParent() instanceof YangIndentableQuotedString &&
-                context.getParent().getParent() instanceof YangPatternBody) {
-            registrar.startInjecting(XsdRegExpParserDefinition.LANGUAGE)
-                    .addPlace(null, null, (PsiLanguageInjectionHost) context, new TextRange(context.getStartOffsetInParent() + 1, context.getStartOffsetInParent() + context.getTextLength() - 1))
-                    .doneInjecting();
+        if (!(context instanceof YangIndentableQuotedString)) return;
+        if (!(context.getParent() instanceof YangPatternBody)) return;
+
+        List<YangQuotedString> quoteParts = PsiTreeUtil.getChildrenOfTypeAsList(context, YangQuotedString.class);
+
+        if (!quoteParts.isEmpty()) {
+            registrar.startInjecting(XsdRegExpParserDefinition.LANGUAGE);
+
+            for (YangQuotedString part : quoteParts) {
+                registrar.addPlace(null, null, part,
+                        new TextRange(1, part.getTextLength() - 1));
+            }
+
+            registrar.doneInjecting();
         }
     }
 
     @Override
     public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-        return List.of(YangQuotedString.class);
+        return List.of(YangQuotedString.class, YangStringSplitter.class);
     }
 }
