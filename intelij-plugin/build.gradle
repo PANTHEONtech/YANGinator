@@ -78,7 +78,7 @@ dependencies {
             name: 'junit-jupiter-engine', version: jupiterEngineVersion
 }
 
-/**f
+/**
  * IntelliJ Platform Configuration
  * * note: The 'recommended()' verification target downloads multiple IDE distributions
  * (latest stable, EAP, and previous major versions). This ensures broad compatibility
