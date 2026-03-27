@@ -21,28 +21,39 @@ jobs:
           token: ${{ secrets.RELEASE_ACTION_TOKEN }}
           ref: ${{ github.head_ref }}
 
-      # Setup Java 17 environment for the next steps
+      # Read Java version from gradle.properties
+      - name: Get Java version
+        id: java_version
+        run: echo "version=$(grep -w javaVersion gradle.properties | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+
+      # Setup Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: ${{ steps.java_version.outputs.version }}
           distribution: 'adopt'
           cache: gradle
 
       # Create release version
       - name: Create release version
-        run: gradle createReleaseVersion
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: createReleaseVersion
 
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
+        uses: gradle/gradle-build-action@v2
         env:
           PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
           CHANNELS: default
-        run: gradle publishPlugin
+        with:
+          arguments: publishPlugin
 
       # Create next snapshot version
       - name: Create next snapshot version
-        run: gradle createNextSnapshotVersion
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: createNextSnapshotVersion
 
       # Push new version into repository
       - uses: stefanzweifel/git-auto-commit-action@v4.12.0
