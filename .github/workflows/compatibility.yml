@@ -21,6 +21,4 @@ jobs:
         distribution: 'adopt'
         cache: gradle
     - name: Execute Verify Plugin Compatibility
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: verifyPlugin
+      run: gradle verifyPlugin

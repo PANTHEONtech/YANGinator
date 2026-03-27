@@ -60,9 +60,7 @@ jobs:
         distribution: 'adopt'
         cache: gradle
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: build
+      run: gradle build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

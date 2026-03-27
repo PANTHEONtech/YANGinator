@@ -36,24 +36,18 @@ jobs:
 
       # Create release version
       - name: Create release version
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: createReleaseVersion
+        run: gradle createReleaseVersion
 
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
-        uses: gradle/gradle-build-action@v2
         env:
           PUBLISH_TOKEN: ${{ secrets.JETBRAINS_PUBLISH_TOKEN }}
           CHANNELS: default
-        with:
-          arguments: publishPlugin
+        run: gradle publishPlugin
 
       # Create next snapshot version
       - name: Create next snapshot version
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: createNextSnapshotVersion
+        run: gradle createNextSnapshotVersion
 
       # Push new version into repository
       - uses: stefanzweifel/git-auto-commit-action@v4.12.0
